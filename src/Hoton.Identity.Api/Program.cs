@@ -1,8 +1,6 @@
 using Hoton.Keycloak;
 using Keycloak.AuthServices.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,7 +80,7 @@ app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin =
 app.UseAuthorization();
 app.UseAuthentication();
 
-app.MapControllers().RequireAuthorization();
-// app.MapControllers();
+// app.MapControllers().RequireAuthorization();
+app.MapControllers();
 
 app.Run();
