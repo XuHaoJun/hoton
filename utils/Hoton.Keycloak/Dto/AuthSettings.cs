@@ -1,0 +1,2 @@
+namespace Hoton.Keycloak.Dto;
+

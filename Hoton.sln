@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9EF2E95A-38C5-4533-B5D6-D8388C69FFEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoton.Identity.Api", "src\Hoton.Identity.Api\Hoton.Identity.Api.csproj", "{805225B6-029B-44C3-904B-3A4507545250}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoton.Pay.Api", "src\Hoton.Pay.Api\Hoton.Pay.Api.csproj", "{1E9FEEBA-FC5D-454C-8300-EC01EC6B0E45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{6091121A-7C1B-4223-B459-2CF1D99F4ED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hoton.Keycloak", "utils\Hoton.Keycloak\Hoton.Keycloak.csproj", "{7B1DB0D5-400E-4AEC-9B2E-600FE22E0D8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{805225B6-029B-44C3-904B-3A4507545250}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805225B6-029B-44C3-904B-3A4507545250}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805225B6-029B-44C3-904B-3A4507545250}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805225B6-029B-44C3-904B-3A4507545250}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E9FEEBA-FC5D-454C-8300-EC01EC6B0E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E9FEEBA-FC5D-454C-8300-EC01EC6B0E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E9FEEBA-FC5D-454C-8300-EC01EC6B0E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E9FEEBA-FC5D-454C-8300-EC01EC6B0E45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B1DB0D5-400E-4AEC-9B2E-600FE22E0D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B1DB0D5-400E-4AEC-9B2E-600FE22E0D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B1DB0D5-400E-4AEC-9B2E-600FE22E0D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B1DB0D5-400E-4AEC-9B2E-600FE22E0D8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{805225B6-029B-44C3-904B-3A4507545250} = {9EF2E95A-38C5-4533-B5D6-D8388C69FFEA}
+		{1E9FEEBA-FC5D-454C-8300-EC01EC6B0E45} = {9EF2E95A-38C5-4533-B5D6-D8388C69FFEA}
+		{7B1DB0D5-400E-4AEC-9B2E-600FE22E0D8B} = {6091121A-7C1B-4223-B459-2CF1D99F4ED5}
+	EndGlobalSection
+EndGlobal
