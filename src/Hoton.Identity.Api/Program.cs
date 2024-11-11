@@ -41,9 +41,12 @@ if (builder.Environment.IsDevelopment())
     });
 }
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddKeyCloakAdminClient();
+
 builder.Services.AddKeyCloakAuth();
-builder
-    .Services.AddAuthorizationBuilder()
+builder.Services
+    .AddAuthorizationBuilder()
     .AddPolicy("ec-profile", policy => policy.RequireProtectedResource("ec1", "profile"));
 
 // builder

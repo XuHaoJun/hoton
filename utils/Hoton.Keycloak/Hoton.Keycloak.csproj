@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Duende.AccessTokenManagement" Version="3.0.1" />
+    <PackageReference Include="Keycloak.AuthServices.Sdk.Kiota" Version="25.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.10" />
   </ItemGroup>

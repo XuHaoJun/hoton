@@ -3,35 +3,26 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Keycloak.AuthServices.Sdk.Kiota;
 
 namespace Hoton.Keycloak;
 
 // https://github.com/NikiforovAll/keycloak-authorization-services-dotnet/discussions/123#discussioncomment-9881517
 public static class KeycloakAuthExtension
 {
-    // TODO
-    // fix it! OnMessageReceived no error and claims is validated: true, and OnAuthenticationFailed no error, why still response 401
     public static IServiceCollection AddKeyCloakAuth(this IServiceCollection services)
     {
-        var httpClient = new HttpClient();
-        var tokenHandler = new JwtSecurityTokenHandler();
-
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(
-                // options =>
-                // {
-                //     options.Resource = "security-admin-console";
-                //     options.AuthServerUrl = "http://localhost:8080/";
-                //     options.VerifyTokenAudience = false;
-                // },
-                options =>
+            .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
                 options.Events = new JwtBearerEvents
                 {
                     OnMessageReceived = async context =>
                     {
+                        var httpClient = new HttpClient();
+                        var tokenHandler = new JwtSecurityTokenHandler();
                         try
                         {
                             var tokenJwt = context.Request.Headers.Authorization.FirstOrDefault();
@@ -125,6 +116,30 @@ public static class KeycloakAuthExtension
                 };
             });
 
+        return services;
+    }
+
+    public static IServiceCollection AddKeyCloakAdminClient(this IServiceCollection services)
+    {
+        var tokenClientName = "keycloak_admin_api_token";
+        services
+            .AddClientCredentialsTokenManagement()
+            .AddClient(
+                tokenClientName,
+                client =>
+                {
+                    client.ClientId = "admin-api";
+                    client.ClientSecret = "6p1rMUz5D9kGg4v5ObhsSEFaggbmK0ZA";
+                    client.TokenEndpoint = "http://localhost:8080/realms/master/protocol/openid-connect/token";
+                }
+            );
+        var keycloakOptions = new KeycloakAdminClientOptions
+        {
+            AuthServerUrl = "http://localhost:8080/",
+            Realm = "master",
+            Resource = "admin-api",
+        };
+        services.AddKeycloakAdminHttpClient(keycloakOptions).AddClientCredentialsTokenHandler(tokenClientName);
         return services;
     }
 }

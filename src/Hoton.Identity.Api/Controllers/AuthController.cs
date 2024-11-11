@@ -1,11 +1,10 @@
-using System.Text;
 using Hoton.Identity.Api.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hoton.Identity.Api.Controllers;
 
-[Route("api/[controller]/realms/{realmName}/[action]")]
+[Route("api/realms/{realmName}/[controller]/[action]")]
 public class AuthController : ControllerBase
 {
     private readonly HttpClient _httpClient;
@@ -15,22 +14,23 @@ public class AuthController : ControllerBase
         _httpClient = new HttpClient();
     }
 
+    // TODO
+    // validate realmName should not be master
     [AllowAnonymous]
     [HttpPost]
     public async Task<ActionResult<TokenResponse>> TokenAsync(
-        [FromBody] TokenRequestModel req,
-        [FromRoute] string realmName
+        [FromRoute] string realmName,
+        [FromBody] TokenRequestModel req
     )
     {
-        var request = new HttpRequestMessage(
+        var kcReq = new HttpRequestMessage(
             HttpMethod.Post,
             $"http://localhost:8080/realms/{realmName}/protocol/openid-connect/token"
         )
         {
             Content = FormUrlEncodedExtensions.ToFormUrlEncoded(req, useJsonPropertyName: true)
         };
-
-        var response = await _httpClient.SendAsync(request);
+        var response = await _httpClient.SendAsync(kcReq);
         response.EnsureSuccessStatusCode();
 
         var tokenResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
