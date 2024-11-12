@@ -151,7 +151,6 @@ CREATE TABLE "shipment"."shipment" (
     carrier_name VARCHAR(50), -- 物流服務商名稱
     carrier_service_type VARCHAR(50), -- 服務類型 宅配, 到店, 超取
     temperature_zone VARCHAR(50), -- 溫層 低溫，長溫
-    shipment_type VARCHAR(50) DEFAULT 'outbound',  -- 出貨類型，例如 outbound（出貨）、inbound（退貨）
     sender_name VARCHAR(100),    -- 寄件人姓名
     sender_phone VARCHAR(100),   -- 寄件人電話
     receiver_name VARCHAR(100),  -- 收件人姓名
@@ -188,5 +187,27 @@ CREATE TABLE "order"."order_shipment_map" (
     shipment_id UUID REFERENCES "shipment"."shipment" (id) ON DELETE CASCADE,  -- 物流單 ID
     flow_type VARCHAR(50) NOT NULL CHECK (flow_type IN ('forward', 'reverse')),  -- 流向類型，正向（forward）或逆向（reverse）
     PRIMARY KEY (order_id, shipment_id, flow_type),  -- 確保每筆訂單-物流的流向唯一
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 支付單表 (Payment)
+CREATE TABLE "payment"."payment" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 支付單 ID
+    payment_number VARCHAR(255) UNIQUE NOT NULL,     -- 支付單號
+    amount DECIMAL(10, 2) NOT NULL,  -- 支付總金額
+    status VARCHAR(50) DEFAULT 'pending',  -- 支付狀態，例如 pending, completed, failed, refunded
+    payment_method VARCHAR(50),  -- 支付方式，例如 credit_card, bank_transfer, paypal
+    return_url VARCHAR(255) NOT NULL,     -- 訂單結果後端 Server URL
+    order_result_url VARCHAR(255) NOT NULL, -- 訂單結果前端 URL
+    check_mac_value VARCHAR(255) NOT NULL, -- 檢查 MAC 值
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 訂單與支付單的多對多關聯表 (Order-Payment Mapping)
+CREATE TABLE "order"."order_payment_map" (
+    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,  -- 訂單 ID
+    payment_id UUID REFERENCES "payment"."payment" (id) ON DELETE CASCADE,  -- 支付單 ID
+    PRIMARY KEY (order_id, payment_id),  -- 確保每個訂單與支付單的唯一關聯
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
