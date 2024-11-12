@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Dapper.EntityFramework" Version="2.0.151" />
+    <PackageReference Include="Dapper.SqlBuilder" Version="2.0.78" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hoton.Domain\Hoton.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
