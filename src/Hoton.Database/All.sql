@@ -196,7 +196,8 @@ CREATE TABLE "payment"."payment" (
     payment_number VARCHAR(255) UNIQUE NOT NULL,     -- 支付單號
     amount DECIMAL(10, 2) NOT NULL,  -- 支付總金額
     status VARCHAR(50) DEFAULT 'pending',  -- 支付狀態，例如 pending, completed, failed, refunded
-    payment_method VARCHAR(50),  -- 支付方式，例如 credit_card, bank_transfer, paypal
+    payment_method VARCHAR(50) NOT NULL,  -- 支付方式，例如 credit_card, bank_transfer
+    payment_provider VARCHAR(50) NOT NULL,  -- 支付服務提供方，例如 paypal, ecpay, stripe
     return_url VARCHAR(255) NOT NULL,     -- 訂單結果後端 Server URL
     order_result_url VARCHAR(255) NOT NULL, -- 訂單結果前端 URL
     check_mac_value VARCHAR(255) NOT NULL, -- 檢查 MAC 值
