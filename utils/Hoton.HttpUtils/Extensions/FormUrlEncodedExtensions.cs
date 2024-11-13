@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Web;
 
+namespace Hoton.HttpUtils.Extensions;
+
 public static class FormUrlEncodedExtensions
 {
-
     public static FormUrlEncodedContent ToFormUrlEncoded<T>(this T obj, bool useJsonPropertyName = false)
         where T : class
     {

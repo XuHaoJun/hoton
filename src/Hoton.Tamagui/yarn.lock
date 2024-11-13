@@ -1899,9 +1899,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/config-plugins@npm:8.0.10, @expo/config-plugins@npm:~8.0.0-beta.0, @expo/config-plugins@npm:~8.0.4, @expo/config-plugins@npm:~8.0.8":
-  version: 8.0.10
-  resolution: "@expo/config-plugins@npm:8.0.10"
+"@expo/config-plugins@npm:8.0.11, @expo/config-plugins@npm:~8.0.0-beta.0, @expo/config-plugins@npm:~8.0.4, @expo/config-plugins@npm:~8.0.8":
+  version: 8.0.11
+  resolution: "@expo/config-plugins@npm:8.0.11"
   dependencies:
     "@expo/config-types": "npm:^51.0.3"
     "@expo/json-file": "npm:~8.3.0"
@@ -10883,7 +10883,7 @@ __metadata:
     "@babel/runtime": "npm:^7.20.0"
     "@expo/cli": "npm:0.18.30"
     "@expo/config": "npm:9.0.4"
-    "@expo/config-plugins": "npm:8.0.10"
+    "@expo/config-plugins": "npm:8.0.11"
     "@expo/metro-config": "npm:0.18.11"
     "@expo/vector-icons": "npm:^14.0.3"
     babel-preset-expo: "npm:~11.0.14"

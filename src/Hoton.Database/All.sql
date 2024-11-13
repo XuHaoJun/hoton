@@ -148,8 +148,8 @@ CREATE TABLE "shipment"."shipment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 物流單 ID
     tracking_number VARCHAR(255) UNIQUE NOT NULL,  -- 物流單號
     status VARCHAR(50) DEFAULT 'pending',  -- 物流單狀態，例如 pending, shipped, delivered, returned
-    carrier_name VARCHAR(50), -- 物流服務商名稱
-    carrier_service_type VARCHAR(50), -- 服務類型 宅配, 到店, 超取
+    service_provider VARCHAR(50), -- 物流服務商名稱
+    service_type VARCHAR(50),     -- 服務類型 宅配, 到店, 超取
     temperature_zone VARCHAR(50), -- 溫層 低溫，長溫
     sender_name VARCHAR(100),    -- 寄件人姓名
     sender_phone VARCHAR(100),   -- 寄件人電話
@@ -194,13 +194,15 @@ CREATE TABLE "order"."order_shipment_map" (
 CREATE TABLE "payment"."payment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 支付單 ID
     payment_number VARCHAR(255) UNIQUE NOT NULL,     -- 支付單號
-    amount DECIMAL(10, 2) NOT NULL,  -- 支付總金額
-    status VARCHAR(50) DEFAULT 'pending',  -- 支付狀態，例如 pending, completed, failed, refunded
-    payment_method VARCHAR(50) NOT NULL,  -- 支付方式，例如 credit_card, bank_transfer
-    payment_provider VARCHAR(50) NOT NULL,  -- 支付服務提供方，例如 paypal, ecpay, stripe
-    return_url VARCHAR(255) NOT NULL,     -- 訂單結果後端 Server URL
+    amount DECIMAL(10, 2) NOT NULL,         -- 支付總金額
+    status VARCHAR(50) DEFAULT 'pending',   -- 支付狀態，例如 pending, completed, failed, refunded
+    payment_method VARCHAR(50) NOT NULL,    -- 支付方式，例如 credit_card, bank_transfer
+    merchant_id VARCHAR(255) NOT NULL,      -- 特店編號
+    service_provider VARCHAR(50) NOT NULL,  -- 支付服務提供方，例如 paypal, ecpay, stripe
+    return_url VARCHAR(255) NOT NULL,       -- 訂單結果後端 Server URL
     order_result_url VARCHAR(255) NOT NULL, -- 訂單結果前端 URL
-    check_mac_value VARCHAR(255) NOT NULL, -- 檢查 MAC 值
+    check_mac_value VARCHAR(255),           -- 檢查 MAC 值
+    atm_pay_no VARCHAR(255),                -- ATM 虛擬帳戶編號
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -210,5 +212,58 @@ CREATE TABLE "order"."order_payment_map" (
     order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,  -- 訂單 ID
     payment_id UUID REFERENCES "payment"."payment" (id) ON DELETE CASCADE,  -- 支付單 ID
     PRIMARY KEY (order_id, payment_id),  -- 確保每個訂單與支付單的唯一關聯
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 發票表 (Invoice)
+CREATE TABLE "invoice"."invoice" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 發票 ID
+    invoice_number VARCHAR(255) UNIQUE NOT NULL,  -- 發票號碼
+    invoice_type VARCHAR(50) NOT NULL,  -- 發票類型 type, 發票類型(1:二聯式 2:三聯式 3:個人載具)
+    amount DECIMAL(10, 2) NOT NULL,  -- 發票總金額(含稅)
+    tax DECIMAL(10, 2) NOT NULL,     -- 發票總稅額
+    status VARCHAR(50) DEFAULT 'issued',    -- 發票狀態，例如 issued, voided, refunded
+    service_provider VARCHAR(50) NOT NULL,  -- 發票服務提供方，例如 ecpay, bankpro
+    company_no VARCHAR(255),    -- 三聯式_公司抬頭
+    company_name VARCHAR(255),  -- 三聯式_公司抬頭
+    carrier_no VARCHAR(255),    -- 個人載具_載具編號
+    issue_date TIMESTAMPTZ DEFAULT NOW(),  -- 發票開立日期
+    void_date TIMESTAMPTZ,  -- 作廢日期 (如作廢則記錄)
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 發票狀態歷程表 (Invoice status history)
+CREATE TABLE "invoice"."invoice_status_history" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    invoice_id UUID REFERENCES "invoice"."invoice" (id) ON DELETE CASCADE,
+    from_status VARCHAR(50),  
+    to_status VARCHAR(50) DEFAULT 'issued',
+    reason VARCHAR(50) , -- 原因，如退貨、部分退貨
+    reason_data JSONB,   -- 相關資料
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 發票項目表 (Invoice Item)
+CREATE TABLE "invoice"."invoice_item" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 發票項目 ID
+    invoice_id UUID REFERENCES "invoice"."invoice" (id) ON DELETE CASCADE,  -- 關聯發票 ID
+    product_name VARCHAR(255) NOT NULL,  -- 商品名稱,內部系統為{商品名稱}_{規格}
+    tax_type VARCHAR(50) NOT NULL,       -- 商品課稅別.
+    remark TEXT,  -- 備註
+    unit_word VARCHAR(255),  -- 單位名稱
+    quantity INT NOT NULL DEFAULT 1,  -- 發票項目數量
+    unit_price DECIMAL(10, 2) NOT NULL,  -- 單價
+    amount DECIMAL(10, 2) GENERATED ALWAYS AS (quantity * unit_price) STORED,  -- 該項目的總金額
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 訂單與發票的多對多關聯表 ( Mapping)
+CREATE TABLE "order"."order_invoice_map" (
+    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,  -- 訂單 ID
+    invoice_id UUID REFERENCES "invoice"."invoice" (id) ON DELETE CASCADE,  -- 發票 ID
+    PRIMARY KEY (order_id, invoice_id),  -- 確保每個訂單與發票唯一關聯
     created_at TIMESTAMPTZ DEFAULT NOW()
 );

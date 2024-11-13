@@ -1,6 +1,8 @@
-using Hoton.Identity.Api.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using Hoton.Identity.Api.Contacts;
+using Hoton.HttpUtils.Extensions;
 
 namespace Hoton.Identity.Api.Controllers;
 

@@ -1,6 +1,0 @@
-@Hoton.Pay.Api_HostAddress = http://localhost:5206
-
-GET {{Hoton.Pay.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
