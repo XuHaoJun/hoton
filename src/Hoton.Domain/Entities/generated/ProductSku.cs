@@ -21,7 +21,5 @@ public partial class ProductSku
 
     public DateTime? SnapshotVersion { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-
     public virtual Product Product { get; set; }
 }

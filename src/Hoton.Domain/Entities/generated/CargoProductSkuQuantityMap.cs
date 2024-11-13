@@ -12,6 +12,4 @@ public partial class CargoProductSkuQuantityMap
     public int? Quantity { get; set; }
 
     public virtual Cargo Cargo { get; set; }
-
-    public virtual ProductSku ProductSku { get; set; }
 }

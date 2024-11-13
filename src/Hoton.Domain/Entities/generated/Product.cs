@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hoton.Domain.Entities.generated;
 
@@ -7,11 +8,17 @@ public partial class Product
 {
     public Guid Id { get; set; }
 
+    public string RealmId { get; set; }
+
     public string Name { get; set; }
 
     public string Description { get; set; }
 
     public decimal Price { get; set; }
+
+    public List<LTree> Categories { get; set; }
+
+    public List<string> Tags { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
@@ -19,9 +26,7 @@ public partial class Product
 
     public DateTime? SnapshotVersion { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
-
     public virtual ICollection<ProductSku> ProductSkus { get; set; } = new List<ProductSku>();
 
-    public virtual ICollection<ProductCategory> Categories { get; set; } = new List<ProductCategory>();
+    public virtual Realm Realm { get; set; }
 }

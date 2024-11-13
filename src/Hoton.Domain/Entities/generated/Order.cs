@@ -23,9 +23,11 @@ public partial class Order
 
     public DateTime? UpdatedAt { get; set; }
 
+    public virtual ICollection<OrderInvoiceMap> OrderInvoiceMaps { get; set; } = new List<OrderInvoiceMap>();
+
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-    public virtual ICollection<OrderShipmentMap> OrderShipmentMaps { get; set; } = new List<OrderShipmentMap>();
+    public virtual ICollection<OrderPaymentMap> OrderPaymentMaps { get; set; } = new List<OrderPaymentMap>();
 
     public virtual ICollection<OrderStatusHistory> OrderStatusHistories { get; set; } = new List<OrderStatusHistory>();
 

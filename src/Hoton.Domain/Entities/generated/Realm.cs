@@ -129,6 +129,8 @@ public partial class Realm
 
     public virtual ICollection<KeycloakRole> KeycloakRoles { get; set; } = new List<KeycloakRole>();
 
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
     public virtual ICollection<RealmAttribute> RealmAttributes { get; set; } = new List<RealmAttribute>();
 
     public virtual ICollection<RealmDefaultGroup> RealmDefaultGroups { get; set; } = new List<RealmDefaultGroup>();

@@ -11,13 +11,11 @@ public partial class Shipment
 
     public string Status { get; set; }
 
-    public string CarrierName { get; set; }
+    public string ServiceProvider { get; set; }
 
-    public string CarrierServiceType { get; set; }
+    public string ServiceType { get; set; }
 
     public string TemperatureZone { get; set; }
-
-    public string ShipmentType { get; set; }
 
     public string SenderName { get; set; }
 
@@ -34,6 +32,4 @@ public partial class Shipment
     public DateTime? UpdatedAt { get; set; }
 
     public virtual ICollection<Cargo> Cargos { get; set; } = new List<Cargo>();
-
-    public virtual ICollection<OrderShipmentMap> OrderShipmentMaps { get; set; } = new List<OrderShipmentMap>();
 }

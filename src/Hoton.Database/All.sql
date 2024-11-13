@@ -9,19 +9,23 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "ltree";
 
 -- 商品分類 (Product Category)
-CREATE TABLE "product"."product_category" (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name_path LTREE UNIQUE NOT NULL, -- 樹狀結構儲存分類層級
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- Decprecated!
+-- CREATE TABLE "product"."product_category" (
+--     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+--     name_path LTREE UNIQUE NOT NULL, -- 樹狀結構儲存分類層級
+--     created_at TIMESTAMPTZ DEFAULT NOW(),
+--     updated_at TIMESTAMPTZ DEFAULT NOW()
+-- );
 
 -- 商品 (Product)
 CREATE TABLE "product"."product" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
+    categories ltree[], 
+    tags varchar(255)[],
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     snapshot_version TIMESTAMPTZ DEFAULT NOW()
@@ -40,15 +44,17 @@ CREATE TABLE "product"."product_sku" (
 );
 
 -- 商品與分類的多對多關聯 (Product-Category Mapping)
-CREATE TABLE "product"."product_category_map" (
-    product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE,
-    category_id UUID REFERENCES "product"."product_category" (id) ON DELETE CASCADE,
-    PRIMARY KEY (product_id, category_id)
-);
+-- Decprecated!
+-- CREATE TABLE "product"."product_category_map" (
+--     product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE,
+--     category_id UUID REFERENCES "product"."product_category" (id) ON DELETE CASCADE,
+--     PRIMARY KEY (product_id, category_id)
+-- );
 
 -- 訂單表 (Order)
 CREATE TABLE "order"."order" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
 	transaction_no varchar(20) UNIQUE NOT NULL,
     customer_name VARCHAR(255) NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL, -- 訂單狀態：pending, completed, cancelled
@@ -100,6 +106,7 @@ CREATE TABLE "order"."order_status_history" (
 -- 商品快照表 (Snapshot Product)
 CREATE TABLE "order"."snapshot_product" (
     id UUID NOT NULL,  -- 商品 ID
+	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
     snapshot_version TIMESTAMPTZ NOT NULL DEFAULT NOW(),  -- 快照版本
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -125,6 +132,7 @@ CREATE TABLE "order"."snapshot_product_sku" (
 -- 物流單表 (Shipment)
 CREATE TABLE "shipment"."shipment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 物流單 ID
+	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
     tracking_number VARCHAR(255) UNIQUE NOT NULL,  -- 物流單號
     status VARCHAR(50) DEFAULT 'pending',  -- 物流單狀態，例如 pending, shipped, delivered, returned
     service_provider VARCHAR(50), -- 物流服務商名稱
@@ -172,6 +180,7 @@ CREATE TABLE "order"."order_shipment_map" (
 -- 支付單表 (Payment)
 CREATE TABLE "payment"."payment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 支付單 ID
+	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
     payment_number VARCHAR(255) UNIQUE NOT NULL,     -- 支付單號
     amount DECIMAL(10, 2) NOT NULL,         -- 支付總金額
     status VARCHAR(50) DEFAULT 'pending',   -- 支付狀態，例如 pending, completed, failed, refunded
@@ -197,6 +206,7 @@ CREATE TABLE "order"."order_payment_map" (
 -- 發票表 (Invoice)
 CREATE TABLE "invoice"."invoice" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 發票 ID
+	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
     invoice_number VARCHAR(255) UNIQUE NOT NULL,  -- 發票號碼
     invoice_type VARCHAR(50) NOT NULL,  -- 發票類型 type, 發票類型(1:二聯式 2:三聯式 3:個人載具)
     amount DECIMAL(10, 2) NOT NULL,  -- 發票總金額(含稅)
@@ -246,3 +256,4 @@ CREATE TABLE "order"."order_invoice_map" (
     PRIMARY KEY (order_id, invoice_id),  -- 確保每個訂單與發票唯一關聯
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
