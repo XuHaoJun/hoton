@@ -37,3 +37,23 @@ JOIN product_category c ON c.name_path = CASE
     WHEN p.name = 'Sony WH-1000XM5' THEN '3C.耳機'
     ELSE '3C'
 END;
+
+-- Insert some sample data
+INSERT INTO categories (paths) VALUES (
+    ARRAY['electronics.computers.laptops'::ltree, 
+          'electronics.accessories.cables'::ltree]
+);
+
+-- Query examples:
+
+-- Check if ANY element matches a path
+SELECT * FROM categories 
+WHERE paths @> 'electronics.computers'::ltree;
+
+-- Using ANY operator
+SELECT * FROM categories 
+WHERE 'electronics.computers.laptops'::ltree = ANY(paths);
+
+-- Using overlap operator &&
+SELECT * FROM categories 
+WHERE paths && ARRAY['electronics.computers'::ltree];

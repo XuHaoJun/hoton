@@ -8,24 +8,28 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE EXTENSION IF NOT EXISTS "ltree";
 
--- 商品分類 (Product Category)
--- Decprecated!
--- CREATE TABLE "product"."product_category" (
---     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
---     name_path LTREE UNIQUE NOT NULL, -- 樹狀結構儲存分類層級
---     created_at TIMESTAMPTZ DEFAULT NOW(),
---     updated_at TIMESTAMPTZ DEFAULT NOW()
--- );
+CREATE SCHEMA IF NOT EXISTS "product";
+CREATE SCHEMA IF NOT EXISTS "order";
+CREATE SCHEMA IF NOT EXISTS "shipment";
+CREATE SCHEMA IF NOT EXISTS "payment";
+CREATE SCHEMA IF NOT EXISTS "invoice";
+CREATE SCHEMA IF NOT EXISTS "cart";
 
 -- 商品 (Product)
 CREATE TABLE "product"."product" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
+    --
     name VARCHAR(255) NOT NULL,
-    description TEXT,
+    description VARCHAR(1024),
+    --
     price DECIMAL(10, 2) NOT NULL,
+    --
     categories ltree[], 
     tags varchar(255)[],
+    --
+    temperature_zones varchar(50)[],
+    --
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     snapshot_version TIMESTAMPTZ DEFAULT NOW()
@@ -34,22 +38,39 @@ CREATE TABLE "product"."product" (
 -- 商品 SKU (Product SKU)
 CREATE TABLE "product"."product_sku" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE, -- 儲存詳細規格
-    spec JSONB NOT NULL, -- 庫存量
-    stock_quantity INT DEFAULT 0, -- 安全水位量
-    safety_stock INT DEFAULT 0,
+    product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE, 
+    spec JSONB NOT NULL,          -- 儲存詳細規格
+    stock_quantity INT DEFAULT 0, -- 庫存量
+    safety_stock INT DEFAULT 0,   -- 安全水位量
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     snapshot_version TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 商品與分類的多對多關聯 (Product-Category Mapping)
--- Decprecated!
--- CREATE TABLE "product"."product_category_map" (
---     product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE,
---     category_id UUID REFERENCES "product"."product_category" (id) ON DELETE CASCADE,
---     PRIMARY KEY (product_id, category_id)
--- );
+-- 訂單物流設定
+CREATE TABLE "order"."realm_order_shipment_config" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
+    display_name varchar(50) NOT NULL,
+    shipment_service_provider varchar(50) NOT NULL, -- 物流服務提供商
+    min_order_amount DECIMAL(10, 2) NOT NULL,
+    temperature_zone varchar(50) NOT NULL,
+    shipment_fee DECIMAL(10, 2) NOT NULL, -- 運費 
+    country varchar(50),
+    pay_conditions varchar(50), -- 付款類型, 所有非自訂貨到付款
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+
+-- 商品物流設定
+CREATE TABLE "product"."product_shipment_config" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE, 
+    realm_order_shipment_config_id UUID REFERENCES "order"."realm_order_shipment_config" (id) ON DELETE CASCADE, 
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
 
 -- 訂單表 (Order)
 CREATE TABLE "order"."order" (
@@ -57,9 +78,9 @@ CREATE TABLE "order"."order" (
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
 	transaction_no varchar(20) UNIQUE NOT NULL,
     customer_name VARCHAR(255) NOT NULL,
-    total_amount DECIMAL(10, 2) NOT NULL, -- 訂單狀態：pending, completed, cancelled
-    delivery_fee DECIMAL(10, 2) NOT NULL, -- 運費 
-    status VARCHAR(50) DEFAULT 'pending',
+    total_amount DECIMAL(10, 2) NOT NULL, 
+    shipment_fee DECIMAL(10, 2) NOT NULL, -- 運費 
+    status VARCHAR(50) DEFAULT 'pending', -- 訂單狀態：pending, completed, cancelled
 	user_id varchar(36) NOT NULL REFERENCES "auth"."user_entity" (id) ON DELETE CASCADE, -- 下單的人
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -257,3 +278,19 @@ CREATE TABLE "order"."order_invoice_map" (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+CREATE TABLE "cart"."cart" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id varchar(36) NOT NULL REFERENCES "auth"."user_entity" (id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE "cart"."cart_item" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    cart_id UUID REFERENCES "cart"."cart" (id) ON DELETE CASCADE,
+    product_sku_id UUID REFERENCES "product"."product_sku" (id) ON DELETE CASCADE,
+    quantity INT NOT NULL DEFAULT 1,
+    price DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
