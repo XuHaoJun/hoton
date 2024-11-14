@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@my/config": "0.0.1",
+    "@tamagui/lucide-icons": "^1.116.14",
     "@tamagui/toast": "^1.116.14",
     "tamagui": "^1.116.14"
   },
