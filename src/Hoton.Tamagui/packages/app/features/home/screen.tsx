@@ -24,6 +24,13 @@ export function HomeScreen({ pagesMode = false }: { pagesMode?: boolean }) {
   const linkProps2 = useLink({
     href: `/buyer/login`,
   })
+  const linkProps3 = useLink({
+    href: `/member-center`,
+    experimental: {
+      nativeBehavior: 'stack-replace',
+      isNestedNavigator: true,
+    },
+  })
 
   return (
     <YStack f={1} jc="center" ai="center" gap="$8" p="$4" bg="$background">
@@ -60,6 +67,7 @@ export function HomeScreen({ pagesMode = false }: { pagesMode?: boolean }) {
 
       <Button {...linkProps}>Link to user</Button>
       <Button {...linkProps2}>Link to login</Button>
+      <Button {...linkProps3}>Link to Member Center</Button>
 
       <SheetDemo />
     </YStack>

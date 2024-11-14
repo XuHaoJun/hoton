@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import { YStack, XStack, Input, Button, Text, Stack } from 'tamagui'
-import { SafeAreaView } from 'react-native'
-import { ChevronLeft, Eye, EyeOff } from '@tamagui/lucide-icons'
+import { Eye, EyeOff } from '@tamagui/lucide-icons'
 
 export const LoginScreenMobile = () => {
   const [email, setEmail] = useState('')
@@ -13,26 +12,11 @@ export const LoginScreenMobile = () => {
   const handleLogin = () => {
     // Implement login logic here
     console.log('Login:', email, password)
+
   }
 
   return (
-    <SafeAreaView>
-      {/* App Bar */}
-      <XStack
-        backgroundColor="$background"
-        borderBottomColor="$borderColor"
-        borderBottomWidth={1}
-        paddingHorizontal="$4"
-        paddingVertical="$3"
-        alignItems="center"
-      >
-        <Button icon={ChevronLeft} circular unstyled onPress={() => console.log('Go back')} />
-        <Text flex={1} textAlign="center" fontSize="$6" fontWeight="600">
-          Login
-        </Text>
-        <Stack width={40} /> {/* Spacer to center the title */}
-      </XStack>
-
+    <YStack flex={1} backgroundColor="$background">
       {/* Login Form */}
       <YStack flex={1} padding="$4" gap="$4" justifyContent="center">
         <Text fontSize="$8" fontWeight="bold" textAlign="center">
@@ -71,11 +55,7 @@ export const LoginScreenMobile = () => {
             />
           </XStack>
 
-          <Button
-            size="$4"
-            marginTop="$2"
-            onPress={handleLogin}
-          >
+          <Button size="$4" marginTop="$2" onPress={handleLogin}>
             Sign In
           </Button>
 
@@ -88,6 +68,6 @@ export const LoginScreenMobile = () => {
           </XStack>
         </YStack>
       </YStack>
-    </SafeAreaView>
+    </YStack>
   )
 }

@@ -51,12 +51,12 @@ CREATE TABLE "product"."product_sku" (
 CREATE TABLE "order"."realm_order_shipment_config" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
-    display_name varchar(50) NOT NULL,
+    display_name varchar(50) NOT NULL, -- 顯示名稱
     shipment_service_provider varchar(50) NOT NULL, -- 物流服務提供商
-    min_order_amount DECIMAL(10, 2) NOT NULL,
-    temperature_zone varchar(50) NOT NULL,
+    min_order_amount DECIMAL(10, 2) NOT NULL, -- 最小訂單金額
+    temperature_zone varchar(50) NOT NULL, -- 溫層
     shipment_fee DECIMAL(10, 2) NOT NULL, -- 運費 
-    country varchar(50),
+    country varchar(50), -- 國家
     pay_conditions varchar(50), -- 付款類型, 所有非自訂貨到付款
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -98,7 +98,6 @@ CREATE TABLE "order"."order_item" (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
 
 -- 訂單狀態歷史表 (Order Status)
 CREATE TABLE "order"."order_status_history" (
@@ -182,13 +181,6 @@ CREATE TABLE "shipment"."cargo" (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 物流箱與商品 SKU 的多對多關聯表和商品數量
-CREATE TABLE "shipment"."cargo_product_sku_quantity_map" (
-    cargo_id UUID REFERENCES "shipment"."cargo" (id) ON DELETE CASCADE,  -- 訂單 ID
-    product_sku_id UUID REFERENCES "product"."product_sku" (id) ON DELETE NO ACTION,  -- 商品 Sku ID
-    quantity INT DEFAULT 1 -- 數量
-);
-
 -- 訂單與物流單的多對多關聯表 (Order-Shipment Mapping)
 CREATE TABLE "order"."order_shipment_map" (
     order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,  -- 訂單 ID
@@ -196,6 +188,13 @@ CREATE TABLE "order"."order_shipment_map" (
     flow_type VARCHAR(50) NOT NULL CHECK (flow_type IN ('forward', 'reverse')),  -- 流向類型，正向（forward）或逆向（reverse）
     PRIMARY KEY (order_id, shipment_id, flow_type),  -- 確保每筆訂單-物流的流向唯一
     created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 訂單 item 與物流箱的多對多關聯表和商品數量
+CREATE TABLE "order"."order_item_cargo_map" (
+    order_item_id UUID REFERENCES "order"."order_item" (id) ON DELETE CASCADE,  -- 箱子 ID
+    cargo_id UUID REFERENCES "shipment"."cargo" (id) ON DELETE CASCADE,  -- 箱子 ID
+    quantity INT DEFAULT 1 -- 數量
 );
 
 -- 支付單表 (Payment)
@@ -278,6 +277,7 @@ CREATE TABLE "order"."order_invoice_map" (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 購物車 (Cart)
 CREATE TABLE "cart"."cart" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id varchar(36) NOT NULL REFERENCES "auth"."user_entity" (id) ON DELETE CASCADE,
@@ -285,6 +285,7 @@ CREATE TABLE "cart"."cart" (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 購物車品項 (Cart Item)
 CREATE TABLE "cart"."cart_item" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     cart_id UUID REFERENCES "cart"."cart" (id) ON DELETE CASCADE,

@@ -54,6 +54,19 @@ To see debug output to verify the compiler, add `// debug` as a comment to the t
 
 - Expo local dev: `yarn native`
 
+native example settings:
+`/apps/expo/android/gradle.properties` add java home:
+
+```text
+org.gradle.java.home=/ProgramData/scoop/apps/openjdk17/17.0.2-8
+```
+
+`/apps/expo/android/local.properties` add android sdk path:
+
+```text
+sdk.dir=C:\\Users\\<YOUR_USERNAME>\\AppData\\Local\\Android\\sdk
+```
+
 ## UI Kit
 
 Note we're following the [design systems guide](https://tamagui.dev/docs/guides/design-systems) and creating our own package for components.

@@ -37,7 +37,6 @@ services:
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - 8080:8080
-    restart: always
     depends_on:
       - postgres
       - rabbitmq-svc
