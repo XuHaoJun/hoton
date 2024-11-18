@@ -150,9 +150,10 @@ CREATE TABLE "order"."snapshot_product_sku" (
 );
 
 -- 物流單表 (Shipment)
-CREATE TABLE "shipment"."shipment" (
+CREATE TABLE "order"."order_shipment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 物流單 ID
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
+    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
     tracking_number VARCHAR(255) UNIQUE NOT NULL,  -- 物流單號
     status VARCHAR(50) DEFAULT 'pending',  -- 物流單狀態，例如 pending, shipped, delivered, returned
     service_provider VARCHAR(50), -- 物流服務商名稱
@@ -168,9 +169,9 @@ CREATE TABLE "shipment"."shipment" (
 );
 
 -- 物流箱表 (Cargo)
-CREATE TABLE "shipment"."cargo" (
+CREATE TABLE "order"."order_shipment_cargo" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 物流箱 ID
-    shipment_id UUID REFERENCES "shipment"."shipment" (id) ON DELETE CASCADE,  -- 物流單 ID
+    order_shipment_id UUID REFERENCES "order"."order_shipment" (id) ON DELETE CASCADE,  -- 物流單 ID
     tracking_number VARCHAR(255),                    -- 箱子編號
     length DECIMAL(10, 2),
     width DECIMAL(10, 2),
@@ -181,26 +182,18 @@ CREATE TABLE "shipment"."cargo" (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 訂單與物流單的多對多關聯表 (Order-Shipment Mapping)
-CREATE TABLE "order"."order_shipment_map" (
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,  -- 訂單 ID
-    shipment_id UUID REFERENCES "shipment"."shipment" (id) ON DELETE CASCADE,  -- 物流單 ID
-    flow_type VARCHAR(50) NOT NULL CHECK (flow_type IN ('forward', 'reverse')),  -- 流向類型，正向（forward）或逆向（reverse）
-    PRIMARY KEY (order_id, shipment_id, flow_type),  -- 確保每筆訂單-物流的流向唯一
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
 -- 訂單 item 與物流箱的多對多關聯表和商品數量
 CREATE TABLE "order"."order_item_cargo_map" (
     order_item_id UUID REFERENCES "order"."order_item" (id) ON DELETE CASCADE,  -- 箱子 ID
-    cargo_id UUID REFERENCES "shipment"."cargo" (id) ON DELETE CASCADE,  -- 箱子 ID
+    order_shipment_cargo_id UUID REFERENCES "order"."order_shipment_cargo" (id) ON DELETE CASCADE,  -- 箱子 ID
     quantity INT DEFAULT 1 -- 數量
 );
 
 -- 支付單表 (Payment)
-CREATE TABLE "payment"."payment" (
+CREATE TABLE "order"."order_payment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 支付單 ID
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
+    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
     payment_number VARCHAR(255) UNIQUE NOT NULL,     -- 支付單號
     amount DECIMAL(10, 2) NOT NULL,         -- 支付總金額
     status VARCHAR(50) DEFAULT 'pending',   -- 支付狀態，例如 pending, completed, failed, refunded
@@ -215,18 +208,11 @@ CREATE TABLE "payment"."payment" (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 訂單與支付單的多對多關聯表 (Order-Payment Mapping)
-CREATE TABLE "order"."order_payment_map" (
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,  -- 訂單 ID
-    payment_id UUID REFERENCES "payment"."payment" (id) ON DELETE CASCADE,  -- 支付單 ID
-    PRIMARY KEY (order_id, payment_id),  -- 確保每個訂單與支付單的唯一關聯
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
 -- 發票表 (Invoice)
-CREATE TABLE "invoice"."invoice" (
+CREATE TABLE "order"."order_invoice" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 發票 ID
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
+    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
     invoice_number VARCHAR(255) UNIQUE NOT NULL,  -- 發票號碼
     invoice_type VARCHAR(50) NOT NULL,  -- 發票類型 type, 發票類型(1:二聯式 2:三聯式 3:個人載具)
     amount DECIMAL(10, 2) NOT NULL,  -- 發票總金額(含稅)
@@ -243,9 +229,9 @@ CREATE TABLE "invoice"."invoice" (
 );
 
 -- 發票狀態歷程表 (Invoice status history)
-CREATE TABLE "invoice"."invoice_status_history" (
+CREATE TABLE "order"."order_invoice_status_history" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    invoice_id UUID REFERENCES "invoice"."invoice" (id) ON DELETE CASCADE,
+    order_invoice_id UUID REFERENCES "order"."order_invoice" (id) ON DELETE CASCADE,
     from_status VARCHAR(50),  
     to_status VARCHAR(50) DEFAULT 'issued',
     reason VARCHAR(50) , -- 原因，如退貨、部分退貨
@@ -255,9 +241,9 @@ CREATE TABLE "invoice"."invoice_status_history" (
 );
 
 -- 發票項目表 (Invoice Item)
-CREATE TABLE "invoice"."invoice_item" (
+CREATE TABLE "order"."order_invoice_item" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 發票項目 ID
-    invoice_id UUID REFERENCES "invoice"."invoice" (id) ON DELETE CASCADE,  -- 關聯發票 ID
+    order_invoice_id UUID REFERENCES "order"."order_invoice" (id) ON DELETE CASCADE,  -- 關聯發票 ID
     product_name VARCHAR(255) NOT NULL,  -- 商品名稱,內部系統為{商品名稱}_{規格}
     tax_type VARCHAR(50) NOT NULL,       -- 商品課稅別.
     remark TEXT,  -- 備註
@@ -267,14 +253,6 @@ CREATE TABLE "invoice"."invoice_item" (
     amount DECIMAL(10, 2) GENERATED ALWAYS AS (quantity * unit_price) STORED,  -- 該項目的總金額
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- 訂單與發票的多對多關聯表 ( Mapping)
-CREATE TABLE "order"."order_invoice_map" (
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,  -- 訂單 ID
-    invoice_id UUID REFERENCES "invoice"."invoice" (id) ON DELETE CASCADE,  -- 發票 ID
-    PRIMARY KEY (order_id, invoice_id),  -- 確保每個訂單與發票唯一關聯
-    created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- 購物車 (Cart)
