@@ -1,2 +1,2 @@
-import MainLayout from '@my/ui/src/Layouts/MainLayout/MainLayout.native'
+import MainLayout from 'app/layouts/MainLayout/MainLayout.native'
 export default MainLayout

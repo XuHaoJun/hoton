@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { NextTamaguiProvider } from './NextTamaguiProvider'
+import MainLayout from 'app/layouts/MainLayout/MainLayout.web'
 
 export const metadata: Metadata = {
   title: 'Tamagui • App Router',
@@ -10,12 +11,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // You can use `suppressHydrationWarning` to avoid the warning about mismatched content during hydration in dev mode
-    <html
-      lang="en"
-      suppressHydrationWarning
-    >
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <NextTamaguiProvider>{children}</NextTamaguiProvider>
+        <NextTamaguiProvider>
+          <MainLayout>{children}</MainLayout>
+        </NextTamaguiProvider>
       </body>
     </html>
   )
