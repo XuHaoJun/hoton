@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Keycloak.AuthServices.Authentication" Version="2.5.3" />
     <PackageReference Include="Keycloak.AuthServices.Authorization" Version="2.5.3" />
-    <PackageReference Include="Keycloak.AuthServices.Sdk.Kiota" Version="25.0.0" />
+    <PackageReference Include="Keycloak.AuthServices.Sdk.Kiota" Version="26.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />

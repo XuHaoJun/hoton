@@ -33,15 +33,12 @@ public class AuthController : ControllerBase
             Content = FormUrlEncodedExtensions.ToFormUrlEncoded(req, useJsonPropertyName: true)
         };
         var response = await _httpClient.SendAsync(kcReq);
-        response.EnsureSuccessStatusCode();
-
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            return BadRequest(error);
+        }
         var tokenResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
         return Ok(tokenResponse);
-    }
-
-    [HttpGet]
-    public async Task<ActionResult<string>> ProfileAsync([FromRoute] string realmName)
-    {
-        return await Task.FromResult(Ok("todo"));
     }
 }

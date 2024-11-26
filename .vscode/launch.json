@@ -30,14 +30,14 @@
       // Use IntelliSense to find out which attributes exist for C# debugging
       // Use hover for the description of the existing attributes
       // For further information visit https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md.
-      "name": ".NET Core Launch (Pay Api)",
+      "name": ".NET Core Launch (BrandEc Api)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/src/Hoton.Pay.Api/bin/Debug/net8.0/Hoton.Pay.Api.dll",
+      "program": "${workspaceFolder}/src/Hoton.BrandEc.Api/bin/Debug/net8.0/Hoton.BrandEc.Api.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/src/Hoton.Pay.Api",
+      "cwd": "${workspaceFolder}/src/Hoton.BrandEc.Api",
       "stopAtEntry": false,
       // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
       //   "serverReadyAction": {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Keycloak.AuthServices.Sdk.Kiota;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Hoton.Keycloak;
 
@@ -16,7 +17,17 @@ public static class KeycloakAuthExtension
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                options.IncludeErrorDetails = true; // 預設值為 true，有時會特別關閉
                 options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = false,
+                    ClockSkew = TimeSpan.Zero
+                };
                 options.Events = new JwtBearerEvents
                 {
                     OnMessageReceived = async context =>
@@ -70,6 +81,7 @@ public static class KeycloakAuthExtension
 
                             var tokenValidationParameters = new TokenValidationParameters
                             {
+                                NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
                                 ValidateIssuer = true,
                                 ValidIssuer = tenantRealm.Issuer,
                                 ValidateAudience = false,
@@ -129,7 +141,7 @@ public static class KeycloakAuthExtension
                 client =>
                 {
                     client.ClientId = "admin-api";
-                    client.ClientSecret = "6p1rMUz5D9kGg4v5ObhsSEFaggbmK0ZA";
+                    client.ClientSecret = "uK1W33VTfYYNNVSEv02g12hAMJaHeY6y";
                     client.TokenEndpoint = "http://localhost:8080/realms/master/protocol/openid-connect/token";
                 }
             );

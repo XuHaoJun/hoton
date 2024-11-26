@@ -99,6 +99,18 @@ definition:
           - realmId
           - serviceAccountClientLink
           - username
+    - role: user
+      output:
+        allowedFields:
+          - createdTimestamp
+          - email
+          - emailVerified
+          - enabled
+          - firstName
+          - id
+          - lastName
+          - realmId
+          - username
 
 ---
 kind: BooleanExpressionType
@@ -283,6 +295,14 @@ definition:
       select:
         filter: null
         allowSubscriptions: true
+    - role: user
+      select:
+        filter:
+          fieldComparison:
+            field: id
+            operator: _eq
+            value:
+              sessionVariable: x-hasura-user-id  
 
 ---
 kind: Relationship

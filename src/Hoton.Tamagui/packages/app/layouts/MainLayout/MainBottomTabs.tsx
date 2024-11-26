@@ -63,8 +63,15 @@ export const MainBottomTabs = () => {
 
   return (
     <>
-      <TabBar width={'100%'} />
-      <TabBar position="absolute" bottom={0} left={0} width={'100%'} zIndex={tokens.zIndex[1]}>
+      <TabBar width={'100%'} $gtXs={{ display: 'none' }} />
+      <TabBar
+        position="absolute"
+        bottom={0}
+        left={0}
+        width={'100%'}
+        zIndex={tokens.zIndex[1]}
+        $gtXs={{ display: 'none' }}
+      >
         {tabs.map((tab) => {
           const isActive = activeTab === tab.key
           const IconComponent = tab.icon

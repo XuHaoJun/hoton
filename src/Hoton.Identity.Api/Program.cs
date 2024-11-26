@@ -1,5 +1,7 @@
 using Hoton.Keycloak;
 using Keycloak.AuthServices.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,8 +48,18 @@ builder.Services.AddKeyCloakAdminClient();
 
 builder.Services.AddKeyCloakAuth();
 builder.Services
-    .AddAuthorizationBuilder()
-    .AddPolicy("ec-profile", policy => policy.RequireProtectedResource("ec1", "profile"));
+    .AddAuthorization(options =>
+    {
+        var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(
+            JwtBearerDefaults.AuthenticationScheme
+        );
+        defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+        options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+    })
+    .AddKeycloakAuthorization();
+
+// .AddAuthorizationBuilder()
+// .AddPolicy("realm:roles:uma_authorization", policy => policy.RequireRealmRoles(["uma_authorization"]));
 
 // builder
 //     .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -83,7 +95,6 @@ app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin =
 app.UseAuthorization();
 app.UseAuthentication();
 
-// app.MapControllers().RequireAuthorization();
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 app.Run();
