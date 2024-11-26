@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRealmEventsListeners
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: AuthRealmEventsListeners
+    inputTypeName: AuthRealmEventsListenersInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_realm_events_listeners
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRealmEventsListeners
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRealmEventsListenersBoolExp
+  operand:
+    object:
+      type: AuthRealmEventsListeners
+      comparableFields:
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRealmEventsListenersBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRealmEventsListenersAggExp
+  operand:
+    object:
+      aggregatedType: AuthRealmEventsListeners
+      aggregatableFields:
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRealmEventsListenersAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRealmEventsListeners
+  objectType: AuthRealmEventsListeners
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_realm_events_listeners
+  filterExpressionType: AuthRealmEventsListenersBoolExp
+  aggregateExpression: AuthRealmEventsListenersAggExp
+  orderableFields:
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRealmEventsListeners
+      subscription:
+        rootField: authRealmEventsListeners
+    selectUniques:
+      - queryRootField: authRealmEventsListenersByConstrRealmEventsListeners
+        uniqueIdentifier:
+          - realmId
+          - value
+        subscription:
+          rootField: authRealmEventsListenersByConstrRealmEventsListeners
+    orderByExpressionType: AuthRealmEventsListenersOrderBy
+    filterInputTypeName: AuthRealmEventsListenersFilterInput
+    aggregate:
+      queryRootField: authRealmEventsListenersAggregate
+      subscription:
+        rootField: authRealmEventsListenersAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRealmEventsListeners
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthRealmEventsListeners
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthResourceServerScopeByNameAndResourceServerIdResponse
+  description: Responses from the
+    'delete_auth_resource_server_scope_by_name_and_resource_server_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServerScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthResourceServerScopeByNameAndResourceServerIdResponse
+    inputTypeName: DeleteAuthResourceServerScopeByNameAndResourceServerIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_resource_server_scope_by_name_and_resource_server_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthResourceServerScopeByNameAndResourceServerIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthResourceServerScopeByNameAndResourceServerId
+  outputType: DeleteAuthResourceServerScopeByNameAndResourceServerIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyResourceServerId
+      type: Varchar!
+    - name: preCheck
+      type: AuthResourceServerScopeBoolExp
+      description: Delete permission predicate over the 'auth_resource_server_scope'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_resource_server_scope_by_name_and_resource_server_id
+    argumentMapping:
+      keyName: key_name
+      keyResourceServerId: key_resource_server_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthResourceServerScopeByNameAndResourceServerId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_resource_server_scope' collection using
+    the 'name' and 'resource_server_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthResourceServerScopeByNameAndResourceServerId
+  permissions:
+    - role: admin
+      allowExecution: true
+

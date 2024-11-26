@@ -1,0 +1,232 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserFederationConfigName
+  description: Update the 'name' column in the 'auth_user_federation_config' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserFederationConfigName
+    inputTypeName: UpdateColumnAuthUserFederationConfigNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_federation_config_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserFederationConfigName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserFederationConfigUserFederationProviderId
+  description: Update the 'user_federation_provider_id' column in the
+    'auth_user_federation_config' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserFederationConfigUserFederationProviderId
+    inputTypeName: UpdateColumnAuthUserFederationConfigUserFederationProviderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_federation_config_user_federation_provider_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserFederationConfigUserFederationProviderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserFederationConfigValue
+  description: Update the 'value' column in the 'auth_user_federation_config' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserFederationConfigValue
+    inputTypeName: UpdateColumnAuthUserFederationConfigValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_federation_config_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserFederationConfigValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdUpdateColumns
+  description: Update the columns of the 'auth_user_federation_config' collection
+  fields:
+    - name: name
+      type: UpdateColumnAuthUserFederationConfigName
+      description: Update the 'name' column in the 'auth_user_federation_config' collection.
+    - name: userFederationProviderId
+      type: UpdateColumnAuthUserFederationConfigUserFederationProviderId
+      description: Update the 'user_federation_provider_id' column in the
+        'auth_user_federation_config' collection.
+    - name: value
+      type: UpdateColumnAuthUserFederationConfigValue
+      description: Update the 'value' column in the 'auth_user_federation_config'
+        collection.
+  graphql:
+    typeName: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdUpdateColumns
+    inputTypeName: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_federation_config_by_name_and_user_federation_provider_id_update_columns
+      fieldMapping:
+        name:
+          column:
+            name: name
+        userFederationProviderId:
+          column:
+            name: user_federation_provider_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - userFederationProviderId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdResponse
+  description: Responses from the
+    'update_auth_user_federation_config_by_name_and_user_federation_provider_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserFederationConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdResponse
+    inputTypeName: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_federation_config_by_name_and_user_federation_provider_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthUserFederationConfigByNameAndUserFederationProviderId
+  outputType: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyUserFederationProviderId
+      type: Varchar!
+    - name: postCheck
+      type: AuthUserFederationConfigBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_user_federation_config' collection
+    - name: preCheck
+      type: AuthUserFederationConfigBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_user_federation_config' collection
+    - name: updateColumns
+      type: UpdateAuthUserFederationConfigByNameAndUserFederationProviderIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_user_federation_config_by_name_and_user_federation_provider_id
+    argumentMapping:
+      keyName: key_name
+      keyUserFederationProviderId: key_user_federation_provider_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthUserFederationConfigByNameAndUserFederationProviderId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_user_federation_config' collection
+    using the 'name' and 'user_federation_provider_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthUserFederationConfigByNameAndUserFederationProviderId
+  permissions:
+    - role: admin
+      allowExecution: true
+

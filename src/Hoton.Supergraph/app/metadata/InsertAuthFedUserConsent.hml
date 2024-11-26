@@ -1,0 +1,150 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserConsentObject
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: clientStorageProvider
+      type: Varchar
+    - name: createdDate
+      type: Int8
+    - name: externalClientId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: lastUpdatedDate
+      type: Int8
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthFedUserConsentObject
+    inputTypeName: InsertAuthFedUserConsentObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_consent_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        createdDate:
+          column:
+            name: created_date
+        externalClientId:
+          column:
+            name: external_client_id
+        id:
+          column:
+            name: id
+        lastUpdatedDate:
+          column:
+            name: last_updated_date
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserConsentObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - createdDate
+          - externalClientId
+          - id
+          - lastUpdatedDate
+          - realmId
+          - storageProviderId
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserConsentResponse
+  description: Responses from the 'insert_auth_fed_user_consent' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserConsent!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthFedUserConsentResponse
+    inputTypeName: InsertAuthFedUserConsentResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_consent_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserConsentResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthFedUserConsent
+  outputType: InsertAuthFedUserConsentResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthFedUserConsentObject!]!"
+    - name: postCheck
+      type: AuthFedUserConsentBoolExp
+      description: Insert permission predicate over the 'auth_fed_user_consent' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_fed_user_consent
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthFedUserConsent
+    rootFieldKind: Mutation
+  description: Insert into the auth_fed_user_consent table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthFedUserConsent
+  permissions:
+    - role: admin
+      allowExecution: true
+

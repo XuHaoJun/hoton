@@ -1,0 +1,157 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderInvoiceItemObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: orderInvoiceId
+      type: Uuid
+    - name: productName
+      type: Varchar!
+    - name: quantity
+      type: Int4
+    - name: remark
+      type: Text
+    - name: taxType
+      type: Varchar!
+    - name: unitPrice
+      type: Numeric!
+    - name: unitWord
+      type: Varchar
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertOrderOrderInvoiceItemObject
+    inputTypeName: InsertOrderOrderInvoiceItemObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_invoice_item_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        orderInvoiceId:
+          column:
+            name: order_invoice_id
+        productName:
+          column:
+            name: product_name
+        quantity:
+          column:
+            name: quantity
+        remark:
+          column:
+            name: remark
+        taxType:
+          column:
+            name: tax_type
+        unitPrice:
+          column:
+            name: unit_price
+        unitWord:
+          column:
+            name: unit_word
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderInvoiceItemObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - orderInvoiceId
+          - productName
+          - quantity
+          - remark
+          - taxType
+          - unitPrice
+          - unitWord
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderInvoiceItemResponse
+  description: Responses from the 'insert_order_order_invoice_item' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderInvoiceItem!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderOrderInvoiceItemResponse
+    inputTypeName: InsertOrderOrderInvoiceItemResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_invoice_item_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderInvoiceItemResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderOrderInvoiceItem
+  outputType: InsertOrderOrderInvoiceItemResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderOrderInvoiceItemObject!]!"
+    - name: postCheck
+      type: OrderOrderInvoiceItemBoolExp
+      description: Insert permission predicate over the 'order_order_invoice_item'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_order_invoice_item
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderOrderInvoiceItem
+    rootFieldKind: Mutation
+  description: Insert into the order_order_invoice_item table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderOrderInvoiceItem
+  permissions:
+    - role: admin
+      allowExecution: true
+

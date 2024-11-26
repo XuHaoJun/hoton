@@ -1,0 +1,167 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthComponentConfig
+  fields:
+    - name: componentId
+      type: Varchar!
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: AuthComponentConfig
+    inputTypeName: AuthComponentConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_component_config
+      fieldMapping:
+        componentId:
+          column:
+            name: component_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthComponentConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - componentId
+          - id
+          - name
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthComponentConfigBoolExp
+  operand:
+    object:
+      type: AuthComponentConfig
+      comparableFields:
+        - fieldName: componentId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: TextBoolExp
+      comparableRelationships:
+        - relationshipName: authComponent
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthComponentConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthComponentConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthComponentConfig
+      aggregatableFields:
+        - fieldName: componentId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthComponentConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthComponentConfig
+  objectType: AuthComponentConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_component_config
+  filterExpressionType: AuthComponentConfigBoolExp
+  aggregateExpression: AuthComponentConfigAggExp
+  orderableFields:
+    - fieldName: componentId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authComponentConfig
+      subscription:
+        rootField: authComponentConfig
+    selectUniques:
+      - queryRootField: authComponentConfigById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authComponentConfigById
+    orderByExpressionType: AuthComponentConfigOrderBy
+    filterInputTypeName: AuthComponentConfigFilterInput
+    aggregate:
+      queryRootField: authComponentConfigAggregate
+      subscription:
+        rootField: authComponentConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthComponentConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authComponent
+  sourceType: AuthComponentConfig
+  target:
+    model:
+      name: AuthComponent
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: componentId
+      target:
+        modelField:
+          - fieldName: id
+

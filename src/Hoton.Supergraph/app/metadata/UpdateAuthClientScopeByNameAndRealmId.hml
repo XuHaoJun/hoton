@@ -1,0 +1,145 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientScopeByNameAndRealmIdUpdateColumns
+  description: Update the columns of the 'auth_client_scope' collection
+  fields:
+    - name: description
+      type: UpdateColumnAuthClientScopeDescription
+      description: Update the 'description' column in the 'auth_client_scope' collection.
+    - name: id
+      type: UpdateColumnAuthClientScopeId
+      description: Update the 'id' column in the 'auth_client_scope' collection.
+    - name: name
+      type: UpdateColumnAuthClientScopeName
+      description: Update the 'name' column in the 'auth_client_scope' collection.
+    - name: protocol
+      type: UpdateColumnAuthClientScopeProtocol
+      description: Update the 'protocol' column in the 'auth_client_scope' collection.
+    - name: realmId
+      type: UpdateColumnAuthClientScopeRealmId
+      description: Update the 'realm_id' column in the 'auth_client_scope' collection.
+  graphql:
+    typeName: UpdateAuthClientScopeByNameAndRealmIdUpdateColumns
+    inputTypeName: UpdateAuthClientScopeByNameAndRealmIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_scope_by_name_and_realm_id_update_columns
+      fieldMapping:
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        protocol:
+          column:
+            name: protocol
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientScopeByNameAndRealmIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - description
+          - id
+          - name
+          - protocol
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientScopeByNameAndRealmIdResponse
+  description: Responses from the 'update_auth_client_scope_by_name_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthClientScopeByNameAndRealmIdResponse
+    inputTypeName: UpdateAuthClientScopeByNameAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_scope_by_name_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientScopeByNameAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthClientScopeByNameAndRealmId
+  outputType: UpdateAuthClientScopeByNameAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar
+    - name: keyRealmId
+      type: Varchar
+    - name: postCheck
+      type: AuthClientScopeBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_client_scope' collection
+    - name: preCheck
+      type: AuthClientScopeBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_client_scope' collection
+    - name: updateColumns
+      type: UpdateAuthClientScopeByNameAndRealmIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_client_scope_by_name_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyRealmId: key_realm_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthClientScopeByNameAndRealmId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_client_scope' collection using the
+    'name' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthClientScopeByNameAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

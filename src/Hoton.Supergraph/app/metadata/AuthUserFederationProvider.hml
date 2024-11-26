@@ -1,0 +1,265 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserFederationProvider
+  fields:
+    - name: changedSyncPeriod
+      type: Int4
+    - name: displayName
+      type: Varchar
+    - name: fullSyncPeriod
+      type: Int4
+    - name: id
+      type: Varchar!
+    - name: lastSync
+      type: Int4
+    - name: priority
+      type: Int4
+    - name: providerName
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: AuthUserFederationProvider
+    inputTypeName: AuthUserFederationProviderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_federation_provider
+      fieldMapping:
+        changedSyncPeriod:
+          column:
+            name: changed_sync_period
+        displayName:
+          column:
+            name: display_name
+        fullSyncPeriod:
+          column:
+            name: full_sync_period
+        id:
+          column:
+            name: id
+        lastSync:
+          column:
+            name: last_sync
+        priority:
+          column:
+            name: priority
+        providerName:
+          column:
+            name: provider_name
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserFederationProvider
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - changedSyncPeriod
+          - displayName
+          - fullSyncPeriod
+          - id
+          - lastSync
+          - priority
+          - providerName
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserFederationProviderBoolExp
+  operand:
+    object:
+      type: AuthUserFederationProvider
+      comparableFields:
+        - fieldName: changedSyncPeriod
+          booleanExpressionType: Int4BoolExp
+        - fieldName: displayName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: fullSyncPeriod
+          booleanExpressionType: Int4BoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastSync
+          booleanExpressionType: Int4BoolExp
+        - fieldName: priority
+          booleanExpressionType: Int4BoolExp
+        - fieldName: providerName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserFederationConfigs
+        - relationshipName: authUserFederationMappers
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserFederationProviderBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserFederationProviderAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserFederationProvider
+      aggregatableFields:
+        - fieldName: changedSyncPeriod
+          aggregateExpression: Int4AggExp
+        - fieldName: displayName
+          aggregateExpression: VarcharAggExp
+        - fieldName: fullSyncPeriod
+          aggregateExpression: Int4AggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastSync
+          aggregateExpression: Int4AggExp
+        - fieldName: priority
+          aggregateExpression: Int4AggExp
+        - fieldName: providerName
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserFederationProviderAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserFederationProvider
+  objectType: AuthUserFederationProvider
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_federation_provider
+  filterExpressionType: AuthUserFederationProviderBoolExp
+  aggregateExpression: AuthUserFederationProviderAggExp
+  orderableFields:
+    - fieldName: changedSyncPeriod
+      orderByDirections:
+        enableAll: true
+    - fieldName: displayName
+      orderByDirections:
+        enableAll: true
+    - fieldName: fullSyncPeriod
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastSync
+      orderByDirections:
+        enableAll: true
+    - fieldName: priority
+      orderByDirections:
+        enableAll: true
+    - fieldName: providerName
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserFederationProvider
+      subscription:
+        rootField: authUserFederationProvider
+    selectUniques:
+      - queryRootField: authUserFederationProviderById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authUserFederationProviderById
+    orderByExpressionType: AuthUserFederationProviderOrderBy
+    filterInputTypeName: AuthUserFederationProviderFilterInput
+    aggregate:
+      queryRootField: authUserFederationProviderAggregate
+      subscription:
+        rootField: authUserFederationProviderAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserFederationProvider
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationConfigs
+  sourceType: AuthUserFederationProvider
+  target:
+    model:
+      name: AuthUserFederationConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserFederationConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userFederationProviderId
+  graphql:
+    aggregateFieldName: authUserFederationConfigsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationMappers
+  sourceType: AuthUserFederationProvider
+  target:
+    model:
+      name: AuthUserFederationMapper
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserFederationMapperAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: federationProviderId
+  graphql:
+    aggregateFieldName: authUserFederationMappersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthUserFederationProvider
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

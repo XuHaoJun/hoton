@@ -1,0 +1,201 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderSnapshotProductSku
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: productId
+      type: Uuid
+    - name: safetyStock
+      type: Int4
+    - name: snapshotVersion
+      type: Timestamptz!
+    - name: spec
+      type: Jsonb!
+    - name: stockQuantity
+      type: Int4
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderSnapshotProductSku
+    inputTypeName: OrderSnapshotProductSkuInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_snapshot_product_sku
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productId:
+          column:
+            name: product_id
+        safetyStock:
+          column:
+            name: safety_stock
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        spec:
+          column:
+            name: spec
+        stockQuantity:
+          column:
+            name: stock_quantity
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderSnapshotProductSku
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - productId
+          - safetyStock
+          - snapshotVersion
+          - spec
+          - stockQuantity
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderSnapshotProductSkuBoolExp
+  operand:
+    object:
+      type: OrderSnapshotProductSku
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: productId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: safetyStock
+          booleanExpressionType: Int4BoolExp
+        - fieldName: snapshotVersion
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: spec
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: stockQuantity
+          booleanExpressionType: Int4BoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderSnapshotProductSkuBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderSnapshotProductSkuAggExp
+  operand:
+    object:
+      aggregatedType: OrderSnapshotProductSku
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: productId
+          aggregateExpression: UuidAggExp
+        - fieldName: safetyStock
+          aggregateExpression: Int4AggExp
+        - fieldName: snapshotVersion
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: spec
+          aggregateExpression: JsonbAggExp
+        - fieldName: stockQuantity
+          aggregateExpression: Int4AggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderSnapshotProductSkuAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderSnapshotProductSku
+  objectType: OrderSnapshotProductSku
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_snapshot_product_sku
+  filterExpressionType: OrderSnapshotProductSkuBoolExp
+  aggregateExpression: OrderSnapshotProductSkuAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: safetyStock
+      orderByDirections:
+        enableAll: true
+    - fieldName: snapshotVersion
+      orderByDirections:
+        enableAll: true
+    - fieldName: spec
+      orderByDirections:
+        enableAll: true
+    - fieldName: stockQuantity
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderSnapshotProductSku
+      subscription:
+        rootField: orderSnapshotProductSku
+    selectUniques:
+      - queryRootField: orderSnapshotProductSkuBySnapshotProductSkuPkey
+        uniqueIdentifier:
+          - id
+          - snapshotVersion
+        subscription:
+          rootField: orderSnapshotProductSkuBySnapshotProductSkuPkey
+    orderByExpressionType: OrderSnapshotProductSkuOrderBy
+    filterInputTypeName: OrderSnapshotProductSkuFilterInput
+    aggregate:
+      queryRootField: orderSnapshotProductSkuAggregate
+      subscription:
+        rootField: orderSnapshotProductSkuAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderSnapshotProductSku
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

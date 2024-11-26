@@ -1,0 +1,145 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthOfflineClientSessionObject
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: clientStorageProvider
+      type: Varchar
+    - name: data
+      type: Text
+    - name: externalClientId
+      type: Varchar
+    - name: offlineFlag
+      type: Varchar!
+    - name: timestamp
+      type: Int4
+    - name: userSessionId
+      type: Varchar!
+    - name: version
+      type: Int4
+  graphql:
+    typeName: InsertAuthOfflineClientSessionObject
+    inputTypeName: InsertAuthOfflineClientSessionObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_offline_client_session_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        data:
+          column:
+            name: data
+        externalClientId:
+          column:
+            name: external_client_id
+        offlineFlag:
+          column:
+            name: offline_flag
+        timestamp:
+          column:
+            name: timestamp
+        userSessionId:
+          column:
+            name: user_session_id
+        version:
+          column:
+            name: version
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthOfflineClientSessionObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - data
+          - externalClientId
+          - offlineFlag
+          - timestamp
+          - userSessionId
+          - version
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthOfflineClientSessionResponse
+  description: Responses from the 'insert_auth_offline_client_session' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOfflineClientSession!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthOfflineClientSessionResponse
+    inputTypeName: InsertAuthOfflineClientSessionResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_offline_client_session_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthOfflineClientSessionResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthOfflineClientSession
+  outputType: InsertAuthOfflineClientSessionResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthOfflineClientSessionObject!]!"
+    - name: postCheck
+      type: AuthOfflineClientSessionBoolExp
+      description: Insert permission predicate over the 'auth_offline_client_session'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_offline_client_session
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthOfflineClientSession
+    rootFieldKind: Mutation
+  description: Insert into the auth_offline_client_session table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthOfflineClientSession
+  permissions:
+    - role: admin
+      allowExecution: true
+

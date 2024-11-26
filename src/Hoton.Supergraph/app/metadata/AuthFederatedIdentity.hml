@@ -1,0 +1,194 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthFederatedIdentity
+  fields:
+    - name: federatedUserId
+      type: Varchar
+    - name: federatedUsername
+      type: Varchar
+    - name: identityProvider
+      type: Varchar!
+    - name: realmId
+      type: Varchar
+    - name: token
+      type: Text
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthFederatedIdentity
+    inputTypeName: AuthFederatedIdentityInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_federated_identity
+      fieldMapping:
+        federatedUserId:
+          column:
+            name: federated_user_id
+        federatedUsername:
+          column:
+            name: federated_username
+        identityProvider:
+          column:
+            name: identity_provider
+        realmId:
+          column:
+            name: realm_id
+        token:
+          column:
+            name: token
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthFederatedIdentity
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - federatedUserId
+          - federatedUsername
+          - identityProvider
+          - realmId
+          - token
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthFederatedIdentityBoolExp
+  operand:
+    object:
+      type: AuthFederatedIdentity
+      comparableFields:
+        - fieldName: federatedUserId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: federatedUsername
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: identityProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: token
+          booleanExpressionType: TextBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserEntity
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthFederatedIdentityBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthFederatedIdentityAggExp
+  operand:
+    object:
+      aggregatedType: AuthFederatedIdentity
+      aggregatableFields:
+        - fieldName: federatedUserId
+          aggregateExpression: VarcharAggExp
+        - fieldName: federatedUsername
+          aggregateExpression: VarcharAggExp
+        - fieldName: identityProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: token
+          aggregateExpression: TextAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthFederatedIdentityAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthFederatedIdentity
+  objectType: AuthFederatedIdentity
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_federated_identity
+  filterExpressionType: AuthFederatedIdentityBoolExp
+  aggregateExpression: AuthFederatedIdentityAggExp
+  orderableFields:
+    - fieldName: federatedUserId
+      orderByDirections:
+        enableAll: true
+    - fieldName: federatedUsername
+      orderByDirections:
+        enableAll: true
+    - fieldName: identityProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: token
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authFederatedIdentity
+      subscription:
+        rootField: authFederatedIdentity
+    selectUniques:
+      - queryRootField: authFederatedIdentityByConstraint40
+        uniqueIdentifier:
+          - identityProvider
+          - userId
+        subscription:
+          rootField: authFederatedIdentityByConstraint40
+    orderByExpressionType: AuthFederatedIdentityOrderBy
+    filterInputTypeName: AuthFederatedIdentityFilterInput
+    aggregate:
+      queryRootField: authFederatedIdentityAggregate
+      subscription:
+        rootField: authFederatedIdentityAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthFederatedIdentity
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: AuthFederatedIdentity
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+

@@ -1,0 +1,414 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmObject
+  fields:
+    - name: accessCodeLifespan
+      type: Int4
+    - name: accessTokenLifeImplicit
+      type: Int4
+    - name: accessTokenLifespan
+      type: Int4
+    - name: accountTheme
+      type: Varchar
+    - name: adminEventsDetailsEnabled
+      type: Bool
+    - name: adminEventsEnabled
+      type: Bool
+    - name: adminTheme
+      type: Varchar
+    - name: allowUserManagedAccess
+      type: Bool
+    - name: browserFlow
+      type: Varchar
+    - name: clientAuthFlow
+      type: Varchar
+    - name: defaultLocale
+      type: Varchar
+    - name: defaultRole
+      type: Varchar
+    - name: directGrantFlow
+      type: Varchar
+    - name: dockerAuthFlow
+      type: Varchar
+    - name: duplicateEmailsAllowed
+      type: Bool
+    - name: editUsernameAllowed
+      type: Bool
+    - name: emailTheme
+      type: Varchar
+    - name: enabled
+      type: Bool
+    - name: eventsEnabled
+      type: Bool
+    - name: eventsExpiration
+      type: Int8
+    - name: id
+      type: Varchar!
+    - name: internationalizationEnabled
+      type: Bool
+    - name: loginLifespan
+      type: Int4
+    - name: loginTheme
+      type: Varchar
+    - name: loginWithEmailAllowed
+      type: Bool
+    - name: masterAdminClient
+      type: Varchar
+    - name: name
+      type: Varchar
+    - name: notBefore
+      type: Int4
+    - name: offlineSessionIdleTimeout
+      type: Int4
+    - name: otpPolicyAlg
+      type: Varchar
+    - name: otpPolicyCounter
+      type: Int4
+    - name: otpPolicyDigits
+      type: Int4
+    - name: otpPolicyPeriod
+      type: Int4
+    - name: otpPolicyType
+      type: Varchar
+    - name: otpPolicyWindow
+      type: Int4
+    - name: passwordPolicy
+      type: Varchar
+    - name: refreshTokenMaxReuse
+      type: Int4
+    - name: regEmailAsUsername
+      type: Bool
+    - name: registrationAllowed
+      type: Bool
+    - name: registrationFlow
+      type: Varchar
+    - name: rememberMe
+      type: Bool
+    - name: resetCredentialsFlow
+      type: Varchar
+    - name: resetPasswordAllowed
+      type: Bool
+    - name: revokeRefreshToken
+      type: Bool
+    - name: social
+      type: Bool
+    - name: sslRequired
+      type: Varchar
+    - name: ssoIdleTimeout
+      type: Int4
+    - name: ssoIdleTimeoutRememberMe
+      type: Int4
+    - name: ssoMaxLifespan
+      type: Int4
+    - name: ssoMaxLifespanRememberMe
+      type: Int4
+    - name: updateProfileOnSocLogin
+      type: Bool
+    - name: userActionLifespan
+      type: Int4
+    - name: verifyEmail
+      type: Bool
+  graphql:
+    typeName: InsertAuthRealmObject
+    inputTypeName: InsertAuthRealmObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_object
+      fieldMapping:
+        accessCodeLifespan:
+          column:
+            name: access_code_lifespan
+        accessTokenLifeImplicit:
+          column:
+            name: access_token_life_implicit
+        accessTokenLifespan:
+          column:
+            name: access_token_lifespan
+        accountTheme:
+          column:
+            name: account_theme
+        adminEventsDetailsEnabled:
+          column:
+            name: admin_events_details_enabled
+        adminEventsEnabled:
+          column:
+            name: admin_events_enabled
+        adminTheme:
+          column:
+            name: admin_theme
+        allowUserManagedAccess:
+          column:
+            name: allow_user_managed_access
+        browserFlow:
+          column:
+            name: browser_flow
+        clientAuthFlow:
+          column:
+            name: client_auth_flow
+        defaultLocale:
+          column:
+            name: default_locale
+        defaultRole:
+          column:
+            name: default_role
+        directGrantFlow:
+          column:
+            name: direct_grant_flow
+        dockerAuthFlow:
+          column:
+            name: docker_auth_flow
+        duplicateEmailsAllowed:
+          column:
+            name: duplicate_emails_allowed
+        editUsernameAllowed:
+          column:
+            name: edit_username_allowed
+        emailTheme:
+          column:
+            name: email_theme
+        enabled:
+          column:
+            name: enabled
+        eventsEnabled:
+          column:
+            name: events_enabled
+        eventsExpiration:
+          column:
+            name: events_expiration
+        id:
+          column:
+            name: id
+        internationalizationEnabled:
+          column:
+            name: internationalization_enabled
+        loginLifespan:
+          column:
+            name: login_lifespan
+        loginTheme:
+          column:
+            name: login_theme
+        loginWithEmailAllowed:
+          column:
+            name: login_with_email_allowed
+        masterAdminClient:
+          column:
+            name: master_admin_client
+        name:
+          column:
+            name: name
+        notBefore:
+          column:
+            name: not_before
+        offlineSessionIdleTimeout:
+          column:
+            name: offline_session_idle_timeout
+        otpPolicyAlg:
+          column:
+            name: otp_policy_alg
+        otpPolicyCounter:
+          column:
+            name: otp_policy_counter
+        otpPolicyDigits:
+          column:
+            name: otp_policy_digits
+        otpPolicyPeriod:
+          column:
+            name: otp_policy_period
+        otpPolicyType:
+          column:
+            name: otp_policy_type
+        otpPolicyWindow:
+          column:
+            name: otp_policy_window
+        passwordPolicy:
+          column:
+            name: password_policy
+        refreshTokenMaxReuse:
+          column:
+            name: refresh_token_max_reuse
+        regEmailAsUsername:
+          column:
+            name: reg_email_as_username
+        registrationAllowed:
+          column:
+            name: registration_allowed
+        registrationFlow:
+          column:
+            name: registration_flow
+        rememberMe:
+          column:
+            name: remember_me
+        resetCredentialsFlow:
+          column:
+            name: reset_credentials_flow
+        resetPasswordAllowed:
+          column:
+            name: reset_password_allowed
+        revokeRefreshToken:
+          column:
+            name: revoke_refresh_token
+        social:
+          column:
+            name: social
+        sslRequired:
+          column:
+            name: ssl_required
+        ssoIdleTimeout:
+          column:
+            name: sso_idle_timeout
+        ssoIdleTimeoutRememberMe:
+          column:
+            name: sso_idle_timeout_remember_me
+        ssoMaxLifespan:
+          column:
+            name: sso_max_lifespan
+        ssoMaxLifespanRememberMe:
+          column:
+            name: sso_max_lifespan_remember_me
+        updateProfileOnSocLogin:
+          column:
+            name: update_profile_on_soc_login
+        userActionLifespan:
+          column:
+            name: user_action_lifespan
+        verifyEmail:
+          column:
+            name: verify_email
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - accessCodeLifespan
+          - accessTokenLifeImplicit
+          - accessTokenLifespan
+          - accountTheme
+          - adminEventsDetailsEnabled
+          - adminEventsEnabled
+          - adminTheme
+          - allowUserManagedAccess
+          - browserFlow
+          - clientAuthFlow
+          - defaultLocale
+          - defaultRole
+          - directGrantFlow
+          - dockerAuthFlow
+          - duplicateEmailsAllowed
+          - editUsernameAllowed
+          - emailTheme
+          - enabled
+          - eventsEnabled
+          - eventsExpiration
+          - id
+          - internationalizationEnabled
+          - loginLifespan
+          - loginTheme
+          - loginWithEmailAllowed
+          - masterAdminClient
+          - name
+          - notBefore
+          - offlineSessionIdleTimeout
+          - otpPolicyAlg
+          - otpPolicyCounter
+          - otpPolicyDigits
+          - otpPolicyPeriod
+          - otpPolicyType
+          - otpPolicyWindow
+          - passwordPolicy
+          - refreshTokenMaxReuse
+          - regEmailAsUsername
+          - registrationAllowed
+          - registrationFlow
+          - rememberMe
+          - resetCredentialsFlow
+          - resetPasswordAllowed
+          - revokeRefreshToken
+          - social
+          - sslRequired
+          - ssoIdleTimeout
+          - ssoIdleTimeoutRememberMe
+          - ssoMaxLifespan
+          - ssoMaxLifespanRememberMe
+          - updateProfileOnSocLogin
+          - userActionLifespan
+          - verifyEmail
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmResponse
+  description: Responses from the 'insert_auth_realm' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealm!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRealmResponse
+    inputTypeName: InsertAuthRealmResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRealm
+  outputType: InsertAuthRealmResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRealmObject!]!"
+    - name: postCheck
+      type: AuthRealmBoolExp
+      description: Insert permission predicate over the 'auth_realm' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_realm
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRealm
+    rootFieldKind: Mutation
+  description: Insert into the auth_realm table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRealm
+  permissions:
+    - role: admin
+      allowExecution: true
+

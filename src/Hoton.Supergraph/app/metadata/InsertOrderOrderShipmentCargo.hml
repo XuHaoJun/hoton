@@ -1,0 +1,151 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderShipmentCargoObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: height
+      type: Numeric
+    - name: id
+      type: Uuid
+    - name: length
+      type: Numeric
+    - name: orderShipmentId
+      type: Uuid
+    - name: trackingNumber
+      type: Varchar
+    - name: updatedAt
+      type: Timestamptz
+    - name: weight
+      type: Numeric
+    - name: width
+      type: Numeric
+  graphql:
+    typeName: InsertOrderOrderShipmentCargoObject
+    inputTypeName: InsertOrderOrderShipmentCargoObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_shipment_cargo_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        height:
+          column:
+            name: height
+        id:
+          column:
+            name: id
+        length:
+          column:
+            name: length
+        orderShipmentId:
+          column:
+            name: order_shipment_id
+        trackingNumber:
+          column:
+            name: tracking_number
+        updatedAt:
+          column:
+            name: updated_at
+        weight:
+          column:
+            name: weight
+        width:
+          column:
+            name: width
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderShipmentCargoObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - height
+          - id
+          - length
+          - orderShipmentId
+          - trackingNumber
+          - updatedAt
+          - weight
+          - width
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderShipmentCargoResponse
+  description: Responses from the 'insert_order_order_shipment_cargo' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderShipmentCargo!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderOrderShipmentCargoResponse
+    inputTypeName: InsertOrderOrderShipmentCargoResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_shipment_cargo_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderShipmentCargoResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderOrderShipmentCargo
+  outputType: InsertOrderOrderShipmentCargoResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderOrderShipmentCargoObject!]!"
+    - name: postCheck
+      type: OrderOrderShipmentCargoBoolExp
+      description: Insert permission predicate over the 'order_order_shipment_cargo'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_order_shipment_cargo
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderOrderShipmentCargo
+    rootFieldKind: Mutation
+  description: Insert into the order_order_shipment_cargo table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderOrderShipmentCargo
+  permissions:
+    - role: admin
+      allowExecution: true
+

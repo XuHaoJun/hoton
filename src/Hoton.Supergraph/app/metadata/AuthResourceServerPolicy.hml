@@ -1,0 +1,363 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthResourceServerPolicy
+  fields:
+    - name: decisionStrategy
+      type: Int2
+    - name: description
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: logic
+      type: Int2
+    - name: name
+      type: Varchar!
+    - name: owner
+      type: Varchar
+    - name: resourceServerId
+      type: Varchar!
+    - name: type
+      type: Varchar!
+  graphql:
+    typeName: AuthResourceServerPolicy
+    inputTypeName: AuthResourceServerPolicyInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_resource_server_policy
+      fieldMapping:
+        decisionStrategy:
+          column:
+            name: decision_strategy
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        logic:
+          column:
+            name: logic
+        name:
+          column:
+            name: name
+        owner:
+          column:
+            name: owner
+        resourceServerId:
+          column:
+            name: resource_server_id
+        type:
+          column:
+            name: type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthResourceServerPolicy
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - decisionStrategy
+          - description
+          - id
+          - logic
+          - name
+          - owner
+          - resourceServerId
+          - type
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthResourceServerPolicyBoolExp
+  operand:
+    object:
+      type: AuthResourceServerPolicy
+      comparableFields:
+        - fieldName: decisionStrategy
+          booleanExpressionType: Int2BoolExp
+        - fieldName: description
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: logic
+          booleanExpressionType: Int2BoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: owner
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resourceServerId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: type
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authAssociatedPolicies
+        - relationshipName: authAssociatedPoliciesByPolicyId
+        - relationshipName: authPolicyConfigs
+        - relationshipName: authResourcePolicies
+        - relationshipName: authResourceServerPermTickets
+        - relationshipName: authResourceServer
+        - relationshipName: authScopePolicies
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthResourceServerPolicyBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthResourceServerPolicyAggExp
+  operand:
+    object:
+      aggregatedType: AuthResourceServerPolicy
+      aggregatableFields:
+        - fieldName: decisionStrategy
+          aggregateExpression: Int2AggExp
+        - fieldName: description
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: logic
+          aggregateExpression: Int2AggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: owner
+          aggregateExpression: VarcharAggExp
+        - fieldName: resourceServerId
+          aggregateExpression: VarcharAggExp
+        - fieldName: type
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthResourceServerPolicyAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthResourceServerPolicy
+  objectType: AuthResourceServerPolicy
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_resource_server_policy
+  filterExpressionType: AuthResourceServerPolicyBoolExp
+  aggregateExpression: AuthResourceServerPolicyAggExp
+  orderableFields:
+    - fieldName: decisionStrategy
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: logic
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: owner
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceServerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: type
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authResourceServerPolicy
+      subscription:
+        rootField: authResourceServerPolicy
+    selectUniques:
+      - queryRootField: authResourceServerPolicyById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authResourceServerPolicyById
+      - queryRootField: authResourceServerPolicyByUkFrsrpt700S9V50Bu18Ws5Ha6
+        uniqueIdentifier:
+          - name
+          - resourceServerId
+        subscription:
+          rootField: authResourceServerPolicyByUkFrsrpt700S9V50Bu18Ws5Ha6
+    orderByExpressionType: AuthResourceServerPolicyOrderBy
+    filterInputTypeName: AuthResourceServerPolicyFilterInput
+    aggregate:
+      queryRootField: authResourceServerPolicyAggregate
+      subscription:
+        rootField: authResourceServerPolicyAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthResourceServerPolicy
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authAssociatedPolicies
+  sourceType: AuthResourceServerPolicy
+  target:
+    model:
+      name: AuthAssociatedPolicy
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthAssociatedPolicyAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: associatedPolicyId
+  graphql:
+    aggregateFieldName: authAssociatedPoliciesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authAssociatedPoliciesByPolicyId
+  sourceType: AuthResourceServerPolicy
+  target:
+    model:
+      name: AuthAssociatedPolicy
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthAssociatedPolicyAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: policyId
+  graphql:
+    aggregateFieldName: authAssociatedPoliciesByPolicyIdAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authPolicyConfigs
+  sourceType: AuthResourceServerPolicy
+  target:
+    model:
+      name: AuthPolicyConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthPolicyConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: policyId
+  graphql:
+    aggregateFieldName: authPolicyConfigsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourcePolicies
+  sourceType: AuthResourceServerPolicy
+  target:
+    model:
+      name: AuthResourcePolicy
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthResourcePolicyAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: policyId
+  graphql:
+    aggregateFieldName: authResourcePoliciesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerPermTickets
+  sourceType: AuthResourceServerPolicy
+  target:
+    model:
+      name: AuthResourceServerPermTicket
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthResourceServerPermTicketAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: policyId
+  graphql:
+    aggregateFieldName: authResourceServerPermTicketsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServer
+  sourceType: AuthResourceServerPolicy
+  target:
+    model:
+      name: AuthResourceServer
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceServerId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authScopePolicies
+  sourceType: AuthResourceServerPolicy
+  target:
+    model:
+      name: AuthScopePolicy
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthScopePolicyAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: policyId
+  graphql:
+    aggregateFieldName: authScopePoliciesAggregate
+

@@ -1,0 +1,114 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthPolicyConfigObject
+  fields:
+    - name: name
+      type: Varchar!
+    - name: policyId
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: InsertAuthPolicyConfigObject
+    inputTypeName: InsertAuthPolicyConfigObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_policy_config_object
+      fieldMapping:
+        name:
+          column:
+            name: name
+        policyId:
+          column:
+            name: policy_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthPolicyConfigObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - policyId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthPolicyConfigResponse
+  description: Responses from the 'insert_auth_policy_config' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthPolicyConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthPolicyConfigResponse
+    inputTypeName: InsertAuthPolicyConfigResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_policy_config_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthPolicyConfigResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthPolicyConfig
+  outputType: InsertAuthPolicyConfigResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthPolicyConfigObject!]!"
+    - name: postCheck
+      type: AuthPolicyConfigBoolExp
+      description: Insert permission predicate over the 'auth_policy_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_policy_config
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthPolicyConfig
+    rootFieldKind: Mutation
+  description: Insert into the auth_policy_config table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthPolicyConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

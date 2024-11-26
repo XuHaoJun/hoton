@@ -1,0 +1,264 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthAuthenticationExecution
+  fields:
+    - name: alias
+      type: Varchar
+    - name: authConfig
+      type: Varchar
+    - name: authFlowId
+      type: Varchar
+    - name: authenticator
+      type: Varchar
+    - name: authenticatorFlow
+      type: Bool!
+    - name: flowId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: priority
+      type: Int4
+    - name: realmId
+      type: Varchar
+    - name: requirement
+      type: Int4
+  graphql:
+    typeName: AuthAuthenticationExecution
+    inputTypeName: AuthAuthenticationExecutionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_authentication_execution
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        authConfig:
+          column:
+            name: auth_config
+        authFlowId:
+          column:
+            name: auth_flow_id
+        authenticator:
+          column:
+            name: authenticator
+        authenticatorFlow:
+          column:
+            name: authenticator_flow
+        flowId:
+          column:
+            name: flow_id
+        id:
+          column:
+            name: id
+        priority:
+          column:
+            name: priority
+        realmId:
+          column:
+            name: realm_id
+        requirement:
+          column:
+            name: requirement
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthAuthenticationExecution
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - authConfig
+          - authFlowId
+          - authenticator
+          - authenticatorFlow
+          - flowId
+          - id
+          - priority
+          - realmId
+          - requirement
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthAuthenticationExecutionBoolExp
+  operand:
+    object:
+      type: AuthAuthenticationExecution
+      comparableFields:
+        - fieldName: alias
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: authConfig
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: authFlowId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: authenticator
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: authenticatorFlow
+          booleanExpressionType: BoolBoolExp
+        - fieldName: flowId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: priority
+          booleanExpressionType: Int4BoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: requirement
+          booleanExpressionType: Int4BoolExp
+      comparableRelationships:
+        - relationshipName: authAuthenticationFlow
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthAuthenticationExecutionBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthAuthenticationExecutionAggExp
+  operand:
+    object:
+      aggregatedType: AuthAuthenticationExecution
+      aggregatableFields:
+        - fieldName: alias
+          aggregateExpression: VarcharAggExp
+        - fieldName: authConfig
+          aggregateExpression: VarcharAggExp
+        - fieldName: authFlowId
+          aggregateExpression: VarcharAggExp
+        - fieldName: authenticator
+          aggregateExpression: VarcharAggExp
+        - fieldName: authenticatorFlow
+          aggregateExpression: BoolAggExp
+        - fieldName: flowId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: priority
+          aggregateExpression: Int4AggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: requirement
+          aggregateExpression: Int4AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthAuthenticationExecutionAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthAuthenticationExecution
+  objectType: AuthAuthenticationExecution
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_authentication_execution
+  filterExpressionType: AuthAuthenticationExecutionBoolExp
+  aggregateExpression: AuthAuthenticationExecutionAggExp
+  orderableFields:
+    - fieldName: alias
+      orderByDirections:
+        enableAll: true
+    - fieldName: authConfig
+      orderByDirections:
+        enableAll: true
+    - fieldName: authFlowId
+      orderByDirections:
+        enableAll: true
+    - fieldName: authenticator
+      orderByDirections:
+        enableAll: true
+    - fieldName: authenticatorFlow
+      orderByDirections:
+        enableAll: true
+    - fieldName: flowId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: priority
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: requirement
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authAuthenticationExecution
+      subscription:
+        rootField: authAuthenticationExecution
+    selectUniques:
+      - queryRootField: authAuthenticationExecutionById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authAuthenticationExecutionById
+    orderByExpressionType: AuthAuthenticationExecutionOrderBy
+    filterInputTypeName: AuthAuthenticationExecutionFilterInput
+    aggregate:
+      queryRootField: authAuthenticationExecutionAggregate
+      subscription:
+        rootField: authAuthenticationExecutionAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthAuthenticationExecution
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authAuthenticationFlow
+  sourceType: AuthAuthenticationExecution
+  target:
+    model:
+      name: AuthAuthenticationFlow
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: flowId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthAuthenticationExecution
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

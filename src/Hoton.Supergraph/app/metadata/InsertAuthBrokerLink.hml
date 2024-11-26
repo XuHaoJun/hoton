@@ -1,0 +1,138 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthBrokerLinkObject
+  fields:
+    - name: brokerUserId
+      type: Varchar
+    - name: brokerUsername
+      type: Varchar
+    - name: identityProvider
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: token
+      type: Text
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthBrokerLinkObject
+    inputTypeName: InsertAuthBrokerLinkObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_broker_link_object
+      fieldMapping:
+        brokerUserId:
+          column:
+            name: broker_user_id
+        brokerUsername:
+          column:
+            name: broker_username
+        identityProvider:
+          column:
+            name: identity_provider
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        token:
+          column:
+            name: token
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthBrokerLinkObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - brokerUserId
+          - brokerUsername
+          - identityProvider
+          - realmId
+          - storageProviderId
+          - token
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthBrokerLinkResponse
+  description: Responses from the 'insert_auth_broker_link' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthBrokerLink!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthBrokerLinkResponse
+    inputTypeName: InsertAuthBrokerLinkResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_broker_link_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthBrokerLinkResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthBrokerLink
+  outputType: InsertAuthBrokerLinkResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthBrokerLinkObject!]!"
+    - name: postCheck
+      type: AuthBrokerLinkBoolExp
+      description: Insert permission predicate over the 'auth_broker_link' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_broker_link
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthBrokerLink
+    rootFieldKind: Mutation
+  description: Insert into the auth_broker_link table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthBrokerLink
+  permissions:
+    - role: admin
+      allowExecution: true
+

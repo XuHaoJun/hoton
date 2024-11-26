@@ -1,0 +1,89 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionIdResponse
+  description: Responses from the
+    'delete_auth_offline_client_session_by_client_id_and_client_storage_provider_and_external_client_id_and_offline_flag_and_user_session_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOfflineClientSession!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionIdResponse
+    inputTypeName: DeleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_offline_client_session_by_client_id_and_client_storage_provider_and_external_client_id_and_offline_flag_and_user_session_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionId
+  outputType: DeleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionIdResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyClientStorageProvider
+      type: Varchar!
+    - name: keyExternalClientId
+      type: Varchar!
+    - name: keyOfflineFlag
+      type: Varchar!
+    - name: keyUserSessionId
+      type: Varchar!
+    - name: preCheck
+      type: AuthOfflineClientSessionBoolExp
+      description: Delete permission predicate over the 'auth_offline_client_session'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_offline_client_session_by_client_id_and_client_storage_provider_and_external_client_id_and_offline_flag_and_user_session_id
+    argumentMapping:
+      keyClientId: key_client_id
+      keyClientStorageProvider: key_client_storage_provider
+      keyExternalClientId: key_external_client_id
+      keyOfflineFlag: key_offline_flag
+      keyUserSessionId: key_user_session_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_offline_client_session' collection
+    using the 'client_id', 'client_storage_provider', 'external_client_id',
+    'offline_flag' and 'user_session_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthOfflineClientSessionByClientIdAndClientStorageProviderAndExternalClientIdAndOfflineFlagAndUserSessionId
+  permissions:
+    - role: admin
+      allowExecution: true
+

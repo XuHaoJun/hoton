@@ -1,0 +1,220 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderShipmentByTrackingNumberUpdateColumns
+  description: Update the columns of the 'order_order_shipment' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnOrderOrderShipmentCreatedAt
+      description: Update the 'created_at' column in the 'order_order_shipment' collection.
+    - name: id
+      type: UpdateColumnOrderOrderShipmentId
+      description: Update the 'id' column in the 'order_order_shipment' collection.
+    - name: orderId
+      type: UpdateColumnOrderOrderShipmentOrderId
+      description: Update the 'order_id' column in the 'order_order_shipment' collection.
+    - name: realmId
+      type: UpdateColumnOrderOrderShipmentRealmId
+      description: Update the 'realm_id' column in the 'order_order_shipment' collection.
+    - name: receiverAddress
+      type: UpdateColumnOrderOrderShipmentReceiverAddress
+      description: Update the 'receiver_address' column in the 'order_order_shipment'
+        collection.
+    - name: receiverName
+      type: UpdateColumnOrderOrderShipmentReceiverName
+      description: Update the 'receiver_name' column in the 'order_order_shipment'
+        collection.
+    - name: receiverPhone
+      type: UpdateColumnOrderOrderShipmentReceiverPhone
+      description: Update the 'receiver_phone' column in the 'order_order_shipment'
+        collection.
+    - name: senderName
+      type: UpdateColumnOrderOrderShipmentSenderName
+      description: Update the 'sender_name' column in the 'order_order_shipment' collection.
+    - name: senderPhone
+      type: UpdateColumnOrderOrderShipmentSenderPhone
+      description: Update the 'sender_phone' column in the 'order_order_shipment'
+        collection.
+    - name: serviceProvider
+      type: UpdateColumnOrderOrderShipmentServiceProvider
+      description: Update the 'service_provider' column in the 'order_order_shipment'
+        collection.
+    - name: serviceType
+      type: UpdateColumnOrderOrderShipmentServiceType
+      description: Update the 'service_type' column in the 'order_order_shipment'
+        collection.
+    - name: status
+      type: UpdateColumnOrderOrderShipmentStatus
+      description: Update the 'status' column in the 'order_order_shipment' collection.
+    - name: temperatureZone
+      type: UpdateColumnOrderOrderShipmentTemperatureZone
+      description: Update the 'temperature_zone' column in the 'order_order_shipment'
+        collection.
+    - name: trackingNumber
+      type: UpdateColumnOrderOrderShipmentTrackingNumber
+      description: Update the 'tracking_number' column in the 'order_order_shipment'
+        collection.
+    - name: updatedAt
+      type: UpdateColumnOrderOrderShipmentUpdatedAt
+      description: Update the 'updated_at' column in the 'order_order_shipment' collection.
+  graphql:
+    typeName: UpdateOrderOrderShipmentByTrackingNumberUpdateColumns
+    inputTypeName: UpdateOrderOrderShipmentByTrackingNumberUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_shipment_by_tracking_number_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        orderId:
+          column:
+            name: order_id
+        realmId:
+          column:
+            name: realm_id
+        receiverAddress:
+          column:
+            name: receiver_address
+        receiverName:
+          column:
+            name: receiver_name
+        receiverPhone:
+          column:
+            name: receiver_phone
+        senderName:
+          column:
+            name: sender_name
+        senderPhone:
+          column:
+            name: sender_phone
+        serviceProvider:
+          column:
+            name: service_provider
+        serviceType:
+          column:
+            name: service_type
+        status:
+          column:
+            name: status
+        temperatureZone:
+          column:
+            name: temperature_zone
+        trackingNumber:
+          column:
+            name: tracking_number
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderShipmentByTrackingNumberUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - orderId
+          - realmId
+          - receiverAddress
+          - receiverName
+          - receiverPhone
+          - senderName
+          - senderPhone
+          - serviceProvider
+          - serviceType
+          - status
+          - temperatureZone
+          - trackingNumber
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderShipmentByTrackingNumberResponse
+  description: Responses from the 'update_order_order_shipment_by_tracking_number' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderShipment!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderOrderShipmentByTrackingNumberResponse
+    inputTypeName: UpdateOrderOrderShipmentByTrackingNumberResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_shipment_by_tracking_number_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderShipmentByTrackingNumberResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderOrderShipmentByTrackingNumber
+  outputType: UpdateOrderOrderShipmentByTrackingNumberResponse!
+  arguments:
+    - name: keyTrackingNumber
+      type: Varchar!
+    - name: postCheck
+      type: OrderOrderShipmentBoolExp
+      description: Update permission post-condition predicate over the
+        'order_order_shipment' collection
+    - name: preCheck
+      type: OrderOrderShipmentBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_order_shipment' collection
+    - name: updateColumns
+      type: UpdateOrderOrderShipmentByTrackingNumberUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_order_shipment_by_tracking_number
+    argumentMapping:
+      keyTrackingNumber: key_tracking_number
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderOrderShipmentByTrackingNumber
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_order_shipment' collection using the
+    'tracking_number' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderOrderShipmentByTrackingNumber
+  permissions:
+    - role: admin
+      allowExecution: true
+

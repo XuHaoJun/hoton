@@ -1,0 +1,475 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionBrokerSessionId
+  description: Update the 'broker_session_id' column in the
+    'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionBrokerSessionId
+    inputTypeName: UpdateColumnAuthOfflineUserSessionBrokerSessionIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_broker_session_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionBrokerSessionId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionCreatedOn
+  description: Update the 'created_on' column in the 'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Int4!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionCreatedOn
+    inputTypeName: UpdateColumnAuthOfflineUserSessionCreatedOnInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_created_on
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionCreatedOn
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionData
+  description: Update the 'data' column in the 'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Text
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionData
+    inputTypeName: UpdateColumnAuthOfflineUserSessionDataInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_data
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionData
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionLastSessionRefresh
+  description: Update the 'last_session_refresh' column in the
+    'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Int4!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionLastSessionRefresh
+    inputTypeName: UpdateColumnAuthOfflineUserSessionLastSessionRefreshInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_last_session_refresh
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionLastSessionRefresh
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionOfflineFlag
+  description: Update the 'offline_flag' column in the 'auth_offline_user_session'
+    collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionOfflineFlag
+    inputTypeName: UpdateColumnAuthOfflineUserSessionOfflineFlagInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_offline_flag
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionOfflineFlag
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionRealmId
+  description: Update the 'realm_id' column in the 'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionRealmId
+    inputTypeName: UpdateColumnAuthOfflineUserSessionRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionUserId
+  description: Update the 'user_id' column in the 'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionUserId
+    inputTypeName: UpdateColumnAuthOfflineUserSessionUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionUserSessionId
+  description: Update the 'user_session_id' column in the
+    'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionUserSessionId
+    inputTypeName: UpdateColumnAuthOfflineUserSessionUserSessionIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_user_session_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionUserSessionId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthOfflineUserSessionVersion
+  description: Update the 'version' column in the 'auth_offline_user_session' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthOfflineUserSessionVersion
+    inputTypeName: UpdateColumnAuthOfflineUserSessionVersionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_offline_user_session_version
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthOfflineUserSessionVersion
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdUpdateColumns
+  description: Update the columns of the 'auth_offline_user_session' collection
+  fields:
+    - name: brokerSessionId
+      type: UpdateColumnAuthOfflineUserSessionBrokerSessionId
+      description: Update the 'broker_session_id' column in the
+        'auth_offline_user_session' collection.
+    - name: createdOn
+      type: UpdateColumnAuthOfflineUserSessionCreatedOn
+      description: Update the 'created_on' column in the 'auth_offline_user_session'
+        collection.
+    - name: data
+      type: UpdateColumnAuthOfflineUserSessionData
+      description: Update the 'data' column in the 'auth_offline_user_session' collection.
+    - name: lastSessionRefresh
+      type: UpdateColumnAuthOfflineUserSessionLastSessionRefresh
+      description: Update the 'last_session_refresh' column in the
+        'auth_offline_user_session' collection.
+    - name: offlineFlag
+      type: UpdateColumnAuthOfflineUserSessionOfflineFlag
+      description: Update the 'offline_flag' column in the 'auth_offline_user_session'
+        collection.
+    - name: realmId
+      type: UpdateColumnAuthOfflineUserSessionRealmId
+      description: Update the 'realm_id' column in the 'auth_offline_user_session'
+        collection.
+    - name: userId
+      type: UpdateColumnAuthOfflineUserSessionUserId
+      description: Update the 'user_id' column in the 'auth_offline_user_session'
+        collection.
+    - name: userSessionId
+      type: UpdateColumnAuthOfflineUserSessionUserSessionId
+      description: Update the 'user_session_id' column in the
+        'auth_offline_user_session' collection.
+    - name: version
+      type: UpdateColumnAuthOfflineUserSessionVersion
+      description: Update the 'version' column in the 'auth_offline_user_session'
+        collection.
+  graphql:
+    typeName: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdUpdateColumns
+    inputTypeName: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_offline_user_session_by_offline_flag_and_user_session_id_update_columns
+      fieldMapping:
+        brokerSessionId:
+          column:
+            name: broker_session_id
+        createdOn:
+          column:
+            name: created_on
+        data:
+          column:
+            name: data
+        lastSessionRefresh:
+          column:
+            name: last_session_refresh
+        offlineFlag:
+          column:
+            name: offline_flag
+        realmId:
+          column:
+            name: realm_id
+        userId:
+          column:
+            name: user_id
+        userSessionId:
+          column:
+            name: user_session_id
+        version:
+          column:
+            name: version
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - brokerSessionId
+          - createdOn
+          - data
+          - lastSessionRefresh
+          - offlineFlag
+          - realmId
+          - userId
+          - userSessionId
+          - version
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse
+  description: Responses from the
+    'update_auth_offline_user_session_by_offline_flag_and_user_session_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOfflineUserSession!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse
+    inputTypeName: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_offline_user_session_by_offline_flag_and_user_session_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionId
+  outputType: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse!
+  arguments:
+    - name: keyOfflineFlag
+      type: Varchar!
+    - name: keyUserSessionId
+      type: Varchar!
+    - name: postCheck
+      type: AuthOfflineUserSessionBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_offline_user_session' collection
+    - name: preCheck
+      type: AuthOfflineUserSessionBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_offline_user_session' collection
+    - name: updateColumns
+      type: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_offline_user_session_by_offline_flag_and_user_session_id
+    argumentMapping:
+      keyOfflineFlag: key_offline_flag
+      keyUserSessionId: key_user_session_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthOfflineUserSessionByOfflineFlagAndUserSessionId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_offline_user_session' collection using
+    the 'offline_flag' and 'user_session_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthOfflineUserSessionByOfflineFlagAndUserSessionId
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,133 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientInitialAccessObject
+  fields:
+    - name: count
+      type: Int4
+    - name: expiration
+      type: Int4
+    - name: id
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: remainingCount
+      type: Int4
+    - name: timestamp
+      type: Int4
+  graphql:
+    typeName: InsertAuthClientInitialAccessObject
+    inputTypeName: InsertAuthClientInitialAccessObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_initial_access_object
+      fieldMapping:
+        count:
+          column:
+            name: count
+        expiration:
+          column:
+            name: expiration
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+        remainingCount:
+          column:
+            name: remaining_count
+        timestamp:
+          column:
+            name: timestamp
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientInitialAccessObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - count
+          - expiration
+          - id
+          - realmId
+          - remainingCount
+          - timestamp
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientInitialAccessResponse
+  description: Responses from the 'insert_auth_client_initial_access' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientInitialAccess!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthClientInitialAccessResponse
+    inputTypeName: InsertAuthClientInitialAccessResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_initial_access_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientInitialAccessResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthClientInitialAccess
+  outputType: InsertAuthClientInitialAccessResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthClientInitialAccessObject!]!"
+    - name: postCheck
+      type: AuthClientInitialAccessBoolExp
+      description: Insert permission predicate over the 'auth_client_initial_access'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_client_initial_access
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthClientInitialAccess
+    rootFieldKind: Mutation
+  description: Insert into the auth_client_initial_access table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthClientInitialAccess
+  permissions:
+    - role: admin
+      allowExecution: true
+

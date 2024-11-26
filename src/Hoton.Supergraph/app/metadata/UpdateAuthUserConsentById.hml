@@ -1,0 +1,158 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserConsentByIdUpdateColumns
+  description: Update the columns of the 'auth_user_consent' collection
+  fields:
+    - name: clientId
+      type: UpdateColumnAuthUserConsentClientId
+      description: Update the 'client_id' column in the 'auth_user_consent' collection.
+    - name: clientStorageProvider
+      type: UpdateColumnAuthUserConsentClientStorageProvider
+      description: Update the 'client_storage_provider' column in the
+        'auth_user_consent' collection.
+    - name: createdDate
+      type: UpdateColumnAuthUserConsentCreatedDate
+      description: Update the 'created_date' column in the 'auth_user_consent' collection.
+    - name: externalClientId
+      type: UpdateColumnAuthUserConsentExternalClientId
+      description: Update the 'external_client_id' column in the 'auth_user_consent'
+        collection.
+    - name: id
+      type: UpdateColumnAuthUserConsentId
+      description: Update the 'id' column in the 'auth_user_consent' collection.
+    - name: lastUpdatedDate
+      type: UpdateColumnAuthUserConsentLastUpdatedDate
+      description: Update the 'last_updated_date' column in the 'auth_user_consent'
+        collection.
+    - name: userId
+      type: UpdateColumnAuthUserConsentUserId
+      description: Update the 'user_id' column in the 'auth_user_consent' collection.
+  graphql:
+    typeName: UpdateAuthUserConsentByIdUpdateColumns
+    inputTypeName: UpdateAuthUserConsentByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_consent_by_id_update_columns
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        createdDate:
+          column:
+            name: created_date
+        externalClientId:
+          column:
+            name: external_client_id
+        id:
+          column:
+            name: id
+        lastUpdatedDate:
+          column:
+            name: last_updated_date
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserConsentByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - createdDate
+          - externalClientId
+          - id
+          - lastUpdatedDate
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserConsentByIdResponse
+  description: Responses from the 'update_auth_user_consent_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserConsent!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthUserConsentByIdResponse
+    inputTypeName: UpdateAuthUserConsentByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_consent_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserConsentByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthUserConsentById
+  outputType: UpdateAuthUserConsentByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthUserConsentBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_user_consent' collection
+    - name: preCheck
+      type: AuthUserConsentBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_user_consent' collection
+    - name: updateColumns
+      type: UpdateAuthUserConsentByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_user_consent_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthUserConsentById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_user_consent' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthUserConsentById
+  permissions:
+    - role: admin
+      allowExecution: true
+

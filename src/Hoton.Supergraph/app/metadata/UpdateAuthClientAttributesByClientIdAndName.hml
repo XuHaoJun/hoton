@@ -1,0 +1,228 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientAttributesClientId
+  description: Update the 'client_id' column in the 'auth_client_attributes' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientAttributesClientId
+    inputTypeName: UpdateColumnAuthClientAttributesClientIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_attributes_client_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientAttributesClientId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientAttributesName
+  description: Update the 'name' column in the 'auth_client_attributes' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientAttributesName
+    inputTypeName: UpdateColumnAuthClientAttributesNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_attributes_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientAttributesName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientAttributesValue
+  description: Update the 'value' column in the 'auth_client_attributes' collection
+  fields:
+    - name: set
+      type: Text
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientAttributesValue
+    inputTypeName: UpdateColumnAuthClientAttributesValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_attributes_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientAttributesValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientAttributesByClientIdAndNameUpdateColumns
+  description: Update the columns of the 'auth_client_attributes' collection
+  fields:
+    - name: clientId
+      type: UpdateColumnAuthClientAttributesClientId
+      description: Update the 'client_id' column in the 'auth_client_attributes' collection.
+    - name: name
+      type: UpdateColumnAuthClientAttributesName
+      description: Update the 'name' column in the 'auth_client_attributes' collection.
+    - name: value
+      type: UpdateColumnAuthClientAttributesValue
+      description: Update the 'value' column in the 'auth_client_attributes' collection.
+  graphql:
+    typeName: UpdateAuthClientAttributesByClientIdAndNameUpdateColumns
+    inputTypeName: UpdateAuthClientAttributesByClientIdAndNameUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_attributes_by_client_id_and_name_update_columns
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientAttributesByClientIdAndNameUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - name
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientAttributesByClientIdAndNameResponse
+  description: Responses from the
+    'update_auth_client_attributes_by_client_id_and_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientAttributes!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthClientAttributesByClientIdAndNameResponse
+    inputTypeName: UpdateAuthClientAttributesByClientIdAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_attributes_by_client_id_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientAttributesByClientIdAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthClientAttributesByClientIdAndName
+  outputType: UpdateAuthClientAttributesByClientIdAndNameResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyName
+      type: Varchar!
+    - name: postCheck
+      type: AuthClientAttributesBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_client_attributes' collection
+    - name: preCheck
+      type: AuthClientAttributesBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_client_attributes' collection
+    - name: updateColumns
+      type: UpdateAuthClientAttributesByClientIdAndNameUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_client_attributes_by_client_id_and_name
+    argumentMapping:
+      keyClientId: key_client_id
+      keyName: key_name
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthClientAttributesByClientIdAndName
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_client_attributes' collection using the
+    'client_id' and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthClientAttributesByClientIdAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,157 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAuthenticationExecutionObject
+  fields:
+    - name: alias
+      type: Varchar
+    - name: authConfig
+      type: Varchar
+    - name: authFlowId
+      type: Varchar
+    - name: authenticator
+      type: Varchar
+    - name: authenticatorFlow
+      type: Bool
+    - name: flowId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: priority
+      type: Int4
+    - name: realmId
+      type: Varchar
+    - name: requirement
+      type: Int4
+  graphql:
+    typeName: InsertAuthAuthenticationExecutionObject
+    inputTypeName: InsertAuthAuthenticationExecutionObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_authentication_execution_object
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        authConfig:
+          column:
+            name: auth_config
+        authFlowId:
+          column:
+            name: auth_flow_id
+        authenticator:
+          column:
+            name: authenticator
+        authenticatorFlow:
+          column:
+            name: authenticator_flow
+        flowId:
+          column:
+            name: flow_id
+        id:
+          column:
+            name: id
+        priority:
+          column:
+            name: priority
+        realmId:
+          column:
+            name: realm_id
+        requirement:
+          column:
+            name: requirement
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAuthenticationExecutionObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - authConfig
+          - authFlowId
+          - authenticator
+          - authenticatorFlow
+          - flowId
+          - id
+          - priority
+          - realmId
+          - requirement
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAuthenticationExecutionResponse
+  description: Responses from the 'insert_auth_authentication_execution' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticationExecution!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthAuthenticationExecutionResponse
+    inputTypeName: InsertAuthAuthenticationExecutionResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_authentication_execution_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAuthenticationExecutionResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthAuthenticationExecution
+  outputType: InsertAuthAuthenticationExecutionResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthAuthenticationExecutionObject!]!"
+    - name: postCheck
+      type: AuthAuthenticationExecutionBoolExp
+      description: Insert permission predicate over the
+        'auth_authentication_execution' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_authentication_execution
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthAuthenticationExecution
+    rootFieldKind: Mutation
+  description: Insert into the auth_authentication_execution table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthAuthenticationExecution
+  permissions:
+    - role: admin
+      allowExecution: true
+

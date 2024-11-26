@@ -1,0 +1,178 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdUpdateColumns
+  description: Update the columns of the 'auth_resource_server_resource' collection
+  fields:
+    - name: displayName
+      type: UpdateColumnAuthResourceServerResourceDisplayName
+      description: Update the 'display_name' column in the
+        'auth_resource_server_resource' collection.
+    - name: iconUri
+      type: UpdateColumnAuthResourceServerResourceIconUri
+      description: Update the 'icon_uri' column in the 'auth_resource_server_resource'
+        collection.
+    - name: id
+      type: UpdateColumnAuthResourceServerResourceId
+      description: Update the 'id' column in the 'auth_resource_server_resource' collection.
+    - name: name
+      type: UpdateColumnAuthResourceServerResourceName
+      description: Update the 'name' column in the 'auth_resource_server_resource'
+        collection.
+    - name: owner
+      type: UpdateColumnAuthResourceServerResourceOwner
+      description: Update the 'owner' column in the 'auth_resource_server_resource'
+        collection.
+    - name: ownerManagedAccess
+      type: UpdateColumnAuthResourceServerResourceOwnerManagedAccess
+      description: Update the 'owner_managed_access' column in the
+        'auth_resource_server_resource' collection.
+    - name: resourceServerId
+      type: UpdateColumnAuthResourceServerResourceResourceServerId
+      description: Update the 'resource_server_id' column in the
+        'auth_resource_server_resource' collection.
+    - name: type
+      type: UpdateColumnAuthResourceServerResourceType
+      description: Update the 'type' column in the 'auth_resource_server_resource'
+        collection.
+  graphql:
+    typeName: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdUpdateColumns
+    inputTypeName: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_resource_by_name_and_owner_and_resource_server_id_update_columns
+      fieldMapping:
+        displayName:
+          column:
+            name: display_name
+        iconUri:
+          column:
+            name: icon_uri
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        owner:
+          column:
+            name: owner
+        ownerManagedAccess:
+          column:
+            name: owner_managed_access
+        resourceServerId:
+          column:
+            name: resource_server_id
+        type:
+          column:
+            name: type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - displayName
+          - iconUri
+          - id
+          - name
+          - owner
+          - ownerManagedAccess
+          - resourceServerId
+          - type
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse
+  description: Responses from the
+    'update_auth_resource_server_resource_by_name_and_owner_and_resource_server_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServerResource!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse
+    inputTypeName: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_resource_by_name_and_owner_and_resource_server_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerId
+  outputType: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyOwner
+      type: Varchar!
+    - name: keyResourceServerId
+      type: Varchar!
+    - name: postCheck
+      type: AuthResourceServerResourceBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_resource_server_resource' collection
+    - name: preCheck
+      type: AuthResourceServerResourceBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_resource_server_resource' collection
+    - name: updateColumns
+      type: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_resource_server_resource_by_name_and_owner_and_resource_server_id
+    argumentMapping:
+      keyName: key_name
+      keyOwner: key_owner
+      keyResourceServerId: key_resource_server_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthResourceServerResourceByNameAndOwnerAndResourceServerId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_resource_server_resource' collection
+    using the 'name', 'owner' and 'resource_server_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthResourceServerResourceByNameAndOwnerAndResourceServerId
+  permissions:
+    - role: admin
+      allowExecution: true
+

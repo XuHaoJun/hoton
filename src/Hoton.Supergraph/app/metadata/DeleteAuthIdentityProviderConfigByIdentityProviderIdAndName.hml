@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderConfigByIdentityProviderIdAndNameResponse
+  description: Responses from the
+    'delete_auth_identity_provider_config_by_identity_provider_id_and_name'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdentityProviderConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthIdentityProviderConfigByIdentityProviderIdAndNameResponse
+    inputTypeName: DeleteAuthIdentityProviderConfigByIdentityProviderIdAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_identity_provider_config_by_identity_provider_id_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthIdentityProviderConfigByIdentityProviderIdAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderConfigByIdentityProviderIdAndName
+  outputType: DeleteAuthIdentityProviderConfigByIdentityProviderIdAndNameResponse!
+  arguments:
+    - name: keyIdentityProviderId
+      type: Varchar!
+    - name: keyName
+      type: Varchar!
+    - name: preCheck
+      type: AuthIdentityProviderConfigBoolExp
+      description: Delete permission predicate over the
+        'auth_identity_provider_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_identity_provider_config_by_identity_provider_id_and_name
+    argumentMapping:
+      keyIdentityProviderId: key_identity_provider_id
+      keyName: key_name
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthIdentityProviderConfigByIdentityProviderIdAndName
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_identity_provider_config' collection
+    using the 'identity_provider_id' and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthIdentityProviderConfigByIdentityProviderIdAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,114 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthMigrationModelObject
+  fields:
+    - name: id
+      type: Varchar!
+    - name: updateTime
+      type: Int8
+    - name: version
+      type: Varchar
+  graphql:
+    typeName: InsertAuthMigrationModelObject
+    inputTypeName: InsertAuthMigrationModelObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_migration_model_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        updateTime:
+          column:
+            name: update_time
+        version:
+          column:
+            name: version
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthMigrationModelObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - updateTime
+          - version
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthMigrationModelResponse
+  description: Responses from the 'insert_auth_migration_model' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthMigrationModel!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthMigrationModelResponse
+    inputTypeName: InsertAuthMigrationModelResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_migration_model_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthMigrationModelResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthMigrationModel
+  outputType: InsertAuthMigrationModelResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthMigrationModelObject!]!"
+    - name: postCheck
+      type: AuthMigrationModelBoolExp
+      description: Insert permission predicate over the 'auth_migration_model' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_migration_model
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthMigrationModel
+    rootFieldKind: Mutation
+  description: Insert into the auth_migration_model table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthMigrationModel
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,75 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderOrderInvoiceStatusHistoryByIdResponse
+  description: Responses from the
+    'delete_order_order_invoice_status_history_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderInvoiceStatusHistory!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderOrderInvoiceStatusHistoryByIdResponse
+    inputTypeName: DeleteOrderOrderInvoiceStatusHistoryByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_order_invoice_status_history_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderOrderInvoiceStatusHistoryByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderOrderInvoiceStatusHistoryById
+  outputType: DeleteOrderOrderInvoiceStatusHistoryByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: preCheck
+      type: OrderOrderInvoiceStatusHistoryBoolExp
+      description: Delete permission predicate over the
+        'order_order_invoice_status_history' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_order_invoice_status_history_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderOrderInvoiceStatusHistoryById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_order_invoice_status_history'
+    collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderOrderInvoiceStatusHistoryById
+  permissions:
+    - role: admin
+      allowExecution: true
+

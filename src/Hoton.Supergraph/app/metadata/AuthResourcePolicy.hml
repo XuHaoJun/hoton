@@ -1,0 +1,161 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthResourcePolicy
+  fields:
+    - name: policyId
+      type: Varchar!
+    - name: resourceId
+      type: Varchar!
+  graphql:
+    typeName: AuthResourcePolicy
+    inputTypeName: AuthResourcePolicyInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_resource_policy
+      fieldMapping:
+        policyId:
+          column:
+            name: policy_id
+        resourceId:
+          column:
+            name: resource_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthResourcePolicy
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - policyId
+          - resourceId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthResourcePolicyBoolExp
+  operand:
+    object:
+      type: AuthResourcePolicy
+      comparableFields:
+        - fieldName: policyId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resourceId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceServerResource
+        - relationshipName: authResourceServerPolicy
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthResourcePolicyBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthResourcePolicyAggExp
+  operand:
+    object:
+      aggregatedType: AuthResourcePolicy
+      aggregatableFields:
+        - fieldName: policyId
+          aggregateExpression: VarcharAggExp
+        - fieldName: resourceId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthResourcePolicyAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthResourcePolicy
+  objectType: AuthResourcePolicy
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_resource_policy
+  filterExpressionType: AuthResourcePolicyBoolExp
+  aggregateExpression: AuthResourcePolicyAggExp
+  orderableFields:
+    - fieldName: policyId
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authResourcePolicy
+      subscription:
+        rootField: authResourcePolicy
+    selectUniques:
+      - queryRootField: authResourcePolicyByConstraintFarsrpp
+        uniqueIdentifier:
+          - policyId
+          - resourceId
+        subscription:
+          rootField: authResourcePolicyByConstraintFarsrpp
+    orderByExpressionType: AuthResourcePolicyOrderBy
+    filterInputTypeName: AuthResourcePolicyFilterInput
+    aggregate:
+      queryRootField: authResourcePolicyAggregate
+      subscription:
+        rootField: authResourcePolicyAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthResourcePolicy
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerResource
+  sourceType: AuthResourcePolicy
+  target:
+    model:
+      name: AuthResourceServerResource
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerPolicy
+  sourceType: AuthResourcePolicy
+  target:
+    model:
+      name: AuthResourceServerPolicy
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: policyId
+      target:
+        modelField:
+          - fieldName: id
+

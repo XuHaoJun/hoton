@@ -1,0 +1,232 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthDefaultClientScopeDefaultScope
+  description: Update the 'default_scope' column in the
+    'auth_default_client_scope' collection
+  fields:
+    - name: set
+      type: Bool!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthDefaultClientScopeDefaultScope
+    inputTypeName: UpdateColumnAuthDefaultClientScopeDefaultScopeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_default_client_scope_default_scope
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthDefaultClientScopeDefaultScope
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthDefaultClientScopeRealmId
+  description: Update the 'realm_id' column in the 'auth_default_client_scope' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthDefaultClientScopeRealmId
+    inputTypeName: UpdateColumnAuthDefaultClientScopeRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_default_client_scope_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthDefaultClientScopeRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthDefaultClientScopeScopeId
+  description: Update the 'scope_id' column in the 'auth_default_client_scope' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthDefaultClientScopeScopeId
+    inputTypeName: UpdateColumnAuthDefaultClientScopeScopeIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_default_client_scope_scope_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthDefaultClientScopeScopeId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdUpdateColumns
+  description: Update the columns of the 'auth_default_client_scope' collection
+  fields:
+    - name: defaultScope
+      type: UpdateColumnAuthDefaultClientScopeDefaultScope
+      description: Update the 'default_scope' column in the
+        'auth_default_client_scope' collection.
+    - name: realmId
+      type: UpdateColumnAuthDefaultClientScopeRealmId
+      description: Update the 'realm_id' column in the 'auth_default_client_scope'
+        collection.
+    - name: scopeId
+      type: UpdateColumnAuthDefaultClientScopeScopeId
+      description: Update the 'scope_id' column in the 'auth_default_client_scope'
+        collection.
+  graphql:
+    typeName: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdUpdateColumns
+    inputTypeName: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_default_client_scope_by_realm_id_and_scope_id_update_columns
+      fieldMapping:
+        defaultScope:
+          column:
+            name: default_scope
+        realmId:
+          column:
+            name: realm_id
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - defaultScope
+          - realmId
+          - scopeId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdResponse
+  description: Responses from the
+    'update_auth_default_client_scope_by_realm_id_and_scope_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthDefaultClientScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdResponse
+    inputTypeName: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_default_client_scope_by_realm_id_and_scope_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthDefaultClientScopeByRealmIdAndScopeId
+  outputType: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdResponse!
+  arguments:
+    - name: keyRealmId
+      type: Varchar!
+    - name: keyScopeId
+      type: Varchar!
+    - name: postCheck
+      type: AuthDefaultClientScopeBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_default_client_scope' collection
+    - name: preCheck
+      type: AuthDefaultClientScopeBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_default_client_scope' collection
+    - name: updateColumns
+      type: UpdateAuthDefaultClientScopeByRealmIdAndScopeIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_default_client_scope_by_realm_id_and_scope_id
+    argumentMapping:
+      keyRealmId: key_realm_id
+      keyScopeId: key_scope_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthDefaultClientScopeByRealmIdAndScopeId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_default_client_scope' collection using
+    the 'realm_id' and 'scope_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthDefaultClientScopeByRealmIdAndScopeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

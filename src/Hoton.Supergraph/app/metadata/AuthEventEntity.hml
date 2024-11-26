@@ -1,0 +1,239 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthEventEntity
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: detailsJson
+      type: Varchar
+    - name: detailsJsonLongValue
+      type: Text
+    - name: error
+      type: Varchar
+    - name: eventTime
+      type: Int8
+    - name: id
+      type: Varchar!
+    - name: ipAddress
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: sessionId
+      type: Varchar
+    - name: type
+      type: Varchar
+    - name: userId
+      type: Varchar
+  graphql:
+    typeName: AuthEventEntity
+    inputTypeName: AuthEventEntityInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_event_entity
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        detailsJson:
+          column:
+            name: details_json
+        detailsJsonLongValue:
+          column:
+            name: details_json_long_value
+        error:
+          column:
+            name: error
+        eventTime:
+          column:
+            name: event_time
+        id:
+          column:
+            name: id
+        ipAddress:
+          column:
+            name: ip_address
+        realmId:
+          column:
+            name: realm_id
+        sessionId:
+          column:
+            name: session_id
+        type:
+          column:
+            name: type
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthEventEntity
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - detailsJson
+          - detailsJsonLongValue
+          - error
+          - eventTime
+          - id
+          - ipAddress
+          - realmId
+          - sessionId
+          - type
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthEventEntityBoolExp
+  operand:
+    object:
+      type: AuthEventEntity
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: detailsJson
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: detailsJsonLongValue
+          booleanExpressionType: TextBoolExp
+        - fieldName: error
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: eventTime
+          booleanExpressionType: Int8BoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: ipAddress
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: sessionId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: type
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthEventEntityBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthEventEntityAggExp
+  operand:
+    object:
+      aggregatedType: AuthEventEntity
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: detailsJson
+          aggregateExpression: VarcharAggExp
+        - fieldName: detailsJsonLongValue
+          aggregateExpression: TextAggExp
+        - fieldName: error
+          aggregateExpression: VarcharAggExp
+        - fieldName: eventTime
+          aggregateExpression: Int8AggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: ipAddress
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: sessionId
+          aggregateExpression: VarcharAggExp
+        - fieldName: type
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthEventEntityAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthEventEntity
+  objectType: AuthEventEntity
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_event_entity
+  filterExpressionType: AuthEventEntityBoolExp
+  aggregateExpression: AuthEventEntityAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: detailsJson
+      orderByDirections:
+        enableAll: true
+    - fieldName: detailsJsonLongValue
+      orderByDirections:
+        enableAll: true
+    - fieldName: error
+      orderByDirections:
+        enableAll: true
+    - fieldName: eventTime
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: ipAddress
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: sessionId
+      orderByDirections:
+        enableAll: true
+    - fieldName: type
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authEventEntity
+      subscription:
+        rootField: authEventEntity
+    selectUniques:
+      - queryRootField: authEventEntityById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authEventEntityById
+    orderByExpressionType: AuthEventEntityOrderBy
+    filterInputTypeName: AuthEventEntityFilterInput
+    aggregate:
+      queryRootField: authEventEntityAggregate
+      subscription:
+        rootField: authEventEntityAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthEventEntity
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

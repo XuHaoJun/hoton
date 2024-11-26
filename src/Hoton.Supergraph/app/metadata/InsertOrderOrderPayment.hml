@@ -1,0 +1,186 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderPaymentObject
+  fields:
+    - name: amount
+      type: Numeric!
+    - name: atmPayNo
+      type: Varchar
+    - name: checkMacValue
+      type: Varchar
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: merchantId
+      type: Varchar!
+    - name: orderId
+      type: Uuid
+    - name: orderResultUrl
+      type: Varchar!
+    - name: paymentMethod
+      type: Varchar!
+    - name: paymentNumber
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: returnUrl
+      type: Varchar!
+    - name: serviceProvider
+      type: Varchar!
+    - name: status
+      type: Varchar
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertOrderOrderPaymentObject
+    inputTypeName: InsertOrderOrderPaymentObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_payment_object
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        atmPayNo:
+          column:
+            name: atm_pay_no
+        checkMacValue:
+          column:
+            name: check_mac_value
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        merchantId:
+          column:
+            name: merchant_id
+        orderId:
+          column:
+            name: order_id
+        orderResultUrl:
+          column:
+            name: order_result_url
+        paymentMethod:
+          column:
+            name: payment_method
+        paymentNumber:
+          column:
+            name: payment_number
+        realmId:
+          column:
+            name: realm_id
+        returnUrl:
+          column:
+            name: return_url
+        serviceProvider:
+          column:
+            name: service_provider
+        status:
+          column:
+            name: status
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderPaymentObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - atmPayNo
+          - checkMacValue
+          - createdAt
+          - id
+          - merchantId
+          - orderId
+          - orderResultUrl
+          - paymentMethod
+          - paymentNumber
+          - realmId
+          - returnUrl
+          - serviceProvider
+          - status
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderPaymentResponse
+  description: Responses from the 'insert_order_order_payment' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderPayment!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderOrderPaymentResponse
+    inputTypeName: InsertOrderOrderPaymentResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_payment_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderPaymentResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderOrderPayment
+  outputType: InsertOrderOrderPaymentResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderOrderPaymentObject!]!"
+    - name: postCheck
+      type: OrderOrderPaymentBoolExp
+      description: Insert permission predicate over the 'order_order_payment' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_order_payment
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderOrderPayment
+    rootFieldKind: Mutation
+  description: Insert into the order_order_payment table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderOrderPayment
+  permissions:
+    - role: admin
+      allowExecution: true
+

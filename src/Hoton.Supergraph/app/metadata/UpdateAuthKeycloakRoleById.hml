@@ -1,0 +1,163 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthKeycloakRoleByIdUpdateColumns
+  description: Update the columns of the 'auth_keycloak_role' collection
+  fields:
+    - name: client
+      type: UpdateColumnAuthKeycloakRoleClient
+      description: Update the 'client' column in the 'auth_keycloak_role' collection.
+    - name: clientRealmConstraint
+      type: UpdateColumnAuthKeycloakRoleClientRealmConstraint
+      description: Update the 'client_realm_constraint' column in the
+        'auth_keycloak_role' collection.
+    - name: clientRole
+      type: UpdateColumnAuthKeycloakRoleClientRole
+      description: Update the 'client_role' column in the 'auth_keycloak_role' collection.
+    - name: description
+      type: UpdateColumnAuthKeycloakRoleDescription
+      description: Update the 'description' column in the 'auth_keycloak_role' collection.
+    - name: id
+      type: UpdateColumnAuthKeycloakRoleId
+      description: Update the 'id' column in the 'auth_keycloak_role' collection.
+    - name: name
+      type: UpdateColumnAuthKeycloakRoleName
+      description: Update the 'name' column in the 'auth_keycloak_role' collection.
+    - name: realm
+      type: UpdateColumnAuthKeycloakRoleRealm
+      description: Update the 'realm' column in the 'auth_keycloak_role' collection.
+    - name: realmId
+      type: UpdateColumnAuthKeycloakRoleRealmId
+      description: Update the 'realm_id' column in the 'auth_keycloak_role' collection.
+  graphql:
+    typeName: UpdateAuthKeycloakRoleByIdUpdateColumns
+    inputTypeName: UpdateAuthKeycloakRoleByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_keycloak_role_by_id_update_columns
+      fieldMapping:
+        client:
+          column:
+            name: client
+        clientRealmConstraint:
+          column:
+            name: client_realm_constraint
+        clientRole:
+          column:
+            name: client_role
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        realm:
+          column:
+            name: realm
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthKeycloakRoleByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - client
+          - clientRealmConstraint
+          - clientRole
+          - description
+          - id
+          - name
+          - realm
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthKeycloakRoleByIdResponse
+  description: Responses from the 'update_auth_keycloak_role_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthKeycloakRole!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthKeycloakRoleByIdResponse
+    inputTypeName: UpdateAuthKeycloakRoleByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_keycloak_role_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthKeycloakRoleByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthKeycloakRoleById
+  outputType: UpdateAuthKeycloakRoleByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthKeycloakRoleBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_keycloak_role' collection
+    - name: preCheck
+      type: AuthKeycloakRoleBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_keycloak_role' collection
+    - name: updateColumns
+      type: UpdateAuthKeycloakRoleByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_keycloak_role_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthKeycloakRoleById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_keycloak_role' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthKeycloakRoleById
+  permissions:
+    - role: admin
+      allowExecution: true
+

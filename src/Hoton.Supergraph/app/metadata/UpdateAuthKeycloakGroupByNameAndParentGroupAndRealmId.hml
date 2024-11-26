@@ -1,0 +1,149 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdUpdateColumns
+  description: Update the columns of the 'auth_keycloak_group' collection
+  fields:
+    - name: id
+      type: UpdateColumnAuthKeycloakGroupId
+      description: Update the 'id' column in the 'auth_keycloak_group' collection.
+    - name: name
+      type: UpdateColumnAuthKeycloakGroupName
+      description: Update the 'name' column in the 'auth_keycloak_group' collection.
+    - name: parentGroup
+      type: UpdateColumnAuthKeycloakGroupParentGroup
+      description: Update the 'parent_group' column in the 'auth_keycloak_group' collection.
+    - name: realmId
+      type: UpdateColumnAuthKeycloakGroupRealmId
+      description: Update the 'realm_id' column in the 'auth_keycloak_group' collection.
+    - name: type
+      type: UpdateColumnAuthKeycloakGroupType
+      description: Update the 'type' column in the 'auth_keycloak_group' collection.
+  graphql:
+    typeName: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdUpdateColumns
+    inputTypeName: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_keycloak_group_by_name_and_parent_group_and_realm_id_update_columns
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        parentGroup:
+          column:
+            name: parent_group
+        realmId:
+          column:
+            name: realm_id
+        type:
+          column:
+            name: type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - parentGroup
+          - realmId
+          - type
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse
+  description: Responses from the
+    'update_auth_keycloak_group_by_name_and_parent_group_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthKeycloakGroup!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse
+    inputTypeName: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_keycloak_group_by_name_and_parent_group_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmId
+  outputType: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar
+    - name: keyParentGroup
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar
+    - name: postCheck
+      type: AuthKeycloakGroupBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_keycloak_group' collection
+    - name: preCheck
+      type: AuthKeycloakGroupBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_keycloak_group' collection
+    - name: updateColumns
+      type: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_keycloak_group_by_name_and_parent_group_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyParentGroup: key_parent_group
+      keyRealmId: key_realm_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthKeycloakGroupByNameAndParentGroupAndRealmId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_keycloak_group' collection using the
+    'name', 'parent_group' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthKeycloakGroupByNameAndParentGroupAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

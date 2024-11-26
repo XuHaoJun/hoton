@@ -1,0 +1,339 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthIdentityProvider
+  fields:
+    - name: addTokenRole
+      type: Bool!
+    - name: authenticateByDefault
+      type: Bool!
+    - name: enabled
+      type: Bool!
+    - name: firstBrokerLoginFlowId
+      type: Varchar
+    - name: hideOnLogin
+      type: Bool
+    - name: internalId
+      type: Varchar!
+    - name: linkOnly
+      type: Bool!
+    - name: organizationId
+      type: Varchar
+    - name: postBrokerLoginFlowId
+      type: Varchar
+    - name: providerAlias
+      type: Varchar
+    - name: providerDisplayName
+      type: Varchar
+    - name: providerId
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: storeToken
+      type: Bool!
+    - name: trustEmail
+      type: Bool!
+  graphql:
+    typeName: AuthIdentityProvider
+    inputTypeName: AuthIdentityProviderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_identity_provider
+      fieldMapping:
+        addTokenRole:
+          column:
+            name: add_token_role
+        authenticateByDefault:
+          column:
+            name: authenticate_by_default
+        enabled:
+          column:
+            name: enabled
+        firstBrokerLoginFlowId:
+          column:
+            name: first_broker_login_flow_id
+        hideOnLogin:
+          column:
+            name: hide_on_login
+        internalId:
+          column:
+            name: internal_id
+        linkOnly:
+          column:
+            name: link_only
+        organizationId:
+          column:
+            name: organization_id
+        postBrokerLoginFlowId:
+          column:
+            name: post_broker_login_flow_id
+        providerAlias:
+          column:
+            name: provider_alias
+        providerDisplayName:
+          column:
+            name: provider_display_name
+        providerId:
+          column:
+            name: provider_id
+        realmId:
+          column:
+            name: realm_id
+        storeToken:
+          column:
+            name: store_token
+        trustEmail:
+          column:
+            name: trust_email
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthIdentityProvider
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - addTokenRole
+          - authenticateByDefault
+          - enabled
+          - firstBrokerLoginFlowId
+          - hideOnLogin
+          - internalId
+          - linkOnly
+          - organizationId
+          - postBrokerLoginFlowId
+          - providerAlias
+          - providerDisplayName
+          - providerId
+          - realmId
+          - storeToken
+          - trustEmail
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthIdentityProviderBoolExp
+  operand:
+    object:
+      type: AuthIdentityProvider
+      comparableFields:
+        - fieldName: addTokenRole
+          booleanExpressionType: BoolBoolExp
+        - fieldName: authenticateByDefault
+          booleanExpressionType: BoolBoolExp
+        - fieldName: enabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: firstBrokerLoginFlowId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: hideOnLogin
+          booleanExpressionType: BoolBoolExp
+        - fieldName: internalId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: linkOnly
+          booleanExpressionType: BoolBoolExp
+        - fieldName: organizationId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: postBrokerLoginFlowId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: providerAlias
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: providerDisplayName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: providerId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storeToken
+          booleanExpressionType: BoolBoolExp
+        - fieldName: trustEmail
+          booleanExpressionType: BoolBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+        - relationshipName: authIdentityProviderConfigs
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthIdentityProviderBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthIdentityProviderAggExp
+  operand:
+    object:
+      aggregatedType: AuthIdentityProvider
+      aggregatableFields:
+        - fieldName: addTokenRole
+          aggregateExpression: BoolAggExp
+        - fieldName: authenticateByDefault
+          aggregateExpression: BoolAggExp
+        - fieldName: enabled
+          aggregateExpression: BoolAggExp
+        - fieldName: firstBrokerLoginFlowId
+          aggregateExpression: VarcharAggExp
+        - fieldName: hideOnLogin
+          aggregateExpression: BoolAggExp
+        - fieldName: internalId
+          aggregateExpression: VarcharAggExp
+        - fieldName: linkOnly
+          aggregateExpression: BoolAggExp
+        - fieldName: organizationId
+          aggregateExpression: VarcharAggExp
+        - fieldName: postBrokerLoginFlowId
+          aggregateExpression: VarcharAggExp
+        - fieldName: providerAlias
+          aggregateExpression: VarcharAggExp
+        - fieldName: providerDisplayName
+          aggregateExpression: VarcharAggExp
+        - fieldName: providerId
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: storeToken
+          aggregateExpression: BoolAggExp
+        - fieldName: trustEmail
+          aggregateExpression: BoolAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthIdentityProviderAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthIdentityProvider
+  objectType: AuthIdentityProvider
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_identity_provider
+  filterExpressionType: AuthIdentityProviderBoolExp
+  aggregateExpression: AuthIdentityProviderAggExp
+  orderableFields:
+    - fieldName: addTokenRole
+      orderByDirections:
+        enableAll: true
+    - fieldName: authenticateByDefault
+      orderByDirections:
+        enableAll: true
+    - fieldName: enabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: firstBrokerLoginFlowId
+      orderByDirections:
+        enableAll: true
+    - fieldName: hideOnLogin
+      orderByDirections:
+        enableAll: true
+    - fieldName: internalId
+      orderByDirections:
+        enableAll: true
+    - fieldName: linkOnly
+      orderByDirections:
+        enableAll: true
+    - fieldName: organizationId
+      orderByDirections:
+        enableAll: true
+    - fieldName: postBrokerLoginFlowId
+      orderByDirections:
+        enableAll: true
+    - fieldName: providerAlias
+      orderByDirections:
+        enableAll: true
+    - fieldName: providerDisplayName
+      orderByDirections:
+        enableAll: true
+    - fieldName: providerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storeToken
+      orderByDirections:
+        enableAll: true
+    - fieldName: trustEmail
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authIdentityProvider
+      subscription:
+        rootField: authIdentityProvider
+    selectUniques:
+      - queryRootField: authIdentityProviderByInternalId
+        uniqueIdentifier:
+          - internalId
+        subscription:
+          rootField: authIdentityProviderByInternalId
+      - queryRootField: authIdentityProviderByUk2Daelwnibji49Avxsrtuf6Xj33
+        uniqueIdentifier:
+          - providerAlias
+          - realmId
+        subscription:
+          rootField: authIdentityProviderByUk2Daelwnibji49Avxsrtuf6Xj33
+    orderByExpressionType: AuthIdentityProviderOrderBy
+    filterInputTypeName: AuthIdentityProviderFilterInput
+    aggregate:
+      queryRootField: authIdentityProviderAggregate
+      subscription:
+        rootField: authIdentityProviderAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthIdentityProvider
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthIdentityProvider
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authIdentityProviderConfigs
+  sourceType: AuthIdentityProvider
+  target:
+    model:
+      name: AuthIdentityProviderConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthIdentityProviderConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: internalId
+      target:
+        modelField:
+          - fieldName: identityProviderId
+  graphql:
+    aggregateFieldName: authIdentityProviderConfigsAggregate
+

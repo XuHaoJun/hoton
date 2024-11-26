@@ -1,0 +1,109 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmSupportedLocalesObject
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthRealmSupportedLocalesObject
+    inputTypeName: InsertAuthRealmSupportedLocalesObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_supported_locales_object
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmSupportedLocalesObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmSupportedLocalesResponse
+  description: Responses from the 'insert_auth_realm_supported_locales' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmSupportedLocales!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRealmSupportedLocalesResponse
+    inputTypeName: InsertAuthRealmSupportedLocalesResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_supported_locales_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmSupportedLocalesResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRealmSupportedLocales
+  outputType: InsertAuthRealmSupportedLocalesResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRealmSupportedLocalesObject!]!"
+    - name: postCheck
+      type: AuthRealmSupportedLocalesBoolExp
+      description: Insert permission predicate over the 'auth_realm_supported_locales'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_realm_supported_locales
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRealmSupportedLocales
+    rootFieldKind: Mutation
+  description: Insert into the auth_realm_supported_locales table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRealmSupportedLocales
+  permissions:
+    - role: admin
+      allowExecution: true
+

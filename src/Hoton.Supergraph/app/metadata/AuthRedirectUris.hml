@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRedirectUris
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: AuthRedirectUris
+    inputTypeName: AuthRedirectUrisInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_redirect_uris
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRedirectUris
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRedirectUrisBoolExp
+  operand:
+    object:
+      type: AuthRedirectUris
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authClient
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRedirectUrisBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRedirectUrisAggExp
+  operand:
+    object:
+      aggregatedType: AuthRedirectUris
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRedirectUrisAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRedirectUris
+  objectType: AuthRedirectUris
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_redirect_uris
+  filterExpressionType: AuthRedirectUrisBoolExp
+  aggregateExpression: AuthRedirectUrisAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRedirectUris
+      subscription:
+        rootField: authRedirectUris
+    selectUniques:
+      - queryRootField: authRedirectUrisByConstraintRedirectUris
+        uniqueIdentifier:
+          - clientId
+          - value
+        subscription:
+          rootField: authRedirectUrisByConstraintRedirectUris
+    orderByExpressionType: AuthRedirectUrisOrderBy
+    filterInputTypeName: AuthRedirectUrisFilterInput
+    aggregate:
+      queryRootField: authRedirectUrisAggregate
+      subscription:
+        rootField: authRedirectUrisAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRedirectUris
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClient
+  sourceType: AuthRedirectUris
+  target:
+    model:
+      name: AuthClient
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: clientId
+      target:
+        modelField:
+          - fieldName: id
+

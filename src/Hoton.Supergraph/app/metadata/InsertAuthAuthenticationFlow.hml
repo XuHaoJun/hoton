@@ -1,0 +1,139 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAuthenticationFlowObject
+  fields:
+    - name: alias
+      type: Varchar
+    - name: builtIn
+      type: Bool
+    - name: description
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: providerId
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: topLevel
+      type: Bool
+  graphql:
+    typeName: InsertAuthAuthenticationFlowObject
+    inputTypeName: InsertAuthAuthenticationFlowObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_authentication_flow_object
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        builtIn:
+          column:
+            name: built_in
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        providerId:
+          column:
+            name: provider_id
+        realmId:
+          column:
+            name: realm_id
+        topLevel:
+          column:
+            name: top_level
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAuthenticationFlowObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - builtIn
+          - description
+          - id
+          - providerId
+          - realmId
+          - topLevel
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAuthenticationFlowResponse
+  description: Responses from the 'insert_auth_authentication_flow' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticationFlow!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthAuthenticationFlowResponse
+    inputTypeName: InsertAuthAuthenticationFlowResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_authentication_flow_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAuthenticationFlowResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthAuthenticationFlow
+  outputType: InsertAuthAuthenticationFlowResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthAuthenticationFlowObject!]!"
+    - name: postCheck
+      type: AuthAuthenticationFlowBoolExp
+      description: Insert permission predicate over the 'auth_authentication_flow'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_authentication_flow
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthAuthenticationFlow
+    rootFieldKind: Mutation
+  description: Insert into the auth_authentication_flow table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthAuthenticationFlow
+  permissions:
+    - role: admin
+      allowExecution: true
+

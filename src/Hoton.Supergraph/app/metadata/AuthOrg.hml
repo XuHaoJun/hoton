@@ -1,0 +1,217 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthOrg
+  fields:
+    - name: alias
+      type: Varchar!
+    - name: description
+      type: Varchar
+    - name: enabled
+      type: Bool!
+    - name: groupId
+      type: Varchar!
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: redirectUrl
+      type: Varchar
+  graphql:
+    typeName: AuthOrg
+    inputTypeName: AuthOrgInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_org
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        description:
+          column:
+            name: description
+        enabled:
+          column:
+            name: enabled
+        groupId:
+          column:
+            name: group_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        redirectUrl:
+          column:
+            name: redirect_url
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthOrg
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - description
+          - enabled
+          - groupId
+          - id
+          - name
+          - realmId
+          - redirectUrl
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthOrgBoolExp
+  operand:
+    object:
+      type: AuthOrg
+      comparableFields:
+        - fieldName: alias
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: description
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: enabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: groupId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: redirectUrl
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthOrgBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthOrgAggExp
+  operand:
+    object:
+      aggregatedType: AuthOrg
+      aggregatableFields:
+        - fieldName: alias
+          aggregateExpression: VarcharAggExp
+        - fieldName: description
+          aggregateExpression: VarcharAggExp
+        - fieldName: enabled
+          aggregateExpression: BoolAggExp
+        - fieldName: groupId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: redirectUrl
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthOrgAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthOrg
+  objectType: AuthOrg
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_org
+  filterExpressionType: AuthOrgBoolExp
+  aggregateExpression: AuthOrgAggExp
+  orderableFields:
+    - fieldName: alias
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: enabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: groupId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: redirectUrl
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authOrg
+      subscription:
+        rootField: authOrg
+    selectUniques:
+      - queryRootField: authOrgById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authOrgById
+      - queryRootField: authOrgByUkOrgAlias
+        uniqueIdentifier:
+          - alias
+          - realmId
+        subscription:
+          rootField: authOrgByUkOrgAlias
+      - queryRootField: authOrgByGroupId
+        uniqueIdentifier:
+          - groupId
+        subscription:
+          rootField: authOrgByGroupId
+      - queryRootField: authOrgByUkOrgName
+        uniqueIdentifier:
+          - name
+          - realmId
+        subscription:
+          rootField: authOrgByUkOrgName
+    orderByExpressionType: AuthOrgOrderBy
+    filterInputTypeName: AuthOrgFilterInput
+    aggregate:
+      queryRootField: authOrgAggregate
+      subscription:
+        rootField: authOrgAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthOrg
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

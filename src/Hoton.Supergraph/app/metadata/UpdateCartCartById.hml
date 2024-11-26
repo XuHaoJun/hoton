@@ -1,0 +1,261 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnCartCartCreatedAt
+  description: Update the 'created_at' column in the 'cart_cart' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnCartCartCreatedAt
+    inputTypeName: UpdateColumnCartCartCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_cart_cart_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnCartCartCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnCartCartId
+  description: Update the 'id' column in the 'cart_cart' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnCartCartId
+    inputTypeName: UpdateColumnCartCartIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_cart_cart_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnCartCartId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnCartCartUpdatedAt
+  description: Update the 'updated_at' column in the 'cart_cart' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnCartCartUpdatedAt
+    inputTypeName: UpdateColumnCartCartUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_cart_cart_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnCartCartUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnCartCartUserId
+  description: Update the 'user_id' column in the 'cart_cart' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnCartCartUserId
+    inputTypeName: UpdateColumnCartCartUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_cart_cart_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnCartCartUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateCartCartByIdUpdateColumns
+  description: Update the columns of the 'cart_cart' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnCartCartCreatedAt
+      description: Update the 'created_at' column in the 'cart_cart' collection.
+    - name: id
+      type: UpdateColumnCartCartId
+      description: Update the 'id' column in the 'cart_cart' collection.
+    - name: updatedAt
+      type: UpdateColumnCartCartUpdatedAt
+      description: Update the 'updated_at' column in the 'cart_cart' collection.
+    - name: userId
+      type: UpdateColumnCartCartUserId
+      description: Update the 'user_id' column in the 'cart_cart' collection.
+  graphql:
+    typeName: UpdateCartCartByIdUpdateColumns
+    inputTypeName: UpdateCartCartByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_cart_cart_by_id_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateCartCartByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - updatedAt
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateCartCartByIdResponse
+  description: Responses from the 'update_cart_cart_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[CartCart!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateCartCartByIdResponse
+    inputTypeName: UpdateCartCartByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_cart_cart_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateCartCartByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateCartCartById
+  outputType: UpdateCartCartByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: CartCartBoolExp
+      description: Update permission post-condition predicate over the 'cart_cart'
+        collection
+    - name: preCheck
+      type: CartCartBoolExp
+      description: Update permission pre-condition predicate over the 'cart_cart' collection
+    - name: updateColumns
+      type: UpdateCartCartByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_cart_cart_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateCartCartById
+    rootFieldKind: Mutation
+  description: Update any row on the 'cart_cart' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateCartCartById
+  permissions:
+    - role: admin
+      allowExecution: true
+

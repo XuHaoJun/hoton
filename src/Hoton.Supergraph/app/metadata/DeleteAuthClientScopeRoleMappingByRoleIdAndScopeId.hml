@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthClientScopeRoleMappingByRoleIdAndScopeIdResponse
+  description: Responses from the
+    'delete_auth_client_scope_role_mapping_by_role_id_and_scope_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientScopeRoleMapping!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthClientScopeRoleMappingByRoleIdAndScopeIdResponse
+    inputTypeName: DeleteAuthClientScopeRoleMappingByRoleIdAndScopeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_client_scope_role_mapping_by_role_id_and_scope_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthClientScopeRoleMappingByRoleIdAndScopeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthClientScopeRoleMappingByRoleIdAndScopeId
+  outputType: DeleteAuthClientScopeRoleMappingByRoleIdAndScopeIdResponse!
+  arguments:
+    - name: keyRoleId
+      type: Varchar!
+    - name: keyScopeId
+      type: Varchar!
+    - name: preCheck
+      type: AuthClientScopeRoleMappingBoolExp
+      description: Delete permission predicate over the
+        'auth_client_scope_role_mapping' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_client_scope_role_mapping_by_role_id_and_scope_id
+    argumentMapping:
+      keyRoleId: key_role_id
+      keyScopeId: key_scope_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthClientScopeRoleMappingByRoleIdAndScopeId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_client_scope_role_mapping' collection
+    using the 'role_id' and 'scope_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthClientScopeRoleMappingByRoleIdAndScopeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

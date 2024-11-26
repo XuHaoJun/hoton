@@ -1,0 +1,254 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthDatabasechangeloglockId
+  description: Update the 'id' column in the 'auth_databasechangeloglock' collection
+  fields:
+    - name: set
+      type: Int4!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthDatabasechangeloglockId
+    inputTypeName: UpdateColumnAuthDatabasechangeloglockIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_databasechangeloglock_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthDatabasechangeloglockId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthDatabasechangeloglockLocked
+  description: Update the 'locked' column in the 'auth_databasechangeloglock' collection
+  fields:
+    - name: set
+      type: Bool!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthDatabasechangeloglockLocked
+    inputTypeName: UpdateColumnAuthDatabasechangeloglockLockedInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_databasechangeloglock_locked
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthDatabasechangeloglockLocked
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthDatabasechangeloglockLockedby
+  description: Update the 'lockedby' column in the 'auth_databasechangeloglock' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthDatabasechangeloglockLockedby
+    inputTypeName: UpdateColumnAuthDatabasechangeloglockLockedbyInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_databasechangeloglock_lockedby
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthDatabasechangeloglockLockedby
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthDatabasechangeloglockLockgranted
+  description: Update the 'lockgranted' column in the 'auth_databasechangeloglock'
+    collection
+  fields:
+    - name: set
+      type: Timestamp
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthDatabasechangeloglockLockgranted
+    inputTypeName: UpdateColumnAuthDatabasechangeloglockLockgrantedInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_databasechangeloglock_lockgranted
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthDatabasechangeloglockLockgranted
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthDatabasechangeloglockByIdUpdateColumns
+  description: Update the columns of the 'auth_databasechangeloglock' collection
+  fields:
+    - name: id
+      type: UpdateColumnAuthDatabasechangeloglockId
+      description: Update the 'id' column in the 'auth_databasechangeloglock' collection.
+    - name: locked
+      type: UpdateColumnAuthDatabasechangeloglockLocked
+      description: Update the 'locked' column in the 'auth_databasechangeloglock'
+        collection.
+    - name: lockedby
+      type: UpdateColumnAuthDatabasechangeloglockLockedby
+      description: Update the 'lockedby' column in the 'auth_databasechangeloglock'
+        collection.
+    - name: lockgranted
+      type: UpdateColumnAuthDatabasechangeloglockLockgranted
+      description: Update the 'lockgranted' column in the 'auth_databasechangeloglock'
+        collection.
+  graphql:
+    typeName: UpdateAuthDatabasechangeloglockByIdUpdateColumns
+    inputTypeName: UpdateAuthDatabasechangeloglockByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_databasechangeloglock_by_id_update_columns
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthDatabasechangeloglockByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - locked
+          - lockedby
+          - lockgranted
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthDatabasechangeloglockByIdResponse
+  description: Responses from the 'update_auth_databasechangeloglock_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthDatabasechangeloglock!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthDatabasechangeloglockByIdResponse
+    inputTypeName: UpdateAuthDatabasechangeloglockByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_databasechangeloglock_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthDatabasechangeloglockByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthDatabasechangeloglockById
+  outputType: UpdateAuthDatabasechangeloglockByIdResponse!
+  arguments:
+    - name: keyId
+      type: Int4!
+    - name: postCheck
+      type: AuthDatabasechangeloglockBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_databasechangeloglock' collection
+    - name: preCheck
+      type: AuthDatabasechangeloglockBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_databasechangeloglock' collection
+    - name: updateColumns
+      type: UpdateAuthDatabasechangeloglockByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_databasechangeloglock_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthDatabasechangeloglockById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_databasechangeloglock' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthDatabasechangeloglockById
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,334 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrderPayment
+  fields:
+    - name: amount
+      type: Numeric!
+    - name: atmPayNo
+      type: Varchar
+    - name: checkMacValue
+      type: Varchar
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: merchantId
+      type: Varchar!
+    - name: orderId
+      type: Uuid
+    - name: orderResultUrl
+      type: Varchar!
+    - name: paymentMethod
+      type: Varchar!
+    - name: paymentNumber
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: returnUrl
+      type: Varchar!
+    - name: serviceProvider
+      type: Varchar!
+    - name: status
+      type: Varchar
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderOrderPayment
+    inputTypeName: OrderOrderPaymentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order_payment
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        atmPayNo:
+          column:
+            name: atm_pay_no
+        checkMacValue:
+          column:
+            name: check_mac_value
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        merchantId:
+          column:
+            name: merchant_id
+        orderId:
+          column:
+            name: order_id
+        orderResultUrl:
+          column:
+            name: order_result_url
+        paymentMethod:
+          column:
+            name: payment_method
+        paymentNumber:
+          column:
+            name: payment_number
+        realmId:
+          column:
+            name: realm_id
+        returnUrl:
+          column:
+            name: return_url
+        serviceProvider:
+          column:
+            name: service_provider
+        status:
+          column:
+            name: status
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrderPayment
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - atmPayNo
+          - checkMacValue
+          - createdAt
+          - id
+          - merchantId
+          - orderId
+          - orderResultUrl
+          - paymentMethod
+          - paymentNumber
+          - realmId
+          - returnUrl
+          - serviceProvider
+          - status
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderPaymentBoolExp
+  operand:
+    object:
+      type: OrderOrderPayment
+      comparableFields:
+        - fieldName: amount
+          booleanExpressionType: NumericBoolExp
+        - fieldName: atmPayNo
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: checkMacValue
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: merchantId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: orderId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: orderResultUrl
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: paymentMethod
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: paymentNumber
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: returnUrl
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: serviceProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: status
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: orderOrder
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderPaymentBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderPaymentAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrderPayment
+      aggregatableFields:
+        - fieldName: amount
+          aggregateExpression: NumericAggExp
+        - fieldName: atmPayNo
+          aggregateExpression: VarcharAggExp
+        - fieldName: checkMacValue
+          aggregateExpression: VarcharAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: merchantId
+          aggregateExpression: VarcharAggExp
+        - fieldName: orderId
+          aggregateExpression: UuidAggExp
+        - fieldName: orderResultUrl
+          aggregateExpression: VarcharAggExp
+        - fieldName: paymentMethod
+          aggregateExpression: VarcharAggExp
+        - fieldName: paymentNumber
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: returnUrl
+          aggregateExpression: VarcharAggExp
+        - fieldName: serviceProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: status
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderPaymentAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrderPayment
+  objectType: OrderOrderPayment
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order_payment
+  filterExpressionType: OrderOrderPaymentBoolExp
+  aggregateExpression: OrderOrderPaymentAggExp
+  orderableFields:
+    - fieldName: amount
+      orderByDirections:
+        enableAll: true
+    - fieldName: atmPayNo
+      orderByDirections:
+        enableAll: true
+    - fieldName: checkMacValue
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: merchantId
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderResultUrl
+      orderByDirections:
+        enableAll: true
+    - fieldName: paymentMethod
+      orderByDirections:
+        enableAll: true
+    - fieldName: paymentNumber
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: returnUrl
+      orderByDirections:
+        enableAll: true
+    - fieldName: serviceProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrderPayment
+      subscription:
+        rootField: orderOrderPayment
+    selectUniques:
+      - queryRootField: orderOrderPaymentByPaymentNumber
+        uniqueIdentifier:
+          - paymentNumber
+        subscription:
+          rootField: orderOrderPaymentByPaymentNumber
+      - queryRootField: orderOrderPaymentById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderOrderPaymentById
+    orderByExpressionType: OrderOrderPaymentOrderBy
+    filterInputTypeName: OrderOrderPaymentFilterInput
+    aggregate:
+      queryRootField: orderOrderPaymentAggregate
+      subscription:
+        rootField: orderOrderPaymentAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrderPayment
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrder
+  sourceType: OrderOrderPayment
+  target:
+    model:
+      name: OrderOrder
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: OrderOrderPayment
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

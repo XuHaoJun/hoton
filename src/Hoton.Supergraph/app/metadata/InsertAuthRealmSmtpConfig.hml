@@ -1,0 +1,114 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmSmtpConfigObject
+  fields:
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: InsertAuthRealmSmtpConfigObject
+    inputTypeName: InsertAuthRealmSmtpConfigObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_smtp_config_object
+      fieldMapping:
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmSmtpConfigObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - realmId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmSmtpConfigResponse
+  description: Responses from the 'insert_auth_realm_smtp_config' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmSmtpConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRealmSmtpConfigResponse
+    inputTypeName: InsertAuthRealmSmtpConfigResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_smtp_config_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmSmtpConfigResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRealmSmtpConfig
+  outputType: InsertAuthRealmSmtpConfigResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRealmSmtpConfigObject!]!"
+    - name: postCheck
+      type: AuthRealmSmtpConfigBoolExp
+      description: Insert permission predicate over the 'auth_realm_smtp_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_realm_smtp_config
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRealmSmtpConfig
+    rootFieldKind: Mutation
+  description: Insert into the auth_realm_smtp_config table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRealmSmtpConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

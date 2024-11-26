@@ -1,0 +1,386 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthBrokerLinkBrokerUserId
+  description: Update the 'broker_user_id' column in the 'auth_broker_link' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthBrokerLinkBrokerUserId
+    inputTypeName: UpdateColumnAuthBrokerLinkBrokerUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_broker_link_broker_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthBrokerLinkBrokerUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthBrokerLinkBrokerUsername
+  description: Update the 'broker_username' column in the 'auth_broker_link' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthBrokerLinkBrokerUsername
+    inputTypeName: UpdateColumnAuthBrokerLinkBrokerUsernameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_broker_link_broker_username
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthBrokerLinkBrokerUsername
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthBrokerLinkIdentityProvider
+  description: Update the 'identity_provider' column in the 'auth_broker_link' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthBrokerLinkIdentityProvider
+    inputTypeName: UpdateColumnAuthBrokerLinkIdentityProviderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_broker_link_identity_provider
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthBrokerLinkIdentityProvider
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthBrokerLinkRealmId
+  description: Update the 'realm_id' column in the 'auth_broker_link' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthBrokerLinkRealmId
+    inputTypeName: UpdateColumnAuthBrokerLinkRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_broker_link_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthBrokerLinkRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthBrokerLinkStorageProviderId
+  description: Update the 'storage_provider_id' column in the 'auth_broker_link' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthBrokerLinkStorageProviderId
+    inputTypeName: UpdateColumnAuthBrokerLinkStorageProviderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_broker_link_storage_provider_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthBrokerLinkStorageProviderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthBrokerLinkToken
+  description: Update the 'token' column in the 'auth_broker_link' collection
+  fields:
+    - name: set
+      type: Text
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthBrokerLinkToken
+    inputTypeName: UpdateColumnAuthBrokerLinkTokenInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_broker_link_token
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthBrokerLinkToken
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthBrokerLinkUserId
+  description: Update the 'user_id' column in the 'auth_broker_link' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthBrokerLinkUserId
+    inputTypeName: UpdateColumnAuthBrokerLinkUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_broker_link_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthBrokerLinkUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthBrokerLinkByIdentityProviderAndUserIdUpdateColumns
+  description: Update the columns of the 'auth_broker_link' collection
+  fields:
+    - name: brokerUserId
+      type: UpdateColumnAuthBrokerLinkBrokerUserId
+      description: Update the 'broker_user_id' column in the 'auth_broker_link' collection.
+    - name: brokerUsername
+      type: UpdateColumnAuthBrokerLinkBrokerUsername
+      description: Update the 'broker_username' column in the 'auth_broker_link' collection.
+    - name: identityProvider
+      type: UpdateColumnAuthBrokerLinkIdentityProvider
+      description: Update the 'identity_provider' column in the 'auth_broker_link'
+        collection.
+    - name: realmId
+      type: UpdateColumnAuthBrokerLinkRealmId
+      description: Update the 'realm_id' column in the 'auth_broker_link' collection.
+    - name: storageProviderId
+      type: UpdateColumnAuthBrokerLinkStorageProviderId
+      description: Update the 'storage_provider_id' column in the 'auth_broker_link'
+        collection.
+    - name: token
+      type: UpdateColumnAuthBrokerLinkToken
+      description: Update the 'token' column in the 'auth_broker_link' collection.
+    - name: userId
+      type: UpdateColumnAuthBrokerLinkUserId
+      description: Update the 'user_id' column in the 'auth_broker_link' collection.
+  graphql:
+    typeName: UpdateAuthBrokerLinkByIdentityProviderAndUserIdUpdateColumns
+    inputTypeName: UpdateAuthBrokerLinkByIdentityProviderAndUserIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_broker_link_by_identity_provider_and_user_id_update_columns
+      fieldMapping:
+        brokerUserId:
+          column:
+            name: broker_user_id
+        brokerUsername:
+          column:
+            name: broker_username
+        identityProvider:
+          column:
+            name: identity_provider
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        token:
+          column:
+            name: token
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthBrokerLinkByIdentityProviderAndUserIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - brokerUserId
+          - brokerUsername
+          - identityProvider
+          - realmId
+          - storageProviderId
+          - token
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthBrokerLinkByIdentityProviderAndUserIdResponse
+  description: Responses from the
+    'update_auth_broker_link_by_identity_provider_and_user_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthBrokerLink!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthBrokerLinkByIdentityProviderAndUserIdResponse
+    inputTypeName: UpdateAuthBrokerLinkByIdentityProviderAndUserIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_broker_link_by_identity_provider_and_user_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthBrokerLinkByIdentityProviderAndUserIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthBrokerLinkByIdentityProviderAndUserId
+  outputType: UpdateAuthBrokerLinkByIdentityProviderAndUserIdResponse!
+  arguments:
+    - name: keyIdentityProvider
+      type: Varchar!
+    - name: keyUserId
+      type: Varchar!
+    - name: postCheck
+      type: AuthBrokerLinkBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_broker_link' collection
+    - name: preCheck
+      type: AuthBrokerLinkBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_broker_link' collection
+    - name: updateColumns
+      type: UpdateAuthBrokerLinkByIdentityProviderAndUserIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_broker_link_by_identity_provider_and_user_id
+    argumentMapping:
+      keyIdentityProvider: key_identity_provider
+      keyUserId: key_user_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthBrokerLinkByIdentityProviderAndUserId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_broker_link' collection using the
+    'identity_provider' and 'user_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthBrokerLinkByIdentityProviderAndUserId
+  permissions:
+    - role: admin
+      allowExecution: true
+

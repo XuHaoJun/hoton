@@ -1,0 +1,199 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductProductShipmentConfig
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: productId
+      type: Uuid
+    - name: realmOrderShipmentConfigId
+      type: Uuid
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: ProductProductShipmentConfig
+    inputTypeName: ProductProductShipmentConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: product_product_shipment_config
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productId:
+          column:
+            name: product_id
+        realmOrderShipmentConfigId:
+          column:
+            name: realm_order_shipment_config_id
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductProductShipmentConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - productId
+          - realmOrderShipmentConfigId
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductProductShipmentConfigBoolExp
+  operand:
+    object:
+      type: ProductProductShipmentConfig
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: productId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: realmOrderShipmentConfigId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: productProduct
+        - relationshipName: orderRealmOrderShipmentConfig
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductProductShipmentConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ProductProductShipmentConfigAggExp
+  operand:
+    object:
+      aggregatedType: ProductProductShipmentConfig
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: productId
+          aggregateExpression: UuidAggExp
+        - fieldName: realmOrderShipmentConfigId
+          aggregateExpression: UuidAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ProductProductShipmentConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ProductProductShipmentConfig
+  objectType: ProductProductShipmentConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: product_product_shipment_config
+  filterExpressionType: ProductProductShipmentConfigBoolExp
+  aggregateExpression: ProductProductShipmentConfigAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmOrderShipmentConfigId
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: productProductShipmentConfig
+      subscription:
+        rootField: productProductShipmentConfig
+    selectUniques:
+      - queryRootField: productProductShipmentConfigById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: productProductShipmentConfigById
+    orderByExpressionType: ProductProductShipmentConfigOrderBy
+    filterInputTypeName: ProductProductShipmentConfigFilterInput
+    aggregate:
+      queryRootField: productProductShipmentConfigAggregate
+      subscription:
+        rootField: productProductShipmentConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ProductProductShipmentConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProduct
+  sourceType: ProductProductShipmentConfig
+  target:
+    model:
+      name: ProductProduct
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderRealmOrderShipmentConfig
+  sourceType: ProductProductShipmentConfig
+  target:
+    model:
+      name: OrderRealmOrderShipmentConfig
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmOrderShipmentConfigId
+      target:
+        modelField:
+          - fieldName: id
+

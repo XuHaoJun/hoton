@@ -1,0 +1,194 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdUpdateColumns
+  description: Update the columns of the 'auth_resource_server_perm_ticket' collection
+  fields:
+    - name: createdTimestamp
+      type: UpdateColumnAuthResourceServerPermTicketCreatedTimestamp
+      description: Update the 'created_timestamp' column in the
+        'auth_resource_server_perm_ticket' collection.
+    - name: grantedTimestamp
+      type: UpdateColumnAuthResourceServerPermTicketGrantedTimestamp
+      description: Update the 'granted_timestamp' column in the
+        'auth_resource_server_perm_ticket' collection.
+    - name: id
+      type: UpdateColumnAuthResourceServerPermTicketId
+      description: Update the 'id' column in the 'auth_resource_server_perm_ticket'
+        collection.
+    - name: owner
+      type: UpdateColumnAuthResourceServerPermTicketOwner
+      description: Update the 'owner' column in the 'auth_resource_server_perm_ticket'
+        collection.
+    - name: policyId
+      type: UpdateColumnAuthResourceServerPermTicketPolicyId
+      description: Update the 'policy_id' column in the
+        'auth_resource_server_perm_ticket' collection.
+    - name: requester
+      type: UpdateColumnAuthResourceServerPermTicketRequester
+      description: Update the 'requester' column in the
+        'auth_resource_server_perm_ticket' collection.
+    - name: resourceId
+      type: UpdateColumnAuthResourceServerPermTicketResourceId
+      description: Update the 'resource_id' column in the
+        'auth_resource_server_perm_ticket' collection.
+    - name: resourceServerId
+      type: UpdateColumnAuthResourceServerPermTicketResourceServerId
+      description: Update the 'resource_server_id' column in the
+        'auth_resource_server_perm_ticket' collection.
+    - name: scopeId
+      type: UpdateColumnAuthResourceServerPermTicketScopeId
+      description: Update the 'scope_id' column in the
+        'auth_resource_server_perm_ticket' collection.
+  graphql:
+    typeName: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdUpdateColumns
+    inputTypeName: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_perm_ticket_by_owner_and_requester_and_resource_id_and_resource_server_id_and_scope_id_update_columns
+      fieldMapping:
+        createdTimestamp:
+          column:
+            name: created_timestamp
+        grantedTimestamp:
+          column:
+            name: granted_timestamp
+        id:
+          column:
+            name: id
+        owner:
+          column:
+            name: owner
+        policyId:
+          column:
+            name: policy_id
+        requester:
+          column:
+            name: requester
+        resourceId:
+          column:
+            name: resource_id
+        resourceServerId:
+          column:
+            name: resource_server_id
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdTimestamp
+          - grantedTimestamp
+          - id
+          - owner
+          - policyId
+          - requester
+          - resourceId
+          - resourceServerId
+          - scopeId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdResponse
+  description: Responses from the
+    'update_auth_resource_server_perm_ticket_by_owner_and_requester_and_resource_id_and_resource_server_id_and_scope_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServerPermTicket!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdResponse
+    inputTypeName: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_perm_ticket_by_owner_and_requester_and_resource_id_and_resource_server_id_and_scope_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeId
+  outputType: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdResponse!
+  arguments:
+    - name: keyOwner
+      type: Varchar!
+    - name: keyRequester
+      type: Varchar!
+    - name: keyResourceId
+      type: Varchar!
+    - name: keyResourceServerId
+      type: Varchar!
+    - name: keyScopeId
+      type: Varchar
+    - name: postCheck
+      type: AuthResourceServerPermTicketBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_resource_server_perm_ticket' collection
+    - name: preCheck
+      type: AuthResourceServerPermTicketBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_resource_server_perm_ticket' collection
+    - name: updateColumns
+      type: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_resource_server_perm_ticket_by_owner_and_requester_and_resource_id_and_resource_server_id_and_scope_id
+    argumentMapping:
+      keyOwner: key_owner
+      keyRequester: key_requester
+      keyResourceId: key_resource_id
+      keyResourceServerId: key_resource_server_id
+      keyScopeId: key_scope_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_resource_server_perm_ticket' collection
+    using the 'owner', 'requester', 'resource_id', 'resource_server_id' and
+    'scope_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthResourceServerPermTicketByOwnerAndRequesterAndResourceIdAndResourceServerIdAndScopeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

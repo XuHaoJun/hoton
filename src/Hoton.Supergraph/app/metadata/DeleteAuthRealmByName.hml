@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRealmByNameResponse
+  description: Responses from the 'delete_auth_realm_by_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealm!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRealmByNameResponse
+    inputTypeName: DeleteAuthRealmByNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_realm_by_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRealmByNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRealmByName
+  outputType: DeleteAuthRealmByNameResponse!
+  arguments:
+    - name: keyName
+      type: Varchar
+    - name: preCheck
+      type: AuthRealmBoolExp
+      description: Delete permission predicate over the 'auth_realm' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_realm_by_name
+    argumentMapping:
+      keyName: key_name
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRealmByName
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_realm' collection using the 'name' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRealmByName
+  permissions:
+    - role: admin
+      allowExecution: true
+

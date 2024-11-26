@@ -1,0 +1,204 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthOfflineClientSession
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: clientStorageProvider
+      type: Varchar!
+    - name: data
+      type: Text
+    - name: externalClientId
+      type: Varchar!
+    - name: offlineFlag
+      type: Varchar!
+    - name: timestamp
+      type: Int4
+    - name: userSessionId
+      type: Varchar!
+    - name: version
+      type: Int4
+  graphql:
+    typeName: AuthOfflineClientSession
+    inputTypeName: AuthOfflineClientSessionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_offline_client_session
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        data:
+          column:
+            name: data
+        externalClientId:
+          column:
+            name: external_client_id
+        offlineFlag:
+          column:
+            name: offline_flag
+        timestamp:
+          column:
+            name: timestamp
+        userSessionId:
+          column:
+            name: user_session_id
+        version:
+          column:
+            name: version
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthOfflineClientSession
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - data
+          - externalClientId
+          - offlineFlag
+          - timestamp
+          - userSessionId
+          - version
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthOfflineClientSessionBoolExp
+  operand:
+    object:
+      type: AuthOfflineClientSession
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientStorageProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: data
+          booleanExpressionType: TextBoolExp
+        - fieldName: externalClientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: offlineFlag
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: timestamp
+          booleanExpressionType: Int4BoolExp
+        - fieldName: userSessionId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: version
+          booleanExpressionType: Int4BoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthOfflineClientSessionBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthOfflineClientSessionAggExp
+  operand:
+    object:
+      aggregatedType: AuthOfflineClientSession
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientStorageProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: data
+          aggregateExpression: TextAggExp
+        - fieldName: externalClientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: offlineFlag
+          aggregateExpression: VarcharAggExp
+        - fieldName: timestamp
+          aggregateExpression: Int4AggExp
+        - fieldName: userSessionId
+          aggregateExpression: VarcharAggExp
+        - fieldName: version
+          aggregateExpression: Int4AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthOfflineClientSessionAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthOfflineClientSession
+  objectType: AuthOfflineClientSession
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_offline_client_session
+  filterExpressionType: AuthOfflineClientSessionBoolExp
+  aggregateExpression: AuthOfflineClientSessionAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientStorageProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: data
+      orderByDirections:
+        enableAll: true
+    - fieldName: externalClientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: offlineFlag
+      orderByDirections:
+        enableAll: true
+    - fieldName: timestamp
+      orderByDirections:
+        enableAll: true
+    - fieldName: userSessionId
+      orderByDirections:
+        enableAll: true
+    - fieldName: version
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authOfflineClientSession
+      subscription:
+        rootField: authOfflineClientSession
+    selectUniques:
+      - queryRootField: authOfflineClientSessionByConstraintOfflClSesPk3
+        uniqueIdentifier:
+          - clientId
+          - clientStorageProvider
+          - externalClientId
+          - offlineFlag
+          - userSessionId
+        subscription:
+          rootField: authOfflineClientSessionByConstraintOfflClSesPk3
+    orderByExpressionType: AuthOfflineClientSessionOrderBy
+    filterInputTypeName: AuthOfflineClientSessionFilterInput
+    aggregate:
+      queryRootField: authOfflineClientSessionAggregate
+      subscription:
+        rootField: authOfflineClientSessionAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthOfflineClientSession
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

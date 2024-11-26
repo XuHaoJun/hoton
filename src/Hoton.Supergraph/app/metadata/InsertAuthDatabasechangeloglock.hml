@@ -1,0 +1,108 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthDatabasechangeloglockObject
+  fields:
+    - name: id
+      type: Int4!
+    - name: locked
+      type: Bool!
+    - name: lockedby
+      type: Varchar
+    - name: lockgranted
+      type: Timestamp
+  graphql:
+    typeName: InsertAuthDatabasechangeloglockObject
+    inputTypeName: InsertAuthDatabasechangeloglockObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_databasechangeloglock_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthDatabasechangeloglockObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - locked
+          - lockedby
+          - lockgranted
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthDatabasechangeloglockResponse
+  description: Responses from the 'insert_auth_databasechangeloglock' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthDatabasechangeloglock!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthDatabasechangeloglockResponse
+    inputTypeName: InsertAuthDatabasechangeloglockResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_databasechangeloglock_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthDatabasechangeloglockResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthDatabasechangeloglock
+  outputType: InsertAuthDatabasechangeloglockResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthDatabasechangeloglockObject!]!"
+    - name: postCheck
+      type: AuthDatabasechangeloglockBoolExp
+      description: Insert permission predicate over the 'auth_databasechangeloglock'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_databasechangeloglock
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthDatabasechangeloglock
+    rootFieldKind: Mutation
+  description: Insert into the auth_databasechangeloglock table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthDatabasechangeloglock
+  permissions:
+    - role: admin
+      allowExecution: true
+

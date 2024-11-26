@@ -1,0 +1,161 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthCompositeRole
+  fields:
+    - name: childRole
+      type: Varchar!
+    - name: composite
+      type: Varchar!
+  graphql:
+    typeName: AuthCompositeRole
+    inputTypeName: AuthCompositeRoleInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_composite_role
+      fieldMapping:
+        childRole:
+          column:
+            name: child_role
+        composite:
+          column:
+            name: composite
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthCompositeRole
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - childRole
+          - composite
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthCompositeRoleBoolExp
+  operand:
+    object:
+      type: AuthCompositeRole
+      comparableFields:
+        - fieldName: childRole
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: composite
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authKeycloakRole
+        - relationshipName: authKeycloakRoleByChildRole
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthCompositeRoleBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthCompositeRoleAggExp
+  operand:
+    object:
+      aggregatedType: AuthCompositeRole
+      aggregatableFields:
+        - fieldName: childRole
+          aggregateExpression: VarcharAggExp
+        - fieldName: composite
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthCompositeRoleAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthCompositeRole
+  objectType: AuthCompositeRole
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_composite_role
+  filterExpressionType: AuthCompositeRoleBoolExp
+  aggregateExpression: AuthCompositeRoleAggExp
+  orderableFields:
+    - fieldName: childRole
+      orderByDirections:
+        enableAll: true
+    - fieldName: composite
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authCompositeRole
+      subscription:
+        rootField: authCompositeRole
+    selectUniques:
+      - queryRootField: authCompositeRoleByConstraintCompositeRole
+        uniqueIdentifier:
+          - childRole
+          - composite
+        subscription:
+          rootField: authCompositeRoleByConstraintCompositeRole
+    orderByExpressionType: AuthCompositeRoleOrderBy
+    filterInputTypeName: AuthCompositeRoleFilterInput
+    aggregate:
+      queryRootField: authCompositeRoleAggregate
+      subscription:
+        rootField: authCompositeRoleAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthCompositeRole
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authKeycloakRole
+  sourceType: AuthCompositeRole
+  target:
+    model:
+      name: AuthKeycloakRole
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: composite
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authKeycloakRoleByChildRole
+  sourceType: AuthCompositeRole
+  target:
+    model:
+      name: AuthKeycloakRole
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: childRole
+      target:
+        modelField:
+          - fieldName: id
+

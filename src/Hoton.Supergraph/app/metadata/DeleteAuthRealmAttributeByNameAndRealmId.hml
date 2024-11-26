@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRealmAttributeByNameAndRealmIdResponse
+  description: Responses from the
+    'delete_auth_realm_attribute_by_name_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRealmAttributeByNameAndRealmIdResponse
+    inputTypeName: DeleteAuthRealmAttributeByNameAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_realm_attribute_by_name_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRealmAttributeByNameAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRealmAttributeByNameAndRealmId
+  outputType: DeleteAuthRealmAttributeByNameAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar!
+    - name: preCheck
+      type: AuthRealmAttributeBoolExp
+      description: Delete permission predicate over the 'auth_realm_attribute' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_realm_attribute_by_name_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRealmAttributeByNameAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_realm_attribute' collection using the
+    'name' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRealmAttributeByNameAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

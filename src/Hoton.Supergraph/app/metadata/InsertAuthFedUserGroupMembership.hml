@@ -1,0 +1,121 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserGroupMembershipObject
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthFedUserGroupMembershipObject
+    inputTypeName: InsertAuthFedUserGroupMembershipObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_group_membership_object
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserGroupMembershipObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - realmId
+          - storageProviderId
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserGroupMembershipResponse
+  description: Responses from the 'insert_auth_fed_user_group_membership' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserGroupMembership!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthFedUserGroupMembershipResponse
+    inputTypeName: InsertAuthFedUserGroupMembershipResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_group_membership_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserGroupMembershipResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthFedUserGroupMembership
+  outputType: InsertAuthFedUserGroupMembershipResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthFedUserGroupMembershipObject!]!"
+    - name: postCheck
+      type: AuthFedUserGroupMembershipBoolExp
+      description: Insert permission predicate over the
+        'auth_fed_user_group_membership' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_fed_user_group_membership
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthFedUserGroupMembership
+    rootFieldKind: Mutation
+  description: Insert into the auth_fed_user_group_membership table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthFedUserGroupMembership
+  permissions:
+    - role: admin
+      allowExecution: true
+

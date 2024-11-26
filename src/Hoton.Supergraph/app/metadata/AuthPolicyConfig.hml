@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthPolicyConfig
+  fields:
+    - name: name
+      type: Varchar!
+    - name: policyId
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: AuthPolicyConfig
+    inputTypeName: AuthPolicyConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_policy_config
+      fieldMapping:
+        name:
+          column:
+            name: name
+        policyId:
+          column:
+            name: policy_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthPolicyConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - policyId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthPolicyConfigBoolExp
+  operand:
+    object:
+      type: AuthPolicyConfig
+      comparableFields:
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: policyId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: TextBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceServerPolicy
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthPolicyConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthPolicyConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthPolicyConfig
+      aggregatableFields:
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: policyId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthPolicyConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthPolicyConfig
+  objectType: AuthPolicyConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_policy_config
+  filterExpressionType: AuthPolicyConfigBoolExp
+  aggregateExpression: AuthPolicyConfigAggExp
+  orderableFields:
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: policyId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authPolicyConfig
+      subscription:
+        rootField: authPolicyConfig
+    selectUniques:
+      - queryRootField: authPolicyConfigByConstraintDpc
+        uniqueIdentifier:
+          - name
+          - policyId
+        subscription:
+          rootField: authPolicyConfigByConstraintDpc
+    orderByExpressionType: AuthPolicyConfigOrderBy
+    filterInputTypeName: AuthPolicyConfigFilterInput
+    aggregate:
+      queryRootField: authPolicyConfigAggregate
+      subscription:
+        rootField: authPolicyConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthPolicyConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerPolicy
+  sourceType: AuthPolicyConfig
+  target:
+    model:
+      name: AuthResourceServerPolicy
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: policyId
+      target:
+        modelField:
+          - fieldName: id
+

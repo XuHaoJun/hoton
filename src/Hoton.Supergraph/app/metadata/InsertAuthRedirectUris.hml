@@ -1,0 +1,108 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRedirectUrisObject
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthRedirectUrisObject
+    inputTypeName: InsertAuthRedirectUrisObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_redirect_uris_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRedirectUrisObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRedirectUrisResponse
+  description: Responses from the 'insert_auth_redirect_uris' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRedirectUris!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRedirectUrisResponse
+    inputTypeName: InsertAuthRedirectUrisResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_redirect_uris_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRedirectUrisResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRedirectUris
+  outputType: InsertAuthRedirectUrisResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRedirectUrisObject!]!"
+    - name: postCheck
+      type: AuthRedirectUrisBoolExp
+      description: Insert permission predicate over the 'auth_redirect_uris' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_redirect_uris
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRedirectUris
+    rootFieldKind: Mutation
+  description: Insert into the auth_redirect_uris table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRedirectUris
+  permissions:
+    - role: admin
+      allowExecution: true
+

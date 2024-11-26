@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRevokedTokenByIdResponse
+  description: Responses from the 'delete_auth_revoked_token_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRevokedToken!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRevokedTokenByIdResponse
+    inputTypeName: DeleteAuthRevokedTokenByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_revoked_token_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRevokedTokenByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRevokedTokenById
+  outputType: DeleteAuthRevokedTokenByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthRevokedTokenBoolExp
+      description: Delete permission predicate over the 'auth_revoked_token' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_revoked_token_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRevokedTokenById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_revoked_token' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRevokedTokenById
+  permissions:
+    - role: admin
+      allowExecution: true
+

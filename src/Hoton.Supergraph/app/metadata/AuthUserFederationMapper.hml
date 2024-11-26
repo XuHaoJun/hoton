@@ -1,0 +1,222 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserFederationMapper
+  fields:
+    - name: federationMapperType
+      type: Varchar!
+    - name: federationProviderId
+      type: Varchar!
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+  graphql:
+    typeName: AuthUserFederationMapper
+    inputTypeName: AuthUserFederationMapperInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_federation_mapper
+      fieldMapping:
+        federationMapperType:
+          column:
+            name: federation_mapper_type
+        federationProviderId:
+          column:
+            name: federation_provider_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserFederationMapper
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - federationMapperType
+          - federationProviderId
+          - id
+          - name
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserFederationMapperBoolExp
+  operand:
+    object:
+      type: AuthUserFederationMapper
+      comparableFields:
+        - fieldName: federationMapperType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: federationProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserFederationProvider
+        - relationshipName: authRealm
+        - relationshipName: authUserFederationMapperConfigs
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserFederationMapperBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserFederationMapperAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserFederationMapper
+      aggregatableFields:
+        - fieldName: federationMapperType
+          aggregateExpression: VarcharAggExp
+        - fieldName: federationProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserFederationMapperAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserFederationMapper
+  objectType: AuthUserFederationMapper
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_federation_mapper
+  filterExpressionType: AuthUserFederationMapperBoolExp
+  aggregateExpression: AuthUserFederationMapperAggExp
+  orderableFields:
+    - fieldName: federationMapperType
+      orderByDirections:
+        enableAll: true
+    - fieldName: federationProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserFederationMapper
+      subscription:
+        rootField: authUserFederationMapper
+    selectUniques:
+      - queryRootField: authUserFederationMapperById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authUserFederationMapperById
+    orderByExpressionType: AuthUserFederationMapperOrderBy
+    filterInputTypeName: AuthUserFederationMapperFilterInput
+    aggregate:
+      queryRootField: authUserFederationMapperAggregate
+      subscription:
+        rootField: authUserFederationMapperAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserFederationMapper
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationProvider
+  sourceType: AuthUserFederationMapper
+  target:
+    model:
+      name: AuthUserFederationProvider
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: federationProviderId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthUserFederationMapper
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationMapperConfigs
+  sourceType: AuthUserFederationMapper
+  target:
+    model:
+      name: AuthUserFederationMapperConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserFederationMapperConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userFederationMapperId
+  graphql:
+    aggregateFieldName: authUserFederationMapperConfigsAggregate
+

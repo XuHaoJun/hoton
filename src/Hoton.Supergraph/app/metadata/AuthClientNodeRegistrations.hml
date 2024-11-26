@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthClientNodeRegistrations
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Int4
+  graphql:
+    typeName: AuthClientNodeRegistrations
+    inputTypeName: AuthClientNodeRegistrationsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_client_node_registrations
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthClientNodeRegistrations
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - name
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthClientNodeRegistrationsBoolExp
+  operand:
+    object:
+      type: AuthClientNodeRegistrations
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: Int4BoolExp
+      comparableRelationships:
+        - relationshipName: authClient
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthClientNodeRegistrationsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthClientNodeRegistrationsAggExp
+  operand:
+    object:
+      aggregatedType: AuthClientNodeRegistrations
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: Int4AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthClientNodeRegistrationsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthClientNodeRegistrations
+  objectType: AuthClientNodeRegistrations
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_client_node_registrations
+  filterExpressionType: AuthClientNodeRegistrationsBoolExp
+  aggregateExpression: AuthClientNodeRegistrationsAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authClientNodeRegistrations
+      subscription:
+        rootField: authClientNodeRegistrations
+    selectUniques:
+      - queryRootField: authClientNodeRegistrationsByConstraint84
+        uniqueIdentifier:
+          - clientId
+          - name
+        subscription:
+          rootField: authClientNodeRegistrationsByConstraint84
+    orderByExpressionType: AuthClientNodeRegistrationsOrderBy
+    filterInputTypeName: AuthClientNodeRegistrationsFilterInput
+    aggregate:
+      queryRootField: authClientNodeRegistrationsAggregate
+      subscription:
+        rootField: authClientNodeRegistrationsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthClientNodeRegistrations
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClient
+  sourceType: AuthClientNodeRegistrations
+  target:
+    model:
+      name: AuthClient
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: clientId
+      target:
+        modelField:
+          - fieldName: id
+

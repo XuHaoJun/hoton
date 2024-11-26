@@ -1,0 +1,133 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUsernameLoginFailureObject
+  fields:
+    - name: failedLoginNotBefore
+      type: Int4
+    - name: lastFailure
+      type: Int8
+    - name: lastIpFailure
+      type: Varchar
+    - name: numFailures
+      type: Int4
+    - name: realmId
+      type: Varchar!
+    - name: username
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthUsernameLoginFailureObject
+    inputTypeName: InsertAuthUsernameLoginFailureObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_username_login_failure_object
+      fieldMapping:
+        failedLoginNotBefore:
+          column:
+            name: failed_login_not_before
+        lastFailure:
+          column:
+            name: last_failure
+        lastIpFailure:
+          column:
+            name: last_ip_failure
+        numFailures:
+          column:
+            name: num_failures
+        realmId:
+          column:
+            name: realm_id
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUsernameLoginFailureObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - failedLoginNotBefore
+          - lastFailure
+          - lastIpFailure
+          - numFailures
+          - realmId
+          - username
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUsernameLoginFailureResponse
+  description: Responses from the 'insert_auth_username_login_failure' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUsernameLoginFailure!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthUsernameLoginFailureResponse
+    inputTypeName: InsertAuthUsernameLoginFailureResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_username_login_failure_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUsernameLoginFailureResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthUsernameLoginFailure
+  outputType: InsertAuthUsernameLoginFailureResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthUsernameLoginFailureObject!]!"
+    - name: postCheck
+      type: AuthUsernameLoginFailureBoolExp
+      description: Insert permission predicate over the 'auth_username_login_failure'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_username_login_failure
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthUsernameLoginFailure
+    rootFieldKind: Mutation
+  description: Insert into the auth_username_login_failure table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthUsernameLoginFailure
+  permissions:
+    - role: admin
+      allowExecution: true
+

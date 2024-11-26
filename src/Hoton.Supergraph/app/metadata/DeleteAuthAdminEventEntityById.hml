@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthAdminEventEntityByIdResponse
+  description: Responses from the 'delete_auth_admin_event_entity_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAdminEventEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthAdminEventEntityByIdResponse
+    inputTypeName: DeleteAuthAdminEventEntityByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_admin_event_entity_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthAdminEventEntityByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthAdminEventEntityById
+  outputType: DeleteAuthAdminEventEntityByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthAdminEventEntityBoolExp
+      description: Delete permission predicate over the 'auth_admin_event_entity' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_admin_event_entity_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthAdminEventEntityById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_admin_event_entity' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthAdminEventEntityById
+  permissions:
+    - role: admin
+      allowExecution: true
+

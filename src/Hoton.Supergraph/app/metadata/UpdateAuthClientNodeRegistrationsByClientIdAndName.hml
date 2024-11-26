@@ -1,0 +1,232 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientNodeRegistrationsClientId
+  description: Update the 'client_id' column in the
+    'auth_client_node_registrations' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientNodeRegistrationsClientId
+    inputTypeName: UpdateColumnAuthClientNodeRegistrationsClientIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_node_registrations_client_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientNodeRegistrationsClientId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientNodeRegistrationsName
+  description: Update the 'name' column in the 'auth_client_node_registrations' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientNodeRegistrationsName
+    inputTypeName: UpdateColumnAuthClientNodeRegistrationsNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_node_registrations_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientNodeRegistrationsName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientNodeRegistrationsValue
+  description: Update the 'value' column in the 'auth_client_node_registrations' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientNodeRegistrationsValue
+    inputTypeName: UpdateColumnAuthClientNodeRegistrationsValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_node_registrations_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientNodeRegistrationsValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientNodeRegistrationsByClientIdAndNameUpdateColumns
+  description: Update the columns of the 'auth_client_node_registrations' collection
+  fields:
+    - name: clientId
+      type: UpdateColumnAuthClientNodeRegistrationsClientId
+      description: Update the 'client_id' column in the
+        'auth_client_node_registrations' collection.
+    - name: name
+      type: UpdateColumnAuthClientNodeRegistrationsName
+      description: Update the 'name' column in the 'auth_client_node_registrations'
+        collection.
+    - name: value
+      type: UpdateColumnAuthClientNodeRegistrationsValue
+      description: Update the 'value' column in the 'auth_client_node_registrations'
+        collection.
+  graphql:
+    typeName: UpdateAuthClientNodeRegistrationsByClientIdAndNameUpdateColumns
+    inputTypeName: UpdateAuthClientNodeRegistrationsByClientIdAndNameUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_node_registrations_by_client_id_and_name_update_columns
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientNodeRegistrationsByClientIdAndNameUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - name
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientNodeRegistrationsByClientIdAndNameResponse
+  description: Responses from the
+    'update_auth_client_node_registrations_by_client_id_and_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientNodeRegistrations!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthClientNodeRegistrationsByClientIdAndNameResponse
+    inputTypeName: UpdateAuthClientNodeRegistrationsByClientIdAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_node_registrations_by_client_id_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientNodeRegistrationsByClientIdAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthClientNodeRegistrationsByClientIdAndName
+  outputType: UpdateAuthClientNodeRegistrationsByClientIdAndNameResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyName
+      type: Varchar!
+    - name: postCheck
+      type: AuthClientNodeRegistrationsBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_client_node_registrations' collection
+    - name: preCheck
+      type: AuthClientNodeRegistrationsBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_client_node_registrations' collection
+    - name: updateColumns
+      type: UpdateAuthClientNodeRegistrationsByClientIdAndNameUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_client_node_registrations_by_client_id_and_name
+    argumentMapping:
+      keyClientId: key_client_id
+      keyName: key_name
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthClientNodeRegistrationsByClientIdAndName
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_client_node_registrations' collection
+    using the 'client_id' and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthClientNodeRegistrationsByClientIdAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

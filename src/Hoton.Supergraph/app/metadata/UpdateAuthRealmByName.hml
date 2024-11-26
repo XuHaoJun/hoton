@@ -1,0 +1,490 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRealmByNameUpdateColumns
+  description: Update the columns of the 'auth_realm' collection
+  fields:
+    - name: accessCodeLifespan
+      type: UpdateColumnAuthRealmAccessCodeLifespan
+      description: Update the 'access_code_lifespan' column in the 'auth_realm' collection.
+    - name: accessTokenLifeImplicit
+      type: UpdateColumnAuthRealmAccessTokenLifeImplicit
+      description: Update the 'access_token_life_implicit' column in the 'auth_realm'
+        collection.
+    - name: accessTokenLifespan
+      type: UpdateColumnAuthRealmAccessTokenLifespan
+      description: Update the 'access_token_lifespan' column in the 'auth_realm' collection.
+    - name: accountTheme
+      type: UpdateColumnAuthRealmAccountTheme
+      description: Update the 'account_theme' column in the 'auth_realm' collection.
+    - name: adminEventsDetailsEnabled
+      type: UpdateColumnAuthRealmAdminEventsDetailsEnabled
+      description: Update the 'admin_events_details_enabled' column in the
+        'auth_realm' collection.
+    - name: adminEventsEnabled
+      type: UpdateColumnAuthRealmAdminEventsEnabled
+      description: Update the 'admin_events_enabled' column in the 'auth_realm' collection.
+    - name: adminTheme
+      type: UpdateColumnAuthRealmAdminTheme
+      description: Update the 'admin_theme' column in the 'auth_realm' collection.
+    - name: allowUserManagedAccess
+      type: UpdateColumnAuthRealmAllowUserManagedAccess
+      description: Update the 'allow_user_managed_access' column in the 'auth_realm'
+        collection.
+    - name: browserFlow
+      type: UpdateColumnAuthRealmBrowserFlow
+      description: Update the 'browser_flow' column in the 'auth_realm' collection.
+    - name: clientAuthFlow
+      type: UpdateColumnAuthRealmClientAuthFlow
+      description: Update the 'client_auth_flow' column in the 'auth_realm' collection.
+    - name: defaultLocale
+      type: UpdateColumnAuthRealmDefaultLocale
+      description: Update the 'default_locale' column in the 'auth_realm' collection.
+    - name: defaultRole
+      type: UpdateColumnAuthRealmDefaultRole
+      description: Update the 'default_role' column in the 'auth_realm' collection.
+    - name: directGrantFlow
+      type: UpdateColumnAuthRealmDirectGrantFlow
+      description: Update the 'direct_grant_flow' column in the 'auth_realm' collection.
+    - name: dockerAuthFlow
+      type: UpdateColumnAuthRealmDockerAuthFlow
+      description: Update the 'docker_auth_flow' column in the 'auth_realm' collection.
+    - name: duplicateEmailsAllowed
+      type: UpdateColumnAuthRealmDuplicateEmailsAllowed
+      description: Update the 'duplicate_emails_allowed' column in the 'auth_realm'
+        collection.
+    - name: editUsernameAllowed
+      type: UpdateColumnAuthRealmEditUsernameAllowed
+      description: Update the 'edit_username_allowed' column in the 'auth_realm' collection.
+    - name: emailTheme
+      type: UpdateColumnAuthRealmEmailTheme
+      description: Update the 'email_theme' column in the 'auth_realm' collection.
+    - name: enabled
+      type: UpdateColumnAuthRealmEnabled
+      description: Update the 'enabled' column in the 'auth_realm' collection.
+    - name: eventsEnabled
+      type: UpdateColumnAuthRealmEventsEnabled
+      description: Update the 'events_enabled' column in the 'auth_realm' collection.
+    - name: eventsExpiration
+      type: UpdateColumnAuthRealmEventsExpiration
+      description: Update the 'events_expiration' column in the 'auth_realm' collection.
+    - name: id
+      type: UpdateColumnAuthRealmId
+      description: Update the 'id' column in the 'auth_realm' collection.
+    - name: internationalizationEnabled
+      type: UpdateColumnAuthRealmInternationalizationEnabled
+      description: Update the 'internationalization_enabled' column in the
+        'auth_realm' collection.
+    - name: loginLifespan
+      type: UpdateColumnAuthRealmLoginLifespan
+      description: Update the 'login_lifespan' column in the 'auth_realm' collection.
+    - name: loginTheme
+      type: UpdateColumnAuthRealmLoginTheme
+      description: Update the 'login_theme' column in the 'auth_realm' collection.
+    - name: loginWithEmailAllowed
+      type: UpdateColumnAuthRealmLoginWithEmailAllowed
+      description: Update the 'login_with_email_allowed' column in the 'auth_realm'
+        collection.
+    - name: masterAdminClient
+      type: UpdateColumnAuthRealmMasterAdminClient
+      description: Update the 'master_admin_client' column in the 'auth_realm' collection.
+    - name: name
+      type: UpdateColumnAuthRealmName
+      description: Update the 'name' column in the 'auth_realm' collection.
+    - name: notBefore
+      type: UpdateColumnAuthRealmNotBefore
+      description: Update the 'not_before' column in the 'auth_realm' collection.
+    - name: offlineSessionIdleTimeout
+      type: UpdateColumnAuthRealmOfflineSessionIdleTimeout
+      description: Update the 'offline_session_idle_timeout' column in the
+        'auth_realm' collection.
+    - name: otpPolicyAlg
+      type: UpdateColumnAuthRealmOtpPolicyAlg
+      description: Update the 'otp_policy_alg' column in the 'auth_realm' collection.
+    - name: otpPolicyCounter
+      type: UpdateColumnAuthRealmOtpPolicyCounter
+      description: Update the 'otp_policy_counter' column in the 'auth_realm' collection.
+    - name: otpPolicyDigits
+      type: UpdateColumnAuthRealmOtpPolicyDigits
+      description: Update the 'otp_policy_digits' column in the 'auth_realm' collection.
+    - name: otpPolicyPeriod
+      type: UpdateColumnAuthRealmOtpPolicyPeriod
+      description: Update the 'otp_policy_period' column in the 'auth_realm' collection.
+    - name: otpPolicyType
+      type: UpdateColumnAuthRealmOtpPolicyType
+      description: Update the 'otp_policy_type' column in the 'auth_realm' collection.
+    - name: otpPolicyWindow
+      type: UpdateColumnAuthRealmOtpPolicyWindow
+      description: Update the 'otp_policy_window' column in the 'auth_realm' collection.
+    - name: passwordPolicy
+      type: UpdateColumnAuthRealmPasswordPolicy
+      description: Update the 'password_policy' column in the 'auth_realm' collection.
+    - name: refreshTokenMaxReuse
+      type: UpdateColumnAuthRealmRefreshTokenMaxReuse
+      description: Update the 'refresh_token_max_reuse' column in the 'auth_realm'
+        collection.
+    - name: regEmailAsUsername
+      type: UpdateColumnAuthRealmRegEmailAsUsername
+      description: Update the 'reg_email_as_username' column in the 'auth_realm' collection.
+    - name: registrationAllowed
+      type: UpdateColumnAuthRealmRegistrationAllowed
+      description: Update the 'registration_allowed' column in the 'auth_realm' collection.
+    - name: registrationFlow
+      type: UpdateColumnAuthRealmRegistrationFlow
+      description: Update the 'registration_flow' column in the 'auth_realm' collection.
+    - name: rememberMe
+      type: UpdateColumnAuthRealmRememberMe
+      description: Update the 'remember_me' column in the 'auth_realm' collection.
+    - name: resetCredentialsFlow
+      type: UpdateColumnAuthRealmResetCredentialsFlow
+      description: Update the 'reset_credentials_flow' column in the 'auth_realm'
+        collection.
+    - name: resetPasswordAllowed
+      type: UpdateColumnAuthRealmResetPasswordAllowed
+      description: Update the 'reset_password_allowed' column in the 'auth_realm'
+        collection.
+    - name: revokeRefreshToken
+      type: UpdateColumnAuthRealmRevokeRefreshToken
+      description: Update the 'revoke_refresh_token' column in the 'auth_realm' collection.
+    - name: social
+      type: UpdateColumnAuthRealmSocial
+      description: Update the 'social' column in the 'auth_realm' collection.
+    - name: sslRequired
+      type: UpdateColumnAuthRealmSslRequired
+      description: Update the 'ssl_required' column in the 'auth_realm' collection.
+    - name: ssoIdleTimeout
+      type: UpdateColumnAuthRealmSsoIdleTimeout
+      description: Update the 'sso_idle_timeout' column in the 'auth_realm' collection.
+    - name: ssoIdleTimeoutRememberMe
+      type: UpdateColumnAuthRealmSsoIdleTimeoutRememberMe
+      description: Update the 'sso_idle_timeout_remember_me' column in the
+        'auth_realm' collection.
+    - name: ssoMaxLifespan
+      type: UpdateColumnAuthRealmSsoMaxLifespan
+      description: Update the 'sso_max_lifespan' column in the 'auth_realm' collection.
+    - name: ssoMaxLifespanRememberMe
+      type: UpdateColumnAuthRealmSsoMaxLifespanRememberMe
+      description: Update the 'sso_max_lifespan_remember_me' column in the
+        'auth_realm' collection.
+    - name: updateProfileOnSocLogin
+      type: UpdateColumnAuthRealmUpdateProfileOnSocLogin
+      description: Update the 'update_profile_on_soc_login' column in the 'auth_realm'
+        collection.
+    - name: userActionLifespan
+      type: UpdateColumnAuthRealmUserActionLifespan
+      description: Update the 'user_action_lifespan' column in the 'auth_realm' collection.
+    - name: verifyEmail
+      type: UpdateColumnAuthRealmVerifyEmail
+      description: Update the 'verify_email' column in the 'auth_realm' collection.
+  graphql:
+    typeName: UpdateAuthRealmByNameUpdateColumns
+    inputTypeName: UpdateAuthRealmByNameUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_realm_by_name_update_columns
+      fieldMapping:
+        accessCodeLifespan:
+          column:
+            name: access_code_lifespan
+        accessTokenLifeImplicit:
+          column:
+            name: access_token_life_implicit
+        accessTokenLifespan:
+          column:
+            name: access_token_lifespan
+        accountTheme:
+          column:
+            name: account_theme
+        adminEventsDetailsEnabled:
+          column:
+            name: admin_events_details_enabled
+        adminEventsEnabled:
+          column:
+            name: admin_events_enabled
+        adminTheme:
+          column:
+            name: admin_theme
+        allowUserManagedAccess:
+          column:
+            name: allow_user_managed_access
+        browserFlow:
+          column:
+            name: browser_flow
+        clientAuthFlow:
+          column:
+            name: client_auth_flow
+        defaultLocale:
+          column:
+            name: default_locale
+        defaultRole:
+          column:
+            name: default_role
+        directGrantFlow:
+          column:
+            name: direct_grant_flow
+        dockerAuthFlow:
+          column:
+            name: docker_auth_flow
+        duplicateEmailsAllowed:
+          column:
+            name: duplicate_emails_allowed
+        editUsernameAllowed:
+          column:
+            name: edit_username_allowed
+        emailTheme:
+          column:
+            name: email_theme
+        enabled:
+          column:
+            name: enabled
+        eventsEnabled:
+          column:
+            name: events_enabled
+        eventsExpiration:
+          column:
+            name: events_expiration
+        id:
+          column:
+            name: id
+        internationalizationEnabled:
+          column:
+            name: internationalization_enabled
+        loginLifespan:
+          column:
+            name: login_lifespan
+        loginTheme:
+          column:
+            name: login_theme
+        loginWithEmailAllowed:
+          column:
+            name: login_with_email_allowed
+        masterAdminClient:
+          column:
+            name: master_admin_client
+        name:
+          column:
+            name: name
+        notBefore:
+          column:
+            name: not_before
+        offlineSessionIdleTimeout:
+          column:
+            name: offline_session_idle_timeout
+        otpPolicyAlg:
+          column:
+            name: otp_policy_alg
+        otpPolicyCounter:
+          column:
+            name: otp_policy_counter
+        otpPolicyDigits:
+          column:
+            name: otp_policy_digits
+        otpPolicyPeriod:
+          column:
+            name: otp_policy_period
+        otpPolicyType:
+          column:
+            name: otp_policy_type
+        otpPolicyWindow:
+          column:
+            name: otp_policy_window
+        passwordPolicy:
+          column:
+            name: password_policy
+        refreshTokenMaxReuse:
+          column:
+            name: refresh_token_max_reuse
+        regEmailAsUsername:
+          column:
+            name: reg_email_as_username
+        registrationAllowed:
+          column:
+            name: registration_allowed
+        registrationFlow:
+          column:
+            name: registration_flow
+        rememberMe:
+          column:
+            name: remember_me
+        resetCredentialsFlow:
+          column:
+            name: reset_credentials_flow
+        resetPasswordAllowed:
+          column:
+            name: reset_password_allowed
+        revokeRefreshToken:
+          column:
+            name: revoke_refresh_token
+        social:
+          column:
+            name: social
+        sslRequired:
+          column:
+            name: ssl_required
+        ssoIdleTimeout:
+          column:
+            name: sso_idle_timeout
+        ssoIdleTimeoutRememberMe:
+          column:
+            name: sso_idle_timeout_remember_me
+        ssoMaxLifespan:
+          column:
+            name: sso_max_lifespan
+        ssoMaxLifespanRememberMe:
+          column:
+            name: sso_max_lifespan_remember_me
+        updateProfileOnSocLogin:
+          column:
+            name: update_profile_on_soc_login
+        userActionLifespan:
+          column:
+            name: user_action_lifespan
+        verifyEmail:
+          column:
+            name: verify_email
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRealmByNameUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - accessCodeLifespan
+          - accessTokenLifeImplicit
+          - accessTokenLifespan
+          - accountTheme
+          - adminEventsDetailsEnabled
+          - adminEventsEnabled
+          - adminTheme
+          - allowUserManagedAccess
+          - browserFlow
+          - clientAuthFlow
+          - defaultLocale
+          - defaultRole
+          - directGrantFlow
+          - dockerAuthFlow
+          - duplicateEmailsAllowed
+          - editUsernameAllowed
+          - emailTheme
+          - enabled
+          - eventsEnabled
+          - eventsExpiration
+          - id
+          - internationalizationEnabled
+          - loginLifespan
+          - loginTheme
+          - loginWithEmailAllowed
+          - masterAdminClient
+          - name
+          - notBefore
+          - offlineSessionIdleTimeout
+          - otpPolicyAlg
+          - otpPolicyCounter
+          - otpPolicyDigits
+          - otpPolicyPeriod
+          - otpPolicyType
+          - otpPolicyWindow
+          - passwordPolicy
+          - refreshTokenMaxReuse
+          - regEmailAsUsername
+          - registrationAllowed
+          - registrationFlow
+          - rememberMe
+          - resetCredentialsFlow
+          - resetPasswordAllowed
+          - revokeRefreshToken
+          - social
+          - sslRequired
+          - ssoIdleTimeout
+          - ssoIdleTimeoutRememberMe
+          - ssoMaxLifespan
+          - ssoMaxLifespanRememberMe
+          - updateProfileOnSocLogin
+          - userActionLifespan
+          - verifyEmail
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRealmByNameResponse
+  description: Responses from the 'update_auth_realm_by_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealm!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthRealmByNameResponse
+    inputTypeName: UpdateAuthRealmByNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_realm_by_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRealmByNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthRealmByName
+  outputType: UpdateAuthRealmByNameResponse!
+  arguments:
+    - name: keyName
+      type: Varchar
+    - name: postCheck
+      type: AuthRealmBoolExp
+      description: Update permission post-condition predicate over the 'auth_realm'
+        collection
+    - name: preCheck
+      type: AuthRealmBoolExp
+      description: Update permission pre-condition predicate over the 'auth_realm'
+        collection
+    - name: updateColumns
+      type: UpdateAuthRealmByNameUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_realm_by_name
+    argumentMapping:
+      keyName: key_name
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthRealmByName
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_realm' collection using the 'name' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthRealmByName
+  permissions:
+    - role: admin
+      allowExecution: true
+

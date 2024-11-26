@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthUserEntityByEmailConstraintAndRealmIdResponse
+  description: Responses from the
+    'delete_auth_user_entity_by_email_constraint_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthUserEntityByEmailConstraintAndRealmIdResponse
+    inputTypeName: DeleteAuthUserEntityByEmailConstraintAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_user_entity_by_email_constraint_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthUserEntityByEmailConstraintAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthUserEntityByEmailConstraintAndRealmId
+  outputType: DeleteAuthUserEntityByEmailConstraintAndRealmIdResponse!
+  arguments:
+    - name: keyEmailConstraint
+      type: Varchar
+    - name: keyRealmId
+      type: Varchar
+    - name: preCheck
+      type: AuthUserEntityBoolExp
+      description: Delete permission predicate over the 'auth_user_entity' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_user_entity_by_email_constraint_and_realm_id
+    argumentMapping:
+      keyEmailConstraint: key_email_constraint
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthUserEntityByEmailConstraintAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_user_entity' collection using the
+    'email_constraint' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthUserEntityByEmailConstraintAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

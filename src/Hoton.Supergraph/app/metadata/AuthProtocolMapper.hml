@@ -1,0 +1,235 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthProtocolMapper
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: clientScopeId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: protocol
+      type: Varchar!
+    - name: protocolMapperName
+      type: Varchar!
+  graphql:
+    typeName: AuthProtocolMapper
+    inputTypeName: AuthProtocolMapperInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_protocol_mapper
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientScopeId:
+          column:
+            name: client_scope_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        protocol:
+          column:
+            name: protocol
+        protocolMapperName:
+          column:
+            name: protocol_mapper_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthProtocolMapper
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientScopeId
+          - id
+          - name
+          - protocol
+          - protocolMapperName
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthProtocolMapperBoolExp
+  operand:
+    object:
+      type: AuthProtocolMapper
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientScopeId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: protocol
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: protocolMapperName
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authClientScope
+        - relationshipName: authClient
+        - relationshipName: authProtocolMapperConfigs
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthProtocolMapperBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthProtocolMapperAggExp
+  operand:
+    object:
+      aggregatedType: AuthProtocolMapper
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientScopeId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: protocol
+          aggregateExpression: VarcharAggExp
+        - fieldName: protocolMapperName
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthProtocolMapperAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthProtocolMapper
+  objectType: AuthProtocolMapper
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_protocol_mapper
+  filterExpressionType: AuthProtocolMapperBoolExp
+  aggregateExpression: AuthProtocolMapperAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientScopeId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: protocol
+      orderByDirections:
+        enableAll: true
+    - fieldName: protocolMapperName
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authProtocolMapper
+      subscription:
+        rootField: authProtocolMapper
+    selectUniques:
+      - queryRootField: authProtocolMapperById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authProtocolMapperById
+    orderByExpressionType: AuthProtocolMapperOrderBy
+    filterInputTypeName: AuthProtocolMapperFilterInput
+    aggregate:
+      queryRootField: authProtocolMapperAggregate
+      subscription:
+        rootField: authProtocolMapperAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthProtocolMapper
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClientScope
+  sourceType: AuthProtocolMapper
+  target:
+    model:
+      name: AuthClientScope
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: clientScopeId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClient
+  sourceType: AuthProtocolMapper
+  target:
+    model:
+      name: AuthClient
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: clientId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authProtocolMapperConfigs
+  sourceType: AuthProtocolMapper
+  target:
+    model:
+      name: AuthProtocolMapperConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthProtocolMapperConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: protocolMapperId
+  graphql:
+    aggregateFieldName: authProtocolMapperConfigsAggregate
+

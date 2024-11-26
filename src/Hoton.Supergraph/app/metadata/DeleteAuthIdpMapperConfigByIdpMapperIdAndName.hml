@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthIdpMapperConfigByIdpMapperIdAndNameResponse
+  description: Responses from the
+    'delete_auth_idp_mapper_config_by_idp_mapper_id_and_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdpMapperConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthIdpMapperConfigByIdpMapperIdAndNameResponse
+    inputTypeName: DeleteAuthIdpMapperConfigByIdpMapperIdAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_idp_mapper_config_by_idp_mapper_id_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthIdpMapperConfigByIdpMapperIdAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthIdpMapperConfigByIdpMapperIdAndName
+  outputType: DeleteAuthIdpMapperConfigByIdpMapperIdAndNameResponse!
+  arguments:
+    - name: keyIdpMapperId
+      type: Varchar!
+    - name: keyName
+      type: Varchar!
+    - name: preCheck
+      type: AuthIdpMapperConfigBoolExp
+      description: Delete permission predicate over the 'auth_idp_mapper_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_idp_mapper_config_by_idp_mapper_id_and_name
+    argumentMapping:
+      keyIdpMapperId: key_idp_mapper_id
+      keyName: key_name
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthIdpMapperConfigByIdpMapperIdAndName
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_idp_mapper_config' collection using the
+    'idp_mapper_id' and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthIdpMapperConfigByIdpMapperIdAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

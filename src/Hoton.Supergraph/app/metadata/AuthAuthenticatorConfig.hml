@@ -1,0 +1,154 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthAuthenticatorConfig
+  fields:
+    - name: alias
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: AuthAuthenticatorConfig
+    inputTypeName: AuthAuthenticatorConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_authenticator_config
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthAuthenticatorConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - id
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthAuthenticatorConfigBoolExp
+  operand:
+    object:
+      type: AuthAuthenticatorConfig
+      comparableFields:
+        - fieldName: alias
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthAuthenticatorConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthAuthenticatorConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthAuthenticatorConfig
+      aggregatableFields:
+        - fieldName: alias
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthAuthenticatorConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthAuthenticatorConfig
+  objectType: AuthAuthenticatorConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_authenticator_config
+  filterExpressionType: AuthAuthenticatorConfigBoolExp
+  aggregateExpression: AuthAuthenticatorConfigAggExp
+  orderableFields:
+    - fieldName: alias
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authAuthenticatorConfig
+      subscription:
+        rootField: authAuthenticatorConfig
+    selectUniques:
+      - queryRootField: authAuthenticatorConfigById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authAuthenticatorConfigById
+    orderByExpressionType: AuthAuthenticatorConfigOrderBy
+    filterInputTypeName: AuthAuthenticatorConfigFilterInput
+    aggregate:
+      queryRootField: authAuthenticatorConfigAggregate
+      subscription:
+        rootField: authAuthenticatorConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthAuthenticatorConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthAuthenticatorConfig
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

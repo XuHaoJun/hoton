@@ -1,0 +1,355 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUsernameLoginFailureFailedLoginNotBefore
+  description: Update the 'failed_login_not_before' column in the
+    'auth_username_login_failure' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUsernameLoginFailureFailedLoginNotBefore
+    inputTypeName: UpdateColumnAuthUsernameLoginFailureFailedLoginNotBeforeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_username_login_failure_failed_login_not_before
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUsernameLoginFailureFailedLoginNotBefore
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUsernameLoginFailureLastFailure
+  description: Update the 'last_failure' column in the
+    'auth_username_login_failure' collection
+  fields:
+    - name: set
+      type: Int8
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUsernameLoginFailureLastFailure
+    inputTypeName: UpdateColumnAuthUsernameLoginFailureLastFailureInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_username_login_failure_last_failure
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUsernameLoginFailureLastFailure
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUsernameLoginFailureLastIpFailure
+  description: Update the 'last_ip_failure' column in the
+    'auth_username_login_failure' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUsernameLoginFailureLastIpFailure
+    inputTypeName: UpdateColumnAuthUsernameLoginFailureLastIpFailureInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_username_login_failure_last_ip_failure
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUsernameLoginFailureLastIpFailure
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUsernameLoginFailureNumFailures
+  description: Update the 'num_failures' column in the
+    'auth_username_login_failure' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUsernameLoginFailureNumFailures
+    inputTypeName: UpdateColumnAuthUsernameLoginFailureNumFailuresInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_username_login_failure_num_failures
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUsernameLoginFailureNumFailures
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUsernameLoginFailureRealmId
+  description: Update the 'realm_id' column in the 'auth_username_login_failure' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUsernameLoginFailureRealmId
+    inputTypeName: UpdateColumnAuthUsernameLoginFailureRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_username_login_failure_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUsernameLoginFailureRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUsernameLoginFailureUsername
+  description: Update the 'username' column in the 'auth_username_login_failure' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUsernameLoginFailureUsername
+    inputTypeName: UpdateColumnAuthUsernameLoginFailureUsernameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_username_login_failure_username
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUsernameLoginFailureUsername
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameUpdateColumns
+  description: Update the columns of the 'auth_username_login_failure' collection
+  fields:
+    - name: failedLoginNotBefore
+      type: UpdateColumnAuthUsernameLoginFailureFailedLoginNotBefore
+      description: Update the 'failed_login_not_before' column in the
+        'auth_username_login_failure' collection.
+    - name: lastFailure
+      type: UpdateColumnAuthUsernameLoginFailureLastFailure
+      description: Update the 'last_failure' column in the
+        'auth_username_login_failure' collection.
+    - name: lastIpFailure
+      type: UpdateColumnAuthUsernameLoginFailureLastIpFailure
+      description: Update the 'last_ip_failure' column in the
+        'auth_username_login_failure' collection.
+    - name: numFailures
+      type: UpdateColumnAuthUsernameLoginFailureNumFailures
+      description: Update the 'num_failures' column in the
+        'auth_username_login_failure' collection.
+    - name: realmId
+      type: UpdateColumnAuthUsernameLoginFailureRealmId
+      description: Update the 'realm_id' column in the 'auth_username_login_failure'
+        collection.
+    - name: username
+      type: UpdateColumnAuthUsernameLoginFailureUsername
+      description: Update the 'username' column in the 'auth_username_login_failure'
+        collection.
+  graphql:
+    typeName: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameUpdateColumns
+    inputTypeName: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_username_login_failure_by_realm_id_and_username_update_columns
+      fieldMapping:
+        failedLoginNotBefore:
+          column:
+            name: failed_login_not_before
+        lastFailure:
+          column:
+            name: last_failure
+        lastIpFailure:
+          column:
+            name: last_ip_failure
+        numFailures:
+          column:
+            name: num_failures
+        realmId:
+          column:
+            name: realm_id
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - failedLoginNotBefore
+          - lastFailure
+          - lastIpFailure
+          - numFailures
+          - realmId
+          - username
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameResponse
+  description: Responses from the
+    'update_auth_username_login_failure_by_realm_id_and_username' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUsernameLoginFailure!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameResponse
+    inputTypeName: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_username_login_failure_by_realm_id_and_username_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthUsernameLoginFailureByRealmIdAndUsername
+  outputType: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameResponse!
+  arguments:
+    - name: keyRealmId
+      type: Varchar!
+    - name: keyUsername
+      type: Varchar!
+    - name: postCheck
+      type: AuthUsernameLoginFailureBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_username_login_failure' collection
+    - name: preCheck
+      type: AuthUsernameLoginFailureBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_username_login_failure' collection
+    - name: updateColumns
+      type: UpdateAuthUsernameLoginFailureByRealmIdAndUsernameUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_username_login_failure_by_realm_id_and_username
+    argumentMapping:
+      keyRealmId: key_realm_id
+      keyUsername: key_username
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthUsernameLoginFailureByRealmIdAndUsername
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_username_login_failure' collection
+    using the 'realm_id' and 'username' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthUsernameLoginFailureByRealmIdAndUsername
+  permissions:
+    - role: admin
+      allowExecution: true
+

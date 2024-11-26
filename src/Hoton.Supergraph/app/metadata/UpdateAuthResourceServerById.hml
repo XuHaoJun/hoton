@@ -1,0 +1,268 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthResourceServerAllowRsRemoteMgmt
+  description: Update the 'allow_rs_remote_mgmt' column in the
+    'auth_resource_server' collection
+  fields:
+    - name: set
+      type: Bool!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthResourceServerAllowRsRemoteMgmt
+    inputTypeName: UpdateColumnAuthResourceServerAllowRsRemoteMgmtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_resource_server_allow_rs_remote_mgmt
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthResourceServerAllowRsRemoteMgmt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthResourceServerDecisionStrategy
+  description: Update the 'decision_strategy' column in the 'auth_resource_server'
+    collection
+  fields:
+    - name: set
+      type: Int2!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthResourceServerDecisionStrategy
+    inputTypeName: UpdateColumnAuthResourceServerDecisionStrategyInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_resource_server_decision_strategy
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthResourceServerDecisionStrategy
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthResourceServerId
+  description: Update the 'id' column in the 'auth_resource_server' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthResourceServerId
+    inputTypeName: UpdateColumnAuthResourceServerIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_resource_server_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthResourceServerId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthResourceServerPolicyEnforceMode
+  description: Update the 'policy_enforce_mode' column in the
+    'auth_resource_server' collection
+  fields:
+    - name: set
+      type: Int2!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthResourceServerPolicyEnforceMode
+    inputTypeName: UpdateColumnAuthResourceServerPolicyEnforceModeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_resource_server_policy_enforce_mode
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthResourceServerPolicyEnforceMode
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerByIdUpdateColumns
+  description: Update the columns of the 'auth_resource_server' collection
+  fields:
+    - name: allowRsRemoteMgmt
+      type: UpdateColumnAuthResourceServerAllowRsRemoteMgmt
+      description: Update the 'allow_rs_remote_mgmt' column in the
+        'auth_resource_server' collection.
+    - name: decisionStrategy
+      type: UpdateColumnAuthResourceServerDecisionStrategy
+      description: Update the 'decision_strategy' column in the 'auth_resource_server'
+        collection.
+    - name: id
+      type: UpdateColumnAuthResourceServerId
+      description: Update the 'id' column in the 'auth_resource_server' collection.
+    - name: policyEnforceMode
+      type: UpdateColumnAuthResourceServerPolicyEnforceMode
+      description: Update the 'policy_enforce_mode' column in the
+        'auth_resource_server' collection.
+  graphql:
+    typeName: UpdateAuthResourceServerByIdUpdateColumns
+    inputTypeName: UpdateAuthResourceServerByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_by_id_update_columns
+      fieldMapping:
+        allowRsRemoteMgmt:
+          column:
+            name: allow_rs_remote_mgmt
+        decisionStrategy:
+          column:
+            name: decision_strategy
+        id:
+          column:
+            name: id
+        policyEnforceMode:
+          column:
+            name: policy_enforce_mode
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - allowRsRemoteMgmt
+          - decisionStrategy
+          - id
+          - policyEnforceMode
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerByIdResponse
+  description: Responses from the 'update_auth_resource_server_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServer!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthResourceServerByIdResponse
+    inputTypeName: UpdateAuthResourceServerByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthResourceServerById
+  outputType: UpdateAuthResourceServerByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthResourceServerBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_resource_server' collection
+    - name: preCheck
+      type: AuthResourceServerBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_resource_server' collection
+    - name: updateColumns
+      type: UpdateAuthResourceServerByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_resource_server_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthResourceServerById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_resource_server' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthResourceServerById
+  permissions:
+    - role: admin
+      allowExecution: true
+

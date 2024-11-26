@@ -1,0 +1,76 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthOrgDomainByIdAndNameResponse
+  description: Responses from the 'delete_auth_org_domain_by_id_and_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOrgDomain!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthOrgDomainByIdAndNameResponse
+    inputTypeName: DeleteAuthOrgDomainByIdAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_org_domain_by_id_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthOrgDomainByIdAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthOrgDomainByIdAndName
+  outputType: DeleteAuthOrgDomainByIdAndNameResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: keyName
+      type: Varchar!
+    - name: preCheck
+      type: AuthOrgDomainBoolExp
+      description: Delete permission predicate over the 'auth_org_domain' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_org_domain_by_id_and_name
+    argumentMapping:
+      keyId: key_id
+      keyName: key_name
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthOrgDomainByIdAndName
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_org_domain' collection using the 'id'
+    and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthOrgDomainByIdAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,175 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUsernameLoginFailure
+  fields:
+    - name: failedLoginNotBefore
+      type: Int4
+    - name: lastFailure
+      type: Int8
+    - name: lastIpFailure
+      type: Varchar
+    - name: numFailures
+      type: Int4
+    - name: realmId
+      type: Varchar!
+    - name: username
+      type: Varchar!
+  graphql:
+    typeName: AuthUsernameLoginFailure
+    inputTypeName: AuthUsernameLoginFailureInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_username_login_failure
+      fieldMapping:
+        failedLoginNotBefore:
+          column:
+            name: failed_login_not_before
+        lastFailure:
+          column:
+            name: last_failure
+        lastIpFailure:
+          column:
+            name: last_ip_failure
+        numFailures:
+          column:
+            name: num_failures
+        realmId:
+          column:
+            name: realm_id
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUsernameLoginFailure
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - failedLoginNotBefore
+          - lastFailure
+          - lastIpFailure
+          - numFailures
+          - realmId
+          - username
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUsernameLoginFailureBoolExp
+  operand:
+    object:
+      type: AuthUsernameLoginFailure
+      comparableFields:
+        - fieldName: failedLoginNotBefore
+          booleanExpressionType: Int4BoolExp
+        - fieldName: lastFailure
+          booleanExpressionType: Int8BoolExp
+        - fieldName: lastIpFailure
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: numFailures
+          booleanExpressionType: Int4BoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: username
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUsernameLoginFailureBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUsernameLoginFailureAggExp
+  operand:
+    object:
+      aggregatedType: AuthUsernameLoginFailure
+      aggregatableFields:
+        - fieldName: failedLoginNotBefore
+          aggregateExpression: Int4AggExp
+        - fieldName: lastFailure
+          aggregateExpression: Int8AggExp
+        - fieldName: lastIpFailure
+          aggregateExpression: VarcharAggExp
+        - fieldName: numFailures
+          aggregateExpression: Int4AggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: username
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUsernameLoginFailureAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUsernameLoginFailure
+  objectType: AuthUsernameLoginFailure
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_username_login_failure
+  filterExpressionType: AuthUsernameLoginFailureBoolExp
+  aggregateExpression: AuthUsernameLoginFailureAggExp
+  orderableFields:
+    - fieldName: failedLoginNotBefore
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastFailure
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastIpFailure
+      orderByDirections:
+        enableAll: true
+    - fieldName: numFailures
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: username
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUsernameLoginFailure
+      subscription:
+        rootField: authUsernameLoginFailure
+    selectUniques:
+      - queryRootField: authUsernameLoginFailureByConstraint172
+        uniqueIdentifier:
+          - realmId
+          - username
+        subscription:
+          rootField: authUsernameLoginFailureByConstraint172
+    orderByExpressionType: AuthUsernameLoginFailureOrderBy
+    filterInputTypeName: AuthUsernameLoginFailureFilterInput
+    aggregate:
+      queryRootField: authUsernameLoginFailureAggregate
+      subscription:
+        rootField: authUsernameLoginFailureAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUsernameLoginFailure
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

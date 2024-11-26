@@ -1,0 +1,138 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthComponentObject
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: parentId
+      type: Varchar
+    - name: providerId
+      type: Varchar
+    - name: providerType
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: subType
+      type: Varchar
+  graphql:
+    typeName: InsertAuthComponentObject
+    inputTypeName: InsertAuthComponentObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_component_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        parentId:
+          column:
+            name: parent_id
+        providerId:
+          column:
+            name: provider_id
+        providerType:
+          column:
+            name: provider_type
+        realmId:
+          column:
+            name: realm_id
+        subType:
+          column:
+            name: sub_type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthComponentObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - parentId
+          - providerId
+          - providerType
+          - realmId
+          - subType
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthComponentResponse
+  description: Responses from the 'insert_auth_component' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthComponent!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthComponentResponse
+    inputTypeName: InsertAuthComponentResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_component_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthComponentResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthComponent
+  outputType: InsertAuthComponentResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthComponentObject!]!"
+    - name: postCheck
+      type: AuthComponentBoolExp
+      description: Insert permission predicate over the 'auth_component' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_component
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthComponent
+    rootFieldKind: Mutation
+  description: Insert into the auth_component table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthComponent
+  permissions:
+    - role: admin
+      allowExecution: true
+

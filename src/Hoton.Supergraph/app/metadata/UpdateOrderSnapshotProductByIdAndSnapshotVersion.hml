@@ -1,0 +1,428 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductCreatedAt
+  description: Update the 'created_at' column in the 'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductCreatedAt
+    inputTypeName: UpdateColumnOrderSnapshotProductCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductDescription
+  description: Update the 'description' column in the 'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Text
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductDescription
+    inputTypeName: UpdateColumnOrderSnapshotProductDescriptionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_description
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductDescription
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductId
+  description: Update the 'id' column in the 'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductId
+    inputTypeName: UpdateColumnOrderSnapshotProductIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductName
+  description: Update the 'name' column in the 'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductName
+    inputTypeName: UpdateColumnOrderSnapshotProductNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductPrice
+  description: Update the 'price' column in the 'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductPrice
+    inputTypeName: UpdateColumnOrderSnapshotProductPriceInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_price
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductPrice
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductRealmId
+  description: Update the 'realm_id' column in the 'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductRealmId
+    inputTypeName: UpdateColumnOrderSnapshotProductRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductSnapshotVersion
+  description: Update the 'snapshot_version' column in the
+    'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Timestamptz!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductSnapshotVersion
+    inputTypeName: UpdateColumnOrderSnapshotProductSnapshotVersionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_snapshot_version
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductSnapshotVersion
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderSnapshotProductUpdatedAt
+  description: Update the 'updated_at' column in the 'order_snapshot_product' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderSnapshotProductUpdatedAt
+    inputTypeName: UpdateColumnOrderSnapshotProductUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_snapshot_product_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderSnapshotProductUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderSnapshotProductByIdAndSnapshotVersionUpdateColumns
+  description: Update the columns of the 'order_snapshot_product' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnOrderSnapshotProductCreatedAt
+      description: Update the 'created_at' column in the 'order_snapshot_product'
+        collection.
+    - name: description
+      type: UpdateColumnOrderSnapshotProductDescription
+      description: Update the 'description' column in the 'order_snapshot_product'
+        collection.
+    - name: id
+      type: UpdateColumnOrderSnapshotProductId
+      description: Update the 'id' column in the 'order_snapshot_product' collection.
+    - name: name
+      type: UpdateColumnOrderSnapshotProductName
+      description: Update the 'name' column in the 'order_snapshot_product' collection.
+    - name: price
+      type: UpdateColumnOrderSnapshotProductPrice
+      description: Update the 'price' column in the 'order_snapshot_product' collection.
+    - name: realmId
+      type: UpdateColumnOrderSnapshotProductRealmId
+      description: Update the 'realm_id' column in the 'order_snapshot_product' collection.
+    - name: snapshotVersion
+      type: UpdateColumnOrderSnapshotProductSnapshotVersion
+      description: Update the 'snapshot_version' column in the
+        'order_snapshot_product' collection.
+    - name: updatedAt
+      type: UpdateColumnOrderSnapshotProductUpdatedAt
+      description: Update the 'updated_at' column in the 'order_snapshot_product'
+        collection.
+  graphql:
+    typeName: UpdateOrderSnapshotProductByIdAndSnapshotVersionUpdateColumns
+    inputTypeName: UpdateOrderSnapshotProductByIdAndSnapshotVersionUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_snapshot_product_by_id_and_snapshot_version_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        price:
+          column:
+            name: price
+        realmId:
+          column:
+            name: realm_id
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderSnapshotProductByIdAndSnapshotVersionUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - description
+          - id
+          - name
+          - price
+          - realmId
+          - snapshotVersion
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderSnapshotProductByIdAndSnapshotVersionResponse
+  description: Responses from the
+    'update_order_snapshot_product_by_id_and_snapshot_version' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderSnapshotProduct!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderSnapshotProductByIdAndSnapshotVersionResponse
+    inputTypeName: UpdateOrderSnapshotProductByIdAndSnapshotVersionResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_snapshot_product_by_id_and_snapshot_version_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderSnapshotProductByIdAndSnapshotVersionResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderSnapshotProductByIdAndSnapshotVersion
+  outputType: UpdateOrderSnapshotProductByIdAndSnapshotVersionResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: keySnapshotVersion
+      type: Timestamptz!
+    - name: postCheck
+      type: OrderSnapshotProductBoolExp
+      description: Update permission post-condition predicate over the
+        'order_snapshot_product' collection
+    - name: preCheck
+      type: OrderSnapshotProductBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_snapshot_product' collection
+    - name: updateColumns
+      type: UpdateOrderSnapshotProductByIdAndSnapshotVersionUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_snapshot_product_by_id_and_snapshot_version
+    argumentMapping:
+      keyId: key_id
+      keySnapshotVersion: key_snapshot_version
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderSnapshotProductByIdAndSnapshotVersion
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_snapshot_product' collection using the
+    'id' and 'snapshot_version' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderSnapshotProductByIdAndSnapshotVersion
+  permissions:
+    - role: admin
+      allowExecution: true
+

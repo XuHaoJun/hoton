@@ -1,0 +1,214 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthKeycloakGroup
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: parentGroup
+      type: Varchar!
+    - name: realmId
+      type: Varchar
+    - name: type
+      type: Int4!
+  graphql:
+    typeName: AuthKeycloakGroup
+    inputTypeName: AuthKeycloakGroupInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_keycloak_group
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        parentGroup:
+          column:
+            name: parent_group
+        realmId:
+          column:
+            name: realm_id
+        type:
+          column:
+            name: type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthKeycloakGroup
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - parentGroup
+          - realmId
+          - type
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthKeycloakGroupBoolExp
+  operand:
+    object:
+      type: AuthKeycloakGroup
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: parentGroup
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: type
+          booleanExpressionType: Int4BoolExp
+      comparableRelationships:
+        - relationshipName: authGroupAttributes
+        - relationshipName: authGroupRoleMappings
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthKeycloakGroupBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthKeycloakGroupAggExp
+  operand:
+    object:
+      aggregatedType: AuthKeycloakGroup
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: parentGroup
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: type
+          aggregateExpression: Int4AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthKeycloakGroupAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthKeycloakGroup
+  objectType: AuthKeycloakGroup
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_keycloak_group
+  filterExpressionType: AuthKeycloakGroupBoolExp
+  aggregateExpression: AuthKeycloakGroupAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: parentGroup
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: type
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authKeycloakGroup
+      subscription:
+        rootField: authKeycloakGroup
+    selectUniques:
+      - queryRootField: authKeycloakGroupById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authKeycloakGroupById
+      - queryRootField: authKeycloakGroupBySiblingNames
+        uniqueIdentifier:
+          - name
+          - parentGroup
+          - realmId
+        subscription:
+          rootField: authKeycloakGroupBySiblingNames
+    orderByExpressionType: AuthKeycloakGroupOrderBy
+    filterInputTypeName: AuthKeycloakGroupFilterInput
+    aggregate:
+      queryRootField: authKeycloakGroupAggregate
+      subscription:
+        rootField: authKeycloakGroupAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthKeycloakGroup
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authGroupAttributes
+  sourceType: AuthKeycloakGroup
+  target:
+    model:
+      name: AuthGroupAttribute
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthGroupAttributeAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: groupId
+  graphql:
+    aggregateFieldName: authGroupAttributesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authGroupRoleMappings
+  sourceType: AuthKeycloakGroup
+  target:
+    model:
+      name: AuthGroupRoleMapping
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthGroupRoleMappingAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: groupId
+  graphql:
+    aggregateFieldName: authGroupRoleMappingsAggregate
+

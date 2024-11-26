@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthPolicyConfigByNameAndPolicyIdResponse
+  description: Responses from the
+    'delete_auth_policy_config_by_name_and_policy_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthPolicyConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthPolicyConfigByNameAndPolicyIdResponse
+    inputTypeName: DeleteAuthPolicyConfigByNameAndPolicyIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_policy_config_by_name_and_policy_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthPolicyConfigByNameAndPolicyIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthPolicyConfigByNameAndPolicyId
+  outputType: DeleteAuthPolicyConfigByNameAndPolicyIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyPolicyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthPolicyConfigBoolExp
+      description: Delete permission predicate over the 'auth_policy_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_policy_config_by_name_and_policy_id
+    argumentMapping:
+      keyName: key_name
+      keyPolicyId: key_policy_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthPolicyConfigByNameAndPolicyId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_policy_config' collection using the
+    'name' and 'policy_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthPolicyConfigByNameAndPolicyId
+  permissions:
+    - role: admin
+      allowExecution: true
+

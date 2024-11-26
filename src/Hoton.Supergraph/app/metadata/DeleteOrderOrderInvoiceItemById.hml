@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderOrderInvoiceItemByIdResponse
+  description: Responses from the 'delete_order_order_invoice_item_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderInvoiceItem!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderOrderInvoiceItemByIdResponse
+    inputTypeName: DeleteOrderOrderInvoiceItemByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_order_invoice_item_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderOrderInvoiceItemByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderOrderInvoiceItemById
+  outputType: DeleteOrderOrderInvoiceItemByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: preCheck
+      type: OrderOrderInvoiceItemBoolExp
+      description: Delete permission predicate over the 'order_order_invoice_item'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_order_invoice_item_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderOrderInvoiceItemById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_order_invoice_item' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderOrderInvoiceItemById
+  permissions:
+    - role: admin
+      allowExecution: true
+

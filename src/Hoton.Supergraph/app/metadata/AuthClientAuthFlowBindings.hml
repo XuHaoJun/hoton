@@ -1,0 +1,136 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthClientAuthFlowBindings
+  fields:
+    - name: bindingName
+      type: Varchar!
+    - name: clientId
+      type: Varchar!
+    - name: flowId
+      type: Varchar
+  graphql:
+    typeName: AuthClientAuthFlowBindings
+    inputTypeName: AuthClientAuthFlowBindingsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_client_auth_flow_bindings
+      fieldMapping:
+        bindingName:
+          column:
+            name: binding_name
+        clientId:
+          column:
+            name: client_id
+        flowId:
+          column:
+            name: flow_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthClientAuthFlowBindings
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - bindingName
+          - clientId
+          - flowId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthClientAuthFlowBindingsBoolExp
+  operand:
+    object:
+      type: AuthClientAuthFlowBindings
+      comparableFields:
+        - fieldName: bindingName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: flowId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthClientAuthFlowBindingsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthClientAuthFlowBindingsAggExp
+  operand:
+    object:
+      aggregatedType: AuthClientAuthFlowBindings
+      aggregatableFields:
+        - fieldName: bindingName
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: flowId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthClientAuthFlowBindingsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthClientAuthFlowBindings
+  objectType: AuthClientAuthFlowBindings
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_client_auth_flow_bindings
+  filterExpressionType: AuthClientAuthFlowBindingsBoolExp
+  aggregateExpression: AuthClientAuthFlowBindingsAggExp
+  orderableFields:
+    - fieldName: bindingName
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: flowId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authClientAuthFlowBindings
+      subscription:
+        rootField: authClientAuthFlowBindings
+    selectUniques:
+      - queryRootField: authClientAuthFlowBindingsByCCliFlowBind
+        uniqueIdentifier:
+          - bindingName
+          - clientId
+        subscription:
+          rootField: authClientAuthFlowBindingsByCCliFlowBind
+    orderByExpressionType: AuthClientAuthFlowBindingsOrderBy
+    filterInputTypeName: AuthClientAuthFlowBindingsFilterInput
+    aggregate:
+      queryRootField: authClientAuthFlowBindingsAggregate
+      subscription:
+        rootField: authClientAuthFlowBindingsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthClientAuthFlowBindings
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

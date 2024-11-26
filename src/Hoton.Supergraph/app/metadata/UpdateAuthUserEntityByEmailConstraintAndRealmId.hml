@@ -1,0 +1,622 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityCreatedTimestamp
+  description: Update the 'created_timestamp' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Int8
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityCreatedTimestamp
+    inputTypeName: UpdateColumnAuthUserEntityCreatedTimestampInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_created_timestamp
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityCreatedTimestamp
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityEmail
+  description: Update the 'email' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityEmail
+    inputTypeName: UpdateColumnAuthUserEntityEmailInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_email
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityEmail
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityEmailConstraint
+  description: Update the 'email_constraint' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityEmailConstraint
+    inputTypeName: UpdateColumnAuthUserEntityEmailConstraintInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_email_constraint
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityEmailConstraint
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityEmailVerified
+  description: Update the 'email_verified' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Bool!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityEmailVerified
+    inputTypeName: UpdateColumnAuthUserEntityEmailVerifiedInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_email_verified
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityEmailVerified
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityEnabled
+  description: Update the 'enabled' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Bool!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityEnabled
+    inputTypeName: UpdateColumnAuthUserEntityEnabledInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_enabled
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityEnabled
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityFederationLink
+  description: Update the 'federation_link' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityFederationLink
+    inputTypeName: UpdateColumnAuthUserEntityFederationLinkInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_federation_link
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityFederationLink
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityFirstName
+  description: Update the 'first_name' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityFirstName
+    inputTypeName: UpdateColumnAuthUserEntityFirstNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_first_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityFirstName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityId
+  description: Update the 'id' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityId
+    inputTypeName: UpdateColumnAuthUserEntityIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityLastName
+  description: Update the 'last_name' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityLastName
+    inputTypeName: UpdateColumnAuthUserEntityLastNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_last_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityLastName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityNotBefore
+  description: Update the 'not_before' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Int4!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityNotBefore
+    inputTypeName: UpdateColumnAuthUserEntityNotBeforeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_not_before
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityNotBefore
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityRealmId
+  description: Update the 'realm_id' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityRealmId
+    inputTypeName: UpdateColumnAuthUserEntityRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityServiceAccountClientLink
+  description: Update the 'service_account_client_link' column in the
+    'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityServiceAccountClientLink
+    inputTypeName: UpdateColumnAuthUserEntityServiceAccountClientLinkInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_service_account_client_link
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityServiceAccountClientLink
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserEntityUsername
+  description: Update the 'username' column in the 'auth_user_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserEntityUsername
+    inputTypeName: UpdateColumnAuthUserEntityUsernameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_entity_username
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserEntityUsername
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserEntityByEmailConstraintAndRealmIdUpdateColumns
+  description: Update the columns of the 'auth_user_entity' collection
+  fields:
+    - name: createdTimestamp
+      type: UpdateColumnAuthUserEntityCreatedTimestamp
+      description: Update the 'created_timestamp' column in the 'auth_user_entity'
+        collection.
+    - name: email
+      type: UpdateColumnAuthUserEntityEmail
+      description: Update the 'email' column in the 'auth_user_entity' collection.
+    - name: emailConstraint
+      type: UpdateColumnAuthUserEntityEmailConstraint
+      description: Update the 'email_constraint' column in the 'auth_user_entity'
+        collection.
+    - name: emailVerified
+      type: UpdateColumnAuthUserEntityEmailVerified
+      description: Update the 'email_verified' column in the 'auth_user_entity' collection.
+    - name: enabled
+      type: UpdateColumnAuthUserEntityEnabled
+      description: Update the 'enabled' column in the 'auth_user_entity' collection.
+    - name: federationLink
+      type: UpdateColumnAuthUserEntityFederationLink
+      description: Update the 'federation_link' column in the 'auth_user_entity' collection.
+    - name: firstName
+      type: UpdateColumnAuthUserEntityFirstName
+      description: Update the 'first_name' column in the 'auth_user_entity' collection.
+    - name: id
+      type: UpdateColumnAuthUserEntityId
+      description: Update the 'id' column in the 'auth_user_entity' collection.
+    - name: lastName
+      type: UpdateColumnAuthUserEntityLastName
+      description: Update the 'last_name' column in the 'auth_user_entity' collection.
+    - name: notBefore
+      type: UpdateColumnAuthUserEntityNotBefore
+      description: Update the 'not_before' column in the 'auth_user_entity' collection.
+    - name: realmId
+      type: UpdateColumnAuthUserEntityRealmId
+      description: Update the 'realm_id' column in the 'auth_user_entity' collection.
+    - name: serviceAccountClientLink
+      type: UpdateColumnAuthUserEntityServiceAccountClientLink
+      description: Update the 'service_account_client_link' column in the
+        'auth_user_entity' collection.
+    - name: username
+      type: UpdateColumnAuthUserEntityUsername
+      description: Update the 'username' column in the 'auth_user_entity' collection.
+  graphql:
+    typeName: UpdateAuthUserEntityByEmailConstraintAndRealmIdUpdateColumns
+    inputTypeName: UpdateAuthUserEntityByEmailConstraintAndRealmIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_entity_by_email_constraint_and_realm_id_update_columns
+      fieldMapping:
+        createdTimestamp:
+          column:
+            name: created_timestamp
+        email:
+          column:
+            name: email
+        emailConstraint:
+          column:
+            name: email_constraint
+        emailVerified:
+          column:
+            name: email_verified
+        enabled:
+          column:
+            name: enabled
+        federationLink:
+          column:
+            name: federation_link
+        firstName:
+          column:
+            name: first_name
+        id:
+          column:
+            name: id
+        lastName:
+          column:
+            name: last_name
+        notBefore:
+          column:
+            name: not_before
+        realmId:
+          column:
+            name: realm_id
+        serviceAccountClientLink:
+          column:
+            name: service_account_client_link
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserEntityByEmailConstraintAndRealmIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdTimestamp
+          - email
+          - emailConstraint
+          - emailVerified
+          - enabled
+          - federationLink
+          - firstName
+          - id
+          - lastName
+          - notBefore
+          - realmId
+          - serviceAccountClientLink
+          - username
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserEntityByEmailConstraintAndRealmIdResponse
+  description: Responses from the
+    'update_auth_user_entity_by_email_constraint_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthUserEntityByEmailConstraintAndRealmIdResponse
+    inputTypeName: UpdateAuthUserEntityByEmailConstraintAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_entity_by_email_constraint_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserEntityByEmailConstraintAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthUserEntityByEmailConstraintAndRealmId
+  outputType: UpdateAuthUserEntityByEmailConstraintAndRealmIdResponse!
+  arguments:
+    - name: keyEmailConstraint
+      type: Varchar
+    - name: keyRealmId
+      type: Varchar
+    - name: postCheck
+      type: AuthUserEntityBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_user_entity' collection
+    - name: preCheck
+      type: AuthUserEntityBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_user_entity' collection
+    - name: updateColumns
+      type: UpdateAuthUserEntityByEmailConstraintAndRealmIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_user_entity_by_email_constraint_and_realm_id
+    argumentMapping:
+      keyEmailConstraint: key_email_constraint
+      keyRealmId: key_realm_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthUserEntityByEmailConstraintAndRealmId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_user_entity' collection using the
+    'email_constraint' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthUserEntityByEmailConstraintAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

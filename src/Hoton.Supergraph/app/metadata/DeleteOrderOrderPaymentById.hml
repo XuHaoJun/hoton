@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderOrderPaymentByIdResponse
+  description: Responses from the 'delete_order_order_payment_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderPayment!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderOrderPaymentByIdResponse
+    inputTypeName: DeleteOrderOrderPaymentByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_order_payment_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderOrderPaymentByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderOrderPaymentById
+  outputType: DeleteOrderOrderPaymentByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: preCheck
+      type: OrderOrderPaymentBoolExp
+      description: Delete permission predicate over the 'order_order_payment' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_order_payment_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderOrderPaymentById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_order_payment' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderOrderPaymentById
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,187 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthRealmDefaultGroupsGroupId
+  description: Update the 'group_id' column in the 'auth_realm_default_groups' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthRealmDefaultGroupsGroupId
+    inputTypeName: UpdateColumnAuthRealmDefaultGroupsGroupIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_realm_default_groups_group_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthRealmDefaultGroupsGroupId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthRealmDefaultGroupsRealmId
+  description: Update the 'realm_id' column in the 'auth_realm_default_groups' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthRealmDefaultGroupsRealmId
+    inputTypeName: UpdateColumnAuthRealmDefaultGroupsRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_realm_default_groups_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthRealmDefaultGroupsRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRealmDefaultGroupsByGroupIdUpdateColumns
+  description: Update the columns of the 'auth_realm_default_groups' collection
+  fields:
+    - name: groupId
+      type: UpdateColumnAuthRealmDefaultGroupsGroupId
+      description: Update the 'group_id' column in the 'auth_realm_default_groups'
+        collection.
+    - name: realmId
+      type: UpdateColumnAuthRealmDefaultGroupsRealmId
+      description: Update the 'realm_id' column in the 'auth_realm_default_groups'
+        collection.
+  graphql:
+    typeName: UpdateAuthRealmDefaultGroupsByGroupIdUpdateColumns
+    inputTypeName: UpdateAuthRealmDefaultGroupsByGroupIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_realm_default_groups_by_group_id_update_columns
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRealmDefaultGroupsByGroupIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRealmDefaultGroupsByGroupIdResponse
+  description: Responses from the 'update_auth_realm_default_groups_by_group_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmDefaultGroups!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthRealmDefaultGroupsByGroupIdResponse
+    inputTypeName: UpdateAuthRealmDefaultGroupsByGroupIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_realm_default_groups_by_group_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRealmDefaultGroupsByGroupIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthRealmDefaultGroupsByGroupId
+  outputType: UpdateAuthRealmDefaultGroupsByGroupIdResponse!
+  arguments:
+    - name: keyGroupId
+      type: Varchar!
+    - name: postCheck
+      type: AuthRealmDefaultGroupsBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_realm_default_groups' collection
+    - name: preCheck
+      type: AuthRealmDefaultGroupsBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_realm_default_groups' collection
+    - name: updateColumns
+      type: UpdateAuthRealmDefaultGroupsByGroupIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_realm_default_groups_by_group_id
+    argumentMapping:
+      keyGroupId: key_group_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthRealmDefaultGroupsByGroupId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_realm_default_groups' collection using
+    the 'group_id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthRealmDefaultGroupsByGroupId
+  permissions:
+    - role: admin
+      allowExecution: true
+

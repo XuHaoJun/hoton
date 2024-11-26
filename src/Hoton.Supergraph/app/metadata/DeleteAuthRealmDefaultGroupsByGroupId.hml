@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRealmDefaultGroupsByGroupIdResponse
+  description: Responses from the 'delete_auth_realm_default_groups_by_group_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmDefaultGroups!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRealmDefaultGroupsByGroupIdResponse
+    inputTypeName: DeleteAuthRealmDefaultGroupsByGroupIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_realm_default_groups_by_group_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRealmDefaultGroupsByGroupIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRealmDefaultGroupsByGroupId
+  outputType: DeleteAuthRealmDefaultGroupsByGroupIdResponse!
+  arguments:
+    - name: keyGroupId
+      type: Varchar!
+    - name: preCheck
+      type: AuthRealmDefaultGroupsBoolExp
+      description: Delete permission predicate over the 'auth_realm_default_groups'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_realm_default_groups_by_group_id
+    argumentMapping:
+      keyGroupId: key_group_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRealmDefaultGroupsByGroupId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_realm_default_groups' collection using
+    the 'group_id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRealmDefaultGroupsByGroupId
+  permissions:
+    - role: admin
+      allowExecution: true
+

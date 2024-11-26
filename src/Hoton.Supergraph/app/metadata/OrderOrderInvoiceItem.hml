@@ -1,0 +1,258 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrderInvoiceItem
+  fields:
+    - name: amount
+      type: Numeric
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: orderInvoiceId
+      type: Uuid
+    - name: productName
+      type: Varchar!
+    - name: quantity
+      type: Int4!
+    - name: remark
+      type: Text
+    - name: taxType
+      type: Varchar!
+    - name: unitPrice
+      type: Numeric!
+    - name: unitWord
+      type: Varchar
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderOrderInvoiceItem
+    inputTypeName: OrderOrderInvoiceItemInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order_invoice_item
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        orderInvoiceId:
+          column:
+            name: order_invoice_id
+        productName:
+          column:
+            name: product_name
+        quantity:
+          column:
+            name: quantity
+        remark:
+          column:
+            name: remark
+        taxType:
+          column:
+            name: tax_type
+        unitPrice:
+          column:
+            name: unit_price
+        unitWord:
+          column:
+            name: unit_word
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrderInvoiceItem
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - createdAt
+          - id
+          - orderInvoiceId
+          - productName
+          - quantity
+          - remark
+          - taxType
+          - unitPrice
+          - unitWord
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderInvoiceItemBoolExp
+  operand:
+    object:
+      type: OrderOrderInvoiceItem
+      comparableFields:
+        - fieldName: amount
+          booleanExpressionType: NumericBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: orderInvoiceId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: productName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: quantity
+          booleanExpressionType: Int4BoolExp
+        - fieldName: remark
+          booleanExpressionType: TextBoolExp
+        - fieldName: taxType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: unitPrice
+          booleanExpressionType: NumericBoolExp
+        - fieldName: unitWord
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: orderOrderInvoice
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderInvoiceItemBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderInvoiceItemAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrderInvoiceItem
+      aggregatableFields:
+        - fieldName: amount
+          aggregateExpression: NumericAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: orderInvoiceId
+          aggregateExpression: UuidAggExp
+        - fieldName: productName
+          aggregateExpression: VarcharAggExp
+        - fieldName: quantity
+          aggregateExpression: Int4AggExp
+        - fieldName: remark
+          aggregateExpression: TextAggExp
+        - fieldName: taxType
+          aggregateExpression: VarcharAggExp
+        - fieldName: unitPrice
+          aggregateExpression: NumericAggExp
+        - fieldName: unitWord
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderInvoiceItemAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrderInvoiceItem
+  objectType: OrderOrderInvoiceItem
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order_invoice_item
+  filterExpressionType: OrderOrderInvoiceItemBoolExp
+  aggregateExpression: OrderOrderInvoiceItemAggExp
+  orderableFields:
+    - fieldName: amount
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderInvoiceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: productName
+      orderByDirections:
+        enableAll: true
+    - fieldName: quantity
+      orderByDirections:
+        enableAll: true
+    - fieldName: remark
+      orderByDirections:
+        enableAll: true
+    - fieldName: taxType
+      orderByDirections:
+        enableAll: true
+    - fieldName: unitPrice
+      orderByDirections:
+        enableAll: true
+    - fieldName: unitWord
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrderInvoiceItem
+      subscription:
+        rootField: orderOrderInvoiceItem
+    selectUniques:
+      - queryRootField: orderOrderInvoiceItemById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderOrderInvoiceItemById
+    orderByExpressionType: OrderOrderInvoiceItemOrderBy
+    filterInputTypeName: OrderOrderInvoiceItemFilterInput
+    aggregate:
+      queryRootField: orderOrderInvoiceItemAggregate
+      subscription:
+        rootField: orderOrderInvoiceItemAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrderInvoiceItem
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderInvoice
+  sourceType: OrderOrderInvoiceItem
+  target:
+    model:
+      name: OrderOrderInvoice
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderInvoiceId
+      target:
+        modelField:
+          - fieldName: id
+

@@ -1,0 +1,732 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceAmount
+  description: Update the 'amount' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceAmount
+    inputTypeName: UpdateColumnOrderOrderInvoiceAmountInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_amount
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceAmount
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceCarrierNo
+  description: Update the 'carrier_no' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceCarrierNo
+    inputTypeName: UpdateColumnOrderOrderInvoiceCarrierNoInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_carrier_no
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceCarrierNo
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceCompanyName
+  description: Update the 'company_name' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceCompanyName
+    inputTypeName: UpdateColumnOrderOrderInvoiceCompanyNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_company_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceCompanyName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceCompanyNo
+  description: Update the 'company_no' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceCompanyNo
+    inputTypeName: UpdateColumnOrderOrderInvoiceCompanyNoInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_company_no
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceCompanyNo
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceCreatedAt
+  description: Update the 'created_at' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceCreatedAt
+    inputTypeName: UpdateColumnOrderOrderInvoiceCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceId
+  description: Update the 'id' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceId
+    inputTypeName: UpdateColumnOrderOrderInvoiceIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceInvoiceNumber
+  description: Update the 'invoice_number' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceInvoiceNumber
+    inputTypeName: UpdateColumnOrderOrderInvoiceInvoiceNumberInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_invoice_number
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceInvoiceNumber
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceInvoiceType
+  description: Update the 'invoice_type' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceInvoiceType
+    inputTypeName: UpdateColumnOrderOrderInvoiceInvoiceTypeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_invoice_type
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceInvoiceType
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceIssueDate
+  description: Update the 'issue_date' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceIssueDate
+    inputTypeName: UpdateColumnOrderOrderInvoiceIssueDateInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_issue_date
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceIssueDate
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceOrderId
+  description: Update the 'order_id' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Uuid
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceOrderId
+    inputTypeName: UpdateColumnOrderOrderInvoiceOrderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_order_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceOrderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceRealmId
+  description: Update the 'realm_id' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceRealmId
+    inputTypeName: UpdateColumnOrderOrderInvoiceRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceServiceProvider
+  description: Update the 'service_provider' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceServiceProvider
+    inputTypeName: UpdateColumnOrderOrderInvoiceServiceProviderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_service_provider
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceServiceProvider
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceStatus
+  description: Update the 'status' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceStatus
+    inputTypeName: UpdateColumnOrderOrderInvoiceStatusInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_status
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceStatus
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceTax
+  description: Update the 'tax' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceTax
+    inputTypeName: UpdateColumnOrderOrderInvoiceTaxInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_tax
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceTax
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceUpdatedAt
+  description: Update the 'updated_at' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceUpdatedAt
+    inputTypeName: UpdateColumnOrderOrderInvoiceUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderInvoiceVoidDate
+  description: Update the 'void_date' column in the 'order_order_invoice' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderInvoiceVoidDate
+    inputTypeName: UpdateColumnOrderOrderInvoiceVoidDateInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_invoice_void_date
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderInvoiceVoidDate
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderInvoiceByIdUpdateColumns
+  description: Update the columns of the 'order_order_invoice' collection
+  fields:
+    - name: amount
+      type: UpdateColumnOrderOrderInvoiceAmount
+      description: Update the 'amount' column in the 'order_order_invoice' collection.
+    - name: carrierNo
+      type: UpdateColumnOrderOrderInvoiceCarrierNo
+      description: Update the 'carrier_no' column in the 'order_order_invoice' collection.
+    - name: companyName
+      type: UpdateColumnOrderOrderInvoiceCompanyName
+      description: Update the 'company_name' column in the 'order_order_invoice' collection.
+    - name: companyNo
+      type: UpdateColumnOrderOrderInvoiceCompanyNo
+      description: Update the 'company_no' column in the 'order_order_invoice' collection.
+    - name: createdAt
+      type: UpdateColumnOrderOrderInvoiceCreatedAt
+      description: Update the 'created_at' column in the 'order_order_invoice' collection.
+    - name: id
+      type: UpdateColumnOrderOrderInvoiceId
+      description: Update the 'id' column in the 'order_order_invoice' collection.
+    - name: invoiceNumber
+      type: UpdateColumnOrderOrderInvoiceInvoiceNumber
+      description: Update the 'invoice_number' column in the 'order_order_invoice'
+        collection.
+    - name: invoiceType
+      type: UpdateColumnOrderOrderInvoiceInvoiceType
+      description: Update the 'invoice_type' column in the 'order_order_invoice' collection.
+    - name: issueDate
+      type: UpdateColumnOrderOrderInvoiceIssueDate
+      description: Update the 'issue_date' column in the 'order_order_invoice' collection.
+    - name: orderId
+      type: UpdateColumnOrderOrderInvoiceOrderId
+      description: Update the 'order_id' column in the 'order_order_invoice' collection.
+    - name: realmId
+      type: UpdateColumnOrderOrderInvoiceRealmId
+      description: Update the 'realm_id' column in the 'order_order_invoice' collection.
+    - name: serviceProvider
+      type: UpdateColumnOrderOrderInvoiceServiceProvider
+      description: Update the 'service_provider' column in the 'order_order_invoice'
+        collection.
+    - name: status
+      type: UpdateColumnOrderOrderInvoiceStatus
+      description: Update the 'status' column in the 'order_order_invoice' collection.
+    - name: tax
+      type: UpdateColumnOrderOrderInvoiceTax
+      description: Update the 'tax' column in the 'order_order_invoice' collection.
+    - name: updatedAt
+      type: UpdateColumnOrderOrderInvoiceUpdatedAt
+      description: Update the 'updated_at' column in the 'order_order_invoice' collection.
+    - name: voidDate
+      type: UpdateColumnOrderOrderInvoiceVoidDate
+      description: Update the 'void_date' column in the 'order_order_invoice' collection.
+  graphql:
+    typeName: UpdateOrderOrderInvoiceByIdUpdateColumns
+    inputTypeName: UpdateOrderOrderInvoiceByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_invoice_by_id_update_columns
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        carrierNo:
+          column:
+            name: carrier_no
+        companyName:
+          column:
+            name: company_name
+        companyNo:
+          column:
+            name: company_no
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        invoiceNumber:
+          column:
+            name: invoice_number
+        invoiceType:
+          column:
+            name: invoice_type
+        issueDate:
+          column:
+            name: issue_date
+        orderId:
+          column:
+            name: order_id
+        realmId:
+          column:
+            name: realm_id
+        serviceProvider:
+          column:
+            name: service_provider
+        status:
+          column:
+            name: status
+        tax:
+          column:
+            name: tax
+        updatedAt:
+          column:
+            name: updated_at
+        voidDate:
+          column:
+            name: void_date
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderInvoiceByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - carrierNo
+          - companyName
+          - companyNo
+          - createdAt
+          - id
+          - invoiceNumber
+          - invoiceType
+          - issueDate
+          - orderId
+          - realmId
+          - serviceProvider
+          - status
+          - tax
+          - updatedAt
+          - voidDate
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderInvoiceByIdResponse
+  description: Responses from the 'update_order_order_invoice_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderInvoice!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderOrderInvoiceByIdResponse
+    inputTypeName: UpdateOrderOrderInvoiceByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_invoice_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderInvoiceByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderOrderInvoiceById
+  outputType: UpdateOrderOrderInvoiceByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: OrderOrderInvoiceBoolExp
+      description: Update permission post-condition predicate over the
+        'order_order_invoice' collection
+    - name: preCheck
+      type: OrderOrderInvoiceBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_order_invoice' collection
+    - name: updateColumns
+      type: UpdateOrderOrderInvoiceByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_order_invoice_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderOrderInvoiceById
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_order_invoice' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderOrderInvoiceById
+  permissions:
+    - role: admin
+      allowExecution: true
+

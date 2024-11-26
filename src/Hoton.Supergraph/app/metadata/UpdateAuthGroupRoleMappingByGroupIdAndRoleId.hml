@@ -1,0 +1,189 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthGroupRoleMappingGroupId
+  description: Update the 'group_id' column in the 'auth_group_role_mapping' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthGroupRoleMappingGroupId
+    inputTypeName: UpdateColumnAuthGroupRoleMappingGroupIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_group_role_mapping_group_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthGroupRoleMappingGroupId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthGroupRoleMappingRoleId
+  description: Update the 'role_id' column in the 'auth_group_role_mapping' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthGroupRoleMappingRoleId
+    inputTypeName: UpdateColumnAuthGroupRoleMappingRoleIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_group_role_mapping_role_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthGroupRoleMappingRoleId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdUpdateColumns
+  description: Update the columns of the 'auth_group_role_mapping' collection
+  fields:
+    - name: groupId
+      type: UpdateColumnAuthGroupRoleMappingGroupId
+      description: Update the 'group_id' column in the 'auth_group_role_mapping' collection.
+    - name: roleId
+      type: UpdateColumnAuthGroupRoleMappingRoleId
+      description: Update the 'role_id' column in the 'auth_group_role_mapping' collection.
+  graphql:
+    typeName: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdUpdateColumns
+    inputTypeName: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_group_role_mapping_by_group_id_and_role_id_update_columns
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        roleId:
+          column:
+            name: role_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - roleId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdResponse
+  description: Responses from the
+    'update_auth_group_role_mapping_by_group_id_and_role_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthGroupRoleMapping!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdResponse
+    inputTypeName: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_group_role_mapping_by_group_id_and_role_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthGroupRoleMappingByGroupIdAndRoleId
+  outputType: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdResponse!
+  arguments:
+    - name: keyGroupId
+      type: Varchar!
+    - name: keyRoleId
+      type: Varchar!
+    - name: postCheck
+      type: AuthGroupRoleMappingBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_group_role_mapping' collection
+    - name: preCheck
+      type: AuthGroupRoleMappingBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_group_role_mapping' collection
+    - name: updateColumns
+      type: UpdateAuthGroupRoleMappingByGroupIdAndRoleIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_group_role_mapping_by_group_id_and_role_id
+    argumentMapping:
+      keyGroupId: key_group_id
+      keyRoleId: key_role_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthGroupRoleMappingByGroupIdAndRoleId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_group_role_mapping' collection using
+    the 'group_id' and 'role_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthGroupRoleMappingByGroupIdAndRoleId
+  permissions:
+    - role: admin
+      allowExecution: true
+

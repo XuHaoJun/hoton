@@ -1,0 +1,273 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthDatabasechangelog
+  fields:
+    - name: author
+      type: Varchar!
+    - name: comments
+      type: Varchar
+    - name: contexts
+      type: Varchar
+    - name: dateexecuted
+      type: Timestamp!
+    - name: deploymentId
+      type: Varchar
+    - name: description
+      type: Varchar
+    - name: exectype
+      type: Varchar!
+    - name: filename
+      type: Varchar!
+    - name: id
+      type: Varchar!
+    - name: labels
+      type: Varchar
+    - name: liquibase
+      type: Varchar
+    - name: md5Sum
+      type: Varchar
+    - name: orderexecuted
+      type: Int4!
+    - name: tag
+      type: Varchar
+  graphql:
+    typeName: AuthDatabasechangelog
+    inputTypeName: AuthDatabasechangelogInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_databasechangelog
+      fieldMapping:
+        author:
+          column:
+            name: author
+        comments:
+          column:
+            name: comments
+        contexts:
+          column:
+            name: contexts
+        dateexecuted:
+          column:
+            name: dateexecuted
+        deploymentId:
+          column:
+            name: deployment_id
+        description:
+          column:
+            name: description
+        exectype:
+          column:
+            name: exectype
+        filename:
+          column:
+            name: filename
+        id:
+          column:
+            name: id
+        labels:
+          column:
+            name: labels
+        liquibase:
+          column:
+            name: liquibase
+        md5Sum:
+          column:
+            name: md5sum
+        orderexecuted:
+          column:
+            name: orderexecuted
+        tag:
+          column:
+            name: tag
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthDatabasechangelog
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - author
+          - comments
+          - contexts
+          - dateexecuted
+          - deploymentId
+          - description
+          - exectype
+          - filename
+          - id
+          - labels
+          - liquibase
+          - md5Sum
+          - orderexecuted
+          - tag
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthDatabasechangelogBoolExp
+  operand:
+    object:
+      type: AuthDatabasechangelog
+      comparableFields:
+        - fieldName: author
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: comments
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: contexts
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: dateexecuted
+          booleanExpressionType: TimestampBoolExp
+        - fieldName: deploymentId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: description
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: exectype
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: filename
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: labels
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: liquibase
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: md5Sum
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: orderexecuted
+          booleanExpressionType: Int4BoolExp
+        - fieldName: tag
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthDatabasechangelogBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthDatabasechangelogAggExp
+  operand:
+    object:
+      aggregatedType: AuthDatabasechangelog
+      aggregatableFields:
+        - fieldName: author
+          aggregateExpression: VarcharAggExp
+        - fieldName: comments
+          aggregateExpression: VarcharAggExp
+        - fieldName: contexts
+          aggregateExpression: VarcharAggExp
+        - fieldName: dateexecuted
+          aggregateExpression: TimestampAggExp
+        - fieldName: deploymentId
+          aggregateExpression: VarcharAggExp
+        - fieldName: description
+          aggregateExpression: VarcharAggExp
+        - fieldName: exectype
+          aggregateExpression: VarcharAggExp
+        - fieldName: filename
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: labels
+          aggregateExpression: VarcharAggExp
+        - fieldName: liquibase
+          aggregateExpression: VarcharAggExp
+        - fieldName: md5Sum
+          aggregateExpression: VarcharAggExp
+        - fieldName: orderexecuted
+          aggregateExpression: Int4AggExp
+        - fieldName: tag
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthDatabasechangelogAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthDatabasechangelog
+  objectType: AuthDatabasechangelog
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_databasechangelog
+  filterExpressionType: AuthDatabasechangelogBoolExp
+  aggregateExpression: AuthDatabasechangelogAggExp
+  orderableFields:
+    - fieldName: author
+      orderByDirections:
+        enableAll: true
+    - fieldName: comments
+      orderByDirections:
+        enableAll: true
+    - fieldName: contexts
+      orderByDirections:
+        enableAll: true
+    - fieldName: dateexecuted
+      orderByDirections:
+        enableAll: true
+    - fieldName: deploymentId
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: exectype
+      orderByDirections:
+        enableAll: true
+    - fieldName: filename
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: labels
+      orderByDirections:
+        enableAll: true
+    - fieldName: liquibase
+      orderByDirections:
+        enableAll: true
+    - fieldName: md5Sum
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderexecuted
+      orderByDirections:
+        enableAll: true
+    - fieldName: tag
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authDatabasechangelog
+      subscription:
+        rootField: authDatabasechangelog
+    selectUniques: []
+    orderByExpressionType: AuthDatabasechangelogOrderBy
+    filterInputTypeName: AuthDatabasechangelogFilterInput
+    aggregate:
+      queryRootField: authDatabasechangelogAggregate
+      subscription:
+        rootField: authDatabasechangelogAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthDatabasechangelog
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

@@ -1,0 +1,188 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthBrokerLink
+  fields:
+    - name: brokerUserId
+      type: Varchar
+    - name: brokerUsername
+      type: Varchar
+    - name: identityProvider
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: token
+      type: Text
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthBrokerLink
+    inputTypeName: AuthBrokerLinkInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_broker_link
+      fieldMapping:
+        brokerUserId:
+          column:
+            name: broker_user_id
+        brokerUsername:
+          column:
+            name: broker_username
+        identityProvider:
+          column:
+            name: identity_provider
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        token:
+          column:
+            name: token
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthBrokerLink
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - brokerUserId
+          - brokerUsername
+          - identityProvider
+          - realmId
+          - storageProviderId
+          - token
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthBrokerLinkBoolExp
+  operand:
+    object:
+      type: AuthBrokerLink
+      comparableFields:
+        - fieldName: brokerUserId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: brokerUsername
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: identityProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storageProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: token
+          booleanExpressionType: TextBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthBrokerLinkBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthBrokerLinkAggExp
+  operand:
+    object:
+      aggregatedType: AuthBrokerLink
+      aggregatableFields:
+        - fieldName: brokerUserId
+          aggregateExpression: VarcharAggExp
+        - fieldName: brokerUsername
+          aggregateExpression: VarcharAggExp
+        - fieldName: identityProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: storageProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: token
+          aggregateExpression: TextAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthBrokerLinkAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthBrokerLink
+  objectType: AuthBrokerLink
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_broker_link
+  filterExpressionType: AuthBrokerLinkBoolExp
+  aggregateExpression: AuthBrokerLinkAggExp
+  orderableFields:
+    - fieldName: brokerUserId
+      orderByDirections:
+        enableAll: true
+    - fieldName: brokerUsername
+      orderByDirections:
+        enableAll: true
+    - fieldName: identityProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storageProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: token
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authBrokerLink
+      subscription:
+        rootField: authBrokerLink
+    selectUniques:
+      - queryRootField: authBrokerLinkByConstrBrokerLinkPk
+        uniqueIdentifier:
+          - identityProvider
+          - userId
+        subscription:
+          rootField: authBrokerLinkByConstrBrokerLinkPk
+    orderByExpressionType: AuthBrokerLinkOrderBy
+    filterInputTypeName: AuthBrokerLinkFilterInput
+    aggregate:
+      queryRootField: authBrokerLinkAggregate
+      subscription:
+        rootField: authBrokerLinkAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthBrokerLink
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

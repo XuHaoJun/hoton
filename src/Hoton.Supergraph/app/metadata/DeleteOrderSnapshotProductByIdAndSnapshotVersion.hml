@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderSnapshotProductByIdAndSnapshotVersionResponse
+  description: Responses from the
+    'delete_order_snapshot_product_by_id_and_snapshot_version' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderSnapshotProduct!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderSnapshotProductByIdAndSnapshotVersionResponse
+    inputTypeName: DeleteOrderSnapshotProductByIdAndSnapshotVersionResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_snapshot_product_by_id_and_snapshot_version_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderSnapshotProductByIdAndSnapshotVersionResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderSnapshotProductByIdAndSnapshotVersion
+  outputType: DeleteOrderSnapshotProductByIdAndSnapshotVersionResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: keySnapshotVersion
+      type: Timestamptz!
+    - name: preCheck
+      type: OrderSnapshotProductBoolExp
+      description: Delete permission predicate over the 'order_snapshot_product' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_snapshot_product_by_id_and_snapshot_version
+    argumentMapping:
+      keyId: key_id
+      keySnapshotVersion: key_snapshot_version
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderSnapshotProductByIdAndSnapshotVersion
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_snapshot_product' collection using the
+    'id' and 'snapshot_version' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderSnapshotProductByIdAndSnapshotVersion
+  permissions:
+    - role: admin
+      allowExecution: true
+

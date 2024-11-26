@@ -1,0 +1,536 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductCategories
+  description: Update the 'categories' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: "[Ltree]"
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductCategories
+    inputTypeName: UpdateColumnProductProductCategoriesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_categories
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductCategories
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductCreatedAt
+  description: Update the 'created_at' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductCreatedAt
+    inputTypeName: UpdateColumnProductProductCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductDescription
+  description: Update the 'description' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductDescription
+    inputTypeName: UpdateColumnProductProductDescriptionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_description
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductDescription
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductId
+  description: Update the 'id' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductId
+    inputTypeName: UpdateColumnProductProductIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductName
+  description: Update the 'name' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductName
+    inputTypeName: UpdateColumnProductProductNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductPrice
+  description: Update the 'price' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductPrice
+    inputTypeName: UpdateColumnProductProductPriceInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_price
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductPrice
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductRealmId
+  description: Update the 'realm_id' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductRealmId
+    inputTypeName: UpdateColumnProductProductRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSnapshotVersion
+  description: Update the 'snapshot_version' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSnapshotVersion
+    inputTypeName: UpdateColumnProductProductSnapshotVersionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_snapshot_version
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSnapshotVersion
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductTags
+  description: Update the 'tags' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: "[Varchar]"
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductTags
+    inputTypeName: UpdateColumnProductProductTagsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_tags
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductTags
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductTemperatureZones
+  description: Update the 'temperature_zones' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: "[Varchar]"
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductTemperatureZones
+    inputTypeName: UpdateColumnProductProductTemperatureZonesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_temperature_zones
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductTemperatureZones
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductUpdatedAt
+  description: Update the 'updated_at' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductUpdatedAt
+    inputTypeName: UpdateColumnProductProductUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateProductProductByIdUpdateColumns
+  description: Update the columns of the 'product_product' collection
+  fields:
+    - name: categories
+      type: UpdateColumnProductProductCategories
+      description: Update the 'categories' column in the 'product_product' collection.
+    - name: createdAt
+      type: UpdateColumnProductProductCreatedAt
+      description: Update the 'created_at' column in the 'product_product' collection.
+    - name: description
+      type: UpdateColumnProductProductDescription
+      description: Update the 'description' column in the 'product_product' collection.
+    - name: id
+      type: UpdateColumnProductProductId
+      description: Update the 'id' column in the 'product_product' collection.
+    - name: name
+      type: UpdateColumnProductProductName
+      description: Update the 'name' column in the 'product_product' collection.
+    - name: price
+      type: UpdateColumnProductProductPrice
+      description: Update the 'price' column in the 'product_product' collection.
+    - name: realmId
+      type: UpdateColumnProductProductRealmId
+      description: Update the 'realm_id' column in the 'product_product' collection.
+    - name: snapshotVersion
+      type: UpdateColumnProductProductSnapshotVersion
+      description: Update the 'snapshot_version' column in the 'product_product' collection.
+    - name: tags
+      type: UpdateColumnProductProductTags
+      description: Update the 'tags' column in the 'product_product' collection.
+    - name: temperatureZones
+      type: UpdateColumnProductProductTemperatureZones
+      description: Update the 'temperature_zones' column in the 'product_product'
+        collection.
+    - name: updatedAt
+      type: UpdateColumnProductProductUpdatedAt
+      description: Update the 'updated_at' column in the 'product_product' collection.
+  graphql:
+    typeName: UpdateProductProductByIdUpdateColumns
+    inputTypeName: UpdateProductProductByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_product_product_by_id_update_columns
+      fieldMapping:
+        categories:
+          column:
+            name: categories
+        createdAt:
+          column:
+            name: created_at
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        price:
+          column:
+            name: price
+        realmId:
+          column:
+            name: realm_id
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        tags:
+          column:
+            name: tags
+        temperatureZones:
+          column:
+            name: temperature_zones
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateProductProductByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - categories
+          - createdAt
+          - description
+          - id
+          - name
+          - price
+          - realmId
+          - snapshotVersion
+          - tags
+          - temperatureZones
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateProductProductByIdResponse
+  description: Responses from the 'update_product_product_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProduct!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateProductProductByIdResponse
+    inputTypeName: UpdateProductProductByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_product_product_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateProductProductByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateProductProductById
+  outputType: UpdateProductProductByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: ProductProductBoolExp
+      description: Update permission post-condition predicate over the
+        'product_product' collection
+    - name: preCheck
+      type: ProductProductBoolExp
+      description: Update permission pre-condition predicate over the
+        'product_product' collection
+    - name: updateColumns
+      type: UpdateProductProductByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_product_product_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateProductProductById
+    rootFieldKind: Mutation
+  description: Update any row on the 'product_product' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateProductProductById
+  permissions:
+    - role: admin
+      allowExecution: true
+

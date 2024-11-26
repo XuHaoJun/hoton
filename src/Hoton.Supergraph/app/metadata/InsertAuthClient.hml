@@ -1,0 +1,252 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientObject
+  fields:
+    - name: alwaysDisplayInConsole
+      type: Bool
+    - name: baseUrl
+      type: Varchar
+    - name: bearerOnly
+      type: Bool
+    - name: clientAuthenticatorType
+      type: Varchar
+    - name: clientId
+      type: Varchar
+    - name: consentRequired
+      type: Bool
+    - name: description
+      type: Varchar
+    - name: directAccessGrantsEnabled
+      type: Bool
+    - name: enabled
+      type: Bool
+    - name: frontchannelLogout
+      type: Bool
+    - name: fullScopeAllowed
+      type: Bool
+    - name: id
+      type: Varchar!
+    - name: implicitFlowEnabled
+      type: Bool
+    - name: managementUrl
+      type: Varchar
+    - name: name
+      type: Varchar
+    - name: nodeReregTimeout
+      type: Int4
+    - name: notBefore
+      type: Int4
+    - name: protocol
+      type: Varchar
+    - name: publicClient
+      type: Bool
+    - name: realmId
+      type: Varchar
+    - name: registrationToken
+      type: Varchar
+    - name: rootUrl
+      type: Varchar
+    - name: secret
+      type: Varchar
+    - name: serviceAccountsEnabled
+      type: Bool
+    - name: standardFlowEnabled
+      type: Bool
+    - name: surrogateAuthRequired
+      type: Bool
+  graphql:
+    typeName: InsertAuthClientObject
+    inputTypeName: InsertAuthClientObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_object
+      fieldMapping:
+        alwaysDisplayInConsole:
+          column:
+            name: always_display_in_console
+        baseUrl:
+          column:
+            name: base_url
+        bearerOnly:
+          column:
+            name: bearer_only
+        clientAuthenticatorType:
+          column:
+            name: client_authenticator_type
+        clientId:
+          column:
+            name: client_id
+        consentRequired:
+          column:
+            name: consent_required
+        description:
+          column:
+            name: description
+        directAccessGrantsEnabled:
+          column:
+            name: direct_access_grants_enabled
+        enabled:
+          column:
+            name: enabled
+        frontchannelLogout:
+          column:
+            name: frontchannel_logout
+        fullScopeAllowed:
+          column:
+            name: full_scope_allowed
+        id:
+          column:
+            name: id
+        implicitFlowEnabled:
+          column:
+            name: implicit_flow_enabled
+        managementUrl:
+          column:
+            name: management_url
+        name:
+          column:
+            name: name
+        nodeReregTimeout:
+          column:
+            name: node_rereg_timeout
+        notBefore:
+          column:
+            name: not_before
+        protocol:
+          column:
+            name: protocol
+        publicClient:
+          column:
+            name: public_client
+        realmId:
+          column:
+            name: realm_id
+        registrationToken:
+          column:
+            name: registration_token
+        rootUrl:
+          column:
+            name: root_url
+        secret:
+          column:
+            name: secret
+        serviceAccountsEnabled:
+          column:
+            name: service_accounts_enabled
+        standardFlowEnabled:
+          column:
+            name: standard_flow_enabled
+        surrogateAuthRequired:
+          column:
+            name: surrogate_auth_required
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alwaysDisplayInConsole
+          - baseUrl
+          - bearerOnly
+          - clientAuthenticatorType
+          - clientId
+          - consentRequired
+          - description
+          - directAccessGrantsEnabled
+          - enabled
+          - frontchannelLogout
+          - fullScopeAllowed
+          - id
+          - implicitFlowEnabled
+          - managementUrl
+          - name
+          - nodeReregTimeout
+          - notBefore
+          - protocol
+          - publicClient
+          - realmId
+          - registrationToken
+          - rootUrl
+          - secret
+          - serviceAccountsEnabled
+          - standardFlowEnabled
+          - surrogateAuthRequired
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientResponse
+  description: Responses from the 'insert_auth_client' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClient!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthClientResponse
+    inputTypeName: InsertAuthClientResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthClient
+  outputType: InsertAuthClientResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthClientObject!]!"
+    - name: postCheck
+      type: AuthClientBoolExp
+      description: Insert permission predicate over the 'auth_client' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_client
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthClient
+    rootFieldKind: Mutation
+  description: Insert into the auth_client table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthClient
+  permissions:
+    - role: admin
+      allowExecution: true
+

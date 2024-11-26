@@ -1,0 +1,294 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthKeycloakRole
+  fields:
+    - name: client
+      type: Varchar
+    - name: clientRealmConstraint
+      type: Varchar
+    - name: clientRole
+      type: Bool!
+    - name: description
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: realm
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: AuthKeycloakRole
+    inputTypeName: AuthKeycloakRoleInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_keycloak_role
+      fieldMapping:
+        client:
+          column:
+            name: client
+        clientRealmConstraint:
+          column:
+            name: client_realm_constraint
+        clientRole:
+          column:
+            name: client_role
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        realm:
+          column:
+            name: realm
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthKeycloakRole
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - client
+          - clientRealmConstraint
+          - clientRole
+          - description
+          - id
+          - name
+          - realm
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthKeycloakRoleBoolExp
+  operand:
+    object:
+      type: AuthKeycloakRole
+      comparableFields:
+        - fieldName: client
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientRealmConstraint
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientRole
+          booleanExpressionType: BoolBoolExp
+        - fieldName: description
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realm
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authCompositeRoles
+        - relationshipName: authCompositeRolesByChildRole
+        - relationshipName: authRealm
+        - relationshipName: authRoleAttributes
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthKeycloakRoleBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthKeycloakRoleAggExp
+  operand:
+    object:
+      aggregatedType: AuthKeycloakRole
+      aggregatableFields:
+        - fieldName: client
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientRealmConstraint
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientRole
+          aggregateExpression: BoolAggExp
+        - fieldName: description
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: realm
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthKeycloakRoleAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthKeycloakRole
+  objectType: AuthKeycloakRole
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_keycloak_role
+  filterExpressionType: AuthKeycloakRoleBoolExp
+  aggregateExpression: AuthKeycloakRoleAggExp
+  orderableFields:
+    - fieldName: client
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientRealmConstraint
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientRole
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: realm
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authKeycloakRole
+      subscription:
+        rootField: authKeycloakRole
+    selectUniques:
+      - queryRootField: authKeycloakRoleByUkJ3Rwuvd56Ontgsuhogm184Ww22
+        uniqueIdentifier:
+          - clientRealmConstraint
+          - name
+        subscription:
+          rootField: authKeycloakRoleByUkJ3Rwuvd56Ontgsuhogm184Ww22
+      - queryRootField: authKeycloakRoleById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authKeycloakRoleById
+    orderByExpressionType: AuthKeycloakRoleOrderBy
+    filterInputTypeName: AuthKeycloakRoleFilterInput
+    aggregate:
+      queryRootField: authKeycloakRoleAggregate
+      subscription:
+        rootField: authKeycloakRoleAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthKeycloakRole
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authCompositeRoles
+  sourceType: AuthKeycloakRole
+  target:
+    model:
+      name: AuthCompositeRole
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthCompositeRoleAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: composite
+  graphql:
+    aggregateFieldName: authCompositeRolesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authCompositeRolesByChildRole
+  sourceType: AuthKeycloakRole
+  target:
+    model:
+      name: AuthCompositeRole
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthCompositeRoleAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: childRole
+  graphql:
+    aggregateFieldName: authCompositeRolesByChildRoleAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthKeycloakRole
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realm
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRoleAttributes
+  sourceType: AuthKeycloakRole
+  target:
+    model:
+      name: AuthRoleAttribute
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRoleAttributeAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: roleId
+  graphql:
+    aggregateFieldName: authRoleAttributesAggregate
+

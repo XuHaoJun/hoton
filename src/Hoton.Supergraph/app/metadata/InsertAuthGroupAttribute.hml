@@ -1,0 +1,120 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthGroupAttributeObject
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: id
+      type: Varchar
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: InsertAuthGroupAttributeObject
+    inputTypeName: InsertAuthGroupAttributeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_group_attribute_object
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthGroupAttributeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - id
+          - name
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthGroupAttributeResponse
+  description: Responses from the 'insert_auth_group_attribute' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthGroupAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthGroupAttributeResponse
+    inputTypeName: InsertAuthGroupAttributeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_group_attribute_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthGroupAttributeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthGroupAttribute
+  outputType: InsertAuthGroupAttributeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthGroupAttributeObject!]!"
+    - name: postCheck
+      type: AuthGroupAttributeBoolExp
+      description: Insert permission predicate over the 'auth_group_attribute' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_group_attribute
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthGroupAttribute
+    rootFieldKind: Mutation
+  description: Insert into the auth_group_attribute table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthGroupAttribute
+  permissions:
+    - role: admin
+      allowExecution: true
+

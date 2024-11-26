@@ -1,0 +1,145 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRequiredActionProviderObject
+  fields:
+    - name: alias
+      type: Varchar
+    - name: defaultAction
+      type: Bool
+    - name: enabled
+      type: Bool
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: priority
+      type: Int4
+    - name: providerId
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthRequiredActionProviderObject
+    inputTypeName: InsertAuthRequiredActionProviderObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_required_action_provider_object
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        defaultAction:
+          column:
+            name: default_action
+        enabled:
+          column:
+            name: enabled
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        priority:
+          column:
+            name: priority
+        providerId:
+          column:
+            name: provider_id
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRequiredActionProviderObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - defaultAction
+          - enabled
+          - id
+          - name
+          - priority
+          - providerId
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRequiredActionProviderResponse
+  description: Responses from the 'insert_auth_required_action_provider' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRequiredActionProvider!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRequiredActionProviderResponse
+    inputTypeName: InsertAuthRequiredActionProviderResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_required_action_provider_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRequiredActionProviderResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRequiredActionProvider
+  outputType: InsertAuthRequiredActionProviderResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRequiredActionProviderObject!]!"
+    - name: postCheck
+      type: AuthRequiredActionProviderBoolExp
+      description: Insert permission predicate over the
+        'auth_required_action_provider' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_required_action_provider
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRequiredActionProvider
+    rootFieldKind: Mutation
+  description: Insert into the auth_required_action_provider table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRequiredActionProvider
+  permissions:
+    - role: admin
+      allowExecution: true
+

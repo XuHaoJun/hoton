@@ -1,0 +1,115 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRevokedToken
+  fields:
+    - name: expire
+      type: Int8!
+    - name: id
+      type: Varchar!
+  graphql:
+    typeName: AuthRevokedToken
+    inputTypeName: AuthRevokedTokenInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_revoked_token
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRevokedToken
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - expire
+          - id
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRevokedTokenBoolExp
+  operand:
+    object:
+      type: AuthRevokedToken
+      comparableFields:
+        - fieldName: expire
+          booleanExpressionType: Int8BoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRevokedTokenBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRevokedTokenAggExp
+  operand:
+    object:
+      aggregatedType: AuthRevokedToken
+      aggregatableFields:
+        - fieldName: expire
+          aggregateExpression: Int8AggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRevokedTokenAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRevokedToken
+  objectType: AuthRevokedToken
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_revoked_token
+  filterExpressionType: AuthRevokedTokenBoolExp
+  aggregateExpression: AuthRevokedTokenAggExp
+  orderableFields:
+    - fieldName: expire
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRevokedToken
+      subscription:
+        rootField: authRevokedToken
+    selectUniques:
+      - queryRootField: authRevokedTokenById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authRevokedTokenById
+    orderByExpressionType: AuthRevokedTokenOrderBy
+    filterInputTypeName: AuthRevokedTokenFilterInput
+    aggregate:
+      queryRootField: authRevokedTokenAggregate
+      subscription:
+        rootField: authRevokedTokenAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRevokedToken
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

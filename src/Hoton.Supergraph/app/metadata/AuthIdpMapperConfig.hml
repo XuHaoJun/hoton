@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthIdpMapperConfig
+  fields:
+    - name: idpMapperId
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: AuthIdpMapperConfig
+    inputTypeName: AuthIdpMapperConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_idp_mapper_config
+      fieldMapping:
+        idpMapperId:
+          column:
+            name: idp_mapper_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthIdpMapperConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - idpMapperId
+          - name
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthIdpMapperConfigBoolExp
+  operand:
+    object:
+      type: AuthIdpMapperConfig
+      comparableFields:
+        - fieldName: idpMapperId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: TextBoolExp
+      comparableRelationships:
+        - relationshipName: authIdentityProviderMapper
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthIdpMapperConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthIdpMapperConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthIdpMapperConfig
+      aggregatableFields:
+        - fieldName: idpMapperId
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthIdpMapperConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthIdpMapperConfig
+  objectType: AuthIdpMapperConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_idp_mapper_config
+  filterExpressionType: AuthIdpMapperConfigBoolExp
+  aggregateExpression: AuthIdpMapperConfigAggExp
+  orderableFields:
+    - fieldName: idpMapperId
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authIdpMapperConfig
+      subscription:
+        rootField: authIdpMapperConfig
+    selectUniques:
+      - queryRootField: authIdpMapperConfigByConstraintIdpmconfig
+        uniqueIdentifier:
+          - idpMapperId
+          - name
+        subscription:
+          rootField: authIdpMapperConfigByConstraintIdpmconfig
+    orderByExpressionType: AuthIdpMapperConfigOrderBy
+    filterInputTypeName: AuthIdpMapperConfigFilterInput
+    aggregate:
+      queryRootField: authIdpMapperConfigAggregate
+      subscription:
+        rootField: authIdpMapperConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthIdpMapperConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authIdentityProviderMapper
+  sourceType: AuthIdpMapperConfig
+  target:
+    model:
+      name: AuthIdentityProviderMapper
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: idpMapperId
+      target:
+        modelField:
+          - fieldName: id
+

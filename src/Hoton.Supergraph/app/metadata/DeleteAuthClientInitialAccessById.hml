@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthClientInitialAccessByIdResponse
+  description: Responses from the 'delete_auth_client_initial_access_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientInitialAccess!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthClientInitialAccessByIdResponse
+    inputTypeName: DeleteAuthClientInitialAccessByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_client_initial_access_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthClientInitialAccessByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthClientInitialAccessById
+  outputType: DeleteAuthClientInitialAccessByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthClientInitialAccessBoolExp
+      description: Delete permission predicate over the 'auth_client_initial_access'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_client_initial_access_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthClientInitialAccessById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_client_initial_access' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthClientInitialAccessById
+  permissions:
+    - role: admin
+      allowExecution: true
+

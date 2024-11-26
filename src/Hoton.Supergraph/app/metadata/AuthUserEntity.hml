@@ -1,0 +1,484 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserEntity
+  fields:
+    - name: createdTimestamp
+      type: Int8
+    - name: email
+      type: Varchar
+    - name: emailConstraint
+      type: Varchar
+    - name: emailVerified
+      type: Bool!
+    - name: enabled
+      type: Bool!
+    - name: federationLink
+      type: Varchar
+    - name: firstName
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: lastName
+      type: Varchar
+    - name: notBefore
+      type: Int4!
+    - name: realmId
+      type: Varchar
+    - name: serviceAccountClientLink
+      type: Varchar
+    - name: username
+      type: Varchar
+  graphql:
+    typeName: AuthUserEntity
+    inputTypeName: AuthUserEntityInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_entity
+      fieldMapping:
+        createdTimestamp:
+          column:
+            name: created_timestamp
+        email:
+          column:
+            name: email
+        emailConstraint:
+          column:
+            name: email_constraint
+        emailVerified:
+          column:
+            name: email_verified
+        enabled:
+          column:
+            name: enabled
+        federationLink:
+          column:
+            name: federation_link
+        firstName:
+          column:
+            name: first_name
+        id:
+          column:
+            name: id
+        lastName:
+          column:
+            name: last_name
+        notBefore:
+          column:
+            name: not_before
+        realmId:
+          column:
+            name: realm_id
+        serviceAccountClientLink:
+          column:
+            name: service_account_client_link
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserEntity
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdTimestamp
+          - email
+          - emailConstraint
+          - emailVerified
+          - enabled
+          - federationLink
+          - firstName
+          - id
+          - lastName
+          - notBefore
+          - realmId
+          - serviceAccountClientLink
+          - username
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserEntityBoolExp
+  operand:
+    object:
+      type: AuthUserEntity
+      comparableFields:
+        - fieldName: createdTimestamp
+          booleanExpressionType: Int8BoolExp
+        - fieldName: email
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: emailConstraint
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: emailVerified
+          booleanExpressionType: BoolBoolExp
+        - fieldName: enabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: federationLink
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: firstName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: notBefore
+          booleanExpressionType: Int4BoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: serviceAccountClientLink
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: username
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authCredentials
+        - relationshipName: authFederatedIdentities
+        - relationshipName: authUserAttributes
+        - relationshipName: authUserConsents
+        - relationshipName: authUserGroupMemberships
+        - relationshipName: authUserRequiredActions
+        - relationshipName: authUserRoleMappings
+        - relationshipName: cartCarts
+        - relationshipName: orderOrders
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserEntityBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserEntityAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserEntity
+      aggregatableFields:
+        - fieldName: createdTimestamp
+          aggregateExpression: Int8AggExp
+        - fieldName: email
+          aggregateExpression: VarcharAggExp
+        - fieldName: emailConstraint
+          aggregateExpression: VarcharAggExp
+        - fieldName: emailVerified
+          aggregateExpression: BoolAggExp
+        - fieldName: enabled
+          aggregateExpression: BoolAggExp
+        - fieldName: federationLink
+          aggregateExpression: VarcharAggExp
+        - fieldName: firstName
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastName
+          aggregateExpression: VarcharAggExp
+        - fieldName: notBefore
+          aggregateExpression: Int4AggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: serviceAccountClientLink
+          aggregateExpression: VarcharAggExp
+        - fieldName: username
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserEntityAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserEntity
+  objectType: AuthUserEntity
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_entity
+  filterExpressionType: AuthUserEntityBoolExp
+  aggregateExpression: AuthUserEntityAggExp
+  orderableFields:
+    - fieldName: createdTimestamp
+      orderByDirections:
+        enableAll: true
+    - fieldName: email
+      orderByDirections:
+        enableAll: true
+    - fieldName: emailConstraint
+      orderByDirections:
+        enableAll: true
+    - fieldName: emailVerified
+      orderByDirections:
+        enableAll: true
+    - fieldName: enabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: federationLink
+      orderByDirections:
+        enableAll: true
+    - fieldName: firstName
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastName
+      orderByDirections:
+        enableAll: true
+    - fieldName: notBefore
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: serviceAccountClientLink
+      orderByDirections:
+        enableAll: true
+    - fieldName: username
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserEntity
+      subscription:
+        rootField: authUserEntity
+    selectUniques:
+      - queryRootField: authUserEntityById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authUserEntityById
+      - queryRootField: authUserEntityByUkDykn684Sl8Up1Crfei6Eckhd7
+        uniqueIdentifier:
+          - emailConstraint
+          - realmId
+        subscription:
+          rootField: authUserEntityByUkDykn684Sl8Up1Crfei6Eckhd7
+      - queryRootField: authUserEntityByUkRu8Tt6T700S9V50Bu18Ws5Ha6
+        uniqueIdentifier:
+          - realmId
+          - username
+        subscription:
+          rootField: authUserEntityByUkRu8Tt6T700S9V50Bu18Ws5Ha6
+    orderByExpressionType: AuthUserEntityOrderBy
+    filterInputTypeName: AuthUserEntityFilterInput
+    aggregate:
+      queryRootField: authUserEntityAggregate
+      subscription:
+        rootField: authUserEntityAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserEntity
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authCredentials
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: AuthCredential
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthCredentialAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: authCredentialsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authFederatedIdentities
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: AuthFederatedIdentity
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthFederatedIdentityAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: authFederatedIdentitiesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserAttributes
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: AuthUserAttribute
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserAttributeAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: authUserAttributesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserConsents
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: AuthUserConsent
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserConsentAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: authUserConsentsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserGroupMemberships
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: AuthUserGroupMembership
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserGroupMembershipAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: authUserGroupMembershipsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserRequiredActions
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: AuthUserRequiredAction
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserRequiredActionAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: authUserRequiredActionsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserRoleMappings
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: AuthUserRoleMapping
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserRoleMappingAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: authUserRoleMappingsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartCarts
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: CartCart
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: CartCartAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: cartCartsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrders
+  sourceType: AuthUserEntity
+  target:
+    model:
+      name: OrderOrder
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userId
+  graphql:
+    aggregateFieldName: orderOrdersAggregate
+

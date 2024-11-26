@@ -1,0 +1,109 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmEventsListenersObject
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthRealmEventsListenersObject
+    inputTypeName: InsertAuthRealmEventsListenersObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_events_listeners_object
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmEventsListenersObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmEventsListenersResponse
+  description: Responses from the 'insert_auth_realm_events_listeners' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmEventsListeners!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRealmEventsListenersResponse
+    inputTypeName: InsertAuthRealmEventsListenersResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_events_listeners_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmEventsListenersResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRealmEventsListeners
+  outputType: InsertAuthRealmEventsListenersResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRealmEventsListenersObject!]!"
+    - name: postCheck
+      type: AuthRealmEventsListenersBoolExp
+      description: Insert permission predicate over the 'auth_realm_events_listeners'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_realm_events_listeners
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRealmEventsListeners
+    rootFieldKind: Mutation
+  description: Insert into the auth_realm_events_listeners table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRealmEventsListeners
+  permissions:
+    - role: admin
+      allowExecution: true
+

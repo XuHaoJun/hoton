@@ -1,0 +1,149 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerScopeByNameAndResourceServerIdUpdateColumns
+  description: Update the columns of the 'auth_resource_server_scope' collection
+  fields:
+    - name: displayName
+      type: UpdateColumnAuthResourceServerScopeDisplayName
+      description: Update the 'display_name' column in the
+        'auth_resource_server_scope' collection.
+    - name: iconUri
+      type: UpdateColumnAuthResourceServerScopeIconUri
+      description: Update the 'icon_uri' column in the 'auth_resource_server_scope'
+        collection.
+    - name: id
+      type: UpdateColumnAuthResourceServerScopeId
+      description: Update the 'id' column in the 'auth_resource_server_scope' collection.
+    - name: name
+      type: UpdateColumnAuthResourceServerScopeName
+      description: Update the 'name' column in the 'auth_resource_server_scope' collection.
+    - name: resourceServerId
+      type: UpdateColumnAuthResourceServerScopeResourceServerId
+      description: Update the 'resource_server_id' column in the
+        'auth_resource_server_scope' collection.
+  graphql:
+    typeName: UpdateAuthResourceServerScopeByNameAndResourceServerIdUpdateColumns
+    inputTypeName: UpdateAuthResourceServerScopeByNameAndResourceServerIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_scope_by_name_and_resource_server_id_update_columns
+      fieldMapping:
+        displayName:
+          column:
+            name: display_name
+        iconUri:
+          column:
+            name: icon_uri
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        resourceServerId:
+          column:
+            name: resource_server_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerScopeByNameAndResourceServerIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - displayName
+          - iconUri
+          - id
+          - name
+          - resourceServerId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourceServerScopeByNameAndResourceServerIdResponse
+  description: Responses from the
+    'update_auth_resource_server_scope_by_name_and_resource_server_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServerScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthResourceServerScopeByNameAndResourceServerIdResponse
+    inputTypeName: UpdateAuthResourceServerScopeByNameAndResourceServerIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_server_scope_by_name_and_resource_server_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourceServerScopeByNameAndResourceServerIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthResourceServerScopeByNameAndResourceServerId
+  outputType: UpdateAuthResourceServerScopeByNameAndResourceServerIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyResourceServerId
+      type: Varchar!
+    - name: postCheck
+      type: AuthResourceServerScopeBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_resource_server_scope' collection
+    - name: preCheck
+      type: AuthResourceServerScopeBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_resource_server_scope' collection
+    - name: updateColumns
+      type: UpdateAuthResourceServerScopeByNameAndResourceServerIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_resource_server_scope_by_name_and_resource_server_id
+    argumentMapping:
+      keyName: key_name
+      keyResourceServerId: key_resource_server_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthResourceServerScopeByNameAndResourceServerId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_resource_server_scope' collection using
+    the 'name' and 'resource_server_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthResourceServerScopeByNameAndResourceServerId
+  permissions:
+    - role: admin
+      allowExecution: true
+

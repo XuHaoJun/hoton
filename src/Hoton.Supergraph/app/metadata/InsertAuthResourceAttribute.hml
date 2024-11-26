@@ -1,0 +1,120 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthResourceAttributeObject
+  fields:
+    - name: id
+      type: Varchar
+    - name: name
+      type: Varchar!
+    - name: resourceId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: InsertAuthResourceAttributeObject
+    inputTypeName: InsertAuthResourceAttributeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_resource_attribute_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        resourceId:
+          column:
+            name: resource_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthResourceAttributeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - resourceId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthResourceAttributeResponse
+  description: Responses from the 'insert_auth_resource_attribute' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthResourceAttributeResponse
+    inputTypeName: InsertAuthResourceAttributeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_resource_attribute_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthResourceAttributeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthResourceAttribute
+  outputType: InsertAuthResourceAttributeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthResourceAttributeObject!]!"
+    - name: postCheck
+      type: AuthResourceAttributeBoolExp
+      description: Insert permission predicate over the 'auth_resource_attribute' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_resource_attribute
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthResourceAttribute
+    rootFieldKind: Mutation
+  description: Insert into the auth_resource_attribute table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthResourceAttribute
+  permissions:
+    - role: admin
+      allowExecution: true
+

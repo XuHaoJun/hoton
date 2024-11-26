@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthClientScopeClientByClientIdAndScopeIdResponse
+  description: Responses from the
+    'delete_auth_client_scope_client_by_client_id_and_scope_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientScopeClient!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthClientScopeClientByClientIdAndScopeIdResponse
+    inputTypeName: DeleteAuthClientScopeClientByClientIdAndScopeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_client_scope_client_by_client_id_and_scope_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthClientScopeClientByClientIdAndScopeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthClientScopeClientByClientIdAndScopeId
+  outputType: DeleteAuthClientScopeClientByClientIdAndScopeIdResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyScopeId
+      type: Varchar!
+    - name: preCheck
+      type: AuthClientScopeClientBoolExp
+      description: Delete permission predicate over the 'auth_client_scope_client'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_client_scope_client_by_client_id_and_scope_id
+    argumentMapping:
+      keyClientId: key_client_id
+      keyScopeId: key_scope_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthClientScopeClientByClientIdAndScopeId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_client_scope_client' collection using
+    the 'client_id' and 'scope_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthClientScopeClientByClientIdAndScopeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

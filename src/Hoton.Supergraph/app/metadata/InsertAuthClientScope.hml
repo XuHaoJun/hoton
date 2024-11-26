@@ -1,0 +1,126 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientScopeObject
+  fields:
+    - name: description
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: protocol
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthClientScopeObject
+    inputTypeName: InsertAuthClientScopeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_scope_object
+      fieldMapping:
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        protocol:
+          column:
+            name: protocol
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientScopeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - description
+          - id
+          - name
+          - protocol
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientScopeResponse
+  description: Responses from the 'insert_auth_client_scope' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthClientScopeResponse
+    inputTypeName: InsertAuthClientScopeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_scope_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientScopeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthClientScope
+  outputType: InsertAuthClientScopeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthClientScopeObject!]!"
+    - name: postCheck
+      type: AuthClientScopeBoolExp
+      description: Insert permission predicate over the 'auth_client_scope' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_client_scope
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthClientScope
+    rootFieldKind: Mutation
+  description: Insert into the auth_client_scope table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthClientScope
+  permissions:
+    - role: admin
+      allowExecution: true
+

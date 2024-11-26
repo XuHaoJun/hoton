@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthCompositeRoleByChildRoleAndCompositeResponse
+  description: Responses from the
+    'delete_auth_composite_role_by_child_role_and_composite' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthCompositeRole!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthCompositeRoleByChildRoleAndCompositeResponse
+    inputTypeName: DeleteAuthCompositeRoleByChildRoleAndCompositeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_composite_role_by_child_role_and_composite_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthCompositeRoleByChildRoleAndCompositeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthCompositeRoleByChildRoleAndComposite
+  outputType: DeleteAuthCompositeRoleByChildRoleAndCompositeResponse!
+  arguments:
+    - name: keyChildRole
+      type: Varchar!
+    - name: keyComposite
+      type: Varchar!
+    - name: preCheck
+      type: AuthCompositeRoleBoolExp
+      description: Delete permission predicate over the 'auth_composite_role' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_composite_role_by_child_role_and_composite
+    argumentMapping:
+      keyChildRole: key_child_role
+      keyComposite: key_composite
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthCompositeRoleByChildRoleAndComposite
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_composite_role' collection using the
+    'child_role' and 'composite' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthCompositeRoleByChildRoleAndComposite
+  permissions:
+    - role: admin
+      allowExecution: true
+

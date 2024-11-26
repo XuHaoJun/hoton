@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthMigrationModelByIdResponse
+  description: Responses from the 'delete_auth_migration_model_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthMigrationModel!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthMigrationModelByIdResponse
+    inputTypeName: DeleteAuthMigrationModelByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_migration_model_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthMigrationModelByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthMigrationModelById
+  outputType: DeleteAuthMigrationModelByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthMigrationModelBoolExp
+      description: Delete permission predicate over the 'auth_migration_model' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_migration_model_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthMigrationModelById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_migration_model' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthMigrationModelById
+  permissions:
+    - role: admin
+      allowExecution: true
+

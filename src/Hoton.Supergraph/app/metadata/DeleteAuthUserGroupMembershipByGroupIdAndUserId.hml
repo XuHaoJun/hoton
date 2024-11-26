@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthUserGroupMembershipByGroupIdAndUserIdResponse
+  description: Responses from the
+    'delete_auth_user_group_membership_by_group_id_and_user_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserGroupMembership!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthUserGroupMembershipByGroupIdAndUserIdResponse
+    inputTypeName: DeleteAuthUserGroupMembershipByGroupIdAndUserIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_user_group_membership_by_group_id_and_user_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthUserGroupMembershipByGroupIdAndUserIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthUserGroupMembershipByGroupIdAndUserId
+  outputType: DeleteAuthUserGroupMembershipByGroupIdAndUserIdResponse!
+  arguments:
+    - name: keyGroupId
+      type: Varchar!
+    - name: keyUserId
+      type: Varchar!
+    - name: preCheck
+      type: AuthUserGroupMembershipBoolExp
+      description: Delete permission predicate over the 'auth_user_group_membership'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_user_group_membership_by_group_id_and_user_id
+    argumentMapping:
+      keyGroupId: key_group_id
+      keyUserId: key_user_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthUserGroupMembershipByGroupIdAndUserId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_user_group_membership' collection using
+    the 'group_id' and 'user_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthUserGroupMembershipByGroupIdAndUserId
+  permissions:
+    - role: admin
+      allowExecution: true
+

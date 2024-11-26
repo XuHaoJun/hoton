@@ -1,0 +1,346 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientInitialAccessCount
+  description: Update the 'count' column in the 'auth_client_initial_access' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientInitialAccessCount
+    inputTypeName: UpdateColumnAuthClientInitialAccessCountInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_initial_access_count
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientInitialAccessCount
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientInitialAccessExpiration
+  description: Update the 'expiration' column in the 'auth_client_initial_access' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientInitialAccessExpiration
+    inputTypeName: UpdateColumnAuthClientInitialAccessExpirationInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_initial_access_expiration
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientInitialAccessExpiration
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientInitialAccessId
+  description: Update the 'id' column in the 'auth_client_initial_access' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientInitialAccessId
+    inputTypeName: UpdateColumnAuthClientInitialAccessIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_initial_access_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientInitialAccessId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientInitialAccessRealmId
+  description: Update the 'realm_id' column in the 'auth_client_initial_access' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientInitialAccessRealmId
+    inputTypeName: UpdateColumnAuthClientInitialAccessRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_initial_access_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientInitialAccessRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientInitialAccessRemainingCount
+  description: Update the 'remaining_count' column in the
+    'auth_client_initial_access' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientInitialAccessRemainingCount
+    inputTypeName: UpdateColumnAuthClientInitialAccessRemainingCountInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_initial_access_remaining_count
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientInitialAccessRemainingCount
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientInitialAccessTimestamp
+  description: Update the 'timestamp' column in the 'auth_client_initial_access' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientInitialAccessTimestamp
+    inputTypeName: UpdateColumnAuthClientInitialAccessTimestampInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_initial_access_timestamp
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientInitialAccessTimestamp
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientInitialAccessByIdUpdateColumns
+  description: Update the columns of the 'auth_client_initial_access' collection
+  fields:
+    - name: count
+      type: UpdateColumnAuthClientInitialAccessCount
+      description: Update the 'count' column in the 'auth_client_initial_access' collection.
+    - name: expiration
+      type: UpdateColumnAuthClientInitialAccessExpiration
+      description: Update the 'expiration' column in the 'auth_client_initial_access'
+        collection.
+    - name: id
+      type: UpdateColumnAuthClientInitialAccessId
+      description: Update the 'id' column in the 'auth_client_initial_access' collection.
+    - name: realmId
+      type: UpdateColumnAuthClientInitialAccessRealmId
+      description: Update the 'realm_id' column in the 'auth_client_initial_access'
+        collection.
+    - name: remainingCount
+      type: UpdateColumnAuthClientInitialAccessRemainingCount
+      description: Update the 'remaining_count' column in the
+        'auth_client_initial_access' collection.
+    - name: timestamp
+      type: UpdateColumnAuthClientInitialAccessTimestamp
+      description: Update the 'timestamp' column in the 'auth_client_initial_access'
+        collection.
+  graphql:
+    typeName: UpdateAuthClientInitialAccessByIdUpdateColumns
+    inputTypeName: UpdateAuthClientInitialAccessByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_initial_access_by_id_update_columns
+      fieldMapping:
+        count:
+          column:
+            name: count
+        expiration:
+          column:
+            name: expiration
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+        remainingCount:
+          column:
+            name: remaining_count
+        timestamp:
+          column:
+            name: timestamp
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientInitialAccessByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - count
+          - expiration
+          - id
+          - realmId
+          - remainingCount
+          - timestamp
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientInitialAccessByIdResponse
+  description: Responses from the 'update_auth_client_initial_access_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientInitialAccess!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthClientInitialAccessByIdResponse
+    inputTypeName: UpdateAuthClientInitialAccessByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_initial_access_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientInitialAccessByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthClientInitialAccessById
+  outputType: UpdateAuthClientInitialAccessByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthClientInitialAccessBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_client_initial_access' collection
+    - name: preCheck
+      type: AuthClientInitialAccessBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_client_initial_access' collection
+    - name: updateColumns
+      type: UpdateAuthClientInitialAccessByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_client_initial_access_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthClientInitialAccessById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_client_initial_access' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthClientInitialAccessById
+  permissions:
+    - role: admin
+      allowExecution: true
+

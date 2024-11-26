@@ -1,0 +1,578 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthClient
+  fields:
+    - name: alwaysDisplayInConsole
+      type: Bool!
+    - name: baseUrl
+      type: Varchar
+    - name: bearerOnly
+      type: Bool!
+    - name: clientAuthenticatorType
+      type: Varchar
+    - name: clientId
+      type: Varchar
+    - name: consentRequired
+      type: Bool!
+    - name: description
+      type: Varchar
+    - name: directAccessGrantsEnabled
+      type: Bool!
+    - name: enabled
+      type: Bool!
+    - name: frontchannelLogout
+      type: Bool!
+    - name: fullScopeAllowed
+      type: Bool!
+    - name: id
+      type: Varchar!
+    - name: implicitFlowEnabled
+      type: Bool!
+    - name: managementUrl
+      type: Varchar
+    - name: name
+      type: Varchar
+    - name: nodeReregTimeout
+      type: Int4
+    - name: notBefore
+      type: Int4
+    - name: protocol
+      type: Varchar
+    - name: publicClient
+      type: Bool!
+    - name: realmId
+      type: Varchar
+    - name: registrationToken
+      type: Varchar
+    - name: rootUrl
+      type: Varchar
+    - name: secret
+      type: Varchar
+    - name: serviceAccountsEnabled
+      type: Bool!
+    - name: standardFlowEnabled
+      type: Bool!
+    - name: surrogateAuthRequired
+      type: Bool!
+  graphql:
+    typeName: AuthClient
+    inputTypeName: AuthClientInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_client
+      fieldMapping:
+        alwaysDisplayInConsole:
+          column:
+            name: always_display_in_console
+        baseUrl:
+          column:
+            name: base_url
+        bearerOnly:
+          column:
+            name: bearer_only
+        clientAuthenticatorType:
+          column:
+            name: client_authenticator_type
+        clientId:
+          column:
+            name: client_id
+        consentRequired:
+          column:
+            name: consent_required
+        description:
+          column:
+            name: description
+        directAccessGrantsEnabled:
+          column:
+            name: direct_access_grants_enabled
+        enabled:
+          column:
+            name: enabled
+        frontchannelLogout:
+          column:
+            name: frontchannel_logout
+        fullScopeAllowed:
+          column:
+            name: full_scope_allowed
+        id:
+          column:
+            name: id
+        implicitFlowEnabled:
+          column:
+            name: implicit_flow_enabled
+        managementUrl:
+          column:
+            name: management_url
+        name:
+          column:
+            name: name
+        nodeReregTimeout:
+          column:
+            name: node_rereg_timeout
+        notBefore:
+          column:
+            name: not_before
+        protocol:
+          column:
+            name: protocol
+        publicClient:
+          column:
+            name: public_client
+        realmId:
+          column:
+            name: realm_id
+        registrationToken:
+          column:
+            name: registration_token
+        rootUrl:
+          column:
+            name: root_url
+        secret:
+          column:
+            name: secret
+        serviceAccountsEnabled:
+          column:
+            name: service_accounts_enabled
+        standardFlowEnabled:
+          column:
+            name: standard_flow_enabled
+        surrogateAuthRequired:
+          column:
+            name: surrogate_auth_required
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthClient
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alwaysDisplayInConsole
+          - baseUrl
+          - bearerOnly
+          - clientAuthenticatorType
+          - clientId
+          - consentRequired
+          - description
+          - directAccessGrantsEnabled
+          - enabled
+          - frontchannelLogout
+          - fullScopeAllowed
+          - id
+          - implicitFlowEnabled
+          - managementUrl
+          - name
+          - nodeReregTimeout
+          - notBefore
+          - protocol
+          - publicClient
+          - realmId
+          - registrationToken
+          - rootUrl
+          - secret
+          - serviceAccountsEnabled
+          - standardFlowEnabled
+          - surrogateAuthRequired
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthClientBoolExp
+  operand:
+    object:
+      type: AuthClient
+      comparableFields:
+        - fieldName: alwaysDisplayInConsole
+          booleanExpressionType: BoolBoolExp
+        - fieldName: baseUrl
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: bearerOnly
+          booleanExpressionType: BoolBoolExp
+        - fieldName: clientAuthenticatorType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: consentRequired
+          booleanExpressionType: BoolBoolExp
+        - fieldName: description
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: directAccessGrantsEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: enabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: frontchannelLogout
+          booleanExpressionType: BoolBoolExp
+        - fieldName: fullScopeAllowed
+          booleanExpressionType: BoolBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: implicitFlowEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: managementUrl
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: nodeReregTimeout
+          booleanExpressionType: Int4BoolExp
+        - fieldName: notBefore
+          booleanExpressionType: Int4BoolExp
+        - fieldName: protocol
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: publicClient
+          booleanExpressionType: BoolBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: registrationToken
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: rootUrl
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: secret
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: serviceAccountsEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: standardFlowEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: surrogateAuthRequired
+          booleanExpressionType: BoolBoolExp
+      comparableRelationships:
+        - relationshipName: authClientAttributes
+        - relationshipName: authClientNodeRegistrations
+        - relationshipName: authProtocolMappers
+        - relationshipName: authRedirectUris
+        - relationshipName: authScopeMappings
+        - relationshipName: authWebOrigins
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthClientBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthClientAggExp
+  operand:
+    object:
+      aggregatedType: AuthClient
+      aggregatableFields:
+        - fieldName: alwaysDisplayInConsole
+          aggregateExpression: BoolAggExp
+        - fieldName: baseUrl
+          aggregateExpression: VarcharAggExp
+        - fieldName: bearerOnly
+          aggregateExpression: BoolAggExp
+        - fieldName: clientAuthenticatorType
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: consentRequired
+          aggregateExpression: BoolAggExp
+        - fieldName: description
+          aggregateExpression: VarcharAggExp
+        - fieldName: directAccessGrantsEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: enabled
+          aggregateExpression: BoolAggExp
+        - fieldName: frontchannelLogout
+          aggregateExpression: BoolAggExp
+        - fieldName: fullScopeAllowed
+          aggregateExpression: BoolAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: implicitFlowEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: managementUrl
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: nodeReregTimeout
+          aggregateExpression: Int4AggExp
+        - fieldName: notBefore
+          aggregateExpression: Int4AggExp
+        - fieldName: protocol
+          aggregateExpression: VarcharAggExp
+        - fieldName: publicClient
+          aggregateExpression: BoolAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: registrationToken
+          aggregateExpression: VarcharAggExp
+        - fieldName: rootUrl
+          aggregateExpression: VarcharAggExp
+        - fieldName: secret
+          aggregateExpression: VarcharAggExp
+        - fieldName: serviceAccountsEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: standardFlowEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: surrogateAuthRequired
+          aggregateExpression: BoolAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthClientAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthClient
+  objectType: AuthClient
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_client
+  filterExpressionType: AuthClientBoolExp
+  aggregateExpression: AuthClientAggExp
+  orderableFields:
+    - fieldName: alwaysDisplayInConsole
+      orderByDirections:
+        enableAll: true
+    - fieldName: baseUrl
+      orderByDirections:
+        enableAll: true
+    - fieldName: bearerOnly
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientAuthenticatorType
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: consentRequired
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: directAccessGrantsEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: enabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: frontchannelLogout
+      orderByDirections:
+        enableAll: true
+    - fieldName: fullScopeAllowed
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: implicitFlowEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: managementUrl
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: nodeReregTimeout
+      orderByDirections:
+        enableAll: true
+    - fieldName: notBefore
+      orderByDirections:
+        enableAll: true
+    - fieldName: protocol
+      orderByDirections:
+        enableAll: true
+    - fieldName: publicClient
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: registrationToken
+      orderByDirections:
+        enableAll: true
+    - fieldName: rootUrl
+      orderByDirections:
+        enableAll: true
+    - fieldName: secret
+      orderByDirections:
+        enableAll: true
+    - fieldName: serviceAccountsEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: standardFlowEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: surrogateAuthRequired
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authClient
+      subscription:
+        rootField: authClient
+    selectUniques:
+      - queryRootField: authClientById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authClientById
+      - queryRootField: authClientByUkB71Cjlbenv945Rb6Gcon438At
+        uniqueIdentifier:
+          - clientId
+          - realmId
+        subscription:
+          rootField: authClientByUkB71Cjlbenv945Rb6Gcon438At
+    orderByExpressionType: AuthClientOrderBy
+    filterInputTypeName: AuthClientFilterInput
+    aggregate:
+      queryRootField: authClientAggregate
+      subscription:
+        rootField: authClientAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthClient
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClientAttributes
+  sourceType: AuthClient
+  target:
+    model:
+      name: AuthClientAttributes
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthClientAttributesAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: clientId
+  graphql:
+    aggregateFieldName: authClientAttributesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClientNodeRegistrations
+  sourceType: AuthClient
+  target:
+    model:
+      name: AuthClientNodeRegistrations
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthClientNodeRegistrationsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: clientId
+  graphql:
+    aggregateFieldName: authClientNodeRegistrationsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authProtocolMappers
+  sourceType: AuthClient
+  target:
+    model:
+      name: AuthProtocolMapper
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthProtocolMapperAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: clientId
+  graphql:
+    aggregateFieldName: authProtocolMappersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRedirectUris
+  sourceType: AuthClient
+  target:
+    model:
+      name: AuthRedirectUris
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRedirectUrisAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: clientId
+  graphql:
+    aggregateFieldName: authRedirectUrisAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authScopeMappings
+  sourceType: AuthClient
+  target:
+    model:
+      name: AuthScopeMapping
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthScopeMappingAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: clientId
+  graphql:
+    aggregateFieldName: authScopeMappingsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authWebOrigins
+  sourceType: AuthClient
+  target:
+    model:
+      name: AuthWebOrigins
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthWebOriginsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: clientId
+  graphql:
+    aggregateFieldName: authWebOriginsAggregate
+

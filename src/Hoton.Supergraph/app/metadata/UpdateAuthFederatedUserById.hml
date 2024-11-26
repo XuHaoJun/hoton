@@ -1,0 +1,225 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFederatedUserId
+  description: Update the 'id' column in the 'auth_federated_user' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFederatedUserId
+    inputTypeName: UpdateColumnAuthFederatedUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_federated_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFederatedUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFederatedUserRealmId
+  description: Update the 'realm_id' column in the 'auth_federated_user' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFederatedUserRealmId
+    inputTypeName: UpdateColumnAuthFederatedUserRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_federated_user_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFederatedUserRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFederatedUserStorageProviderId
+  description: Update the 'storage_provider_id' column in the
+    'auth_federated_user' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFederatedUserStorageProviderId
+    inputTypeName: UpdateColumnAuthFederatedUserStorageProviderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_federated_user_storage_provider_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFederatedUserStorageProviderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFederatedUserByIdUpdateColumns
+  description: Update the columns of the 'auth_federated_user' collection
+  fields:
+    - name: id
+      type: UpdateColumnAuthFederatedUserId
+      description: Update the 'id' column in the 'auth_federated_user' collection.
+    - name: realmId
+      type: UpdateColumnAuthFederatedUserRealmId
+      description: Update the 'realm_id' column in the 'auth_federated_user' collection.
+    - name: storageProviderId
+      type: UpdateColumnAuthFederatedUserStorageProviderId
+      description: Update the 'storage_provider_id' column in the
+        'auth_federated_user' collection.
+  graphql:
+    typeName: UpdateAuthFederatedUserByIdUpdateColumns
+    inputTypeName: UpdateAuthFederatedUserByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_federated_user_by_id_update_columns
+      fieldMapping:
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFederatedUserByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - realmId
+          - storageProviderId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFederatedUserByIdResponse
+  description: Responses from the 'update_auth_federated_user_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFederatedUser!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthFederatedUserByIdResponse
+    inputTypeName: UpdateAuthFederatedUserByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_federated_user_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFederatedUserByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthFederatedUserById
+  outputType: UpdateAuthFederatedUserByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthFederatedUserBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_federated_user' collection
+    - name: preCheck
+      type: AuthFederatedUserBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_federated_user' collection
+    - name: updateColumns
+      type: UpdateAuthFederatedUserByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_federated_user_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthFederatedUserById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_federated_user' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthFederatedUserById
+  permissions:
+    - role: admin
+      allowExecution: true
+

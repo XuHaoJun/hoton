@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderOrderStatusHistoryByIdResponse
+  description: Responses from the 'delete_order_order_status_history_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderStatusHistory!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderOrderStatusHistoryByIdResponse
+    inputTypeName: DeleteOrderOrderStatusHistoryByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_order_status_history_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderOrderStatusHistoryByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderOrderStatusHistoryById
+  outputType: DeleteOrderOrderStatusHistoryByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: preCheck
+      type: OrderOrderStatusHistoryBoolExp
+      description: Delete permission predicate over the 'order_order_status_history'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_order_status_history_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderOrderStatusHistoryById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_order_status_history' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderOrderStatusHistoryById
+  permissions:
+    - role: admin
+      allowExecution: true
+

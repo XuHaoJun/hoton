@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthClientScopeRoleMapping
+  fields:
+    - name: roleId
+      type: Varchar!
+    - name: scopeId
+      type: Varchar!
+  graphql:
+    typeName: AuthClientScopeRoleMapping
+    inputTypeName: AuthClientScopeRoleMappingInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_client_scope_role_mapping
+      fieldMapping:
+        roleId:
+          column:
+            name: role_id
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthClientScopeRoleMapping
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - roleId
+          - scopeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthClientScopeRoleMappingBoolExp
+  operand:
+    object:
+      type: AuthClientScopeRoleMapping
+      comparableFields:
+        - fieldName: roleId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: scopeId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authClientScope
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthClientScopeRoleMappingBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthClientScopeRoleMappingAggExp
+  operand:
+    object:
+      aggregatedType: AuthClientScopeRoleMapping
+      aggregatableFields:
+        - fieldName: roleId
+          aggregateExpression: VarcharAggExp
+        - fieldName: scopeId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthClientScopeRoleMappingAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthClientScopeRoleMapping
+  objectType: AuthClientScopeRoleMapping
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_client_scope_role_mapping
+  filterExpressionType: AuthClientScopeRoleMappingBoolExp
+  aggregateExpression: AuthClientScopeRoleMappingAggExp
+  orderableFields:
+    - fieldName: roleId
+      orderByDirections:
+        enableAll: true
+    - fieldName: scopeId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authClientScopeRoleMapping
+      subscription:
+        rootField: authClientScopeRoleMapping
+    selectUniques:
+      - queryRootField: authClientScopeRoleMappingByPkTemplateScope
+        uniqueIdentifier:
+          - roleId
+          - scopeId
+        subscription:
+          rootField: authClientScopeRoleMappingByPkTemplateScope
+    orderByExpressionType: AuthClientScopeRoleMappingOrderBy
+    filterInputTypeName: AuthClientScopeRoleMappingFilterInput
+    aggregate:
+      queryRootField: authClientScopeRoleMappingAggregate
+      subscription:
+        rootField: authClientScopeRoleMappingAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthClientScopeRoleMapping
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClientScope
+  sourceType: AuthClientScopeRoleMapping
+  target:
+    model:
+      name: AuthClientScope
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: scopeId
+      target:
+        modelField:
+          - fieldName: id
+

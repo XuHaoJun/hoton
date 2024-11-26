@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRealmSupportedLocales
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: AuthRealmSupportedLocales
+    inputTypeName: AuthRealmSupportedLocalesInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_realm_supported_locales
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRealmSupportedLocales
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRealmSupportedLocalesBoolExp
+  operand:
+    object:
+      type: AuthRealmSupportedLocales
+      comparableFields:
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRealmSupportedLocalesBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRealmSupportedLocalesAggExp
+  operand:
+    object:
+      aggregatedType: AuthRealmSupportedLocales
+      aggregatableFields:
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRealmSupportedLocalesAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRealmSupportedLocales
+  objectType: AuthRealmSupportedLocales
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_realm_supported_locales
+  filterExpressionType: AuthRealmSupportedLocalesBoolExp
+  aggregateExpression: AuthRealmSupportedLocalesAggExp
+  orderableFields:
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRealmSupportedLocales
+      subscription:
+        rootField: authRealmSupportedLocales
+    selectUniques:
+      - queryRootField: authRealmSupportedLocalesByConstrRealmSupportedLocales
+        uniqueIdentifier:
+          - realmId
+          - value
+        subscription:
+          rootField: authRealmSupportedLocalesByConstrRealmSupportedLocales
+    orderByExpressionType: AuthRealmSupportedLocalesOrderBy
+    filterInputTypeName: AuthRealmSupportedLocalesFilterInput
+    aggregate:
+      queryRootField: authRealmSupportedLocalesAggregate
+      subscription:
+        rootField: authRealmSupportedLocalesAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRealmSupportedLocales
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthRealmSupportedLocales
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

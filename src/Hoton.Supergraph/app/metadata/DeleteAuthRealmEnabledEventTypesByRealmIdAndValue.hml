@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRealmEnabledEventTypesByRealmIdAndValueResponse
+  description: Responses from the
+    'delete_auth_realm_enabled_event_types_by_realm_id_and_value' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmEnabledEventTypes!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRealmEnabledEventTypesByRealmIdAndValueResponse
+    inputTypeName: DeleteAuthRealmEnabledEventTypesByRealmIdAndValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_realm_enabled_event_types_by_realm_id_and_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRealmEnabledEventTypesByRealmIdAndValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRealmEnabledEventTypesByRealmIdAndValue
+  outputType: DeleteAuthRealmEnabledEventTypesByRealmIdAndValueResponse!
+  arguments:
+    - name: keyRealmId
+      type: Varchar!
+    - name: keyValue
+      type: Varchar!
+    - name: preCheck
+      type: AuthRealmEnabledEventTypesBoolExp
+      description: Delete permission predicate over the
+        'auth_realm_enabled_event_types' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_realm_enabled_event_types_by_realm_id_and_value
+    argumentMapping:
+      keyRealmId: key_realm_id
+      keyValue: key_value
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRealmEnabledEventTypesByRealmIdAndValue
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_realm_enabled_event_types' collection
+    using the 'realm_id' and 'value' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRealmEnabledEventTypesByRealmIdAndValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

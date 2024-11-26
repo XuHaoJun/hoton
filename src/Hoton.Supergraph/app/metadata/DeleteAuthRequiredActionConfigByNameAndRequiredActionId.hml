@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRequiredActionConfigByNameAndRequiredActionIdResponse
+  description: Responses from the
+    'delete_auth_required_action_config_by_name_and_required_action_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRequiredActionConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRequiredActionConfigByNameAndRequiredActionIdResponse
+    inputTypeName: DeleteAuthRequiredActionConfigByNameAndRequiredActionIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_required_action_config_by_name_and_required_action_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRequiredActionConfigByNameAndRequiredActionIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRequiredActionConfigByNameAndRequiredActionId
+  outputType: DeleteAuthRequiredActionConfigByNameAndRequiredActionIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyRequiredActionId
+      type: Varchar!
+    - name: preCheck
+      type: AuthRequiredActionConfigBoolExp
+      description: Delete permission predicate over the 'auth_required_action_config'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_required_action_config_by_name_and_required_action_id
+    argumentMapping:
+      keyName: key_name
+      keyRequiredActionId: key_required_action_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRequiredActionConfigByNameAndRequiredActionId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_required_action_config' collection
+    using the 'name' and 'required_action_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRequiredActionConfigByNameAndRequiredActionId
+  permissions:
+    - role: admin
+      allowExecution: true
+

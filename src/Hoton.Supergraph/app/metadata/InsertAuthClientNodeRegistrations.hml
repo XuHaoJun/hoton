@@ -1,0 +1,115 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientNodeRegistrationsObject
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Int4
+  graphql:
+    typeName: InsertAuthClientNodeRegistrationsObject
+    inputTypeName: InsertAuthClientNodeRegistrationsObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_node_registrations_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientNodeRegistrationsObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - name
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientNodeRegistrationsResponse
+  description: Responses from the 'insert_auth_client_node_registrations' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientNodeRegistrations!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthClientNodeRegistrationsResponse
+    inputTypeName: InsertAuthClientNodeRegistrationsResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_node_registrations_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientNodeRegistrationsResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthClientNodeRegistrations
+  outputType: InsertAuthClientNodeRegistrationsResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthClientNodeRegistrationsObject!]!"
+    - name: postCheck
+      type: AuthClientNodeRegistrationsBoolExp
+      description: Insert permission predicate over the
+        'auth_client_node_registrations' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_client_node_registrations
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthClientNodeRegistrations
+    rootFieldKind: Mutation
+  description: Insert into the auth_client_node_registrations table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthClientNodeRegistrations
+  permissions:
+    - role: admin
+      allowExecution: true
+

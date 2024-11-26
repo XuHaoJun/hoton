@@ -1,0 +1,144 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductSkuObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: productId
+      type: Uuid
+    - name: safetyStock
+      type: Int4
+    - name: snapshotVersion
+      type: Timestamptz
+    - name: spec
+      type: Jsonb!
+    - name: stockQuantity
+      type: Int4
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertProductProductSkuObject
+    inputTypeName: InsertProductProductSkuObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_sku_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productId:
+          column:
+            name: product_id
+        safetyStock:
+          column:
+            name: safety_stock
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        spec:
+          column:
+            name: spec
+        stockQuantity:
+          column:
+            name: stock_quantity
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductSkuObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - productId
+          - safetyStock
+          - snapshotVersion
+          - spec
+          - stockQuantity
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductSkuResponse
+  description: Responses from the 'insert_product_product_sku' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProductSku!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertProductProductSkuResponse
+    inputTypeName: InsertProductProductSkuResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_sku_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductSkuResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertProductProductSku
+  outputType: InsertProductProductSkuResponse!
+  arguments:
+    - name: objects
+      type: "[InsertProductProductSkuObject!]!"
+    - name: postCheck
+      type: ProductProductSkuBoolExp
+      description: Insert permission predicate over the 'product_product_sku' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_product_product_sku
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertProductProductSku
+    rootFieldKind: Mutation
+  description: Insert into the product_product_sku table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertProductProductSku
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,200 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserEntityByIdUpdateColumns
+  description: Update the columns of the 'auth_user_entity' collection
+  fields:
+    - name: createdTimestamp
+      type: UpdateColumnAuthUserEntityCreatedTimestamp
+      description: Update the 'created_timestamp' column in the 'auth_user_entity'
+        collection.
+    - name: email
+      type: UpdateColumnAuthUserEntityEmail
+      description: Update the 'email' column in the 'auth_user_entity' collection.
+    - name: emailConstraint
+      type: UpdateColumnAuthUserEntityEmailConstraint
+      description: Update the 'email_constraint' column in the 'auth_user_entity'
+        collection.
+    - name: emailVerified
+      type: UpdateColumnAuthUserEntityEmailVerified
+      description: Update the 'email_verified' column in the 'auth_user_entity' collection.
+    - name: enabled
+      type: UpdateColumnAuthUserEntityEnabled
+      description: Update the 'enabled' column in the 'auth_user_entity' collection.
+    - name: federationLink
+      type: UpdateColumnAuthUserEntityFederationLink
+      description: Update the 'federation_link' column in the 'auth_user_entity' collection.
+    - name: firstName
+      type: UpdateColumnAuthUserEntityFirstName
+      description: Update the 'first_name' column in the 'auth_user_entity' collection.
+    - name: id
+      type: UpdateColumnAuthUserEntityId
+      description: Update the 'id' column in the 'auth_user_entity' collection.
+    - name: lastName
+      type: UpdateColumnAuthUserEntityLastName
+      description: Update the 'last_name' column in the 'auth_user_entity' collection.
+    - name: notBefore
+      type: UpdateColumnAuthUserEntityNotBefore
+      description: Update the 'not_before' column in the 'auth_user_entity' collection.
+    - name: realmId
+      type: UpdateColumnAuthUserEntityRealmId
+      description: Update the 'realm_id' column in the 'auth_user_entity' collection.
+    - name: serviceAccountClientLink
+      type: UpdateColumnAuthUserEntityServiceAccountClientLink
+      description: Update the 'service_account_client_link' column in the
+        'auth_user_entity' collection.
+    - name: username
+      type: UpdateColumnAuthUserEntityUsername
+      description: Update the 'username' column in the 'auth_user_entity' collection.
+  graphql:
+    typeName: UpdateAuthUserEntityByIdUpdateColumns
+    inputTypeName: UpdateAuthUserEntityByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_entity_by_id_update_columns
+      fieldMapping:
+        createdTimestamp:
+          column:
+            name: created_timestamp
+        email:
+          column:
+            name: email
+        emailConstraint:
+          column:
+            name: email_constraint
+        emailVerified:
+          column:
+            name: email_verified
+        enabled:
+          column:
+            name: enabled
+        federationLink:
+          column:
+            name: federation_link
+        firstName:
+          column:
+            name: first_name
+        id:
+          column:
+            name: id
+        lastName:
+          column:
+            name: last_name
+        notBefore:
+          column:
+            name: not_before
+        realmId:
+          column:
+            name: realm_id
+        serviceAccountClientLink:
+          column:
+            name: service_account_client_link
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserEntityByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdTimestamp
+          - email
+          - emailConstraint
+          - emailVerified
+          - enabled
+          - federationLink
+          - firstName
+          - id
+          - lastName
+          - notBefore
+          - realmId
+          - serviceAccountClientLink
+          - username
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserEntityByIdResponse
+  description: Responses from the 'update_auth_user_entity_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthUserEntityByIdResponse
+    inputTypeName: UpdateAuthUserEntityByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_entity_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserEntityByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthUserEntityById
+  outputType: UpdateAuthUserEntityByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthUserEntityBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_user_entity' collection
+    - name: preCheck
+      type: AuthUserEntityBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_user_entity' collection
+    - name: updateColumns
+      type: UpdateAuthUserEntityByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_user_entity_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthUserEntityById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_user_entity' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthUserEntityById
+  permissions:
+    - role: admin
+      allowExecution: true
+

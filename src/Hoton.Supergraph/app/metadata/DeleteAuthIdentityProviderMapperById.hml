@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderMapperByIdResponse
+  description: Responses from the 'delete_auth_identity_provider_mapper_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdentityProviderMapper!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthIdentityProviderMapperByIdResponse
+    inputTypeName: DeleteAuthIdentityProviderMapperByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_identity_provider_mapper_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthIdentityProviderMapperByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderMapperById
+  outputType: DeleteAuthIdentityProviderMapperByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthIdentityProviderMapperBoolExp
+      description: Delete permission predicate over the
+        'auth_identity_provider_mapper' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_identity_provider_mapper_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthIdentityProviderMapperById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_identity_provider_mapper' collection
+    using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthIdentityProviderMapperById
+  permissions:
+    - role: admin
+      allowExecution: true
+

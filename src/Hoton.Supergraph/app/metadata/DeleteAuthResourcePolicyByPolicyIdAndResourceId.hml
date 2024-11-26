@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthResourcePolicyByPolicyIdAndResourceIdResponse
+  description: Responses from the
+    'delete_auth_resource_policy_by_policy_id_and_resource_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourcePolicy!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthResourcePolicyByPolicyIdAndResourceIdResponse
+    inputTypeName: DeleteAuthResourcePolicyByPolicyIdAndResourceIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_resource_policy_by_policy_id_and_resource_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthResourcePolicyByPolicyIdAndResourceIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthResourcePolicyByPolicyIdAndResourceId
+  outputType: DeleteAuthResourcePolicyByPolicyIdAndResourceIdResponse!
+  arguments:
+    - name: keyPolicyId
+      type: Varchar!
+    - name: keyResourceId
+      type: Varchar!
+    - name: preCheck
+      type: AuthResourcePolicyBoolExp
+      description: Delete permission predicate over the 'auth_resource_policy' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_resource_policy_by_policy_id_and_resource_id
+    argumentMapping:
+      keyPolicyId: key_policy_id
+      keyResourceId: key_resource_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthResourcePolicyByPolicyIdAndResourceId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_resource_policy' collection using the
+    'policy_id' and 'resource_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthResourcePolicyByPolicyIdAndResourceId
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,135 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthMigrationModel
+  fields:
+    - name: id
+      type: Varchar!
+    - name: updateTime
+      type: Int8!
+    - name: version
+      type: Varchar
+  graphql:
+    typeName: AuthMigrationModel
+    inputTypeName: AuthMigrationModelInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_migration_model
+      fieldMapping:
+        id:
+          column:
+            name: id
+        updateTime:
+          column:
+            name: update_time
+        version:
+          column:
+            name: version
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthMigrationModel
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - updateTime
+          - version
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthMigrationModelBoolExp
+  operand:
+    object:
+      type: AuthMigrationModel
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updateTime
+          booleanExpressionType: Int8BoolExp
+        - fieldName: version
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthMigrationModelBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthMigrationModelAggExp
+  operand:
+    object:
+      aggregatedType: AuthMigrationModel
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: updateTime
+          aggregateExpression: Int8AggExp
+        - fieldName: version
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthMigrationModelAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthMigrationModel
+  objectType: AuthMigrationModel
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_migration_model
+  filterExpressionType: AuthMigrationModelBoolExp
+  aggregateExpression: AuthMigrationModelAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: updateTime
+      orderByDirections:
+        enableAll: true
+    - fieldName: version
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authMigrationModel
+      subscription:
+        rootField: authMigrationModel
+    selectUniques:
+      - queryRootField: authMigrationModelById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authMigrationModelById
+    orderByExpressionType: AuthMigrationModelOrderBy
+    filterInputTypeName: AuthMigrationModelFilterInput
+    aggregate:
+      queryRootField: authMigrationModelAggregate
+      subscription:
+        rootField: authMigrationModelAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthMigrationModel
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

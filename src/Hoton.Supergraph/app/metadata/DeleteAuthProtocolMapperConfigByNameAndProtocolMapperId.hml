@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthProtocolMapperConfigByNameAndProtocolMapperIdResponse
+  description: Responses from the
+    'delete_auth_protocol_mapper_config_by_name_and_protocol_mapper_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthProtocolMapperConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthProtocolMapperConfigByNameAndProtocolMapperIdResponse
+    inputTypeName: DeleteAuthProtocolMapperConfigByNameAndProtocolMapperIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_protocol_mapper_config_by_name_and_protocol_mapper_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthProtocolMapperConfigByNameAndProtocolMapperIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthProtocolMapperConfigByNameAndProtocolMapperId
+  outputType: DeleteAuthProtocolMapperConfigByNameAndProtocolMapperIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyProtocolMapperId
+      type: Varchar!
+    - name: preCheck
+      type: AuthProtocolMapperConfigBoolExp
+      description: Delete permission predicate over the 'auth_protocol_mapper_config'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_protocol_mapper_config_by_name_and_protocol_mapper_id
+    argumentMapping:
+      keyName: key_name
+      keyProtocolMapperId: key_protocol_mapper_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthProtocolMapperConfigByNameAndProtocolMapperId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_protocol_mapper_config' collection
+    using the 'name' and 'protocol_mapper_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthProtocolMapperConfigByNameAndProtocolMapperId
+  permissions:
+    - role: admin
+      allowExecution: true
+

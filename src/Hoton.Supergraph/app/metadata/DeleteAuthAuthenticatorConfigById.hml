@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthAuthenticatorConfigByIdResponse
+  description: Responses from the 'delete_auth_authenticator_config_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticatorConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthAuthenticatorConfigByIdResponse
+    inputTypeName: DeleteAuthAuthenticatorConfigByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_authenticator_config_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthAuthenticatorConfigByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthAuthenticatorConfigById
+  outputType: DeleteAuthAuthenticatorConfigByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthAuthenticatorConfigBoolExp
+      description: Delete permission predicate over the 'auth_authenticator_config'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_authenticator_config_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthAuthenticatorConfigById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_authenticator_config' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthAuthenticatorConfigById
+  permissions:
+    - role: admin
+      allowExecution: true
+

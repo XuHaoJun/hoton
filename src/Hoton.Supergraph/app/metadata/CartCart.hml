@@ -1,0 +1,190 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: CartCart
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: CartCart
+    inputTypeName: CartCartInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: cart_cart
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: CartCart
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - updatedAt
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: CartCartBoolExp
+  operand:
+    object:
+      type: CartCart
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserEntity
+        - relationshipName: cartCartItems
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: CartCartBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CartCartAggExp
+  operand:
+    object:
+      aggregatedType: CartCart
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CartCartAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: CartCart
+  objectType: CartCart
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: cart_cart
+  filterExpressionType: CartCartBoolExp
+  aggregateExpression: CartCartAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: cartCart
+      subscription:
+        rootField: cartCart
+    selectUniques:
+      - queryRootField: cartCartById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: cartCartById
+    orderByExpressionType: CartCartOrderBy
+    filterInputTypeName: CartCartFilterInput
+    aggregate:
+      queryRootField: cartCartAggregate
+      subscription:
+        rootField: cartCartAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: CartCart
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: CartCart
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartCartItems
+  sourceType: CartCart
+  target:
+    model:
+      name: CartCartItem
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: CartCartItemAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: cartId
+  graphql:
+    aggregateFieldName: cartCartItemsAggregate
+

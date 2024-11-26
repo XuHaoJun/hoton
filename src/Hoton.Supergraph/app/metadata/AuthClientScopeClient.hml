@@ -1,0 +1,136 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthClientScopeClient
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: defaultScope
+      type: Bool!
+    - name: scopeId
+      type: Varchar!
+  graphql:
+    typeName: AuthClientScopeClient
+    inputTypeName: AuthClientScopeClientInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_client_scope_client
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        defaultScope:
+          column:
+            name: default_scope
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthClientScopeClient
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - defaultScope
+          - scopeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthClientScopeClientBoolExp
+  operand:
+    object:
+      type: AuthClientScopeClient
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: defaultScope
+          booleanExpressionType: BoolBoolExp
+        - fieldName: scopeId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthClientScopeClientBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthClientScopeClientAggExp
+  operand:
+    object:
+      aggregatedType: AuthClientScopeClient
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: defaultScope
+          aggregateExpression: BoolAggExp
+        - fieldName: scopeId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthClientScopeClientAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthClientScopeClient
+  objectType: AuthClientScopeClient
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_client_scope_client
+  filterExpressionType: AuthClientScopeClientBoolExp
+  aggregateExpression: AuthClientScopeClientAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: defaultScope
+      orderByDirections:
+        enableAll: true
+    - fieldName: scopeId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authClientScopeClient
+      subscription:
+        rootField: authClientScopeClient
+    selectUniques:
+      - queryRootField: authClientScopeClientByCCliScopeBind
+        uniqueIdentifier:
+          - clientId
+          - scopeId
+        subscription:
+          rootField: authClientScopeClientByCCliScopeBind
+    orderByExpressionType: AuthClientScopeClientOrderBy
+    filterInputTypeName: AuthClientScopeClientFilterInput
+    aggregate:
+      queryRootField: authClientScopeClientAggregate
+      subscription:
+        rootField: authClientScopeClientAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthClientScopeClient
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

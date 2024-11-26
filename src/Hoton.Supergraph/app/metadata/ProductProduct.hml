@@ -1,0 +1,315 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductProduct
+  fields:
+    - name: categories
+      type: "[Ltree]"
+    - name: createdAt
+      type: Timestamptz
+    - name: description
+      type: Varchar
+    - name: id
+      type: Uuid!
+    - name: name
+      type: Varchar!
+    - name: price
+      type: Numeric!
+    - name: realmId
+      type: Varchar!
+    - name: snapshotVersion
+      type: Timestamptz
+    - name: tags
+      type: "[Varchar]"
+    - name: temperatureZones
+      type: "[Varchar]"
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: ProductProduct
+    inputTypeName: ProductProductInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: product_product
+      fieldMapping:
+        categories:
+          column:
+            name: categories
+        createdAt:
+          column:
+            name: created_at
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        price:
+          column:
+            name: price
+        realmId:
+          column:
+            name: realm_id
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        tags:
+          column:
+            name: tags
+        temperatureZones:
+          column:
+            name: temperature_zones
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductProduct
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - categories
+          - createdAt
+          - description
+          - id
+          - name
+          - price
+          - realmId
+          - snapshotVersion
+          - tags
+          - temperatureZones
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductProductBoolExp
+  operand:
+    object:
+      type: ProductProduct
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: description
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: price
+          booleanExpressionType: NumericBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: snapshotVersion
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: orderOrderItems
+        - relationshipName: authRealm
+        - relationshipName: productProductShipmentConfigs
+        - relationshipName: productProductSkus
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductProductBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ProductProductAggExp
+  operand:
+    object:
+      aggregatedType: ProductProduct
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: description
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: price
+          aggregateExpression: NumericAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: snapshotVersion
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ProductProductAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ProductProduct
+  objectType: ProductProduct
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: product_product
+  filterExpressionType: ProductProductBoolExp
+  aggregateExpression: ProductProductAggExp
+  orderableFields:
+    - fieldName: categories
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: snapshotVersion
+      orderByDirections:
+        enableAll: true
+    - fieldName: tags
+      orderByDirections:
+        enableAll: true
+    - fieldName: temperatureZones
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: productProduct
+      subscription:
+        rootField: productProduct
+    selectUniques:
+      - queryRootField: productProductById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: productProductById
+    orderByExpressionType: ProductProductOrderBy
+    filterInputTypeName: ProductProductFilterInput
+    aggregate:
+      queryRootField: productProductAggregate
+      subscription:
+        rootField: productProductAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ProductProduct
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderItems
+  sourceType: ProductProduct
+  target:
+    model:
+      name: OrderOrderItem
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderItemAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+  graphql:
+    aggregateFieldName: orderOrderItemsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: ProductProduct
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProductShipmentConfigs
+  sourceType: ProductProduct
+  target:
+    model:
+      name: ProductProductShipmentConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ProductProductShipmentConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+  graphql:
+    aggregateFieldName: productProductShipmentConfigsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProductSkus
+  sourceType: ProductProduct
+  target:
+    model:
+      name: ProductProductSku
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ProductProductSkuAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+  graphql:
+    aggregateFieldName: productProductSkusAggregate
+

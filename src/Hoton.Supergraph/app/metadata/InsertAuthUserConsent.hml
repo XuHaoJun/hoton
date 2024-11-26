@@ -1,0 +1,138 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserConsentObject
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: clientStorageProvider
+      type: Varchar
+    - name: createdDate
+      type: Int8
+    - name: externalClientId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: lastUpdatedDate
+      type: Int8
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthUserConsentObject
+    inputTypeName: InsertAuthUserConsentObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_consent_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        createdDate:
+          column:
+            name: created_date
+        externalClientId:
+          column:
+            name: external_client_id
+        id:
+          column:
+            name: id
+        lastUpdatedDate:
+          column:
+            name: last_updated_date
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserConsentObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - createdDate
+          - externalClientId
+          - id
+          - lastUpdatedDate
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserConsentResponse
+  description: Responses from the 'insert_auth_user_consent' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserConsent!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthUserConsentResponse
+    inputTypeName: InsertAuthUserConsentResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_consent_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserConsentResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthUserConsent
+  outputType: InsertAuthUserConsentResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthUserConsentObject!]!"
+    - name: postCheck
+      type: AuthUserConsentBoolExp
+      description: Insert permission predicate over the 'auth_user_consent' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_user_consent
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthUserConsent
+    rootFieldKind: Mutation
+  description: Insert into the auth_user_consent table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthUserConsent
+  permissions:
+    - role: admin
+      allowExecution: true
+

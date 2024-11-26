@@ -1,0 +1,194 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentClScopeScopeId
+  description: Update the 'scope_id' column in the
+    'auth_fed_user_consent_cl_scope' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentClScopeScopeId
+    inputTypeName: UpdateColumnAuthFedUserConsentClScopeScopeIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_cl_scope_scope_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentClScopeScopeId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentClScopeUserConsentId
+  description: Update the 'user_consent_id' column in the
+    'auth_fed_user_consent_cl_scope' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentClScopeUserConsentId
+    inputTypeName: UpdateColumnAuthFedUserConsentClScopeUserConsentIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_cl_scope_user_consent_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentClScopeUserConsentId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdUpdateColumns
+  description: Update the columns of the 'auth_fed_user_consent_cl_scope' collection
+  fields:
+    - name: scopeId
+      type: UpdateColumnAuthFedUserConsentClScopeScopeId
+      description: Update the 'scope_id' column in the
+        'auth_fed_user_consent_cl_scope' collection.
+    - name: userConsentId
+      type: UpdateColumnAuthFedUserConsentClScopeUserConsentId
+      description: Update the 'user_consent_id' column in the
+        'auth_fed_user_consent_cl_scope' collection.
+  graphql:
+    typeName: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdUpdateColumns
+    inputTypeName: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_consent_cl_scope_by_scope_id_and_user_consent_id_update_columns
+      fieldMapping:
+        scopeId:
+          column:
+            name: scope_id
+        userConsentId:
+          column:
+            name: user_consent_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - scopeId
+          - userConsentId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse
+  description: Responses from the
+    'update_auth_fed_user_consent_cl_scope_by_scope_id_and_user_consent_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserConsentClScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse
+    inputTypeName: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_consent_cl_scope_by_scope_id_and_user_consent_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentId
+  outputType: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse!
+  arguments:
+    - name: keyScopeId
+      type: Varchar!
+    - name: keyUserConsentId
+      type: Varchar!
+    - name: postCheck
+      type: AuthFedUserConsentClScopeBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_fed_user_consent_cl_scope' collection
+    - name: preCheck
+      type: AuthFedUserConsentClScopeBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_fed_user_consent_cl_scope' collection
+    - name: updateColumns
+      type: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_fed_user_consent_cl_scope_by_scope_id_and_user_consent_id
+    argumentMapping:
+      keyScopeId: key_scope_id
+      keyUserConsentId: key_user_consent_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthFedUserConsentClScopeByScopeIdAndUserConsentId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_fed_user_consent_cl_scope' collection
+    using the 'scope_id' and 'user_consent_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthFedUserConsentClScopeByScopeIdAndUserConsentId
+  permissions:
+    - role: admin
+      allowExecution: true
+

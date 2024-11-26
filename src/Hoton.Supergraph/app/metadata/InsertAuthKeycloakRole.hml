@@ -1,0 +1,144 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthKeycloakRoleObject
+  fields:
+    - name: client
+      type: Varchar
+    - name: clientRealmConstraint
+      type: Varchar
+    - name: clientRole
+      type: Bool
+    - name: description
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: realm
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthKeycloakRoleObject
+    inputTypeName: InsertAuthKeycloakRoleObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_keycloak_role_object
+      fieldMapping:
+        client:
+          column:
+            name: client
+        clientRealmConstraint:
+          column:
+            name: client_realm_constraint
+        clientRole:
+          column:
+            name: client_role
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        realm:
+          column:
+            name: realm
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthKeycloakRoleObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - client
+          - clientRealmConstraint
+          - clientRole
+          - description
+          - id
+          - name
+          - realm
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthKeycloakRoleResponse
+  description: Responses from the 'insert_auth_keycloak_role' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthKeycloakRole!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthKeycloakRoleResponse
+    inputTypeName: InsertAuthKeycloakRoleResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_keycloak_role_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthKeycloakRoleResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthKeycloakRole
+  outputType: InsertAuthKeycloakRoleResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthKeycloakRoleObject!]!"
+    - name: postCheck
+      type: AuthKeycloakRoleBoolExp
+      description: Insert permission predicate over the 'auth_keycloak_role' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_keycloak_role
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthKeycloakRole
+    rootFieldKind: Mutation
+  description: Insert into the auth_keycloak_role table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthKeycloakRole
+  permissions:
+    - role: admin
+      allowExecution: true
+

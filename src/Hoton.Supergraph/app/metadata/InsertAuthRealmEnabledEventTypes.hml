@@ -1,0 +1,109 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmEnabledEventTypesObject
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthRealmEnabledEventTypesObject
+    inputTypeName: InsertAuthRealmEnabledEventTypesObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_enabled_event_types_object
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmEnabledEventTypesObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmEnabledEventTypesResponse
+  description: Responses from the 'insert_auth_realm_enabled_event_types' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmEnabledEventTypes!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRealmEnabledEventTypesResponse
+    inputTypeName: InsertAuthRealmEnabledEventTypesResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_enabled_event_types_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmEnabledEventTypesResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRealmEnabledEventTypes
+  outputType: InsertAuthRealmEnabledEventTypesResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRealmEnabledEventTypesObject!]!"
+    - name: postCheck
+      type: AuthRealmEnabledEventTypesBoolExp
+      description: Insert permission predicate over the
+        'auth_realm_enabled_event_types' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_realm_enabled_event_types
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRealmEnabledEventTypes
+    rootFieldKind: Mutation
+  description: Insert into the auth_realm_enabled_event_types table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRealmEnabledEventTypes
+  permissions:
+    - role: admin
+      allowExecution: true
+

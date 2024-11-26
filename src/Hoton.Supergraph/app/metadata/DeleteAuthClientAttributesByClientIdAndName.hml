@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthClientAttributesByClientIdAndNameResponse
+  description: Responses from the
+    'delete_auth_client_attributes_by_client_id_and_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientAttributes!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthClientAttributesByClientIdAndNameResponse
+    inputTypeName: DeleteAuthClientAttributesByClientIdAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_client_attributes_by_client_id_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthClientAttributesByClientIdAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthClientAttributesByClientIdAndName
+  outputType: DeleteAuthClientAttributesByClientIdAndNameResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyName
+      type: Varchar!
+    - name: preCheck
+      type: AuthClientAttributesBoolExp
+      description: Delete permission predicate over the 'auth_client_attributes' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_client_attributes_by_client_id_and_name
+    argumentMapping:
+      keyClientId: key_client_id
+      keyName: key_name
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthClientAttributesByClientIdAndName
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_client_attributes' collection using the
+    'client_id' and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthClientAttributesByClientIdAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

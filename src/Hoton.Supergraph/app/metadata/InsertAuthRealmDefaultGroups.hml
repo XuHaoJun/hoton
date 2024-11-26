@@ -1,0 +1,109 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmDefaultGroupsObject
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthRealmDefaultGroupsObject
+    inputTypeName: InsertAuthRealmDefaultGroupsObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_default_groups_object
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmDefaultGroupsObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmDefaultGroupsResponse
+  description: Responses from the 'insert_auth_realm_default_groups' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmDefaultGroups!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRealmDefaultGroupsResponse
+    inputTypeName: InsertAuthRealmDefaultGroupsResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_default_groups_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmDefaultGroupsResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRealmDefaultGroups
+  outputType: InsertAuthRealmDefaultGroupsResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRealmDefaultGroupsObject!]!"
+    - name: postCheck
+      type: AuthRealmDefaultGroupsBoolExp
+      description: Insert permission predicate over the 'auth_realm_default_groups'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_realm_default_groups
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRealmDefaultGroups
+    rootFieldKind: Mutation
+  description: Insert into the auth_realm_default_groups table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRealmDefaultGroups
+  permissions:
+    - role: admin
+      allowExecution: true
+

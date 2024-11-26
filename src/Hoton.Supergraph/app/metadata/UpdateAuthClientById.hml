@@ -1,0 +1,295 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientByIdUpdateColumns
+  description: Update the columns of the 'auth_client' collection
+  fields:
+    - name: alwaysDisplayInConsole
+      type: UpdateColumnAuthClientAlwaysDisplayInConsole
+      description: Update the 'always_display_in_console' column in the 'auth_client'
+        collection.
+    - name: baseUrl
+      type: UpdateColumnAuthClientBaseUrl
+      description: Update the 'base_url' column in the 'auth_client' collection.
+    - name: bearerOnly
+      type: UpdateColumnAuthClientBearerOnly
+      description: Update the 'bearer_only' column in the 'auth_client' collection.
+    - name: clientAuthenticatorType
+      type: UpdateColumnAuthClientClientAuthenticatorType
+      description: Update the 'client_authenticator_type' column in the 'auth_client'
+        collection.
+    - name: clientId
+      type: UpdateColumnAuthClientClientId
+      description: Update the 'client_id' column in the 'auth_client' collection.
+    - name: consentRequired
+      type: UpdateColumnAuthClientConsentRequired
+      description: Update the 'consent_required' column in the 'auth_client' collection.
+    - name: description
+      type: UpdateColumnAuthClientDescription
+      description: Update the 'description' column in the 'auth_client' collection.
+    - name: directAccessGrantsEnabled
+      type: UpdateColumnAuthClientDirectAccessGrantsEnabled
+      description: Update the 'direct_access_grants_enabled' column in the
+        'auth_client' collection.
+    - name: enabled
+      type: UpdateColumnAuthClientEnabled
+      description: Update the 'enabled' column in the 'auth_client' collection.
+    - name: frontchannelLogout
+      type: UpdateColumnAuthClientFrontchannelLogout
+      description: Update the 'frontchannel_logout' column in the 'auth_client' collection.
+    - name: fullScopeAllowed
+      type: UpdateColumnAuthClientFullScopeAllowed
+      description: Update the 'full_scope_allowed' column in the 'auth_client' collection.
+    - name: id
+      type: UpdateColumnAuthClientId
+      description: Update the 'id' column in the 'auth_client' collection.
+    - name: implicitFlowEnabled
+      type: UpdateColumnAuthClientImplicitFlowEnabled
+      description: Update the 'implicit_flow_enabled' column in the 'auth_client'
+        collection.
+    - name: managementUrl
+      type: UpdateColumnAuthClientManagementUrl
+      description: Update the 'management_url' column in the 'auth_client' collection.
+    - name: name
+      type: UpdateColumnAuthClientName
+      description: Update the 'name' column in the 'auth_client' collection.
+    - name: nodeReregTimeout
+      type: UpdateColumnAuthClientNodeReregTimeout
+      description: Update the 'node_rereg_timeout' column in the 'auth_client' collection.
+    - name: notBefore
+      type: UpdateColumnAuthClientNotBefore
+      description: Update the 'not_before' column in the 'auth_client' collection.
+    - name: protocol
+      type: UpdateColumnAuthClientProtocol
+      description: Update the 'protocol' column in the 'auth_client' collection.
+    - name: publicClient
+      type: UpdateColumnAuthClientPublicClient
+      description: Update the 'public_client' column in the 'auth_client' collection.
+    - name: realmId
+      type: UpdateColumnAuthClientRealmId
+      description: Update the 'realm_id' column in the 'auth_client' collection.
+    - name: registrationToken
+      type: UpdateColumnAuthClientRegistrationToken
+      description: Update the 'registration_token' column in the 'auth_client' collection.
+    - name: rootUrl
+      type: UpdateColumnAuthClientRootUrl
+      description: Update the 'root_url' column in the 'auth_client' collection.
+    - name: secret
+      type: UpdateColumnAuthClientSecret
+      description: Update the 'secret' column in the 'auth_client' collection.
+    - name: serviceAccountsEnabled
+      type: UpdateColumnAuthClientServiceAccountsEnabled
+      description: Update the 'service_accounts_enabled' column in the 'auth_client'
+        collection.
+    - name: standardFlowEnabled
+      type: UpdateColumnAuthClientStandardFlowEnabled
+      description: Update the 'standard_flow_enabled' column in the 'auth_client'
+        collection.
+    - name: surrogateAuthRequired
+      type: UpdateColumnAuthClientSurrogateAuthRequired
+      description: Update the 'surrogate_auth_required' column in the 'auth_client'
+        collection.
+  graphql:
+    typeName: UpdateAuthClientByIdUpdateColumns
+    inputTypeName: UpdateAuthClientByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_by_id_update_columns
+      fieldMapping:
+        alwaysDisplayInConsole:
+          column:
+            name: always_display_in_console
+        baseUrl:
+          column:
+            name: base_url
+        bearerOnly:
+          column:
+            name: bearer_only
+        clientAuthenticatorType:
+          column:
+            name: client_authenticator_type
+        clientId:
+          column:
+            name: client_id
+        consentRequired:
+          column:
+            name: consent_required
+        description:
+          column:
+            name: description
+        directAccessGrantsEnabled:
+          column:
+            name: direct_access_grants_enabled
+        enabled:
+          column:
+            name: enabled
+        frontchannelLogout:
+          column:
+            name: frontchannel_logout
+        fullScopeAllowed:
+          column:
+            name: full_scope_allowed
+        id:
+          column:
+            name: id
+        implicitFlowEnabled:
+          column:
+            name: implicit_flow_enabled
+        managementUrl:
+          column:
+            name: management_url
+        name:
+          column:
+            name: name
+        nodeReregTimeout:
+          column:
+            name: node_rereg_timeout
+        notBefore:
+          column:
+            name: not_before
+        protocol:
+          column:
+            name: protocol
+        publicClient:
+          column:
+            name: public_client
+        realmId:
+          column:
+            name: realm_id
+        registrationToken:
+          column:
+            name: registration_token
+        rootUrl:
+          column:
+            name: root_url
+        secret:
+          column:
+            name: secret
+        serviceAccountsEnabled:
+          column:
+            name: service_accounts_enabled
+        standardFlowEnabled:
+          column:
+            name: standard_flow_enabled
+        surrogateAuthRequired:
+          column:
+            name: surrogate_auth_required
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alwaysDisplayInConsole
+          - baseUrl
+          - bearerOnly
+          - clientAuthenticatorType
+          - clientId
+          - consentRequired
+          - description
+          - directAccessGrantsEnabled
+          - enabled
+          - frontchannelLogout
+          - fullScopeAllowed
+          - id
+          - implicitFlowEnabled
+          - managementUrl
+          - name
+          - nodeReregTimeout
+          - notBefore
+          - protocol
+          - publicClient
+          - realmId
+          - registrationToken
+          - rootUrl
+          - secret
+          - serviceAccountsEnabled
+          - standardFlowEnabled
+          - surrogateAuthRequired
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientByIdResponse
+  description: Responses from the 'update_auth_client_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClient!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthClientByIdResponse
+    inputTypeName: UpdateAuthClientByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthClientById
+  outputType: UpdateAuthClientByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthClientBoolExp
+      description: Update permission post-condition predicate over the 'auth_client'
+        collection
+    - name: preCheck
+      type: AuthClientBoolExp
+      description: Update permission pre-condition predicate over the 'auth_client'
+        collection
+    - name: updateColumns
+      type: UpdateAuthClientByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_client_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthClientById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_client' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthClientById
+  permissions:
+    - role: admin
+      allowExecution: true
+

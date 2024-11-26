@@ -1,0 +1,189 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthRedirectUrisClientId
+  description: Update the 'client_id' column in the 'auth_redirect_uris' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthRedirectUrisClientId
+    inputTypeName: UpdateColumnAuthRedirectUrisClientIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_redirect_uris_client_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthRedirectUrisClientId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthRedirectUrisValue
+  description: Update the 'value' column in the 'auth_redirect_uris' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthRedirectUrisValue
+    inputTypeName: UpdateColumnAuthRedirectUrisValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_redirect_uris_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthRedirectUrisValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRedirectUrisByClientIdAndValueUpdateColumns
+  description: Update the columns of the 'auth_redirect_uris' collection
+  fields:
+    - name: clientId
+      type: UpdateColumnAuthRedirectUrisClientId
+      description: Update the 'client_id' column in the 'auth_redirect_uris' collection.
+    - name: value
+      type: UpdateColumnAuthRedirectUrisValue
+      description: Update the 'value' column in the 'auth_redirect_uris' collection.
+  graphql:
+    typeName: UpdateAuthRedirectUrisByClientIdAndValueUpdateColumns
+    inputTypeName: UpdateAuthRedirectUrisByClientIdAndValueUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_redirect_uris_by_client_id_and_value_update_columns
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRedirectUrisByClientIdAndValueUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRedirectUrisByClientIdAndValueResponse
+  description: Responses from the
+    'update_auth_redirect_uris_by_client_id_and_value' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRedirectUris!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthRedirectUrisByClientIdAndValueResponse
+    inputTypeName: UpdateAuthRedirectUrisByClientIdAndValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_redirect_uris_by_client_id_and_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRedirectUrisByClientIdAndValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthRedirectUrisByClientIdAndValue
+  outputType: UpdateAuthRedirectUrisByClientIdAndValueResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyValue
+      type: Varchar!
+    - name: postCheck
+      type: AuthRedirectUrisBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_redirect_uris' collection
+    - name: preCheck
+      type: AuthRedirectUrisBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_redirect_uris' collection
+    - name: updateColumns
+      type: UpdateAuthRedirectUrisByClientIdAndValueUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_redirect_uris_by_client_id_and_value
+    argumentMapping:
+      keyClientId: key_client_id
+      keyValue: key_value
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthRedirectUrisByClientIdAndValue
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_redirect_uris' collection using the
+    'client_id' and 'value' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthRedirectUrisByClientIdAndValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,120 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthOrgDomainObject
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: orgId
+      type: Varchar!
+    - name: verified
+      type: Bool!
+  graphql:
+    typeName: InsertAuthOrgDomainObject
+    inputTypeName: InsertAuthOrgDomainObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_org_domain_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        orgId:
+          column:
+            name: org_id
+        verified:
+          column:
+            name: verified
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthOrgDomainObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - orgId
+          - verified
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthOrgDomainResponse
+  description: Responses from the 'insert_auth_org_domain' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOrgDomain!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthOrgDomainResponse
+    inputTypeName: InsertAuthOrgDomainResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_org_domain_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthOrgDomainResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthOrgDomain
+  outputType: InsertAuthOrgDomainResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthOrgDomainObject!]!"
+    - name: postCheck
+      type: AuthOrgDomainBoolExp
+      description: Insert permission predicate over the 'auth_org_domain' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_org_domain
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthOrgDomain
+    rootFieldKind: Mutation
+  description: Insert into the auth_org_domain table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthOrgDomain
+  permissions:
+    - role: admin
+      allowExecution: true
+

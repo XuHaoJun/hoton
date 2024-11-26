@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderByProviderAliasAndRealmIdResponse
+  description: Responses from the
+    'delete_auth_identity_provider_by_provider_alias_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdentityProvider!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthIdentityProviderByProviderAliasAndRealmIdResponse
+    inputTypeName: DeleteAuthIdentityProviderByProviderAliasAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_identity_provider_by_provider_alias_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthIdentityProviderByProviderAliasAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderByProviderAliasAndRealmId
+  outputType: DeleteAuthIdentityProviderByProviderAliasAndRealmIdResponse!
+  arguments:
+    - name: keyProviderAlias
+      type: Varchar
+    - name: keyRealmId
+      type: Varchar
+    - name: preCheck
+      type: AuthIdentityProviderBoolExp
+      description: Delete permission predicate over the 'auth_identity_provider' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_identity_provider_by_provider_alias_and_realm_id
+    argumentMapping:
+      keyProviderAlias: key_provider_alias
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthIdentityProviderByProviderAliasAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_identity_provider' collection using the
+    'provider_alias' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthIdentityProviderByProviderAliasAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

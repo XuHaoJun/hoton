@@ -1,0 +1,115 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthDefaultClientScopeObject
+  fields:
+    - name: defaultScope
+      type: Bool
+    - name: realmId
+      type: Varchar!
+    - name: scopeId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthDefaultClientScopeObject
+    inputTypeName: InsertAuthDefaultClientScopeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_default_client_scope_object
+      fieldMapping:
+        defaultScope:
+          column:
+            name: default_scope
+        realmId:
+          column:
+            name: realm_id
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthDefaultClientScopeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - defaultScope
+          - realmId
+          - scopeId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthDefaultClientScopeResponse
+  description: Responses from the 'insert_auth_default_client_scope' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthDefaultClientScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthDefaultClientScopeResponse
+    inputTypeName: InsertAuthDefaultClientScopeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_default_client_scope_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthDefaultClientScopeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthDefaultClientScope
+  outputType: InsertAuthDefaultClientScopeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthDefaultClientScopeObject!]!"
+    - name: postCheck
+      type: AuthDefaultClientScopeBoolExp
+      description: Insert permission predicate over the 'auth_default_client_scope'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_default_client_scope
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthDefaultClientScope
+    rootFieldKind: Mutation
+  description: Insert into the auth_default_client_scope table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthDefaultClientScope
+  permissions:
+    - role: admin
+      allowExecution: true
+

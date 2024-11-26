@@ -1,0 +1,265 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductProductSku
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: productId
+      type: Uuid
+    - name: safetyStock
+      type: Int4
+    - name: snapshotVersion
+      type: Timestamptz
+    - name: spec
+      type: Jsonb!
+    - name: stockQuantity
+      type: Int4
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: ProductProductSku
+    inputTypeName: ProductProductSkuInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: product_product_sku
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productId:
+          column:
+            name: product_id
+        safetyStock:
+          column:
+            name: safety_stock
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        spec:
+          column:
+            name: spec
+        stockQuantity:
+          column:
+            name: stock_quantity
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductProductSku
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - productId
+          - safetyStock
+          - snapshotVersion
+          - spec
+          - stockQuantity
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductProductSkuBoolExp
+  operand:
+    object:
+      type: ProductProductSku
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: productId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: safetyStock
+          booleanExpressionType: Int4BoolExp
+        - fieldName: snapshotVersion
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: spec
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: stockQuantity
+          booleanExpressionType: Int4BoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: cartCartItems
+        - relationshipName: orderOrderItems
+        - relationshipName: productProduct
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductProductSkuBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ProductProductSkuAggExp
+  operand:
+    object:
+      aggregatedType: ProductProductSku
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: productId
+          aggregateExpression: UuidAggExp
+        - fieldName: safetyStock
+          aggregateExpression: Int4AggExp
+        - fieldName: snapshotVersion
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: spec
+          aggregateExpression: JsonbAggExp
+        - fieldName: stockQuantity
+          aggregateExpression: Int4AggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ProductProductSkuAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ProductProductSku
+  objectType: ProductProductSku
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: product_product_sku
+  filterExpressionType: ProductProductSkuBoolExp
+  aggregateExpression: ProductProductSkuAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: safetyStock
+      orderByDirections:
+        enableAll: true
+    - fieldName: snapshotVersion
+      orderByDirections:
+        enableAll: true
+    - fieldName: spec
+      orderByDirections:
+        enableAll: true
+    - fieldName: stockQuantity
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: productProductSku
+      subscription:
+        rootField: productProductSku
+    selectUniques:
+      - queryRootField: productProductSkuById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: productProductSkuById
+    orderByExpressionType: ProductProductSkuOrderBy
+    filterInputTypeName: ProductProductSkuFilterInput
+    aggregate:
+      queryRootField: productProductSkuAggregate
+      subscription:
+        rootField: productProductSkuAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ProductProductSku
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartCartItems
+  sourceType: ProductProductSku
+  target:
+    model:
+      name: CartCartItem
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: CartCartItemAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productSkuId
+  graphql:
+    aggregateFieldName: cartCartItemsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderItems
+  sourceType: ProductProductSku
+  target:
+    model:
+      name: OrderOrderItem
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderItemAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productSkuId
+  graphql:
+    aggregateFieldName: orderOrderItemsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProduct
+  sourceType: ProductProductSku
+  target:
+    model:
+      name: ProductProduct
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+

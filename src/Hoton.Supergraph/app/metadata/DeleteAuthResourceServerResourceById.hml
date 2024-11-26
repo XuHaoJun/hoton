@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthResourceServerResourceByIdResponse
+  description: Responses from the 'delete_auth_resource_server_resource_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServerResource!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthResourceServerResourceByIdResponse
+    inputTypeName: DeleteAuthResourceServerResourceByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_resource_server_resource_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthResourceServerResourceByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthResourceServerResourceById
+  outputType: DeleteAuthResourceServerResourceByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthResourceServerResourceBoolExp
+      description: Delete permission predicate over the
+        'auth_resource_server_resource' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_resource_server_resource_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthResourceServerResourceById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_resource_server_resource' collection
+    using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthResourceServerResourceById
+  permissions:
+    - role: admin
+      allowExecution: true
+

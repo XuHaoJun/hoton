@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthClientAuthFlowBindingsByBindingNameAndClientIdResponse
+  description: Responses from the
+    'delete_auth_client_auth_flow_bindings_by_binding_name_and_client_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientAuthFlowBindings!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthClientAuthFlowBindingsByBindingNameAndClientIdResponse
+    inputTypeName: DeleteAuthClientAuthFlowBindingsByBindingNameAndClientIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_client_auth_flow_bindings_by_binding_name_and_client_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthClientAuthFlowBindingsByBindingNameAndClientIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthClientAuthFlowBindingsByBindingNameAndClientId
+  outputType: DeleteAuthClientAuthFlowBindingsByBindingNameAndClientIdResponse!
+  arguments:
+    - name: keyBindingName
+      type: Varchar!
+    - name: keyClientId
+      type: Varchar!
+    - name: preCheck
+      type: AuthClientAuthFlowBindingsBoolExp
+      description: Delete permission predicate over the
+        'auth_client_auth_flow_bindings' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_client_auth_flow_bindings_by_binding_name_and_client_id
+    argumentMapping:
+      keyBindingName: key_binding_name
+      keyClientId: key_client_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthClientAuthFlowBindingsByBindingNameAndClientId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_client_auth_flow_bindings' collection
+    using the 'binding_name' and 'client_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthClientAuthFlowBindingsByBindingNameAndClientId
+  permissions:
+    - role: admin
+      allowExecution: true
+

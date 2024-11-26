@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderOrderByTransactionNoResponse
+  description: Responses from the 'delete_order_order_by_transaction_no' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrder!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderOrderByTransactionNoResponse
+    inputTypeName: DeleteOrderOrderByTransactionNoResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_order_by_transaction_no_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderOrderByTransactionNoResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderOrderByTransactionNo
+  outputType: DeleteOrderOrderByTransactionNoResponse!
+  arguments:
+    - name: keyTransactionNo
+      type: Varchar!
+    - name: preCheck
+      type: OrderOrderBoolExp
+      description: Delete permission predicate over the 'order_order' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_order_by_transaction_no
+    argumentMapping:
+      keyTransactionNo: key_transaction_no
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderOrderByTransactionNo
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_order' collection using the 'transaction_no' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderOrderByTransactionNo
+  permissions:
+    - role: admin
+      allowExecution: true
+

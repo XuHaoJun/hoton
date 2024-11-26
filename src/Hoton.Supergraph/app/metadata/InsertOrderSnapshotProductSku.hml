@@ -1,0 +1,145 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderSnapshotProductSkuObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: productId
+      type: Uuid
+    - name: safetyStock
+      type: Int4
+    - name: snapshotVersion
+      type: Timestamptz
+    - name: spec
+      type: Jsonb!
+    - name: stockQuantity
+      type: Int4
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertOrderSnapshotProductSkuObject
+    inputTypeName: InsertOrderSnapshotProductSkuObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_snapshot_product_sku_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productId:
+          column:
+            name: product_id
+        safetyStock:
+          column:
+            name: safety_stock
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        spec:
+          column:
+            name: spec
+        stockQuantity:
+          column:
+            name: stock_quantity
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderSnapshotProductSkuObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - productId
+          - safetyStock
+          - snapshotVersion
+          - spec
+          - stockQuantity
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderSnapshotProductSkuResponse
+  description: Responses from the 'insert_order_snapshot_product_sku' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderSnapshotProductSku!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderSnapshotProductSkuResponse
+    inputTypeName: InsertOrderSnapshotProductSkuResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_snapshot_product_sku_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderSnapshotProductSkuResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderSnapshotProductSku
+  outputType: InsertOrderSnapshotProductSkuResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderSnapshotProductSkuObject!]!"
+    - name: postCheck
+      type: OrderSnapshotProductSkuBoolExp
+      description: Insert permission predicate over the 'order_snapshot_product_sku'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_snapshot_product_sku
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderSnapshotProductSku
+    rootFieldKind: Mutation
+  description: Insert into the order_snapshot_product_sku table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderSnapshotProductSku
+  permissions:
+    - role: admin
+      allowExecution: true
+

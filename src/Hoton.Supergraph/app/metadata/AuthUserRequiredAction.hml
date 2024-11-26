@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserRequiredAction
+  fields:
+    - name: requiredAction
+      type: Varchar!
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthUserRequiredAction
+    inputTypeName: AuthUserRequiredActionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_required_action
+      fieldMapping:
+        requiredAction:
+          column:
+            name: required_action
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserRequiredAction
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - requiredAction
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserRequiredActionBoolExp
+  operand:
+    object:
+      type: AuthUserRequiredAction
+      comparableFields:
+        - fieldName: requiredAction
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserEntity
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserRequiredActionBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserRequiredActionAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserRequiredAction
+      aggregatableFields:
+        - fieldName: requiredAction
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserRequiredActionAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserRequiredAction
+  objectType: AuthUserRequiredAction
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_required_action
+  filterExpressionType: AuthUserRequiredActionBoolExp
+  aggregateExpression: AuthUserRequiredActionAggExp
+  orderableFields:
+    - fieldName: requiredAction
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserRequiredAction
+      subscription:
+        rootField: authUserRequiredAction
+    selectUniques:
+      - queryRootField: authUserRequiredActionByConstraintRequiredAction
+        uniqueIdentifier:
+          - requiredAction
+          - userId
+        subscription:
+          rootField: authUserRequiredActionByConstraintRequiredAction
+    orderByExpressionType: AuthUserRequiredActionOrderBy
+    filterInputTypeName: AuthUserRequiredActionFilterInput
+    aggregate:
+      queryRootField: authUserRequiredActionAggregate
+      subscription:
+        rootField: authUserRequiredActionAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserRequiredAction
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: AuthUserRequiredAction
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+

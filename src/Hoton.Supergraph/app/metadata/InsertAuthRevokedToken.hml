@@ -1,0 +1,101 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRevokedTokenObject
+  fields:
+    - name: expire
+      type: Int8!
+    - name: id
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthRevokedTokenObject
+    inputTypeName: InsertAuthRevokedTokenObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_revoked_token_object
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRevokedTokenObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - expire
+          - id
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRevokedTokenResponse
+  description: Responses from the 'insert_auth_revoked_token' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRevokedToken!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRevokedTokenResponse
+    inputTypeName: InsertAuthRevokedTokenResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_revoked_token_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRevokedTokenResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRevokedToken
+  outputType: InsertAuthRevokedTokenResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRevokedTokenObject!]!"
+    - name: postCheck
+      type: AuthRevokedTokenBoolExp
+      description: Insert permission predicate over the 'auth_revoked_token' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_revoked_token
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRevokedToken
+    rootFieldKind: Mutation
+  description: Insert into the auth_revoked_token table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRevokedToken
+  permissions:
+    - role: admin
+      allowExecution: true
+

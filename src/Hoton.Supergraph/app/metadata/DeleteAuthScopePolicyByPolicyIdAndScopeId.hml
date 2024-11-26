@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthScopePolicyByPolicyIdAndScopeIdResponse
+  description: Responses from the
+    'delete_auth_scope_policy_by_policy_id_and_scope_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthScopePolicy!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthScopePolicyByPolicyIdAndScopeIdResponse
+    inputTypeName: DeleteAuthScopePolicyByPolicyIdAndScopeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_scope_policy_by_policy_id_and_scope_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthScopePolicyByPolicyIdAndScopeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthScopePolicyByPolicyIdAndScopeId
+  outputType: DeleteAuthScopePolicyByPolicyIdAndScopeIdResponse!
+  arguments:
+    - name: keyPolicyId
+      type: Varchar!
+    - name: keyScopeId
+      type: Varchar!
+    - name: preCheck
+      type: AuthScopePolicyBoolExp
+      description: Delete permission predicate over the 'auth_scope_policy' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_scope_policy_by_policy_id_and_scope_id
+    argumentMapping:
+      keyPolicyId: key_policy_id
+      keyScopeId: key_scope_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthScopePolicyByPolicyIdAndScopeId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_scope_policy' collection using the
+    'policy_id' and 'scope_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthScopePolicyByPolicyIdAndScopeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

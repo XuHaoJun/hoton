@@ -1,0 +1,220 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderSnapshotProduct
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: description
+      type: Text
+    - name: id
+      type: Uuid!
+    - name: name
+      type: Varchar!
+    - name: price
+      type: Numeric!
+    - name: realmId
+      type: Varchar!
+    - name: snapshotVersion
+      type: Timestamptz!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderSnapshotProduct
+    inputTypeName: OrderSnapshotProductInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_snapshot_product
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        price:
+          column:
+            name: price
+        realmId:
+          column:
+            name: realm_id
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderSnapshotProduct
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - description
+          - id
+          - name
+          - price
+          - realmId
+          - snapshotVersion
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderSnapshotProductBoolExp
+  operand:
+    object:
+      type: OrderSnapshotProduct
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: description
+          booleanExpressionType: TextBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: price
+          booleanExpressionType: NumericBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: snapshotVersion
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderSnapshotProductBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderSnapshotProductAggExp
+  operand:
+    object:
+      aggregatedType: OrderSnapshotProduct
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: description
+          aggregateExpression: TextAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: price
+          aggregateExpression: NumericAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: snapshotVersion
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderSnapshotProductAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderSnapshotProduct
+  objectType: OrderSnapshotProduct
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_snapshot_product
+  filterExpressionType: OrderSnapshotProductBoolExp
+  aggregateExpression: OrderSnapshotProductAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: snapshotVersion
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderSnapshotProduct
+      subscription:
+        rootField: orderSnapshotProduct
+    selectUniques:
+      - queryRootField: orderSnapshotProductBySnapshotProductPkey
+        uniqueIdentifier:
+          - id
+          - snapshotVersion
+        subscription:
+          rootField: orderSnapshotProductBySnapshotProductPkey
+    orderByExpressionType: OrderSnapshotProductOrderBy
+    filterInputTypeName: OrderSnapshotProductFilterInput
+    aggregate:
+      queryRootField: orderSnapshotProductAggregate
+      subscription:
+        rootField: orderSnapshotProductAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderSnapshotProduct
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: OrderSnapshotProduct
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

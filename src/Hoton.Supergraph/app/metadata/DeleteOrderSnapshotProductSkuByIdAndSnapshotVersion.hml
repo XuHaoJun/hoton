@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderSnapshotProductSkuByIdAndSnapshotVersionResponse
+  description: Responses from the
+    'delete_order_snapshot_product_sku_by_id_and_snapshot_version' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderSnapshotProductSku!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderSnapshotProductSkuByIdAndSnapshotVersionResponse
+    inputTypeName: DeleteOrderSnapshotProductSkuByIdAndSnapshotVersionResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_snapshot_product_sku_by_id_and_snapshot_version_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderSnapshotProductSkuByIdAndSnapshotVersionResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderSnapshotProductSkuByIdAndSnapshotVersion
+  outputType: DeleteOrderSnapshotProductSkuByIdAndSnapshotVersionResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: keySnapshotVersion
+      type: Timestamptz!
+    - name: preCheck
+      type: OrderSnapshotProductSkuBoolExp
+      description: Delete permission predicate over the 'order_snapshot_product_sku'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_snapshot_product_sku_by_id_and_snapshot_version
+    argumentMapping:
+      keyId: key_id
+      keySnapshotVersion: key_snapshot_version
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderSnapshotProductSkuByIdAndSnapshotVersion
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_snapshot_product_sku' collection using
+    the 'id' and 'snapshot_version' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderSnapshotProductSkuByIdAndSnapshotVersion
+  permissions:
+    - role: admin
+      allowExecution: true
+

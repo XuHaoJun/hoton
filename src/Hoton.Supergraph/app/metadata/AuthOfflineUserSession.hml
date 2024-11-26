@@ -1,0 +1,214 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthOfflineUserSession
+  fields:
+    - name: brokerSessionId
+      type: Varchar
+    - name: createdOn
+      type: Int4!
+    - name: data
+      type: Text
+    - name: lastSessionRefresh
+      type: Int4!
+    - name: offlineFlag
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: userId
+      type: Varchar!
+    - name: userSessionId
+      type: Varchar!
+    - name: version
+      type: Int4
+  graphql:
+    typeName: AuthOfflineUserSession
+    inputTypeName: AuthOfflineUserSessionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_offline_user_session
+      fieldMapping:
+        brokerSessionId:
+          column:
+            name: broker_session_id
+        createdOn:
+          column:
+            name: created_on
+        data:
+          column:
+            name: data
+        lastSessionRefresh:
+          column:
+            name: last_session_refresh
+        offlineFlag:
+          column:
+            name: offline_flag
+        realmId:
+          column:
+            name: realm_id
+        userId:
+          column:
+            name: user_id
+        userSessionId:
+          column:
+            name: user_session_id
+        version:
+          column:
+            name: version
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthOfflineUserSession
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - brokerSessionId
+          - createdOn
+          - data
+          - lastSessionRefresh
+          - offlineFlag
+          - realmId
+          - userId
+          - userSessionId
+          - version
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthOfflineUserSessionBoolExp
+  operand:
+    object:
+      type: AuthOfflineUserSession
+      comparableFields:
+        - fieldName: brokerSessionId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: createdOn
+          booleanExpressionType: Int4BoolExp
+        - fieldName: data
+          booleanExpressionType: TextBoolExp
+        - fieldName: lastSessionRefresh
+          booleanExpressionType: Int4BoolExp
+        - fieldName: offlineFlag
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userSessionId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: version
+          booleanExpressionType: Int4BoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthOfflineUserSessionBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthOfflineUserSessionAggExp
+  operand:
+    object:
+      aggregatedType: AuthOfflineUserSession
+      aggregatableFields:
+        - fieldName: brokerSessionId
+          aggregateExpression: VarcharAggExp
+        - fieldName: createdOn
+          aggregateExpression: Int4AggExp
+        - fieldName: data
+          aggregateExpression: TextAggExp
+        - fieldName: lastSessionRefresh
+          aggregateExpression: Int4AggExp
+        - fieldName: offlineFlag
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userSessionId
+          aggregateExpression: VarcharAggExp
+        - fieldName: version
+          aggregateExpression: Int4AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthOfflineUserSessionAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthOfflineUserSession
+  objectType: AuthOfflineUserSession
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_offline_user_session
+  filterExpressionType: AuthOfflineUserSessionBoolExp
+  aggregateExpression: AuthOfflineUserSessionAggExp
+  orderableFields:
+    - fieldName: brokerSessionId
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdOn
+      orderByDirections:
+        enableAll: true
+    - fieldName: data
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastSessionRefresh
+      orderByDirections:
+        enableAll: true
+    - fieldName: offlineFlag
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userSessionId
+      orderByDirections:
+        enableAll: true
+    - fieldName: version
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authOfflineUserSession
+      subscription:
+        rootField: authOfflineUserSession
+    selectUniques:
+      - queryRootField: authOfflineUserSessionByConstraintOfflUsSesPk2
+        uniqueIdentifier:
+          - offlineFlag
+          - userSessionId
+        subscription:
+          rootField: authOfflineUserSessionByConstraintOfflUsSesPk2
+    orderByExpressionType: AuthOfflineUserSessionOrderBy
+    filterInputTypeName: AuthOfflineUserSessionFilterInput
+    aggregate:
+      queryRootField: authOfflineUserSessionAggregate
+      subscription:
+        rootField: authOfflineUserSessionAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthOfflineUserSession
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

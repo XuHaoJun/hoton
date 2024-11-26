@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRealmDefaultGroupsByGroupIdAndRealmIdResponse
+  description: Responses from the
+    'delete_auth_realm_default_groups_by_group_id_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmDefaultGroups!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRealmDefaultGroupsByGroupIdAndRealmIdResponse
+    inputTypeName: DeleteAuthRealmDefaultGroupsByGroupIdAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_realm_default_groups_by_group_id_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRealmDefaultGroupsByGroupIdAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRealmDefaultGroupsByGroupIdAndRealmId
+  outputType: DeleteAuthRealmDefaultGroupsByGroupIdAndRealmIdResponse!
+  arguments:
+    - name: keyGroupId
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar!
+    - name: preCheck
+      type: AuthRealmDefaultGroupsBoolExp
+      description: Delete permission predicate over the 'auth_realm_default_groups'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_realm_default_groups_by_group_id_and_realm_id
+    argumentMapping:
+      keyGroupId: key_group_id
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRealmDefaultGroupsByGroupIdAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_realm_default_groups' collection using
+    the 'group_id' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRealmDefaultGroupsByGroupIdAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

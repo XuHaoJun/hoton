@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthGroupRoleMappingByGroupIdAndRoleIdResponse
+  description: Responses from the
+    'delete_auth_group_role_mapping_by_group_id_and_role_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthGroupRoleMapping!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthGroupRoleMappingByGroupIdAndRoleIdResponse
+    inputTypeName: DeleteAuthGroupRoleMappingByGroupIdAndRoleIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_group_role_mapping_by_group_id_and_role_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthGroupRoleMappingByGroupIdAndRoleIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthGroupRoleMappingByGroupIdAndRoleId
+  outputType: DeleteAuthGroupRoleMappingByGroupIdAndRoleIdResponse!
+  arguments:
+    - name: keyGroupId
+      type: Varchar!
+    - name: keyRoleId
+      type: Varchar!
+    - name: preCheck
+      type: AuthGroupRoleMappingBoolExp
+      description: Delete permission predicate over the 'auth_group_role_mapping' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_group_role_mapping_by_group_id_and_role_id
+    argumentMapping:
+      keyGroupId: key_group_id
+      keyRoleId: key_role_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthGroupRoleMappingByGroupIdAndRoleId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_group_role_mapping' collection using
+    the 'group_id' and 'role_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthGroupRoleMappingByGroupIdAndRoleId
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,242 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserConsent
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: clientStorageProvider
+      type: Varchar
+    - name: createdDate
+      type: Int8
+    - name: externalClientId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: lastUpdatedDate
+      type: Int8
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthUserConsent
+    inputTypeName: AuthUserConsentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_consent
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        createdDate:
+          column:
+            name: created_date
+        externalClientId:
+          column:
+            name: external_client_id
+        id:
+          column:
+            name: id
+        lastUpdatedDate:
+          column:
+            name: last_updated_date
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserConsent
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - createdDate
+          - externalClientId
+          - id
+          - lastUpdatedDate
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserConsentBoolExp
+  operand:
+    object:
+      type: AuthUserConsent
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientStorageProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: createdDate
+          booleanExpressionType: Int8BoolExp
+        - fieldName: externalClientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastUpdatedDate
+          booleanExpressionType: Int8BoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserEntity
+        - relationshipName: authUserConsentClientScopes
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserConsentBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserConsentAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserConsent
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientStorageProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: createdDate
+          aggregateExpression: Int8AggExp
+        - fieldName: externalClientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastUpdatedDate
+          aggregateExpression: Int8AggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserConsentAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserConsent
+  objectType: AuthUserConsent
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_consent
+  filterExpressionType: AuthUserConsentBoolExp
+  aggregateExpression: AuthUserConsentAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientStorageProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: externalClientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdatedDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserConsent
+      subscription:
+        rootField: authUserConsent
+    selectUniques:
+      - queryRootField: authUserConsentById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authUserConsentById
+      - queryRootField: authUserConsentByUkExternalConsent
+        uniqueIdentifier:
+          - clientStorageProvider
+          - externalClientId
+          - userId
+        subscription:
+          rootField: authUserConsentByUkExternalConsent
+      - queryRootField: authUserConsentByUkLocalConsent
+        uniqueIdentifier:
+          - clientId
+          - userId
+        subscription:
+          rootField: authUserConsentByUkLocalConsent
+    orderByExpressionType: AuthUserConsentOrderBy
+    filterInputTypeName: AuthUserConsentFilterInput
+    aggregate:
+      queryRootField: authUserConsentAggregate
+      subscription:
+        rootField: authUserConsentAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserConsent
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: AuthUserConsent
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserConsentClientScopes
+  sourceType: AuthUserConsent
+  target:
+    model:
+      name: AuthUserConsentClientScope
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserConsentClientScopeAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: userConsentId
+  graphql:
+    aggregateFieldName: authUserConsentClientScopesAggregate
+

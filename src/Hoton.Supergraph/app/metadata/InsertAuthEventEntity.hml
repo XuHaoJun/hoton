@@ -1,0 +1,162 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthEventEntityObject
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: detailsJson
+      type: Varchar
+    - name: detailsJsonLongValue
+      type: Text
+    - name: error
+      type: Varchar
+    - name: eventTime
+      type: Int8
+    - name: id
+      type: Varchar!
+    - name: ipAddress
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: sessionId
+      type: Varchar
+    - name: type
+      type: Varchar
+    - name: userId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthEventEntityObject
+    inputTypeName: InsertAuthEventEntityObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_event_entity_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        detailsJson:
+          column:
+            name: details_json
+        detailsJsonLongValue:
+          column:
+            name: details_json_long_value
+        error:
+          column:
+            name: error
+        eventTime:
+          column:
+            name: event_time
+        id:
+          column:
+            name: id
+        ipAddress:
+          column:
+            name: ip_address
+        realmId:
+          column:
+            name: realm_id
+        sessionId:
+          column:
+            name: session_id
+        type:
+          column:
+            name: type
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthEventEntityObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - detailsJson
+          - detailsJsonLongValue
+          - error
+          - eventTime
+          - id
+          - ipAddress
+          - realmId
+          - sessionId
+          - type
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthEventEntityResponse
+  description: Responses from the 'insert_auth_event_entity' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthEventEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthEventEntityResponse
+    inputTypeName: InsertAuthEventEntityResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_event_entity_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthEventEntityResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthEventEntity
+  outputType: InsertAuthEventEntityResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthEventEntityObject!]!"
+    - name: postCheck
+      type: AuthEventEntityBoolExp
+      description: Insert permission predicate over the 'auth_event_entity' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_event_entity
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthEventEntity
+    rootFieldKind: Mutation
+  description: Insert into the auth_event_entity table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthEventEntity
+  permissions:
+    - role: admin
+      allowExecution: true
+

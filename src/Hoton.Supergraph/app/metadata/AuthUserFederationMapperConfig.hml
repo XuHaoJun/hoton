@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserFederationMapperConfig
+  fields:
+    - name: name
+      type: Varchar!
+    - name: userFederationMapperId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthUserFederationMapperConfig
+    inputTypeName: AuthUserFederationMapperConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_federation_mapper_config
+      fieldMapping:
+        name:
+          column:
+            name: name
+        userFederationMapperId:
+          column:
+            name: user_federation_mapper_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserFederationMapperConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - userFederationMapperId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserFederationMapperConfigBoolExp
+  operand:
+    object:
+      type: AuthUserFederationMapperConfig
+      comparableFields:
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userFederationMapperId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserFederationMapper
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserFederationMapperConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserFederationMapperConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserFederationMapperConfig
+      aggregatableFields:
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: userFederationMapperId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserFederationMapperConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserFederationMapperConfig
+  objectType: AuthUserFederationMapperConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_federation_mapper_config
+  filterExpressionType: AuthUserFederationMapperConfigBoolExp
+  aggregateExpression: AuthUserFederationMapperConfigAggExp
+  orderableFields:
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: userFederationMapperId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserFederationMapperConfig
+      subscription:
+        rootField: authUserFederationMapperConfig
+    selectUniques:
+      - queryRootField: authUserFederationMapperConfigByConstraintFedmapperCfgPm
+        uniqueIdentifier:
+          - name
+          - userFederationMapperId
+        subscription:
+          rootField: authUserFederationMapperConfigByConstraintFedmapperCfgPm
+    orderByExpressionType: AuthUserFederationMapperConfigOrderBy
+    filterInputTypeName: AuthUserFederationMapperConfigFilterInput
+    aggregate:
+      queryRootField: authUserFederationMapperConfigAggregate
+      subscription:
+        rootField: authUserFederationMapperConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserFederationMapperConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationMapper
+  sourceType: AuthUserFederationMapperConfig
+  target:
+    model:
+      name: AuthUserFederationMapper
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userFederationMapperId
+      target:
+        modelField:
+          - fieldName: id
+

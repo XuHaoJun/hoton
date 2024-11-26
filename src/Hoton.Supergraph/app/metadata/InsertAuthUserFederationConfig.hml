@@ -1,0 +1,115 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserFederationConfigObject
+  fields:
+    - name: name
+      type: Varchar!
+    - name: userFederationProviderId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: InsertAuthUserFederationConfigObject
+    inputTypeName: InsertAuthUserFederationConfigObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_federation_config_object
+      fieldMapping:
+        name:
+          column:
+            name: name
+        userFederationProviderId:
+          column:
+            name: user_federation_provider_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserFederationConfigObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - userFederationProviderId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserFederationConfigResponse
+  description: Responses from the 'insert_auth_user_federation_config' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserFederationConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthUserFederationConfigResponse
+    inputTypeName: InsertAuthUserFederationConfigResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_federation_config_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserFederationConfigResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthUserFederationConfig
+  outputType: InsertAuthUserFederationConfigResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthUserFederationConfigObject!]!"
+    - name: postCheck
+      type: AuthUserFederationConfigBoolExp
+      description: Insert permission predicate over the 'auth_user_federation_config'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_user_federation_config
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthUserFederationConfig
+    rootFieldKind: Mutation
+  description: Insert into the auth_user_federation_config table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthUserFederationConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

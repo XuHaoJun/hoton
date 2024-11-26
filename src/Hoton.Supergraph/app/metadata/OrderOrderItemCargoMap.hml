@@ -1,0 +1,168 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrderItemCargoMap
+  fields:
+    - name: orderItemId
+      type: Uuid
+    - name: orderShipmentCargoId
+      type: Uuid
+    - name: quantity
+      type: Int4
+  graphql:
+    typeName: OrderOrderItemCargoMap
+    inputTypeName: OrderOrderItemCargoMapInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order_item_cargo_map
+      fieldMapping:
+        orderItemId:
+          column:
+            name: order_item_id
+        orderShipmentCargoId:
+          column:
+            name: order_shipment_cargo_id
+        quantity:
+          column:
+            name: quantity
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrderItemCargoMap
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - orderItemId
+          - orderShipmentCargoId
+          - quantity
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderItemCargoMapBoolExp
+  operand:
+    object:
+      type: OrderOrderItemCargoMap
+      comparableFields:
+        - fieldName: orderItemId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: orderShipmentCargoId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: quantity
+          booleanExpressionType: Int4BoolExp
+      comparableRelationships:
+        - relationshipName: orderOrderItem
+        - relationshipName: orderOrderShipmentCargo
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderItemCargoMapBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderItemCargoMapAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrderItemCargoMap
+      aggregatableFields:
+        - fieldName: orderItemId
+          aggregateExpression: UuidAggExp
+        - fieldName: orderShipmentCargoId
+          aggregateExpression: UuidAggExp
+        - fieldName: quantity
+          aggregateExpression: Int4AggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderItemCargoMapAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrderItemCargoMap
+  objectType: OrderOrderItemCargoMap
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order_item_cargo_map
+  filterExpressionType: OrderOrderItemCargoMapBoolExp
+  aggregateExpression: OrderOrderItemCargoMapAggExp
+  orderableFields:
+    - fieldName: orderItemId
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderShipmentCargoId
+      orderByDirections:
+        enableAll: true
+    - fieldName: quantity
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrderItemCargoMap
+      subscription:
+        rootField: orderOrderItemCargoMap
+    selectUniques: []
+    orderByExpressionType: OrderOrderItemCargoMapOrderBy
+    filterInputTypeName: OrderOrderItemCargoMapFilterInput
+    aggregate:
+      queryRootField: orderOrderItemCargoMapAggregate
+      subscription:
+        rootField: orderOrderItemCargoMapAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrderItemCargoMap
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderItem
+  sourceType: OrderOrderItemCargoMap
+  target:
+    model:
+      name: OrderOrderItem
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderItemId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderShipmentCargo
+  sourceType: OrderOrderItemCargoMap
+  target:
+    model:
+      name: OrderOrderShipmentCargo
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderShipmentCargoId
+      target:
+        modelField:
+          - fieldName: id
+

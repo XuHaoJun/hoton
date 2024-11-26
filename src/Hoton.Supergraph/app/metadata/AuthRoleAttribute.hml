@@ -1,0 +1,167 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRoleAttribute
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: roleId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthRoleAttribute
+    inputTypeName: AuthRoleAttributeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_role_attribute
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        roleId:
+          column:
+            name: role_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRoleAttribute
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - roleId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRoleAttributeBoolExp
+  operand:
+    object:
+      type: AuthRoleAttribute
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: roleId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authKeycloakRole
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRoleAttributeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRoleAttributeAggExp
+  operand:
+    object:
+      aggregatedType: AuthRoleAttribute
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: roleId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRoleAttributeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRoleAttribute
+  objectType: AuthRoleAttribute
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_role_attribute
+  filterExpressionType: AuthRoleAttributeBoolExp
+  aggregateExpression: AuthRoleAttributeAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: roleId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRoleAttribute
+      subscription:
+        rootField: authRoleAttribute
+    selectUniques:
+      - queryRootField: authRoleAttributeById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authRoleAttributeById
+    orderByExpressionType: AuthRoleAttributeOrderBy
+    filterInputTypeName: AuthRoleAttributeFilterInput
+    aggregate:
+      queryRootField: authRoleAttributeAggregate
+      subscription:
+        rootField: authRoleAttributeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRoleAttribute
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authKeycloakRole
+  sourceType: AuthRoleAttribute
+  target:
+    model:
+      name: AuthKeycloakRole
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: roleId
+      target:
+        modelField:
+          - fieldName: id
+

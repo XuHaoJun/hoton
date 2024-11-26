@@ -1,0 +1,120 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCartCartObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertCartCartObject
+    inputTypeName: InsertCartCartObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_cart_cart_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCartCartObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - updatedAt
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertCartCartResponse
+  description: Responses from the 'insert_cart_cart' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[CartCart!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertCartCartResponse
+    inputTypeName: InsertCartCartResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_cart_cart_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertCartCartResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertCartCart
+  outputType: InsertCartCartResponse!
+  arguments:
+    - name: objects
+      type: "[InsertCartCartObject!]!"
+    - name: postCheck
+      type: CartCartBoolExp
+      description: Insert permission predicate over the 'cart_cart' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_cart_cart
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertCartCart
+    rootFieldKind: Mutation
+  description: Insert into the cart_cart table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertCartCart
+  permissions:
+    - role: admin
+      allowExecution: true
+

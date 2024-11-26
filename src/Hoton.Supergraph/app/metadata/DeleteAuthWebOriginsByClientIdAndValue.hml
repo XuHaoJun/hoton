@@ -1,0 +1,76 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthWebOriginsByClientIdAndValueResponse
+  description: Responses from the 'delete_auth_web_origins_by_client_id_and_value' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthWebOrigins!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthWebOriginsByClientIdAndValueResponse
+    inputTypeName: DeleteAuthWebOriginsByClientIdAndValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_web_origins_by_client_id_and_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthWebOriginsByClientIdAndValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthWebOriginsByClientIdAndValue
+  outputType: DeleteAuthWebOriginsByClientIdAndValueResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyValue
+      type: Varchar!
+    - name: preCheck
+      type: AuthWebOriginsBoolExp
+      description: Delete permission predicate over the 'auth_web_origins' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_web_origins_by_client_id_and_value
+    argumentMapping:
+      keyClientId: key_client_id
+      keyValue: key_value
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthWebOriginsByClientIdAndValue
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_web_origins' collection using the
+    'client_id' and 'value' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthWebOriginsByClientIdAndValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

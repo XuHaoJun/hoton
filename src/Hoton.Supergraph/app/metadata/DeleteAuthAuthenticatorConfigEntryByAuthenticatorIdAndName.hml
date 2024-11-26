@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndNameResponse
+  description: Responses from the
+    'delete_auth_authenticator_config_entry_by_authenticator_id_and_name'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticatorConfigEntry!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndNameResponse
+    inputTypeName: DeleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_authenticator_config_entry_by_authenticator_id_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndName
+  outputType: DeleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndNameResponse!
+  arguments:
+    - name: keyAuthenticatorId
+      type: Varchar!
+    - name: keyName
+      type: Varchar!
+    - name: preCheck
+      type: AuthAuthenticatorConfigEntryBoolExp
+      description: Delete permission predicate over the
+        'auth_authenticator_config_entry' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_authenticator_config_entry_by_authenticator_id_and_name
+    argumentMapping:
+      keyAuthenticatorId: key_authenticator_id
+      keyName: key_name
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndName
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_authenticator_config_entry' collection
+    using the 'authenticator_id' and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthAuthenticatorConfigEntryByAuthenticatorIdAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRedirectUrisByClientIdAndValueResponse
+  description: Responses from the
+    'delete_auth_redirect_uris_by_client_id_and_value' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRedirectUris!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRedirectUrisByClientIdAndValueResponse
+    inputTypeName: DeleteAuthRedirectUrisByClientIdAndValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_redirect_uris_by_client_id_and_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRedirectUrisByClientIdAndValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRedirectUrisByClientIdAndValue
+  outputType: DeleteAuthRedirectUrisByClientIdAndValueResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar!
+    - name: keyValue
+      type: Varchar!
+    - name: preCheck
+      type: AuthRedirectUrisBoolExp
+      description: Delete permission predicate over the 'auth_redirect_uris' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_redirect_uris_by_client_id_and_value
+    argumentMapping:
+      keyClientId: key_client_id
+      keyValue: key_value
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRedirectUrisByClientIdAndValue
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_redirect_uris' collection using the
+    'client_id' and 'value' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRedirectUrisByClientIdAndValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

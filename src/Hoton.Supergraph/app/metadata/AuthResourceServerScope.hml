@@ -1,0 +1,255 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthResourceServerScope
+  fields:
+    - name: displayName
+      type: Varchar
+    - name: iconUri
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: resourceServerId
+      type: Varchar!
+  graphql:
+    typeName: AuthResourceServerScope
+    inputTypeName: AuthResourceServerScopeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_resource_server_scope
+      fieldMapping:
+        displayName:
+          column:
+            name: display_name
+        iconUri:
+          column:
+            name: icon_uri
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        resourceServerId:
+          column:
+            name: resource_server_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthResourceServerScope
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - displayName
+          - iconUri
+          - id
+          - name
+          - resourceServerId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthResourceServerScopeBoolExp
+  operand:
+    object:
+      type: AuthResourceServerScope
+      comparableFields:
+        - fieldName: displayName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: iconUri
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resourceServerId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceScopes
+        - relationshipName: authResourceServerPermTickets
+        - relationshipName: authResourceServer
+        - relationshipName: authScopePolicies
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthResourceServerScopeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthResourceServerScopeAggExp
+  operand:
+    object:
+      aggregatedType: AuthResourceServerScope
+      aggregatableFields:
+        - fieldName: displayName
+          aggregateExpression: VarcharAggExp
+        - fieldName: iconUri
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: resourceServerId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthResourceServerScopeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthResourceServerScope
+  objectType: AuthResourceServerScope
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_resource_server_scope
+  filterExpressionType: AuthResourceServerScopeBoolExp
+  aggregateExpression: AuthResourceServerScopeAggExp
+  orderableFields:
+    - fieldName: displayName
+      orderByDirections:
+        enableAll: true
+    - fieldName: iconUri
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceServerId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authResourceServerScope
+      subscription:
+        rootField: authResourceServerScope
+    selectUniques:
+      - queryRootField: authResourceServerScopeById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authResourceServerScopeById
+      - queryRootField: authResourceServerScopeByUkFrsrst700S9V50Bu18Ws5Ha6
+        uniqueIdentifier:
+          - name
+          - resourceServerId
+        subscription:
+          rootField: authResourceServerScopeByUkFrsrst700S9V50Bu18Ws5Ha6
+    orderByExpressionType: AuthResourceServerScopeOrderBy
+    filterInputTypeName: AuthResourceServerScopeFilterInput
+    aggregate:
+      queryRootField: authResourceServerScopeAggregate
+      subscription:
+        rootField: authResourceServerScopeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthResourceServerScope
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceScopes
+  sourceType: AuthResourceServerScope
+  target:
+    model:
+      name: AuthResourceScope
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthResourceScopeAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: scopeId
+  graphql:
+    aggregateFieldName: authResourceScopesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerPermTickets
+  sourceType: AuthResourceServerScope
+  target:
+    model:
+      name: AuthResourceServerPermTicket
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthResourceServerPermTicketAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: scopeId
+  graphql:
+    aggregateFieldName: authResourceServerPermTicketsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServer
+  sourceType: AuthResourceServerScope
+  target:
+    model:
+      name: AuthResourceServer
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceServerId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authScopePolicies
+  sourceType: AuthResourceServerScope
+  target:
+    model:
+      name: AuthScopePolicy
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthScopePolicyAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: scopeId
+  graphql:
+    aggregateFieldName: authScopePoliciesAggregate
+

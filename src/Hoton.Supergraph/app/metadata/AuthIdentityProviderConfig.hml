@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthIdentityProviderConfig
+  fields:
+    - name: identityProviderId
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: AuthIdentityProviderConfig
+    inputTypeName: AuthIdentityProviderConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_identity_provider_config
+      fieldMapping:
+        identityProviderId:
+          column:
+            name: identity_provider_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthIdentityProviderConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - identityProviderId
+          - name
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthIdentityProviderConfigBoolExp
+  operand:
+    object:
+      type: AuthIdentityProviderConfig
+      comparableFields:
+        - fieldName: identityProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: TextBoolExp
+      comparableRelationships:
+        - relationshipName: authIdentityProvider
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthIdentityProviderConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthIdentityProviderConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthIdentityProviderConfig
+      aggregatableFields:
+        - fieldName: identityProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthIdentityProviderConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthIdentityProviderConfig
+  objectType: AuthIdentityProviderConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_identity_provider_config
+  filterExpressionType: AuthIdentityProviderConfigBoolExp
+  aggregateExpression: AuthIdentityProviderConfigAggExp
+  orderableFields:
+    - fieldName: identityProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authIdentityProviderConfig
+      subscription:
+        rootField: authIdentityProviderConfig
+    selectUniques:
+      - queryRootField: authIdentityProviderConfigByConstraintD
+        uniqueIdentifier:
+          - identityProviderId
+          - name
+        subscription:
+          rootField: authIdentityProviderConfigByConstraintD
+    orderByExpressionType: AuthIdentityProviderConfigOrderBy
+    filterInputTypeName: AuthIdentityProviderConfigFilterInput
+    aggregate:
+      queryRootField: authIdentityProviderConfigAggregate
+      subscription:
+        rootField: authIdentityProviderConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthIdentityProviderConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authIdentityProvider
+  sourceType: AuthIdentityProviderConfig
+  target:
+    model:
+      name: AuthIdentityProvider
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: identityProviderId
+      target:
+        modelField:
+          - fieldName: internalId
+

@@ -1,0 +1,167 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthGroupAttribute
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthGroupAttribute
+    inputTypeName: AuthGroupAttributeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_group_attribute
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthGroupAttribute
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - id
+          - name
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthGroupAttributeBoolExp
+  operand:
+    object:
+      type: AuthGroupAttribute
+      comparableFields:
+        - fieldName: groupId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authKeycloakGroup
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthGroupAttributeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthGroupAttributeAggExp
+  operand:
+    object:
+      aggregatedType: AuthGroupAttribute
+      aggregatableFields:
+        - fieldName: groupId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthGroupAttributeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthGroupAttribute
+  objectType: AuthGroupAttribute
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_group_attribute
+  filterExpressionType: AuthGroupAttributeBoolExp
+  aggregateExpression: AuthGroupAttributeAggExp
+  orderableFields:
+    - fieldName: groupId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authGroupAttribute
+      subscription:
+        rootField: authGroupAttribute
+    selectUniques:
+      - queryRootField: authGroupAttributeById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authGroupAttributeById
+    orderByExpressionType: AuthGroupAttributeOrderBy
+    filterInputTypeName: AuthGroupAttributeFilterInput
+    aggregate:
+      queryRootField: authGroupAttributeAggregate
+      subscription:
+        rootField: authGroupAttributeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthGroupAttribute
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authKeycloakGroup
+  sourceType: AuthGroupAttribute
+  target:
+    model:
+      name: AuthKeycloakGroup
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: groupId
+      target:
+        modelField:
+          - fieldName: id
+

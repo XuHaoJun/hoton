@@ -1,0 +1,275 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserGroupMembershipGroupId
+  description: Update the 'group_id' column in the
+    'auth_fed_user_group_membership' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserGroupMembershipGroupId
+    inputTypeName: UpdateColumnAuthFedUserGroupMembershipGroupIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_group_membership_group_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserGroupMembershipGroupId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserGroupMembershipRealmId
+  description: Update the 'realm_id' column in the
+    'auth_fed_user_group_membership' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserGroupMembershipRealmId
+    inputTypeName: UpdateColumnAuthFedUserGroupMembershipRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_group_membership_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserGroupMembershipRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserGroupMembershipStorageProviderId
+  description: Update the 'storage_provider_id' column in the
+    'auth_fed_user_group_membership' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserGroupMembershipStorageProviderId
+    inputTypeName: UpdateColumnAuthFedUserGroupMembershipStorageProviderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_group_membership_storage_provider_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserGroupMembershipStorageProviderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserGroupMembershipUserId
+  description: Update the 'user_id' column in the 'auth_fed_user_group_membership'
+    collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserGroupMembershipUserId
+    inputTypeName: UpdateColumnAuthFedUserGroupMembershipUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_group_membership_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserGroupMembershipUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdUpdateColumns
+  description: Update the columns of the 'auth_fed_user_group_membership' collection
+  fields:
+    - name: groupId
+      type: UpdateColumnAuthFedUserGroupMembershipGroupId
+      description: Update the 'group_id' column in the
+        'auth_fed_user_group_membership' collection.
+    - name: realmId
+      type: UpdateColumnAuthFedUserGroupMembershipRealmId
+      description: Update the 'realm_id' column in the
+        'auth_fed_user_group_membership' collection.
+    - name: storageProviderId
+      type: UpdateColumnAuthFedUserGroupMembershipStorageProviderId
+      description: Update the 'storage_provider_id' column in the
+        'auth_fed_user_group_membership' collection.
+    - name: userId
+      type: UpdateColumnAuthFedUserGroupMembershipUserId
+      description: Update the 'user_id' column in the 'auth_fed_user_group_membership'
+        collection.
+  graphql:
+    typeName: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdUpdateColumns
+    inputTypeName: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_group_membership_by_group_id_and_user_id_update_columns
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - realmId
+          - storageProviderId
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdResponse
+  description: Responses from the
+    'update_auth_fed_user_group_membership_by_group_id_and_user_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserGroupMembership!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdResponse
+    inputTypeName: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_group_membership_by_group_id_and_user_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthFedUserGroupMembershipByGroupIdAndUserId
+  outputType: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdResponse!
+  arguments:
+    - name: keyGroupId
+      type: Varchar!
+    - name: keyUserId
+      type: Varchar!
+    - name: postCheck
+      type: AuthFedUserGroupMembershipBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_fed_user_group_membership' collection
+    - name: preCheck
+      type: AuthFedUserGroupMembershipBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_fed_user_group_membership' collection
+    - name: updateColumns
+      type: UpdateAuthFedUserGroupMembershipByGroupIdAndUserIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_fed_user_group_membership_by_group_id_and_user_id
+    argumentMapping:
+      keyGroupId: key_group_id
+      keyUserId: key_user_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthFedUserGroupMembershipByGroupIdAndUserId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_fed_user_group_membership' collection
+    using the 'group_id' and 'user_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthFedUserGroupMembershipByGroupIdAndUserId
+  permissions:
+    - role: admin
+      allowExecution: true
+

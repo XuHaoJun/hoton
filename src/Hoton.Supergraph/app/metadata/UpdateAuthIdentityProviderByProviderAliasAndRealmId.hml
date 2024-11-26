@@ -1,0 +1,228 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthIdentityProviderByProviderAliasAndRealmIdUpdateColumns
+  description: Update the columns of the 'auth_identity_provider' collection
+  fields:
+    - name: addTokenRole
+      type: UpdateColumnAuthIdentityProviderAddTokenRole
+      description: Update the 'add_token_role' column in the 'auth_identity_provider'
+        collection.
+    - name: authenticateByDefault
+      type: UpdateColumnAuthIdentityProviderAuthenticateByDefault
+      description: Update the 'authenticate_by_default' column in the
+        'auth_identity_provider' collection.
+    - name: enabled
+      type: UpdateColumnAuthIdentityProviderEnabled
+      description: Update the 'enabled' column in the 'auth_identity_provider' collection.
+    - name: firstBrokerLoginFlowId
+      type: UpdateColumnAuthIdentityProviderFirstBrokerLoginFlowId
+      description: Update the 'first_broker_login_flow_id' column in the
+        'auth_identity_provider' collection.
+    - name: hideOnLogin
+      type: UpdateColumnAuthIdentityProviderHideOnLogin
+      description: Update the 'hide_on_login' column in the 'auth_identity_provider'
+        collection.
+    - name: internalId
+      type: UpdateColumnAuthIdentityProviderInternalId
+      description: Update the 'internal_id' column in the 'auth_identity_provider'
+        collection.
+    - name: linkOnly
+      type: UpdateColumnAuthIdentityProviderLinkOnly
+      description: Update the 'link_only' column in the 'auth_identity_provider' collection.
+    - name: organizationId
+      type: UpdateColumnAuthIdentityProviderOrganizationId
+      description: Update the 'organization_id' column in the 'auth_identity_provider'
+        collection.
+    - name: postBrokerLoginFlowId
+      type: UpdateColumnAuthIdentityProviderPostBrokerLoginFlowId
+      description: Update the 'post_broker_login_flow_id' column in the
+        'auth_identity_provider' collection.
+    - name: providerAlias
+      type: UpdateColumnAuthIdentityProviderProviderAlias
+      description: Update the 'provider_alias' column in the 'auth_identity_provider'
+        collection.
+    - name: providerDisplayName
+      type: UpdateColumnAuthIdentityProviderProviderDisplayName
+      description: Update the 'provider_display_name' column in the
+        'auth_identity_provider' collection.
+    - name: providerId
+      type: UpdateColumnAuthIdentityProviderProviderId
+      description: Update the 'provider_id' column in the 'auth_identity_provider'
+        collection.
+    - name: realmId
+      type: UpdateColumnAuthIdentityProviderRealmId
+      description: Update the 'realm_id' column in the 'auth_identity_provider' collection.
+    - name: storeToken
+      type: UpdateColumnAuthIdentityProviderStoreToken
+      description: Update the 'store_token' column in the 'auth_identity_provider'
+        collection.
+    - name: trustEmail
+      type: UpdateColumnAuthIdentityProviderTrustEmail
+      description: Update the 'trust_email' column in the 'auth_identity_provider'
+        collection.
+  graphql:
+    typeName: UpdateAuthIdentityProviderByProviderAliasAndRealmIdUpdateColumns
+    inputTypeName: UpdateAuthIdentityProviderByProviderAliasAndRealmIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_identity_provider_by_provider_alias_and_realm_id_update_columns
+      fieldMapping:
+        addTokenRole:
+          column:
+            name: add_token_role
+        authenticateByDefault:
+          column:
+            name: authenticate_by_default
+        enabled:
+          column:
+            name: enabled
+        firstBrokerLoginFlowId:
+          column:
+            name: first_broker_login_flow_id
+        hideOnLogin:
+          column:
+            name: hide_on_login
+        internalId:
+          column:
+            name: internal_id
+        linkOnly:
+          column:
+            name: link_only
+        organizationId:
+          column:
+            name: organization_id
+        postBrokerLoginFlowId:
+          column:
+            name: post_broker_login_flow_id
+        providerAlias:
+          column:
+            name: provider_alias
+        providerDisplayName:
+          column:
+            name: provider_display_name
+        providerId:
+          column:
+            name: provider_id
+        realmId:
+          column:
+            name: realm_id
+        storeToken:
+          column:
+            name: store_token
+        trustEmail:
+          column:
+            name: trust_email
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthIdentityProviderByProviderAliasAndRealmIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - addTokenRole
+          - authenticateByDefault
+          - enabled
+          - firstBrokerLoginFlowId
+          - hideOnLogin
+          - internalId
+          - linkOnly
+          - organizationId
+          - postBrokerLoginFlowId
+          - providerAlias
+          - providerDisplayName
+          - providerId
+          - realmId
+          - storeToken
+          - trustEmail
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthIdentityProviderByProviderAliasAndRealmIdResponse
+  description: Responses from the
+    'update_auth_identity_provider_by_provider_alias_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdentityProvider!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthIdentityProviderByProviderAliasAndRealmIdResponse
+    inputTypeName: UpdateAuthIdentityProviderByProviderAliasAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_identity_provider_by_provider_alias_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthIdentityProviderByProviderAliasAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthIdentityProviderByProviderAliasAndRealmId
+  outputType: UpdateAuthIdentityProviderByProviderAliasAndRealmIdResponse!
+  arguments:
+    - name: keyProviderAlias
+      type: Varchar
+    - name: keyRealmId
+      type: Varchar
+    - name: postCheck
+      type: AuthIdentityProviderBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_identity_provider' collection
+    - name: preCheck
+      type: AuthIdentityProviderBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_identity_provider' collection
+    - name: updateColumns
+      type: UpdateAuthIdentityProviderByProviderAliasAndRealmIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_identity_provider_by_provider_alias_and_realm_id
+    argumentMapping:
+      keyProviderAlias: key_provider_alias
+      keyRealmId: key_realm_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthIdentityProviderByProviderAliasAndRealmId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_identity_provider' collection using the
+    'provider_alias' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthIdentityProviderByProviderAliasAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

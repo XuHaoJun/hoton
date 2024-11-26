@@ -1,0 +1,467 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoCreatedAt
+  description: Update the 'created_at' column in the 'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoCreatedAt
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoHeight
+  description: Update the 'height' column in the 'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Numeric
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoHeight
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoHeightInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_height
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoHeight
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoId
+  description: Update the 'id' column in the 'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoId
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoLength
+  description: Update the 'length' column in the 'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Numeric
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoLength
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoLengthInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_length
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoLength
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoOrderShipmentId
+  description: Update the 'order_shipment_id' column in the
+    'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Uuid
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoOrderShipmentId
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoOrderShipmentIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_order_shipment_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoOrderShipmentId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoTrackingNumber
+  description: Update the 'tracking_number' column in the
+    'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoTrackingNumber
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoTrackingNumberInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_tracking_number
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoTrackingNumber
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoUpdatedAt
+  description: Update the 'updated_at' column in the 'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoUpdatedAt
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoWeight
+  description: Update the 'weight' column in the 'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Numeric
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoWeight
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoWeightInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_weight
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoWeight
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderShipmentCargoWidth
+  description: Update the 'width' column in the 'order_order_shipment_cargo' collection
+  fields:
+    - name: set
+      type: Numeric
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderShipmentCargoWidth
+    inputTypeName: UpdateColumnOrderOrderShipmentCargoWidthInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_shipment_cargo_width
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderShipmentCargoWidth
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderShipmentCargoByIdUpdateColumns
+  description: Update the columns of the 'order_order_shipment_cargo' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnOrderOrderShipmentCargoCreatedAt
+      description: Update the 'created_at' column in the 'order_order_shipment_cargo'
+        collection.
+    - name: height
+      type: UpdateColumnOrderOrderShipmentCargoHeight
+      description: Update the 'height' column in the 'order_order_shipment_cargo'
+        collection.
+    - name: id
+      type: UpdateColumnOrderOrderShipmentCargoId
+      description: Update the 'id' column in the 'order_order_shipment_cargo' collection.
+    - name: length
+      type: UpdateColumnOrderOrderShipmentCargoLength
+      description: Update the 'length' column in the 'order_order_shipment_cargo'
+        collection.
+    - name: orderShipmentId
+      type: UpdateColumnOrderOrderShipmentCargoOrderShipmentId
+      description: Update the 'order_shipment_id' column in the
+        'order_order_shipment_cargo' collection.
+    - name: trackingNumber
+      type: UpdateColumnOrderOrderShipmentCargoTrackingNumber
+      description: Update the 'tracking_number' column in the
+        'order_order_shipment_cargo' collection.
+    - name: updatedAt
+      type: UpdateColumnOrderOrderShipmentCargoUpdatedAt
+      description: Update the 'updated_at' column in the 'order_order_shipment_cargo'
+        collection.
+    - name: weight
+      type: UpdateColumnOrderOrderShipmentCargoWeight
+      description: Update the 'weight' column in the 'order_order_shipment_cargo'
+        collection.
+    - name: width
+      type: UpdateColumnOrderOrderShipmentCargoWidth
+      description: Update the 'width' column in the 'order_order_shipment_cargo' collection.
+  graphql:
+    typeName: UpdateOrderOrderShipmentCargoByIdUpdateColumns
+    inputTypeName: UpdateOrderOrderShipmentCargoByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_shipment_cargo_by_id_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        height:
+          column:
+            name: height
+        id:
+          column:
+            name: id
+        length:
+          column:
+            name: length
+        orderShipmentId:
+          column:
+            name: order_shipment_id
+        trackingNumber:
+          column:
+            name: tracking_number
+        updatedAt:
+          column:
+            name: updated_at
+        weight:
+          column:
+            name: weight
+        width:
+          column:
+            name: width
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderShipmentCargoByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - height
+          - id
+          - length
+          - orderShipmentId
+          - trackingNumber
+          - updatedAt
+          - weight
+          - width
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderShipmentCargoByIdResponse
+  description: Responses from the 'update_order_order_shipment_cargo_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderShipmentCargo!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderOrderShipmentCargoByIdResponse
+    inputTypeName: UpdateOrderOrderShipmentCargoByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_shipment_cargo_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderShipmentCargoByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderOrderShipmentCargoById
+  outputType: UpdateOrderOrderShipmentCargoByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: OrderOrderShipmentCargoBoolExp
+      description: Update permission post-condition predicate over the
+        'order_order_shipment_cargo' collection
+    - name: preCheck
+      type: OrderOrderShipmentCargoBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_order_shipment_cargo' collection
+    - name: updateColumns
+      type: UpdateOrderOrderShipmentCargoByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_order_shipment_cargo_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderOrderShipmentCargoById
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_order_shipment_cargo' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderOrderShipmentCargoById
+  permissions:
+    - role: admin
+      allowExecution: true
+

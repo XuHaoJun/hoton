@@ -1,0 +1,357 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrderShipment
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: orderId
+      type: Uuid
+    - name: realmId
+      type: Varchar!
+    - name: receiverAddress
+      type: Varchar
+    - name: receiverName
+      type: Varchar
+    - name: receiverPhone
+      type: Varchar
+    - name: senderName
+      type: Varchar
+    - name: senderPhone
+      type: Varchar
+    - name: serviceProvider
+      type: Varchar
+    - name: serviceType
+      type: Varchar
+    - name: status
+      type: Varchar
+    - name: temperatureZone
+      type: Varchar
+    - name: trackingNumber
+      type: Varchar!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderOrderShipment
+    inputTypeName: OrderOrderShipmentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order_shipment
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        orderId:
+          column:
+            name: order_id
+        realmId:
+          column:
+            name: realm_id
+        receiverAddress:
+          column:
+            name: receiver_address
+        receiverName:
+          column:
+            name: receiver_name
+        receiverPhone:
+          column:
+            name: receiver_phone
+        senderName:
+          column:
+            name: sender_name
+        senderPhone:
+          column:
+            name: sender_phone
+        serviceProvider:
+          column:
+            name: service_provider
+        serviceType:
+          column:
+            name: service_type
+        status:
+          column:
+            name: status
+        temperatureZone:
+          column:
+            name: temperature_zone
+        trackingNumber:
+          column:
+            name: tracking_number
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrderShipment
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - orderId
+          - realmId
+          - receiverAddress
+          - receiverName
+          - receiverPhone
+          - senderName
+          - senderPhone
+          - serviceProvider
+          - serviceType
+          - status
+          - temperatureZone
+          - trackingNumber
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderShipmentBoolExp
+  operand:
+    object:
+      type: OrderOrderShipment
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: orderId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: receiverAddress
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: receiverName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: receiverPhone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: senderName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: senderPhone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: serviceProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: serviceType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: status
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: temperatureZone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: trackingNumber
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: orderOrder
+        - relationshipName: authRealm
+        - relationshipName: orderOrderShipmentCargos
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderShipmentBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderShipmentAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrderShipment
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: orderId
+          aggregateExpression: UuidAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: receiverAddress
+          aggregateExpression: VarcharAggExp
+        - fieldName: receiverName
+          aggregateExpression: VarcharAggExp
+        - fieldName: receiverPhone
+          aggregateExpression: VarcharAggExp
+        - fieldName: senderName
+          aggregateExpression: VarcharAggExp
+        - fieldName: senderPhone
+          aggregateExpression: VarcharAggExp
+        - fieldName: serviceProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: serviceType
+          aggregateExpression: VarcharAggExp
+        - fieldName: status
+          aggregateExpression: VarcharAggExp
+        - fieldName: temperatureZone
+          aggregateExpression: VarcharAggExp
+        - fieldName: trackingNumber
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderShipmentAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrderShipment
+  objectType: OrderOrderShipment
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order_shipment
+  filterExpressionType: OrderOrderShipmentBoolExp
+  aggregateExpression: OrderOrderShipmentAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: receiverAddress
+      orderByDirections:
+        enableAll: true
+    - fieldName: receiverName
+      orderByDirections:
+        enableAll: true
+    - fieldName: receiverPhone
+      orderByDirections:
+        enableAll: true
+    - fieldName: senderName
+      orderByDirections:
+        enableAll: true
+    - fieldName: senderPhone
+      orderByDirections:
+        enableAll: true
+    - fieldName: serviceProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: serviceType
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: temperatureZone
+      orderByDirections:
+        enableAll: true
+    - fieldName: trackingNumber
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrderShipment
+      subscription:
+        rootField: orderOrderShipment
+    selectUniques:
+      - queryRootField: orderOrderShipmentById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderOrderShipmentById
+      - queryRootField: orderOrderShipmentByTrackingNumber
+        uniqueIdentifier:
+          - trackingNumber
+        subscription:
+          rootField: orderOrderShipmentByTrackingNumber
+    orderByExpressionType: OrderOrderShipmentOrderBy
+    filterInputTypeName: OrderOrderShipmentFilterInput
+    aggregate:
+      queryRootField: orderOrderShipmentAggregate
+      subscription:
+        rootField: orderOrderShipmentAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrderShipment
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrder
+  sourceType: OrderOrderShipment
+  target:
+    model:
+      name: OrderOrder
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: OrderOrderShipment
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderShipmentCargos
+  sourceType: OrderOrderShipment
+  target:
+    model:
+      name: OrderOrderShipmentCargo
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderShipmentCargoAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderShipmentId
+  graphql:
+    aggregateFieldName: orderOrderShipmentCargosAggregate
+

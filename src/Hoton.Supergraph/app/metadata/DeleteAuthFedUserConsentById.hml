@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthFedUserConsentByIdResponse
+  description: Responses from the 'delete_auth_fed_user_consent_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserConsent!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthFedUserConsentByIdResponse
+    inputTypeName: DeleteAuthFedUserConsentByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_fed_user_consent_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthFedUserConsentByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthFedUserConsentById
+  outputType: DeleteAuthFedUserConsentByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthFedUserConsentBoolExp
+      description: Delete permission predicate over the 'auth_fed_user_consent' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_fed_user_consent_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthFedUserConsentById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_fed_user_consent' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthFedUserConsentById
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserGroupMembership
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: membershipType
+      type: Varchar!
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthUserGroupMembership
+    inputTypeName: AuthUserGroupMembershipInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_group_membership
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        membershipType:
+          column:
+            name: membership_type
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserGroupMembership
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - membershipType
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserGroupMembershipBoolExp
+  operand:
+    object:
+      type: AuthUserGroupMembership
+      comparableFields:
+        - fieldName: groupId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: membershipType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserEntity
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserGroupMembershipBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserGroupMembershipAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserGroupMembership
+      aggregatableFields:
+        - fieldName: groupId
+          aggregateExpression: VarcharAggExp
+        - fieldName: membershipType
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserGroupMembershipAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserGroupMembership
+  objectType: AuthUserGroupMembership
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_group_membership
+  filterExpressionType: AuthUserGroupMembershipBoolExp
+  aggregateExpression: AuthUserGroupMembershipAggExp
+  orderableFields:
+    - fieldName: groupId
+      orderByDirections:
+        enableAll: true
+    - fieldName: membershipType
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserGroupMembership
+      subscription:
+        rootField: authUserGroupMembership
+    selectUniques:
+      - queryRootField: authUserGroupMembershipByConstraintUserGroup
+        uniqueIdentifier:
+          - groupId
+          - userId
+        subscription:
+          rootField: authUserGroupMembershipByConstraintUserGroup
+    orderByExpressionType: AuthUserGroupMembershipOrderBy
+    filterInputTypeName: AuthUserGroupMembershipFilterInput
+    aggregate:
+      queryRootField: authUserGroupMembershipAggregate
+      subscription:
+        rootField: authUserGroupMembershipAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserGroupMembership
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: AuthUserGroupMembership
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+

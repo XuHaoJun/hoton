@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRoleAttributeByIdResponse
+  description: Responses from the 'delete_auth_role_attribute_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRoleAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRoleAttributeByIdResponse
+    inputTypeName: DeleteAuthRoleAttributeByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_role_attribute_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRoleAttributeByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRoleAttributeById
+  outputType: DeleteAuthRoleAttributeByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthRoleAttributeBoolExp
+      description: Delete permission predicate over the 'auth_role_attribute' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_role_attribute_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRoleAttributeById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_role_attribute' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRoleAttributeById
+  permissions:
+    - role: admin
+      allowExecution: true
+

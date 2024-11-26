@@ -1,0 +1,167 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthResourceAttribute
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: resourceId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthResourceAttribute
+    inputTypeName: AuthResourceAttributeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_resource_attribute
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        resourceId:
+          column:
+            name: resource_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthResourceAttribute
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - resourceId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthResourceAttributeBoolExp
+  operand:
+    object:
+      type: AuthResourceAttribute
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resourceId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceServerResource
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthResourceAttributeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthResourceAttributeAggExp
+  operand:
+    object:
+      aggregatedType: AuthResourceAttribute
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: resourceId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthResourceAttributeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthResourceAttribute
+  objectType: AuthResourceAttribute
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_resource_attribute
+  filterExpressionType: AuthResourceAttributeBoolExp
+  aggregateExpression: AuthResourceAttributeAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authResourceAttribute
+      subscription:
+        rootField: authResourceAttribute
+    selectUniques:
+      - queryRootField: authResourceAttributeById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authResourceAttributeById
+    orderByExpressionType: AuthResourceAttributeOrderBy
+    filterInputTypeName: AuthResourceAttributeFilterInput
+    aggregate:
+      queryRootField: authResourceAttributeAggregate
+      subscription:
+        rootField: authResourceAttributeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthResourceAttribute
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerResource
+  sourceType: AuthResourceAttribute
+  target:
+    model:
+      name: AuthResourceServerResource
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceId
+      target:
+        modelField:
+          - fieldName: id
+

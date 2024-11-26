@@ -1,0 +1,156 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: customerName
+      type: Varchar!
+    - name: id
+      type: Uuid
+    - name: realmId
+      type: Varchar!
+    - name: shipmentFee
+      type: Numeric!
+    - name: status
+      type: Varchar
+    - name: totalAmount
+      type: Numeric!
+    - name: transactionNo
+      type: Varchar!
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertOrderOrderObject
+    inputTypeName: InsertOrderOrderObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        customerName:
+          column:
+            name: customer_name
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+        shipmentFee:
+          column:
+            name: shipment_fee
+        status:
+          column:
+            name: status
+        totalAmount:
+          column:
+            name: total_amount
+        transactionNo:
+          column:
+            name: transaction_no
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - customerName
+          - id
+          - realmId
+          - shipmentFee
+          - status
+          - totalAmount
+          - transactionNo
+          - updatedAt
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderResponse
+  description: Responses from the 'insert_order_order' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrder!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderOrderResponse
+    inputTypeName: InsertOrderOrderResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderOrder
+  outputType: InsertOrderOrderResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderOrderObject!]!"
+    - name: postCheck
+      type: OrderOrderBoolExp
+      description: Insert permission predicate over the 'order_order' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_order
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderOrder
+    rootFieldKind: Mutation
+  description: Insert into the order_order table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderOrder
+  permissions:
+    - role: admin
+      allowExecution: true
+

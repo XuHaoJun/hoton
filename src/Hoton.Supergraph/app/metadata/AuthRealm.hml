@@ -1,0 +1,1388 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRealm
+  fields:
+    - name: accessCodeLifespan
+      type: Int4
+    - name: accessTokenLifeImplicit
+      type: Int4
+    - name: accessTokenLifespan
+      type: Int4
+    - name: accountTheme
+      type: Varchar
+    - name: adminEventsDetailsEnabled
+      type: Bool!
+    - name: adminEventsEnabled
+      type: Bool!
+    - name: adminTheme
+      type: Varchar
+    - name: allowUserManagedAccess
+      type: Bool!
+    - name: browserFlow
+      type: Varchar
+    - name: clientAuthFlow
+      type: Varchar
+    - name: defaultLocale
+      type: Varchar
+    - name: defaultRole
+      type: Varchar
+    - name: directGrantFlow
+      type: Varchar
+    - name: dockerAuthFlow
+      type: Varchar
+    - name: duplicateEmailsAllowed
+      type: Bool!
+    - name: editUsernameAllowed
+      type: Bool!
+    - name: emailTheme
+      type: Varchar
+    - name: enabled
+      type: Bool!
+    - name: eventsEnabled
+      type: Bool!
+    - name: eventsExpiration
+      type: Int8
+    - name: id
+      type: Varchar!
+    - name: internationalizationEnabled
+      type: Bool!
+    - name: loginLifespan
+      type: Int4
+    - name: loginTheme
+      type: Varchar
+    - name: loginWithEmailAllowed
+      type: Bool!
+    - name: masterAdminClient
+      type: Varchar
+    - name: name
+      type: Varchar
+    - name: notBefore
+      type: Int4
+    - name: offlineSessionIdleTimeout
+      type: Int4
+    - name: otpPolicyAlg
+      type: Varchar
+    - name: otpPolicyCounter
+      type: Int4
+    - name: otpPolicyDigits
+      type: Int4
+    - name: otpPolicyPeriod
+      type: Int4
+    - name: otpPolicyType
+      type: Varchar
+    - name: otpPolicyWindow
+      type: Int4
+    - name: passwordPolicy
+      type: Varchar
+    - name: refreshTokenMaxReuse
+      type: Int4
+    - name: regEmailAsUsername
+      type: Bool!
+    - name: registrationAllowed
+      type: Bool!
+    - name: registrationFlow
+      type: Varchar
+    - name: rememberMe
+      type: Bool!
+    - name: resetCredentialsFlow
+      type: Varchar
+    - name: resetPasswordAllowed
+      type: Bool!
+    - name: revokeRefreshToken
+      type: Bool!
+    - name: social
+      type: Bool!
+    - name: sslRequired
+      type: Varchar
+    - name: ssoIdleTimeout
+      type: Int4
+    - name: ssoIdleTimeoutRememberMe
+      type: Int4!
+    - name: ssoMaxLifespan
+      type: Int4
+    - name: ssoMaxLifespanRememberMe
+      type: Int4!
+    - name: updateProfileOnSocLogin
+      type: Bool!
+    - name: userActionLifespan
+      type: Int4
+    - name: verifyEmail
+      type: Bool!
+  graphql:
+    typeName: AuthRealm
+    inputTypeName: AuthRealmInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_realm
+      fieldMapping:
+        accessCodeLifespan:
+          column:
+            name: access_code_lifespan
+        accessTokenLifeImplicit:
+          column:
+            name: access_token_life_implicit
+        accessTokenLifespan:
+          column:
+            name: access_token_lifespan
+        accountTheme:
+          column:
+            name: account_theme
+        adminEventsDetailsEnabled:
+          column:
+            name: admin_events_details_enabled
+        adminEventsEnabled:
+          column:
+            name: admin_events_enabled
+        adminTheme:
+          column:
+            name: admin_theme
+        allowUserManagedAccess:
+          column:
+            name: allow_user_managed_access
+        browserFlow:
+          column:
+            name: browser_flow
+        clientAuthFlow:
+          column:
+            name: client_auth_flow
+        defaultLocale:
+          column:
+            name: default_locale
+        defaultRole:
+          column:
+            name: default_role
+        directGrantFlow:
+          column:
+            name: direct_grant_flow
+        dockerAuthFlow:
+          column:
+            name: docker_auth_flow
+        duplicateEmailsAllowed:
+          column:
+            name: duplicate_emails_allowed
+        editUsernameAllowed:
+          column:
+            name: edit_username_allowed
+        emailTheme:
+          column:
+            name: email_theme
+        enabled:
+          column:
+            name: enabled
+        eventsEnabled:
+          column:
+            name: events_enabled
+        eventsExpiration:
+          column:
+            name: events_expiration
+        id:
+          column:
+            name: id
+        internationalizationEnabled:
+          column:
+            name: internationalization_enabled
+        loginLifespan:
+          column:
+            name: login_lifespan
+        loginTheme:
+          column:
+            name: login_theme
+        loginWithEmailAllowed:
+          column:
+            name: login_with_email_allowed
+        masterAdminClient:
+          column:
+            name: master_admin_client
+        name:
+          column:
+            name: name
+        notBefore:
+          column:
+            name: not_before
+        offlineSessionIdleTimeout:
+          column:
+            name: offline_session_idle_timeout
+        otpPolicyAlg:
+          column:
+            name: otp_policy_alg
+        otpPolicyCounter:
+          column:
+            name: otp_policy_counter
+        otpPolicyDigits:
+          column:
+            name: otp_policy_digits
+        otpPolicyPeriod:
+          column:
+            name: otp_policy_period
+        otpPolicyType:
+          column:
+            name: otp_policy_type
+        otpPolicyWindow:
+          column:
+            name: otp_policy_window
+        passwordPolicy:
+          column:
+            name: password_policy
+        refreshTokenMaxReuse:
+          column:
+            name: refresh_token_max_reuse
+        regEmailAsUsername:
+          column:
+            name: reg_email_as_username
+        registrationAllowed:
+          column:
+            name: registration_allowed
+        registrationFlow:
+          column:
+            name: registration_flow
+        rememberMe:
+          column:
+            name: remember_me
+        resetCredentialsFlow:
+          column:
+            name: reset_credentials_flow
+        resetPasswordAllowed:
+          column:
+            name: reset_password_allowed
+        revokeRefreshToken:
+          column:
+            name: revoke_refresh_token
+        social:
+          column:
+            name: social
+        sslRequired:
+          column:
+            name: ssl_required
+        ssoIdleTimeout:
+          column:
+            name: sso_idle_timeout
+        ssoIdleTimeoutRememberMe:
+          column:
+            name: sso_idle_timeout_remember_me
+        ssoMaxLifespan:
+          column:
+            name: sso_max_lifespan
+        ssoMaxLifespanRememberMe:
+          column:
+            name: sso_max_lifespan_remember_me
+        updateProfileOnSocLogin:
+          column:
+            name: update_profile_on_soc_login
+        userActionLifespan:
+          column:
+            name: user_action_lifespan
+        verifyEmail:
+          column:
+            name: verify_email
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRealm
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - accessCodeLifespan
+          - accessTokenLifeImplicit
+          - accessTokenLifespan
+          - accountTheme
+          - adminEventsDetailsEnabled
+          - adminEventsEnabled
+          - adminTheme
+          - allowUserManagedAccess
+          - browserFlow
+          - clientAuthFlow
+          - defaultLocale
+          - defaultRole
+          - directGrantFlow
+          - dockerAuthFlow
+          - duplicateEmailsAllowed
+          - editUsernameAllowed
+          - emailTheme
+          - enabled
+          - eventsEnabled
+          - eventsExpiration
+          - id
+          - internationalizationEnabled
+          - loginLifespan
+          - loginTheme
+          - loginWithEmailAllowed
+          - masterAdminClient
+          - name
+          - notBefore
+          - offlineSessionIdleTimeout
+          - otpPolicyAlg
+          - otpPolicyCounter
+          - otpPolicyDigits
+          - otpPolicyPeriod
+          - otpPolicyType
+          - otpPolicyWindow
+          - passwordPolicy
+          - refreshTokenMaxReuse
+          - regEmailAsUsername
+          - registrationAllowed
+          - registrationFlow
+          - rememberMe
+          - resetCredentialsFlow
+          - resetPasswordAllowed
+          - revokeRefreshToken
+          - social
+          - sslRequired
+          - ssoIdleTimeout
+          - ssoIdleTimeoutRememberMe
+          - ssoMaxLifespan
+          - ssoMaxLifespanRememberMe
+          - updateProfileOnSocLogin
+          - userActionLifespan
+          - verifyEmail
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRealmBoolExp
+  operand:
+    object:
+      type: AuthRealm
+      comparableFields:
+        - fieldName: accessCodeLifespan
+          booleanExpressionType: Int4BoolExp
+        - fieldName: accessTokenLifeImplicit
+          booleanExpressionType: Int4BoolExp
+        - fieldName: accessTokenLifespan
+          booleanExpressionType: Int4BoolExp
+        - fieldName: accountTheme
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: adminEventsDetailsEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: adminEventsEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: adminTheme
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: allowUserManagedAccess
+          booleanExpressionType: BoolBoolExp
+        - fieldName: browserFlow
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientAuthFlow
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: defaultLocale
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: defaultRole
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: directGrantFlow
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: dockerAuthFlow
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: duplicateEmailsAllowed
+          booleanExpressionType: BoolBoolExp
+        - fieldName: editUsernameAllowed
+          booleanExpressionType: BoolBoolExp
+        - fieldName: emailTheme
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: enabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: eventsEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: eventsExpiration
+          booleanExpressionType: Int8BoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: internationalizationEnabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: loginLifespan
+          booleanExpressionType: Int4BoolExp
+        - fieldName: loginTheme
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: loginWithEmailAllowed
+          booleanExpressionType: BoolBoolExp
+        - fieldName: masterAdminClient
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: notBefore
+          booleanExpressionType: Int4BoolExp
+        - fieldName: offlineSessionIdleTimeout
+          booleanExpressionType: Int4BoolExp
+        - fieldName: otpPolicyAlg
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: otpPolicyCounter
+          booleanExpressionType: Int4BoolExp
+        - fieldName: otpPolicyDigits
+          booleanExpressionType: Int4BoolExp
+        - fieldName: otpPolicyPeriod
+          booleanExpressionType: Int4BoolExp
+        - fieldName: otpPolicyType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: otpPolicyWindow
+          booleanExpressionType: Int4BoolExp
+        - fieldName: passwordPolicy
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: refreshTokenMaxReuse
+          booleanExpressionType: Int4BoolExp
+        - fieldName: regEmailAsUsername
+          booleanExpressionType: BoolBoolExp
+        - fieldName: registrationAllowed
+          booleanExpressionType: BoolBoolExp
+        - fieldName: registrationFlow
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: rememberMe
+          booleanExpressionType: BoolBoolExp
+        - fieldName: resetCredentialsFlow
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resetPasswordAllowed
+          booleanExpressionType: BoolBoolExp
+        - fieldName: revokeRefreshToken
+          booleanExpressionType: BoolBoolExp
+        - fieldName: social
+          booleanExpressionType: BoolBoolExp
+        - fieldName: sslRequired
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: ssoIdleTimeout
+          booleanExpressionType: Int4BoolExp
+        - fieldName: ssoIdleTimeoutRememberMe
+          booleanExpressionType: Int4BoolExp
+        - fieldName: ssoMaxLifespan
+          booleanExpressionType: Int4BoolExp
+        - fieldName: ssoMaxLifespanRememberMe
+          booleanExpressionType: Int4BoolExp
+        - fieldName: updateProfileOnSocLogin
+          booleanExpressionType: BoolBoolExp
+        - fieldName: userActionLifespan
+          booleanExpressionType: Int4BoolExp
+        - fieldName: verifyEmail
+          booleanExpressionType: BoolBoolExp
+      comparableRelationships:
+        - relationshipName: authAuthenticationExecutions
+        - relationshipName: authAuthenticationFlows
+        - relationshipName: authAuthenticatorConfigs
+        - relationshipName: authClientInitialAccesses
+        - relationshipName: authComponents
+        - relationshipName: authDefaultClientScopes
+        - relationshipName: authIdentityProviders
+        - relationshipName: authIdentityProviderMappers
+        - relationshipName: authKeycloakRoles
+        - relationshipName: authRealmAttributes
+        - relationshipName: authRealmDefaultGroups
+        - relationshipName: authRealmEnabledEventTypes
+        - relationshipName: authRealmEventsListeners
+        - relationshipName: authRealmRequiredCredentials
+        - relationshipName: authRealmSmtpConfigs
+        - relationshipName: authRealmSupportedLocales
+        - relationshipName: authRequiredActionProviders
+        - relationshipName: authUserFederationMappers
+        - relationshipName: authUserFederationProviders
+        - relationshipName: orderOrders
+        - relationshipName: orderOrderInvoices
+        - relationshipName: orderOrderPayments
+        - relationshipName: orderOrderShipments
+        - relationshipName: orderRealmOrderShipmentConfigs
+        - relationshipName: orderSnapshotProducts
+        - relationshipName: productProducts
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRealmBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRealmAggExp
+  operand:
+    object:
+      aggregatedType: AuthRealm
+      aggregatableFields:
+        - fieldName: accessCodeLifespan
+          aggregateExpression: Int4AggExp
+        - fieldName: accessTokenLifeImplicit
+          aggregateExpression: Int4AggExp
+        - fieldName: accessTokenLifespan
+          aggregateExpression: Int4AggExp
+        - fieldName: accountTheme
+          aggregateExpression: VarcharAggExp
+        - fieldName: adminEventsDetailsEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: adminEventsEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: adminTheme
+          aggregateExpression: VarcharAggExp
+        - fieldName: allowUserManagedAccess
+          aggregateExpression: BoolAggExp
+        - fieldName: browserFlow
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientAuthFlow
+          aggregateExpression: VarcharAggExp
+        - fieldName: defaultLocale
+          aggregateExpression: VarcharAggExp
+        - fieldName: defaultRole
+          aggregateExpression: VarcharAggExp
+        - fieldName: directGrantFlow
+          aggregateExpression: VarcharAggExp
+        - fieldName: dockerAuthFlow
+          aggregateExpression: VarcharAggExp
+        - fieldName: duplicateEmailsAllowed
+          aggregateExpression: BoolAggExp
+        - fieldName: editUsernameAllowed
+          aggregateExpression: BoolAggExp
+        - fieldName: emailTheme
+          aggregateExpression: VarcharAggExp
+        - fieldName: enabled
+          aggregateExpression: BoolAggExp
+        - fieldName: eventsEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: eventsExpiration
+          aggregateExpression: Int8AggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: internationalizationEnabled
+          aggregateExpression: BoolAggExp
+        - fieldName: loginLifespan
+          aggregateExpression: Int4AggExp
+        - fieldName: loginTheme
+          aggregateExpression: VarcharAggExp
+        - fieldName: loginWithEmailAllowed
+          aggregateExpression: BoolAggExp
+        - fieldName: masterAdminClient
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: notBefore
+          aggregateExpression: Int4AggExp
+        - fieldName: offlineSessionIdleTimeout
+          aggregateExpression: Int4AggExp
+        - fieldName: otpPolicyAlg
+          aggregateExpression: VarcharAggExp
+        - fieldName: otpPolicyCounter
+          aggregateExpression: Int4AggExp
+        - fieldName: otpPolicyDigits
+          aggregateExpression: Int4AggExp
+        - fieldName: otpPolicyPeriod
+          aggregateExpression: Int4AggExp
+        - fieldName: otpPolicyType
+          aggregateExpression: VarcharAggExp
+        - fieldName: otpPolicyWindow
+          aggregateExpression: Int4AggExp
+        - fieldName: passwordPolicy
+          aggregateExpression: VarcharAggExp
+        - fieldName: refreshTokenMaxReuse
+          aggregateExpression: Int4AggExp
+        - fieldName: regEmailAsUsername
+          aggregateExpression: BoolAggExp
+        - fieldName: registrationAllowed
+          aggregateExpression: BoolAggExp
+        - fieldName: registrationFlow
+          aggregateExpression: VarcharAggExp
+        - fieldName: rememberMe
+          aggregateExpression: BoolAggExp
+        - fieldName: resetCredentialsFlow
+          aggregateExpression: VarcharAggExp
+        - fieldName: resetPasswordAllowed
+          aggregateExpression: BoolAggExp
+        - fieldName: revokeRefreshToken
+          aggregateExpression: BoolAggExp
+        - fieldName: social
+          aggregateExpression: BoolAggExp
+        - fieldName: sslRequired
+          aggregateExpression: VarcharAggExp
+        - fieldName: ssoIdleTimeout
+          aggregateExpression: Int4AggExp
+        - fieldName: ssoIdleTimeoutRememberMe
+          aggregateExpression: Int4AggExp
+        - fieldName: ssoMaxLifespan
+          aggregateExpression: Int4AggExp
+        - fieldName: ssoMaxLifespanRememberMe
+          aggregateExpression: Int4AggExp
+        - fieldName: updateProfileOnSocLogin
+          aggregateExpression: BoolAggExp
+        - fieldName: userActionLifespan
+          aggregateExpression: Int4AggExp
+        - fieldName: verifyEmail
+          aggregateExpression: BoolAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRealmAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRealm
+  objectType: AuthRealm
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_realm
+  filterExpressionType: AuthRealmBoolExp
+  aggregateExpression: AuthRealmAggExp
+  orderableFields:
+    - fieldName: accessCodeLifespan
+      orderByDirections:
+        enableAll: true
+    - fieldName: accessTokenLifeImplicit
+      orderByDirections:
+        enableAll: true
+    - fieldName: accessTokenLifespan
+      orderByDirections:
+        enableAll: true
+    - fieldName: accountTheme
+      orderByDirections:
+        enableAll: true
+    - fieldName: adminEventsDetailsEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: adminEventsEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: adminTheme
+      orderByDirections:
+        enableAll: true
+    - fieldName: allowUserManagedAccess
+      orderByDirections:
+        enableAll: true
+    - fieldName: browserFlow
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientAuthFlow
+      orderByDirections:
+        enableAll: true
+    - fieldName: defaultLocale
+      orderByDirections:
+        enableAll: true
+    - fieldName: defaultRole
+      orderByDirections:
+        enableAll: true
+    - fieldName: directGrantFlow
+      orderByDirections:
+        enableAll: true
+    - fieldName: dockerAuthFlow
+      orderByDirections:
+        enableAll: true
+    - fieldName: duplicateEmailsAllowed
+      orderByDirections:
+        enableAll: true
+    - fieldName: editUsernameAllowed
+      orderByDirections:
+        enableAll: true
+    - fieldName: emailTheme
+      orderByDirections:
+        enableAll: true
+    - fieldName: enabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: eventsEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: eventsExpiration
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: internationalizationEnabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: loginLifespan
+      orderByDirections:
+        enableAll: true
+    - fieldName: loginTheme
+      orderByDirections:
+        enableAll: true
+    - fieldName: loginWithEmailAllowed
+      orderByDirections:
+        enableAll: true
+    - fieldName: masterAdminClient
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: notBefore
+      orderByDirections:
+        enableAll: true
+    - fieldName: offlineSessionIdleTimeout
+      orderByDirections:
+        enableAll: true
+    - fieldName: otpPolicyAlg
+      orderByDirections:
+        enableAll: true
+    - fieldName: otpPolicyCounter
+      orderByDirections:
+        enableAll: true
+    - fieldName: otpPolicyDigits
+      orderByDirections:
+        enableAll: true
+    - fieldName: otpPolicyPeriod
+      orderByDirections:
+        enableAll: true
+    - fieldName: otpPolicyType
+      orderByDirections:
+        enableAll: true
+    - fieldName: otpPolicyWindow
+      orderByDirections:
+        enableAll: true
+    - fieldName: passwordPolicy
+      orderByDirections:
+        enableAll: true
+    - fieldName: refreshTokenMaxReuse
+      orderByDirections:
+        enableAll: true
+    - fieldName: regEmailAsUsername
+      orderByDirections:
+        enableAll: true
+    - fieldName: registrationAllowed
+      orderByDirections:
+        enableAll: true
+    - fieldName: registrationFlow
+      orderByDirections:
+        enableAll: true
+    - fieldName: rememberMe
+      orderByDirections:
+        enableAll: true
+    - fieldName: resetCredentialsFlow
+      orderByDirections:
+        enableAll: true
+    - fieldName: resetPasswordAllowed
+      orderByDirections:
+        enableAll: true
+    - fieldName: revokeRefreshToken
+      orderByDirections:
+        enableAll: true
+    - fieldName: social
+      orderByDirections:
+        enableAll: true
+    - fieldName: sslRequired
+      orderByDirections:
+        enableAll: true
+    - fieldName: ssoIdleTimeout
+      orderByDirections:
+        enableAll: true
+    - fieldName: ssoIdleTimeoutRememberMe
+      orderByDirections:
+        enableAll: true
+    - fieldName: ssoMaxLifespan
+      orderByDirections:
+        enableAll: true
+    - fieldName: ssoMaxLifespanRememberMe
+      orderByDirections:
+        enableAll: true
+    - fieldName: updateProfileOnSocLogin
+      orderByDirections:
+        enableAll: true
+    - fieldName: userActionLifespan
+      orderByDirections:
+        enableAll: true
+    - fieldName: verifyEmail
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRealm
+      subscription:
+        rootField: authRealm
+    selectUniques:
+      - queryRootField: authRealmById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authRealmById
+      - queryRootField: authRealmByName
+        uniqueIdentifier:
+          - name
+        subscription:
+          rootField: authRealmByName
+    orderByExpressionType: AuthRealmOrderBy
+    filterInputTypeName: AuthRealmFilterInput
+    aggregate:
+      queryRootField: authRealmAggregate
+      subscription:
+        rootField: authRealmAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRealm
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authAuthenticationExecutions
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthAuthenticationExecution
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthAuthenticationExecutionAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authAuthenticationExecutionsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authAuthenticationFlows
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthAuthenticationFlow
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthAuthenticationFlowAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authAuthenticationFlowsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authAuthenticatorConfigs
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthAuthenticatorConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthAuthenticatorConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authAuthenticatorConfigsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClientInitialAccesses
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthClientInitialAccess
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthClientInitialAccessAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authClientInitialAccessesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authComponents
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthComponent
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthComponentAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authComponentsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authDefaultClientScopes
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthDefaultClientScope
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthDefaultClientScopeAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authDefaultClientScopesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authIdentityProviders
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthIdentityProvider
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthIdentityProviderAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authIdentityProvidersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authIdentityProviderMappers
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthIdentityProviderMapper
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthIdentityProviderMapperAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authIdentityProviderMappersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authKeycloakRoles
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthKeycloakRole
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthKeycloakRoleAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realm
+  graphql:
+    aggregateFieldName: authKeycloakRolesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealmAttributes
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRealmAttribute
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRealmAttributeAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRealmAttributesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealmDefaultGroups
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRealmDefaultGroups
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRealmDefaultGroupsAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRealmDefaultGroupsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealmEnabledEventTypes
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRealmEnabledEventTypes
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRealmEnabledEventTypesAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRealmEnabledEventTypesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealmEventsListeners
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRealmEventsListeners
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRealmEventsListenersAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRealmEventsListenersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealmRequiredCredentials
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRealmRequiredCredential
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRealmRequiredCredentialAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRealmRequiredCredentialsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealmSmtpConfigs
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRealmSmtpConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRealmSmtpConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRealmSmtpConfigsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealmSupportedLocales
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRealmSupportedLocales
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRealmSupportedLocalesAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRealmSupportedLocalesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRequiredActionProviders
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthRequiredActionProvider
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthRequiredActionProviderAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authRequiredActionProvidersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationMappers
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthUserFederationMapper
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserFederationMapperAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authUserFederationMappersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationProviders
+  sourceType: AuthRealm
+  target:
+    model:
+      name: AuthUserFederationProvider
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthUserFederationProviderAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: authUserFederationProvidersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrders
+  sourceType: AuthRealm
+  target:
+    model:
+      name: OrderOrder
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: orderOrdersAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderInvoices
+  sourceType: AuthRealm
+  target:
+    model:
+      name: OrderOrderInvoice
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderInvoiceAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: orderOrderInvoicesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderPayments
+  sourceType: AuthRealm
+  target:
+    model:
+      name: OrderOrderPayment
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderPaymentAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: orderOrderPaymentsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderShipments
+  sourceType: AuthRealm
+  target:
+    model:
+      name: OrderOrderShipment
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderShipmentAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: orderOrderShipmentsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderRealmOrderShipmentConfigs
+  sourceType: AuthRealm
+  target:
+    model:
+      name: OrderRealmOrderShipmentConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderRealmOrderShipmentConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: orderRealmOrderShipmentConfigsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderSnapshotProducts
+  sourceType: AuthRealm
+  target:
+    model:
+      name: OrderSnapshotProduct
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderSnapshotProductAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: orderSnapshotProductsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProducts
+  sourceType: AuthRealm
+  target:
+    model:
+      name: ProductProduct
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ProductProductAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmId
+  graphql:
+    aggregateFieldName: productProductsAggregate
+

@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse
+  description: Responses from the
+    'delete_auth_offline_user_session_by_offline_flag_and_user_session_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOfflineUserSession!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse
+    inputTypeName: DeleteAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_offline_user_session_by_offline_flag_and_user_session_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthOfflineUserSessionByOfflineFlagAndUserSessionId
+  outputType: DeleteAuthOfflineUserSessionByOfflineFlagAndUserSessionIdResponse!
+  arguments:
+    - name: keyOfflineFlag
+      type: Varchar!
+    - name: keyUserSessionId
+      type: Varchar!
+    - name: preCheck
+      type: AuthOfflineUserSessionBoolExp
+      description: Delete permission predicate over the 'auth_offline_user_session'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_offline_user_session_by_offline_flag_and_user_session_id
+    argumentMapping:
+      keyOfflineFlag: key_offline_flag
+      keyUserSessionId: key_user_session_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthOfflineUserSessionByOfflineFlagAndUserSessionId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_offline_user_session' collection using
+    the 'offline_flag' and 'user_session_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthOfflineUserSessionByOfflineFlagAndUserSessionId
+  permissions:
+    - role: admin
+      allowExecution: true
+

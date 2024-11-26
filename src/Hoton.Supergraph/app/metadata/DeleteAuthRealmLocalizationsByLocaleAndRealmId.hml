@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRealmLocalizationsByLocaleAndRealmIdResponse
+  description: Responses from the
+    'delete_auth_realm_localizations_by_locale_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmLocalizations!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRealmLocalizationsByLocaleAndRealmIdResponse
+    inputTypeName: DeleteAuthRealmLocalizationsByLocaleAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_realm_localizations_by_locale_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRealmLocalizationsByLocaleAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRealmLocalizationsByLocaleAndRealmId
+  outputType: DeleteAuthRealmLocalizationsByLocaleAndRealmIdResponse!
+  arguments:
+    - name: keyLocale
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar!
+    - name: preCheck
+      type: AuthRealmLocalizationsBoolExp
+      description: Delete permission predicate over the 'auth_realm_localizations'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_realm_localizations_by_locale_and_realm_id
+    argumentMapping:
+      keyLocale: key_locale
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRealmLocalizationsByLocaleAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_realm_localizations' collection using
+    the 'locale' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRealmLocalizationsByLocaleAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

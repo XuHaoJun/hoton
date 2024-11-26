@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthKeycloakRoleByClientRealmConstraintAndNameResponse
+  description: Responses from the
+    'delete_auth_keycloak_role_by_client_realm_constraint_and_name' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthKeycloakRole!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthKeycloakRoleByClientRealmConstraintAndNameResponse
+    inputTypeName: DeleteAuthKeycloakRoleByClientRealmConstraintAndNameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_keycloak_role_by_client_realm_constraint_and_name_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthKeycloakRoleByClientRealmConstraintAndNameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthKeycloakRoleByClientRealmConstraintAndName
+  outputType: DeleteAuthKeycloakRoleByClientRealmConstraintAndNameResponse!
+  arguments:
+    - name: keyClientRealmConstraint
+      type: Varchar
+    - name: keyName
+      type: Varchar
+    - name: preCheck
+      type: AuthKeycloakRoleBoolExp
+      description: Delete permission predicate over the 'auth_keycloak_role' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_keycloak_role_by_client_realm_constraint_and_name
+    argumentMapping:
+      keyClientRealmConstraint: key_client_realm_constraint
+      keyName: key_name
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthKeycloakRoleByClientRealmConstraintAndName
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_keycloak_role' collection using the
+    'client_realm_constraint' and 'name' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthKeycloakRoleByClientRealmConstraintAndName
+  permissions:
+    - role: admin
+      allowExecution: true
+

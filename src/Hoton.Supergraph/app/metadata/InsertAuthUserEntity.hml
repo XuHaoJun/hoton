@@ -1,0 +1,174 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserEntityObject
+  fields:
+    - name: createdTimestamp
+      type: Int8
+    - name: email
+      type: Varchar
+    - name: emailConstraint
+      type: Varchar
+    - name: emailVerified
+      type: Bool
+    - name: enabled
+      type: Bool
+    - name: federationLink
+      type: Varchar
+    - name: firstName
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: lastName
+      type: Varchar
+    - name: notBefore
+      type: Int4
+    - name: realmId
+      type: Varchar
+    - name: serviceAccountClientLink
+      type: Varchar
+    - name: username
+      type: Varchar
+  graphql:
+    typeName: InsertAuthUserEntityObject
+    inputTypeName: InsertAuthUserEntityObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_entity_object
+      fieldMapping:
+        createdTimestamp:
+          column:
+            name: created_timestamp
+        email:
+          column:
+            name: email
+        emailConstraint:
+          column:
+            name: email_constraint
+        emailVerified:
+          column:
+            name: email_verified
+        enabled:
+          column:
+            name: enabled
+        federationLink:
+          column:
+            name: federation_link
+        firstName:
+          column:
+            name: first_name
+        id:
+          column:
+            name: id
+        lastName:
+          column:
+            name: last_name
+        notBefore:
+          column:
+            name: not_before
+        realmId:
+          column:
+            name: realm_id
+        serviceAccountClientLink:
+          column:
+            name: service_account_client_link
+        username:
+          column:
+            name: username
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserEntityObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdTimestamp
+          - email
+          - emailConstraint
+          - emailVerified
+          - enabled
+          - federationLink
+          - firstName
+          - id
+          - lastName
+          - notBefore
+          - realmId
+          - serviceAccountClientLink
+          - username
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserEntityResponse
+  description: Responses from the 'insert_auth_user_entity' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthUserEntityResponse
+    inputTypeName: InsertAuthUserEntityResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_entity_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserEntityResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthUserEntity
+  outputType: InsertAuthUserEntityResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthUserEntityObject!]!"
+    - name: postCheck
+      type: AuthUserEntityBoolExp
+      description: Insert permission predicate over the 'auth_user_entity' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_user_entity
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthUserEntity
+    rootFieldKind: Mutation
+  description: Insert into the auth_user_entity table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthUserEntity
+  permissions:
+    - role: admin
+      allowExecution: true
+

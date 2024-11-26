@@ -1,0 +1,114 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthIdpMapperConfigObject
+  fields:
+    - name: idpMapperId
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: InsertAuthIdpMapperConfigObject
+    inputTypeName: InsertAuthIdpMapperConfigObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_idp_mapper_config_object
+      fieldMapping:
+        idpMapperId:
+          column:
+            name: idp_mapper_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthIdpMapperConfigObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - idpMapperId
+          - name
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthIdpMapperConfigResponse
+  description: Responses from the 'insert_auth_idp_mapper_config' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdpMapperConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthIdpMapperConfigResponse
+    inputTypeName: InsertAuthIdpMapperConfigResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_idp_mapper_config_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthIdpMapperConfigResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthIdpMapperConfig
+  outputType: InsertAuthIdpMapperConfigResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthIdpMapperConfigObject!]!"
+    - name: postCheck
+      type: AuthIdpMapperConfigBoolExp
+      description: Insert permission predicate over the 'auth_idp_mapper_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_idp_mapper_config
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthIdpMapperConfig
+    rootFieldKind: Mutation
+  description: Insert into the auth_idp_mapper_config table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthIdpMapperConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

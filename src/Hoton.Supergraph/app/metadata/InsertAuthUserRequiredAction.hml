@@ -1,0 +1,109 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserRequiredActionObject
+  fields:
+    - name: requiredAction
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthUserRequiredActionObject
+    inputTypeName: InsertAuthUserRequiredActionObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_required_action_object
+      fieldMapping:
+        requiredAction:
+          column:
+            name: required_action
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserRequiredActionObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - requiredAction
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserRequiredActionResponse
+  description: Responses from the 'insert_auth_user_required_action' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserRequiredAction!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthUserRequiredActionResponse
+    inputTypeName: InsertAuthUserRequiredActionResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_required_action_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserRequiredActionResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthUserRequiredAction
+  outputType: InsertAuthUserRequiredActionResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthUserRequiredActionObject!]!"
+    - name: postCheck
+      type: AuthUserRequiredActionBoolExp
+      description: Insert permission predicate over the 'auth_user_required_action'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_user_required_action
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthUserRequiredAction
+    rootFieldKind: Mutation
+  description: Insert into the auth_user_required_action table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthUserRequiredAction
+  permissions:
+    - role: admin
+      allowExecution: true
+

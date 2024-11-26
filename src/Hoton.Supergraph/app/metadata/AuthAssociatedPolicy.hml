@@ -1,0 +1,161 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthAssociatedPolicy
+  fields:
+    - name: associatedPolicyId
+      type: Varchar!
+    - name: policyId
+      type: Varchar!
+  graphql:
+    typeName: AuthAssociatedPolicy
+    inputTypeName: AuthAssociatedPolicyInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_associated_policy
+      fieldMapping:
+        associatedPolicyId:
+          column:
+            name: associated_policy_id
+        policyId:
+          column:
+            name: policy_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthAssociatedPolicy
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - associatedPolicyId
+          - policyId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthAssociatedPolicyBoolExp
+  operand:
+    object:
+      type: AuthAssociatedPolicy
+      comparableFields:
+        - fieldName: associatedPolicyId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: policyId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceServerPolicy
+        - relationshipName: authResourceServerPolicyByPolicyId
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthAssociatedPolicyBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthAssociatedPolicyAggExp
+  operand:
+    object:
+      aggregatedType: AuthAssociatedPolicy
+      aggregatableFields:
+        - fieldName: associatedPolicyId
+          aggregateExpression: VarcharAggExp
+        - fieldName: policyId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthAssociatedPolicyAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthAssociatedPolicy
+  objectType: AuthAssociatedPolicy
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_associated_policy
+  filterExpressionType: AuthAssociatedPolicyBoolExp
+  aggregateExpression: AuthAssociatedPolicyAggExp
+  orderableFields:
+    - fieldName: associatedPolicyId
+      orderByDirections:
+        enableAll: true
+    - fieldName: policyId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authAssociatedPolicy
+      subscription:
+        rootField: authAssociatedPolicy
+    selectUniques:
+      - queryRootField: authAssociatedPolicyByConstraintFarsrpap
+        uniqueIdentifier:
+          - associatedPolicyId
+          - policyId
+        subscription:
+          rootField: authAssociatedPolicyByConstraintFarsrpap
+    orderByExpressionType: AuthAssociatedPolicyOrderBy
+    filterInputTypeName: AuthAssociatedPolicyFilterInput
+    aggregate:
+      queryRootField: authAssociatedPolicyAggregate
+      subscription:
+        rootField: authAssociatedPolicyAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthAssociatedPolicy
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerPolicy
+  sourceType: AuthAssociatedPolicy
+  target:
+    model:
+      name: AuthResourceServerPolicy
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: associatedPolicyId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerPolicyByPolicyId
+  sourceType: AuthAssociatedPolicy
+  target:
+    model:
+      name: AuthResourceServerPolicy
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: policyId
+      target:
+        modelField:
+          - fieldName: id
+

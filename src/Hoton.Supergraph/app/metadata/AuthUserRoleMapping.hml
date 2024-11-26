@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserRoleMapping
+  fields:
+    - name: roleId
+      type: Varchar!
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthUserRoleMapping
+    inputTypeName: AuthUserRoleMappingInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_role_mapping
+      fieldMapping:
+        roleId:
+          column:
+            name: role_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserRoleMapping
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - roleId
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserRoleMappingBoolExp
+  operand:
+    object:
+      type: AuthUserRoleMapping
+      comparableFields:
+        - fieldName: roleId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserEntity
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserRoleMappingBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserRoleMappingAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserRoleMapping
+      aggregatableFields:
+        - fieldName: roleId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserRoleMappingAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserRoleMapping
+  objectType: AuthUserRoleMapping
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_role_mapping
+  filterExpressionType: AuthUserRoleMappingBoolExp
+  aggregateExpression: AuthUserRoleMappingAggExp
+  orderableFields:
+    - fieldName: roleId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserRoleMapping
+      subscription:
+        rootField: authUserRoleMapping
+    selectUniques:
+      - queryRootField: authUserRoleMappingByConstraintC
+        uniqueIdentifier:
+          - roleId
+          - userId
+        subscription:
+          rootField: authUserRoleMappingByConstraintC
+    orderByExpressionType: AuthUserRoleMappingOrderBy
+    filterInputTypeName: AuthUserRoleMappingFilterInput
+    aggregate:
+      queryRootField: authUserRoleMappingAggregate
+      subscription:
+        rootField: authUserRoleMappingAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserRoleMapping
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: AuthUserRoleMapping
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+

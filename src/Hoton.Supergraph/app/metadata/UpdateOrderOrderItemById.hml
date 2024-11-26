@@ -1,0 +1,458 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemCreatedAt
+  description: Update the 'created_at' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemCreatedAt
+    inputTypeName: UpdateColumnOrderOrderItemCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemId
+  description: Update the 'id' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemId
+    inputTypeName: UpdateColumnOrderOrderItemIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemOrderId
+  description: Update the 'order_id' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Uuid
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemOrderId
+    inputTypeName: UpdateColumnOrderOrderItemOrderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_order_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemOrderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemPrice
+  description: Update the 'price' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemPrice
+    inputTypeName: UpdateColumnOrderOrderItemPriceInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_price
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemPrice
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemProductId
+  description: Update the 'product_id' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Uuid
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemProductId
+    inputTypeName: UpdateColumnOrderOrderItemProductIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_product_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemProductId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemProductSkuId
+  description: Update the 'product_sku_id' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Uuid
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemProductSkuId
+    inputTypeName: UpdateColumnOrderOrderItemProductSkuIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_product_sku_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemProductSkuId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemQuantity
+  description: Update the 'quantity' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Int4
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemQuantity
+    inputTypeName: UpdateColumnOrderOrderItemQuantityInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_quantity
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemQuantity
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemSnapshotVersion
+  description: Update the 'snapshot_version' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemSnapshotVersion
+    inputTypeName: UpdateColumnOrderOrderItemSnapshotVersionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_snapshot_version
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemSnapshotVersion
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderItemUpdatedAt
+  description: Update the 'updated_at' column in the 'order_order_item' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderItemUpdatedAt
+    inputTypeName: UpdateColumnOrderOrderItemUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_item_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderItemUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderItemByIdUpdateColumns
+  description: Update the columns of the 'order_order_item' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnOrderOrderItemCreatedAt
+      description: Update the 'created_at' column in the 'order_order_item' collection.
+    - name: id
+      type: UpdateColumnOrderOrderItemId
+      description: Update the 'id' column in the 'order_order_item' collection.
+    - name: orderId
+      type: UpdateColumnOrderOrderItemOrderId
+      description: Update the 'order_id' column in the 'order_order_item' collection.
+    - name: price
+      type: UpdateColumnOrderOrderItemPrice
+      description: Update the 'price' column in the 'order_order_item' collection.
+    - name: productId
+      type: UpdateColumnOrderOrderItemProductId
+      description: Update the 'product_id' column in the 'order_order_item' collection.
+    - name: productSkuId
+      type: UpdateColumnOrderOrderItemProductSkuId
+      description: Update the 'product_sku_id' column in the 'order_order_item' collection.
+    - name: quantity
+      type: UpdateColumnOrderOrderItemQuantity
+      description: Update the 'quantity' column in the 'order_order_item' collection.
+    - name: snapshotVersion
+      type: UpdateColumnOrderOrderItemSnapshotVersion
+      description: Update the 'snapshot_version' column in the 'order_order_item'
+        collection.
+    - name: updatedAt
+      type: UpdateColumnOrderOrderItemUpdatedAt
+      description: Update the 'updated_at' column in the 'order_order_item' collection.
+  graphql:
+    typeName: UpdateOrderOrderItemByIdUpdateColumns
+    inputTypeName: UpdateOrderOrderItemByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_item_by_id_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        orderId:
+          column:
+            name: order_id
+        price:
+          column:
+            name: price
+        productId:
+          column:
+            name: product_id
+        productSkuId:
+          column:
+            name: product_sku_id
+        quantity:
+          column:
+            name: quantity
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderItemByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - orderId
+          - price
+          - productId
+          - productSkuId
+          - quantity
+          - snapshotVersion
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderItemByIdResponse
+  description: Responses from the 'update_order_order_item_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderItem!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderOrderItemByIdResponse
+    inputTypeName: UpdateOrderOrderItemByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_item_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderItemByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderOrderItemById
+  outputType: UpdateOrderOrderItemByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: OrderOrderItemBoolExp
+      description: Update permission post-condition predicate over the
+        'order_order_item' collection
+    - name: preCheck
+      type: OrderOrderItemBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_order_item' collection
+    - name: updateColumns
+      type: UpdateOrderOrderItemByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_order_item_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderOrderItemById
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_order_item' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderOrderItemById
+  permissions:
+    - role: admin
+      allowExecution: true
+

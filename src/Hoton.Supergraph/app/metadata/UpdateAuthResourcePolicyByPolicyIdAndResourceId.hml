@@ -1,0 +1,189 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthResourcePolicyPolicyId
+  description: Update the 'policy_id' column in the 'auth_resource_policy' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthResourcePolicyPolicyId
+    inputTypeName: UpdateColumnAuthResourcePolicyPolicyIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_resource_policy_policy_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthResourcePolicyPolicyId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthResourcePolicyResourceId
+  description: Update the 'resource_id' column in the 'auth_resource_policy' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthResourcePolicyResourceId
+    inputTypeName: UpdateColumnAuthResourcePolicyResourceIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_resource_policy_resource_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthResourcePolicyResourceId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourcePolicyByPolicyIdAndResourceIdUpdateColumns
+  description: Update the columns of the 'auth_resource_policy' collection
+  fields:
+    - name: policyId
+      type: UpdateColumnAuthResourcePolicyPolicyId
+      description: Update the 'policy_id' column in the 'auth_resource_policy' collection.
+    - name: resourceId
+      type: UpdateColumnAuthResourcePolicyResourceId
+      description: Update the 'resource_id' column in the 'auth_resource_policy' collection.
+  graphql:
+    typeName: UpdateAuthResourcePolicyByPolicyIdAndResourceIdUpdateColumns
+    inputTypeName: UpdateAuthResourcePolicyByPolicyIdAndResourceIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_policy_by_policy_id_and_resource_id_update_columns
+      fieldMapping:
+        policyId:
+          column:
+            name: policy_id
+        resourceId:
+          column:
+            name: resource_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourcePolicyByPolicyIdAndResourceIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - policyId
+          - resourceId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthResourcePolicyByPolicyIdAndResourceIdResponse
+  description: Responses from the
+    'update_auth_resource_policy_by_policy_id_and_resource_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourcePolicy!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthResourcePolicyByPolicyIdAndResourceIdResponse
+    inputTypeName: UpdateAuthResourcePolicyByPolicyIdAndResourceIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_resource_policy_by_policy_id_and_resource_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthResourcePolicyByPolicyIdAndResourceIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthResourcePolicyByPolicyIdAndResourceId
+  outputType: UpdateAuthResourcePolicyByPolicyIdAndResourceIdResponse!
+  arguments:
+    - name: keyPolicyId
+      type: Varchar!
+    - name: keyResourceId
+      type: Varchar!
+    - name: postCheck
+      type: AuthResourcePolicyBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_resource_policy' collection
+    - name: preCheck
+      type: AuthResourcePolicyBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_resource_policy' collection
+    - name: updateColumns
+      type: UpdateAuthResourcePolicyByPolicyIdAndResourceIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_resource_policy_by_policy_id_and_resource_id
+    argumentMapping:
+      keyPolicyId: key_policy_id
+      keyResourceId: key_resource_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthResourcePolicyByPolicyIdAndResourceId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_resource_policy' collection using the
+    'policy_id' and 'resource_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthResourcePolicyByPolicyIdAndResourceId
+  permissions:
+    - role: admin
+      allowExecution: true
+

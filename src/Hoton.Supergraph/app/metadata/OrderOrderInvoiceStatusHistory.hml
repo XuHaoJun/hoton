@@ -1,0 +1,219 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrderInvoiceStatusHistory
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: fromStatus
+      type: Varchar
+    - name: id
+      type: Uuid!
+    - name: orderInvoiceId
+      type: Uuid
+    - name: reason
+      type: Varchar
+    - name: reasonData
+      type: Jsonb
+    - name: toStatus
+      type: Varchar
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderOrderInvoiceStatusHistory
+    inputTypeName: OrderOrderInvoiceStatusHistoryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order_invoice_status_history
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        fromStatus:
+          column:
+            name: from_status
+        id:
+          column:
+            name: id
+        orderInvoiceId:
+          column:
+            name: order_invoice_id
+        reason:
+          column:
+            name: reason
+        reasonData:
+          column:
+            name: reason_data
+        toStatus:
+          column:
+            name: to_status
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrderInvoiceStatusHistory
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - fromStatus
+          - id
+          - orderInvoiceId
+          - reason
+          - reasonData
+          - toStatus
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderInvoiceStatusHistoryBoolExp
+  operand:
+    object:
+      type: OrderOrderInvoiceStatusHistory
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: fromStatus
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: orderInvoiceId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: reason
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: reasonData
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: toStatus
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: orderOrderInvoice
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderInvoiceStatusHistoryBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderInvoiceStatusHistoryAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrderInvoiceStatusHistory
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: fromStatus
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: orderInvoiceId
+          aggregateExpression: UuidAggExp
+        - fieldName: reason
+          aggregateExpression: VarcharAggExp
+        - fieldName: reasonData
+          aggregateExpression: JsonbAggExp
+        - fieldName: toStatus
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderInvoiceStatusHistoryAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrderInvoiceStatusHistory
+  objectType: OrderOrderInvoiceStatusHistory
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order_invoice_status_history
+  filterExpressionType: OrderOrderInvoiceStatusHistoryBoolExp
+  aggregateExpression: OrderOrderInvoiceStatusHistoryAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: fromStatus
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderInvoiceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: reason
+      orderByDirections:
+        enableAll: true
+    - fieldName: reasonData
+      orderByDirections:
+        enableAll: true
+    - fieldName: toStatus
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrderInvoiceStatusHistory
+      subscription:
+        rootField: orderOrderInvoiceStatusHistory
+    selectUniques:
+      - queryRootField: orderOrderInvoiceStatusHistoryById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderOrderInvoiceStatusHistoryById
+    orderByExpressionType: OrderOrderInvoiceStatusHistoryOrderBy
+    filterInputTypeName: OrderOrderInvoiceStatusHistoryFilterInput
+    aggregate:
+      queryRootField: orderOrderInvoiceStatusHistoryAggregate
+      subscription:
+        rootField: orderOrderInvoiceStatusHistoryAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrderInvoiceStatusHistory
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderInvoice
+  sourceType: OrderOrderInvoiceStatusHistory
+  target:
+    model:
+      name: OrderOrderInvoice
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderInvoiceId
+      target:
+        modelField:
+          - fieldName: id
+

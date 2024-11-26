@@ -1,0 +1,221 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderInvoiceByInvoiceNumberUpdateColumns
+  description: Update the columns of the 'order_order_invoice' collection
+  fields:
+    - name: amount
+      type: UpdateColumnOrderOrderInvoiceAmount
+      description: Update the 'amount' column in the 'order_order_invoice' collection.
+    - name: carrierNo
+      type: UpdateColumnOrderOrderInvoiceCarrierNo
+      description: Update the 'carrier_no' column in the 'order_order_invoice' collection.
+    - name: companyName
+      type: UpdateColumnOrderOrderInvoiceCompanyName
+      description: Update the 'company_name' column in the 'order_order_invoice' collection.
+    - name: companyNo
+      type: UpdateColumnOrderOrderInvoiceCompanyNo
+      description: Update the 'company_no' column in the 'order_order_invoice' collection.
+    - name: createdAt
+      type: UpdateColumnOrderOrderInvoiceCreatedAt
+      description: Update the 'created_at' column in the 'order_order_invoice' collection.
+    - name: id
+      type: UpdateColumnOrderOrderInvoiceId
+      description: Update the 'id' column in the 'order_order_invoice' collection.
+    - name: invoiceNumber
+      type: UpdateColumnOrderOrderInvoiceInvoiceNumber
+      description: Update the 'invoice_number' column in the 'order_order_invoice'
+        collection.
+    - name: invoiceType
+      type: UpdateColumnOrderOrderInvoiceInvoiceType
+      description: Update the 'invoice_type' column in the 'order_order_invoice' collection.
+    - name: issueDate
+      type: UpdateColumnOrderOrderInvoiceIssueDate
+      description: Update the 'issue_date' column in the 'order_order_invoice' collection.
+    - name: orderId
+      type: UpdateColumnOrderOrderInvoiceOrderId
+      description: Update the 'order_id' column in the 'order_order_invoice' collection.
+    - name: realmId
+      type: UpdateColumnOrderOrderInvoiceRealmId
+      description: Update the 'realm_id' column in the 'order_order_invoice' collection.
+    - name: serviceProvider
+      type: UpdateColumnOrderOrderInvoiceServiceProvider
+      description: Update the 'service_provider' column in the 'order_order_invoice'
+        collection.
+    - name: status
+      type: UpdateColumnOrderOrderInvoiceStatus
+      description: Update the 'status' column in the 'order_order_invoice' collection.
+    - name: tax
+      type: UpdateColumnOrderOrderInvoiceTax
+      description: Update the 'tax' column in the 'order_order_invoice' collection.
+    - name: updatedAt
+      type: UpdateColumnOrderOrderInvoiceUpdatedAt
+      description: Update the 'updated_at' column in the 'order_order_invoice' collection.
+    - name: voidDate
+      type: UpdateColumnOrderOrderInvoiceVoidDate
+      description: Update the 'void_date' column in the 'order_order_invoice' collection.
+  graphql:
+    typeName: UpdateOrderOrderInvoiceByInvoiceNumberUpdateColumns
+    inputTypeName: UpdateOrderOrderInvoiceByInvoiceNumberUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_invoice_by_invoice_number_update_columns
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        carrierNo:
+          column:
+            name: carrier_no
+        companyName:
+          column:
+            name: company_name
+        companyNo:
+          column:
+            name: company_no
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        invoiceNumber:
+          column:
+            name: invoice_number
+        invoiceType:
+          column:
+            name: invoice_type
+        issueDate:
+          column:
+            name: issue_date
+        orderId:
+          column:
+            name: order_id
+        realmId:
+          column:
+            name: realm_id
+        serviceProvider:
+          column:
+            name: service_provider
+        status:
+          column:
+            name: status
+        tax:
+          column:
+            name: tax
+        updatedAt:
+          column:
+            name: updated_at
+        voidDate:
+          column:
+            name: void_date
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderInvoiceByInvoiceNumberUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - carrierNo
+          - companyName
+          - companyNo
+          - createdAt
+          - id
+          - invoiceNumber
+          - invoiceType
+          - issueDate
+          - orderId
+          - realmId
+          - serviceProvider
+          - status
+          - tax
+          - updatedAt
+          - voidDate
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderInvoiceByInvoiceNumberResponse
+  description: Responses from the 'update_order_order_invoice_by_invoice_number' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderInvoice!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderOrderInvoiceByInvoiceNumberResponse
+    inputTypeName: UpdateOrderOrderInvoiceByInvoiceNumberResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_invoice_by_invoice_number_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderInvoiceByInvoiceNumberResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderOrderInvoiceByInvoiceNumber
+  outputType: UpdateOrderOrderInvoiceByInvoiceNumberResponse!
+  arguments:
+    - name: keyInvoiceNumber
+      type: Varchar!
+    - name: postCheck
+      type: OrderOrderInvoiceBoolExp
+      description: Update permission post-condition predicate over the
+        'order_order_invoice' collection
+    - name: preCheck
+      type: OrderOrderInvoiceBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_order_invoice' collection
+    - name: updateColumns
+      type: UpdateOrderOrderInvoiceByInvoiceNumberUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_order_invoice_by_invoice_number
+    argumentMapping:
+      keyInvoiceNumber: key_invoice_number
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderOrderInvoiceByInvoiceNumber
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_order_invoice' collection using the
+    'invoice_number' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderOrderInvoiceByInvoiceNumber
+  permissions:
+    - role: admin
+      allowExecution: true
+

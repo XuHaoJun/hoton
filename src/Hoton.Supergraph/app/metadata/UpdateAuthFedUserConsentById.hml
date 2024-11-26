@@ -1,0 +1,466 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentClientId
+  description: Update the 'client_id' column in the 'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentClientId
+    inputTypeName: UpdateColumnAuthFedUserConsentClientIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_client_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentClientId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentClientStorageProvider
+  description: Update the 'client_storage_provider' column in the
+    'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentClientStorageProvider
+    inputTypeName: UpdateColumnAuthFedUserConsentClientStorageProviderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_client_storage_provider
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentClientStorageProvider
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentCreatedDate
+  description: Update the 'created_date' column in the 'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Int8
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentCreatedDate
+    inputTypeName: UpdateColumnAuthFedUserConsentCreatedDateInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_created_date
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentCreatedDate
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentExternalClientId
+  description: Update the 'external_client_id' column in the
+    'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentExternalClientId
+    inputTypeName: UpdateColumnAuthFedUserConsentExternalClientIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_external_client_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentExternalClientId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentId
+  description: Update the 'id' column in the 'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentId
+    inputTypeName: UpdateColumnAuthFedUserConsentIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentLastUpdatedDate
+  description: Update the 'last_updated_date' column in the
+    'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Int8
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentLastUpdatedDate
+    inputTypeName: UpdateColumnAuthFedUserConsentLastUpdatedDateInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_last_updated_date
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentLastUpdatedDate
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentRealmId
+  description: Update the 'realm_id' column in the 'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentRealmId
+    inputTypeName: UpdateColumnAuthFedUserConsentRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentStorageProviderId
+  description: Update the 'storage_provider_id' column in the
+    'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentStorageProviderId
+    inputTypeName: UpdateColumnAuthFedUserConsentStorageProviderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_storage_provider_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentStorageProviderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserConsentUserId
+  description: Update the 'user_id' column in the 'auth_fed_user_consent' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserConsentUserId
+    inputTypeName: UpdateColumnAuthFedUserConsentUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_consent_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserConsentUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserConsentByIdUpdateColumns
+  description: Update the columns of the 'auth_fed_user_consent' collection
+  fields:
+    - name: clientId
+      type: UpdateColumnAuthFedUserConsentClientId
+      description: Update the 'client_id' column in the 'auth_fed_user_consent' collection.
+    - name: clientStorageProvider
+      type: UpdateColumnAuthFedUserConsentClientStorageProvider
+      description: Update the 'client_storage_provider' column in the
+        'auth_fed_user_consent' collection.
+    - name: createdDate
+      type: UpdateColumnAuthFedUserConsentCreatedDate
+      description: Update the 'created_date' column in the 'auth_fed_user_consent'
+        collection.
+    - name: externalClientId
+      type: UpdateColumnAuthFedUserConsentExternalClientId
+      description: Update the 'external_client_id' column in the
+        'auth_fed_user_consent' collection.
+    - name: id
+      type: UpdateColumnAuthFedUserConsentId
+      description: Update the 'id' column in the 'auth_fed_user_consent' collection.
+    - name: lastUpdatedDate
+      type: UpdateColumnAuthFedUserConsentLastUpdatedDate
+      description: Update the 'last_updated_date' column in the
+        'auth_fed_user_consent' collection.
+    - name: realmId
+      type: UpdateColumnAuthFedUserConsentRealmId
+      description: Update the 'realm_id' column in the 'auth_fed_user_consent' collection.
+    - name: storageProviderId
+      type: UpdateColumnAuthFedUserConsentStorageProviderId
+      description: Update the 'storage_provider_id' column in the
+        'auth_fed_user_consent' collection.
+    - name: userId
+      type: UpdateColumnAuthFedUserConsentUserId
+      description: Update the 'user_id' column in the 'auth_fed_user_consent' collection.
+  graphql:
+    typeName: UpdateAuthFedUserConsentByIdUpdateColumns
+    inputTypeName: UpdateAuthFedUserConsentByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_consent_by_id_update_columns
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        createdDate:
+          column:
+            name: created_date
+        externalClientId:
+          column:
+            name: external_client_id
+        id:
+          column:
+            name: id
+        lastUpdatedDate:
+          column:
+            name: last_updated_date
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserConsentByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - createdDate
+          - externalClientId
+          - id
+          - lastUpdatedDate
+          - realmId
+          - storageProviderId
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserConsentByIdResponse
+  description: Responses from the 'update_auth_fed_user_consent_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserConsent!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthFedUserConsentByIdResponse
+    inputTypeName: UpdateAuthFedUserConsentByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_consent_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserConsentByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthFedUserConsentById
+  outputType: UpdateAuthFedUserConsentByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthFedUserConsentBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_fed_user_consent' collection
+    - name: preCheck
+      type: AuthFedUserConsentBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_fed_user_consent' collection
+    - name: updateColumns
+      type: UpdateAuthFedUserConsentByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_fed_user_consent_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthFedUserConsentById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_fed_user_consent' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthFedUserConsentById
+  permissions:
+    - role: admin
+      allowExecution: true
+

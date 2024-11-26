@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRealmAttribute
+  fields:
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: AuthRealmAttribute
+    inputTypeName: AuthRealmAttributeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_realm_attribute
+      fieldMapping:
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRealmAttribute
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - realmId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRealmAttributeBoolExp
+  operand:
+    object:
+      type: AuthRealmAttribute
+      comparableFields:
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: TextBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRealmAttributeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRealmAttributeAggExp
+  operand:
+    object:
+      aggregatedType: AuthRealmAttribute
+      aggregatableFields:
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRealmAttributeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRealmAttribute
+  objectType: AuthRealmAttribute
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_realm_attribute
+  filterExpressionType: AuthRealmAttributeBoolExp
+  aggregateExpression: AuthRealmAttributeAggExp
+  orderableFields:
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRealmAttribute
+      subscription:
+        rootField: authRealmAttribute
+    selectUniques:
+      - queryRootField: authRealmAttributeByConstraint9
+        uniqueIdentifier:
+          - name
+          - realmId
+        subscription:
+          rootField: authRealmAttributeByConstraint9
+    orderByExpressionType: AuthRealmAttributeOrderBy
+    filterInputTypeName: AuthRealmAttributeFilterInput
+    aggregate:
+      queryRootField: authRealmAttributeAggregate
+      subscription:
+        rootField: authRealmAttributeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRealmAttribute
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthRealmAttribute
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

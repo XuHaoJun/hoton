@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthResourceUris
+  fields:
+    - name: resourceId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: AuthResourceUris
+    inputTypeName: AuthResourceUrisInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_resource_uris
+      fieldMapping:
+        resourceId:
+          column:
+            name: resource_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthResourceUris
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - resourceId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthResourceUrisBoolExp
+  operand:
+    object:
+      type: AuthResourceUris
+      comparableFields:
+        - fieldName: resourceId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceServerResource
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthResourceUrisBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthResourceUrisAggExp
+  operand:
+    object:
+      aggregatedType: AuthResourceUris
+      aggregatableFields:
+        - fieldName: resourceId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthResourceUrisAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthResourceUris
+  objectType: AuthResourceUris
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_resource_uris
+  filterExpressionType: AuthResourceUrisBoolExp
+  aggregateExpression: AuthResourceUrisAggExp
+  orderableFields:
+    - fieldName: resourceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authResourceUris
+      subscription:
+        rootField: authResourceUris
+    selectUniques:
+      - queryRootField: authResourceUrisByConstraintResourUrisPk
+        uniqueIdentifier:
+          - resourceId
+          - value
+        subscription:
+          rootField: authResourceUrisByConstraintResourUrisPk
+    orderByExpressionType: AuthResourceUrisOrderBy
+    filterInputTypeName: AuthResourceUrisFilterInput
+    aggregate:
+      queryRootField: authResourceUrisAggregate
+      subscription:
+        rootField: authResourceUrisAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthResourceUris
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerResource
+  sourceType: AuthResourceUris
+  target:
+    model:
+      name: AuthResourceServerResource
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceId
+      target:
+        modelField:
+          - fieldName: id
+

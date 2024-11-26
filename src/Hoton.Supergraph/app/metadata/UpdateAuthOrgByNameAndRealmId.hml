@@ -1,0 +1,164 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthOrgByNameAndRealmIdUpdateColumns
+  description: Update the columns of the 'auth_org' collection
+  fields:
+    - name: alias
+      type: UpdateColumnAuthOrgAlias
+      description: Update the 'alias' column in the 'auth_org' collection.
+    - name: description
+      type: UpdateColumnAuthOrgDescription
+      description: Update the 'description' column in the 'auth_org' collection.
+    - name: enabled
+      type: UpdateColumnAuthOrgEnabled
+      description: Update the 'enabled' column in the 'auth_org' collection.
+    - name: groupId
+      type: UpdateColumnAuthOrgGroupId
+      description: Update the 'group_id' column in the 'auth_org' collection.
+    - name: id
+      type: UpdateColumnAuthOrgId
+      description: Update the 'id' column in the 'auth_org' collection.
+    - name: name
+      type: UpdateColumnAuthOrgName
+      description: Update the 'name' column in the 'auth_org' collection.
+    - name: realmId
+      type: UpdateColumnAuthOrgRealmId
+      description: Update the 'realm_id' column in the 'auth_org' collection.
+    - name: redirectUrl
+      type: UpdateColumnAuthOrgRedirectUrl
+      description: Update the 'redirect_url' column in the 'auth_org' collection.
+  graphql:
+    typeName: UpdateAuthOrgByNameAndRealmIdUpdateColumns
+    inputTypeName: UpdateAuthOrgByNameAndRealmIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_org_by_name_and_realm_id_update_columns
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        description:
+          column:
+            name: description
+        enabled:
+          column:
+            name: enabled
+        groupId:
+          column:
+            name: group_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        redirectUrl:
+          column:
+            name: redirect_url
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthOrgByNameAndRealmIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - description
+          - enabled
+          - groupId
+          - id
+          - name
+          - realmId
+          - redirectUrl
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthOrgByNameAndRealmIdResponse
+  description: Responses from the 'update_auth_org_by_name_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOrg!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthOrgByNameAndRealmIdResponse
+    inputTypeName: UpdateAuthOrgByNameAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_org_by_name_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthOrgByNameAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthOrgByNameAndRealmId
+  outputType: UpdateAuthOrgByNameAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar!
+    - name: postCheck
+      type: AuthOrgBoolExp
+      description: Update permission post-condition predicate over the 'auth_org' collection
+    - name: preCheck
+      type: AuthOrgBoolExp
+      description: Update permission pre-condition predicate over the 'auth_org' collection
+    - name: updateColumns
+      type: UpdateAuthOrgByNameAndRealmIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_org_by_name_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyRealmId: key_realm_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthOrgByNameAndRealmId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_org' collection using the 'name' and
+    'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthOrgByNameAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

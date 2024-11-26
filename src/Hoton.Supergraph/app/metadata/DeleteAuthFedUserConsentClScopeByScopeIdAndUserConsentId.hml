@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse
+  description: Responses from the
+    'delete_auth_fed_user_consent_cl_scope_by_scope_id_and_user_consent_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserConsentClScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse
+    inputTypeName: DeleteAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_fed_user_consent_cl_scope_by_scope_id_and_user_consent_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthFedUserConsentClScopeByScopeIdAndUserConsentId
+  outputType: DeleteAuthFedUserConsentClScopeByScopeIdAndUserConsentIdResponse!
+  arguments:
+    - name: keyScopeId
+      type: Varchar!
+    - name: keyUserConsentId
+      type: Varchar!
+    - name: preCheck
+      type: AuthFedUserConsentClScopeBoolExp
+      description: Delete permission predicate over the
+        'auth_fed_user_consent_cl_scope' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_fed_user_consent_cl_scope_by_scope_id_and_user_consent_id
+    argumentMapping:
+      keyScopeId: key_scope_id
+      keyUserConsentId: key_user_consent_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthFedUserConsentClScopeByScopeIdAndUserConsentId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_fed_user_consent_cl_scope' collection
+    using the 'scope_id' and 'user_consent_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthFedUserConsentClScopeByScopeIdAndUserConsentId
+  permissions:
+    - role: admin
+      allowExecution: true
+

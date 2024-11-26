@@ -1,0 +1,120 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRoleAttributeObject
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: roleId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: InsertAuthRoleAttributeObject
+    inputTypeName: InsertAuthRoleAttributeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_role_attribute_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        roleId:
+          column:
+            name: role_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRoleAttributeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - roleId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRoleAttributeResponse
+  description: Responses from the 'insert_auth_role_attribute' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRoleAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRoleAttributeResponse
+    inputTypeName: InsertAuthRoleAttributeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_role_attribute_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRoleAttributeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRoleAttribute
+  outputType: InsertAuthRoleAttributeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRoleAttributeObject!]!"
+    - name: postCheck
+      type: AuthRoleAttributeBoolExp
+      description: Insert permission predicate over the 'auth_role_attribute' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_role_attribute
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRoleAttribute
+    rootFieldKind: Mutation
+  description: Insert into the auth_role_attribute table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRoleAttribute
+  permissions:
+    - role: admin
+      allowExecution: true
+

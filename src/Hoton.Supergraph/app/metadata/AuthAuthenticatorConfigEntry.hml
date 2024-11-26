@@ -1,0 +1,136 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthAuthenticatorConfigEntry
+  fields:
+    - name: authenticatorId
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: AuthAuthenticatorConfigEntry
+    inputTypeName: AuthAuthenticatorConfigEntryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_authenticator_config_entry
+      fieldMapping:
+        authenticatorId:
+          column:
+            name: authenticator_id
+        name:
+          column:
+            name: name
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthAuthenticatorConfigEntry
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - authenticatorId
+          - name
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthAuthenticatorConfigEntryBoolExp
+  operand:
+    object:
+      type: AuthAuthenticatorConfigEntry
+      comparableFields:
+        - fieldName: authenticatorId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthAuthenticatorConfigEntryBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthAuthenticatorConfigEntryAggExp
+  operand:
+    object:
+      aggregatedType: AuthAuthenticatorConfigEntry
+      aggregatableFields:
+        - fieldName: authenticatorId
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthAuthenticatorConfigEntryAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthAuthenticatorConfigEntry
+  objectType: AuthAuthenticatorConfigEntry
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_authenticator_config_entry
+  filterExpressionType: AuthAuthenticatorConfigEntryBoolExp
+  aggregateExpression: AuthAuthenticatorConfigEntryAggExp
+  orderableFields:
+    - fieldName: authenticatorId
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authAuthenticatorConfigEntry
+      subscription:
+        rootField: authAuthenticatorConfigEntry
+    selectUniques:
+      - queryRootField: authAuthenticatorConfigEntryByConstraintAuthCfgPk
+        uniqueIdentifier:
+          - authenticatorId
+          - name
+        subscription:
+          rootField: authAuthenticatorConfigEntryByConstraintAuthCfgPk
+    orderByExpressionType: AuthAuthenticatorConfigEntryOrderBy
+    filterInputTypeName: AuthAuthenticatorConfigEntryFilterInput
+    aggregate:
+      queryRootField: authAuthenticatorConfigEntryAggregate
+      subscription:
+        rootField: authAuthenticatorConfigEntryAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthAuthenticatorConfigEntry
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

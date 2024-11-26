@@ -1,0 +1,186 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthIdentityProviderObject
+  fields:
+    - name: addTokenRole
+      type: Bool
+    - name: authenticateByDefault
+      type: Bool
+    - name: enabled
+      type: Bool
+    - name: firstBrokerLoginFlowId
+      type: Varchar
+    - name: hideOnLogin
+      type: Bool
+    - name: internalId
+      type: Varchar!
+    - name: linkOnly
+      type: Bool
+    - name: organizationId
+      type: Varchar
+    - name: postBrokerLoginFlowId
+      type: Varchar
+    - name: providerAlias
+      type: Varchar
+    - name: providerDisplayName
+      type: Varchar
+    - name: providerId
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: storeToken
+      type: Bool
+    - name: trustEmail
+      type: Bool
+  graphql:
+    typeName: InsertAuthIdentityProviderObject
+    inputTypeName: InsertAuthIdentityProviderObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_identity_provider_object
+      fieldMapping:
+        addTokenRole:
+          column:
+            name: add_token_role
+        authenticateByDefault:
+          column:
+            name: authenticate_by_default
+        enabled:
+          column:
+            name: enabled
+        firstBrokerLoginFlowId:
+          column:
+            name: first_broker_login_flow_id
+        hideOnLogin:
+          column:
+            name: hide_on_login
+        internalId:
+          column:
+            name: internal_id
+        linkOnly:
+          column:
+            name: link_only
+        organizationId:
+          column:
+            name: organization_id
+        postBrokerLoginFlowId:
+          column:
+            name: post_broker_login_flow_id
+        providerAlias:
+          column:
+            name: provider_alias
+        providerDisplayName:
+          column:
+            name: provider_display_name
+        providerId:
+          column:
+            name: provider_id
+        realmId:
+          column:
+            name: realm_id
+        storeToken:
+          column:
+            name: store_token
+        trustEmail:
+          column:
+            name: trust_email
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthIdentityProviderObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - addTokenRole
+          - authenticateByDefault
+          - enabled
+          - firstBrokerLoginFlowId
+          - hideOnLogin
+          - internalId
+          - linkOnly
+          - organizationId
+          - postBrokerLoginFlowId
+          - providerAlias
+          - providerDisplayName
+          - providerId
+          - realmId
+          - storeToken
+          - trustEmail
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthIdentityProviderResponse
+  description: Responses from the 'insert_auth_identity_provider' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdentityProvider!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthIdentityProviderResponse
+    inputTypeName: InsertAuthIdentityProviderResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_identity_provider_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthIdentityProviderResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthIdentityProvider
+  outputType: InsertAuthIdentityProviderResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthIdentityProviderObject!]!"
+    - name: postCheck
+      type: AuthIdentityProviderBoolExp
+      description: Insert permission predicate over the 'auth_identity_provider' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_identity_provider
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthIdentityProvider
+    rootFieldKind: Mutation
+  description: Insert into the auth_identity_provider table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthIdentityProvider
+  permissions:
+    - role: admin
+      allowExecution: true
+

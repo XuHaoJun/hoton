@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthDefaultClientScope
+  fields:
+    - name: defaultScope
+      type: Bool!
+    - name: realmId
+      type: Varchar!
+    - name: scopeId
+      type: Varchar!
+  graphql:
+    typeName: AuthDefaultClientScope
+    inputTypeName: AuthDefaultClientScopeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_default_client_scope
+      fieldMapping:
+        defaultScope:
+          column:
+            name: default_scope
+        realmId:
+          column:
+            name: realm_id
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthDefaultClientScope
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - defaultScope
+          - realmId
+          - scopeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthDefaultClientScopeBoolExp
+  operand:
+    object:
+      type: AuthDefaultClientScope
+      comparableFields:
+        - fieldName: defaultScope
+          booleanExpressionType: BoolBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: scopeId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthDefaultClientScopeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthDefaultClientScopeAggExp
+  operand:
+    object:
+      aggregatedType: AuthDefaultClientScope
+      aggregatableFields:
+        - fieldName: defaultScope
+          aggregateExpression: BoolAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: scopeId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthDefaultClientScopeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthDefaultClientScope
+  objectType: AuthDefaultClientScope
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_default_client_scope
+  filterExpressionType: AuthDefaultClientScopeBoolExp
+  aggregateExpression: AuthDefaultClientScopeAggExp
+  orderableFields:
+    - fieldName: defaultScope
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: scopeId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authDefaultClientScope
+      subscription:
+        rootField: authDefaultClientScope
+    selectUniques:
+      - queryRootField: authDefaultClientScopeByRDefCliScopeBind
+        uniqueIdentifier:
+          - realmId
+          - scopeId
+        subscription:
+          rootField: authDefaultClientScopeByRDefCliScopeBind
+    orderByExpressionType: AuthDefaultClientScopeOrderBy
+    filterInputTypeName: AuthDefaultClientScopeFilterInput
+    aggregate:
+      queryRootField: authDefaultClientScopeAggregate
+      subscription:
+        rootField: authDefaultClientScopeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthDefaultClientScope
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthDefaultClientScope
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

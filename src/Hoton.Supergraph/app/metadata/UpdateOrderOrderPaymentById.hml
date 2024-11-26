@@ -1,0 +1,696 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentAmount
+  description: Update the 'amount' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Numeric!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentAmount
+    inputTypeName: UpdateColumnOrderOrderPaymentAmountInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_amount
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentAmount
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentAtmPayNo
+  description: Update the 'atm_pay_no' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentAtmPayNo
+    inputTypeName: UpdateColumnOrderOrderPaymentAtmPayNoInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_atm_pay_no
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentAtmPayNo
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentCheckMacValue
+  description: Update the 'check_mac_value' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentCheckMacValue
+    inputTypeName: UpdateColumnOrderOrderPaymentCheckMacValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_check_mac_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentCheckMacValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentCreatedAt
+  description: Update the 'created_at' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentCreatedAt
+    inputTypeName: UpdateColumnOrderOrderPaymentCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentId
+  description: Update the 'id' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentId
+    inputTypeName: UpdateColumnOrderOrderPaymentIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentMerchantId
+  description: Update the 'merchant_id' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentMerchantId
+    inputTypeName: UpdateColumnOrderOrderPaymentMerchantIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_merchant_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentMerchantId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentOrderId
+  description: Update the 'order_id' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Uuid
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentOrderId
+    inputTypeName: UpdateColumnOrderOrderPaymentOrderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_order_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentOrderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentOrderResultUrl
+  description: Update the 'order_result_url' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentOrderResultUrl
+    inputTypeName: UpdateColumnOrderOrderPaymentOrderResultUrlInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_order_result_url
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentOrderResultUrl
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentPaymentMethod
+  description: Update the 'payment_method' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentPaymentMethod
+    inputTypeName: UpdateColumnOrderOrderPaymentPaymentMethodInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_payment_method
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentPaymentMethod
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentPaymentNumber
+  description: Update the 'payment_number' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentPaymentNumber
+    inputTypeName: UpdateColumnOrderOrderPaymentPaymentNumberInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_payment_number
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentPaymentNumber
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentRealmId
+  description: Update the 'realm_id' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentRealmId
+    inputTypeName: UpdateColumnOrderOrderPaymentRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentReturnUrl
+  description: Update the 'return_url' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentReturnUrl
+    inputTypeName: UpdateColumnOrderOrderPaymentReturnUrlInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_return_url
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentReturnUrl
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentServiceProvider
+  description: Update the 'service_provider' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentServiceProvider
+    inputTypeName: UpdateColumnOrderOrderPaymentServiceProviderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_service_provider
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentServiceProvider
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentStatus
+  description: Update the 'status' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentStatus
+    inputTypeName: UpdateColumnOrderOrderPaymentStatusInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_status
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentStatus
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderPaymentUpdatedAt
+  description: Update the 'updated_at' column in the 'order_order_payment' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderPaymentUpdatedAt
+    inputTypeName: UpdateColumnOrderOrderPaymentUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_payment_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderPaymentUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderPaymentByIdUpdateColumns
+  description: Update the columns of the 'order_order_payment' collection
+  fields:
+    - name: amount
+      type: UpdateColumnOrderOrderPaymentAmount
+      description: Update the 'amount' column in the 'order_order_payment' collection.
+    - name: atmPayNo
+      type: UpdateColumnOrderOrderPaymentAtmPayNo
+      description: Update the 'atm_pay_no' column in the 'order_order_payment' collection.
+    - name: checkMacValue
+      type: UpdateColumnOrderOrderPaymentCheckMacValue
+      description: Update the 'check_mac_value' column in the 'order_order_payment'
+        collection.
+    - name: createdAt
+      type: UpdateColumnOrderOrderPaymentCreatedAt
+      description: Update the 'created_at' column in the 'order_order_payment' collection.
+    - name: id
+      type: UpdateColumnOrderOrderPaymentId
+      description: Update the 'id' column in the 'order_order_payment' collection.
+    - name: merchantId
+      type: UpdateColumnOrderOrderPaymentMerchantId
+      description: Update the 'merchant_id' column in the 'order_order_payment' collection.
+    - name: orderId
+      type: UpdateColumnOrderOrderPaymentOrderId
+      description: Update the 'order_id' column in the 'order_order_payment' collection.
+    - name: orderResultUrl
+      type: UpdateColumnOrderOrderPaymentOrderResultUrl
+      description: Update the 'order_result_url' column in the 'order_order_payment'
+        collection.
+    - name: paymentMethod
+      type: UpdateColumnOrderOrderPaymentPaymentMethod
+      description: Update the 'payment_method' column in the 'order_order_payment'
+        collection.
+    - name: paymentNumber
+      type: UpdateColumnOrderOrderPaymentPaymentNumber
+      description: Update the 'payment_number' column in the 'order_order_payment'
+        collection.
+    - name: realmId
+      type: UpdateColumnOrderOrderPaymentRealmId
+      description: Update the 'realm_id' column in the 'order_order_payment' collection.
+    - name: returnUrl
+      type: UpdateColumnOrderOrderPaymentReturnUrl
+      description: Update the 'return_url' column in the 'order_order_payment' collection.
+    - name: serviceProvider
+      type: UpdateColumnOrderOrderPaymentServiceProvider
+      description: Update the 'service_provider' column in the 'order_order_payment'
+        collection.
+    - name: status
+      type: UpdateColumnOrderOrderPaymentStatus
+      description: Update the 'status' column in the 'order_order_payment' collection.
+    - name: updatedAt
+      type: UpdateColumnOrderOrderPaymentUpdatedAt
+      description: Update the 'updated_at' column in the 'order_order_payment' collection.
+  graphql:
+    typeName: UpdateOrderOrderPaymentByIdUpdateColumns
+    inputTypeName: UpdateOrderOrderPaymentByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_payment_by_id_update_columns
+      fieldMapping:
+        amount:
+          column:
+            name: amount
+        atmPayNo:
+          column:
+            name: atm_pay_no
+        checkMacValue:
+          column:
+            name: check_mac_value
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        merchantId:
+          column:
+            name: merchant_id
+        orderId:
+          column:
+            name: order_id
+        orderResultUrl:
+          column:
+            name: order_result_url
+        paymentMethod:
+          column:
+            name: payment_method
+        paymentNumber:
+          column:
+            name: payment_number
+        realmId:
+          column:
+            name: realm_id
+        returnUrl:
+          column:
+            name: return_url
+        serviceProvider:
+          column:
+            name: service_provider
+        status:
+          column:
+            name: status
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderPaymentByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - amount
+          - atmPayNo
+          - checkMacValue
+          - createdAt
+          - id
+          - merchantId
+          - orderId
+          - orderResultUrl
+          - paymentMethod
+          - paymentNumber
+          - realmId
+          - returnUrl
+          - serviceProvider
+          - status
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderPaymentByIdResponse
+  description: Responses from the 'update_order_order_payment_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderPayment!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderOrderPaymentByIdResponse
+    inputTypeName: UpdateOrderOrderPaymentByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_payment_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderPaymentByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderOrderPaymentById
+  outputType: UpdateOrderOrderPaymentByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: OrderOrderPaymentBoolExp
+      description: Update permission post-condition predicate over the
+        'order_order_payment' collection
+    - name: preCheck
+      type: OrderOrderPaymentBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_order_payment' collection
+    - name: updateColumns
+      type: UpdateOrderOrderPaymentByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_order_payment_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderOrderPaymentById
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_order_payment' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderOrderPaymentById
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteCartCartItemByIdResponse
+  description: Responses from the 'delete_cart_cart_item_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[CartCartItem!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteCartCartItemByIdResponse
+    inputTypeName: DeleteCartCartItemByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_cart_cart_item_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteCartCartItemByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteCartCartItemById
+  outputType: DeleteCartCartItemByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: preCheck
+      type: CartCartItemBoolExp
+      description: Delete permission predicate over the 'cart_cart_item' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_cart_cart_item_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteCartCartItemById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'cart_cart_item' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteCartCartItemById
+  permissions:
+    - role: admin
+      allowExecution: true
+

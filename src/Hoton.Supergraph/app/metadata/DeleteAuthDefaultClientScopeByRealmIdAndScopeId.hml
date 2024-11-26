@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthDefaultClientScopeByRealmIdAndScopeIdResponse
+  description: Responses from the
+    'delete_auth_default_client_scope_by_realm_id_and_scope_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthDefaultClientScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthDefaultClientScopeByRealmIdAndScopeIdResponse
+    inputTypeName: DeleteAuthDefaultClientScopeByRealmIdAndScopeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_default_client_scope_by_realm_id_and_scope_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthDefaultClientScopeByRealmIdAndScopeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthDefaultClientScopeByRealmIdAndScopeId
+  outputType: DeleteAuthDefaultClientScopeByRealmIdAndScopeIdResponse!
+  arguments:
+    - name: keyRealmId
+      type: Varchar!
+    - name: keyScopeId
+      type: Varchar!
+    - name: preCheck
+      type: AuthDefaultClientScopeBoolExp
+      description: Delete permission predicate over the 'auth_default_client_scope'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_default_client_scope_by_realm_id_and_scope_id
+    argumentMapping:
+      keyRealmId: key_realm_id
+      keyScopeId: key_scope_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthDefaultClientScopeByRealmIdAndScopeId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_default_client_scope' collection using
+    the 'realm_id' and 'scope_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthDefaultClientScopeByRealmIdAndScopeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

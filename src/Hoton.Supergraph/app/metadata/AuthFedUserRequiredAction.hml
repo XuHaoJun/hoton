@@ -1,0 +1,149 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthFedUserRequiredAction
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: requiredAction
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthFedUserRequiredAction
+    inputTypeName: AuthFedUserRequiredActionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_fed_user_required_action
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        requiredAction:
+          column:
+            name: required_action
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthFedUserRequiredAction
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - requiredAction
+          - storageProviderId
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthFedUserRequiredActionBoolExp
+  operand:
+    object:
+      type: AuthFedUserRequiredAction
+      comparableFields:
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: requiredAction
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storageProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthFedUserRequiredActionBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthFedUserRequiredActionAggExp
+  operand:
+    object:
+      aggregatedType: AuthFedUserRequiredAction
+      aggregatableFields:
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: requiredAction
+          aggregateExpression: VarcharAggExp
+        - fieldName: storageProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthFedUserRequiredActionAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthFedUserRequiredAction
+  objectType: AuthFedUserRequiredAction
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_fed_user_required_action
+  filterExpressionType: AuthFedUserRequiredActionBoolExp
+  aggregateExpression: AuthFedUserRequiredActionAggExp
+  orderableFields:
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: requiredAction
+      orderByDirections:
+        enableAll: true
+    - fieldName: storageProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authFedUserRequiredAction
+      subscription:
+        rootField: authFedUserRequiredAction
+    selectUniques:
+      - queryRootField: authFedUserRequiredActionByConstrFedRequiredAction
+        uniqueIdentifier:
+          - requiredAction
+          - userId
+        subscription:
+          rootField: authFedUserRequiredActionByConstrFedRequiredAction
+    orderByExpressionType: AuthFedUserRequiredActionOrderBy
+    filterInputTypeName: AuthFedUserRequiredActionFilterInput
+    aggregate:
+      queryRootField: authFedUserRequiredActionAggregate
+      subscription:
+        rootField: authFedUserRequiredActionAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthFedUserRequiredAction
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

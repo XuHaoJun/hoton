@@ -1,0 +1,186 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderShipmentObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: orderId
+      type: Uuid
+    - name: realmId
+      type: Varchar!
+    - name: receiverAddress
+      type: Varchar
+    - name: receiverName
+      type: Varchar
+    - name: receiverPhone
+      type: Varchar
+    - name: senderName
+      type: Varchar
+    - name: senderPhone
+      type: Varchar
+    - name: serviceProvider
+      type: Varchar
+    - name: serviceType
+      type: Varchar
+    - name: status
+      type: Varchar
+    - name: temperatureZone
+      type: Varchar
+    - name: trackingNumber
+      type: Varchar!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertOrderOrderShipmentObject
+    inputTypeName: InsertOrderOrderShipmentObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_shipment_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        orderId:
+          column:
+            name: order_id
+        realmId:
+          column:
+            name: realm_id
+        receiverAddress:
+          column:
+            name: receiver_address
+        receiverName:
+          column:
+            name: receiver_name
+        receiverPhone:
+          column:
+            name: receiver_phone
+        senderName:
+          column:
+            name: sender_name
+        senderPhone:
+          column:
+            name: sender_phone
+        serviceProvider:
+          column:
+            name: service_provider
+        serviceType:
+          column:
+            name: service_type
+        status:
+          column:
+            name: status
+        temperatureZone:
+          column:
+            name: temperature_zone
+        trackingNumber:
+          column:
+            name: tracking_number
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderShipmentObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - orderId
+          - realmId
+          - receiverAddress
+          - receiverName
+          - receiverPhone
+          - senderName
+          - senderPhone
+          - serviceProvider
+          - serviceType
+          - status
+          - temperatureZone
+          - trackingNumber
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderOrderShipmentResponse
+  description: Responses from the 'insert_order_order_shipment' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderShipment!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderOrderShipmentResponse
+    inputTypeName: InsertOrderOrderShipmentResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_order_shipment_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderOrderShipmentResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderOrderShipment
+  outputType: InsertOrderOrderShipmentResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderOrderShipmentObject!]!"
+    - name: postCheck
+      type: OrderOrderShipmentBoolExp
+      description: Insert permission predicate over the 'order_order_shipment' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_order_shipment
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderOrderShipment
+    rootFieldKind: Mutation
+  description: Insert into the order_order_shipment table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderOrderShipment
+  permissions:
+    - role: admin
+      allowExecution: true
+

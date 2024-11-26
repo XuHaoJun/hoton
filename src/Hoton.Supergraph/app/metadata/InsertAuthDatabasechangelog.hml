@@ -1,0 +1,180 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthDatabasechangelogObject
+  fields:
+    - name: author
+      type: Varchar!
+    - name: comments
+      type: Varchar
+    - name: contexts
+      type: Varchar
+    - name: dateexecuted
+      type: Timestamp!
+    - name: deploymentId
+      type: Varchar
+    - name: description
+      type: Varchar
+    - name: exectype
+      type: Varchar!
+    - name: filename
+      type: Varchar!
+    - name: id
+      type: Varchar!
+    - name: labels
+      type: Varchar
+    - name: liquibase
+      type: Varchar
+    - name: md5Sum
+      type: Varchar
+    - name: orderexecuted
+      type: Int4!
+    - name: tag
+      type: Varchar
+  graphql:
+    typeName: InsertAuthDatabasechangelogObject
+    inputTypeName: InsertAuthDatabasechangelogObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_databasechangelog_object
+      fieldMapping:
+        author:
+          column:
+            name: author
+        comments:
+          column:
+            name: comments
+        contexts:
+          column:
+            name: contexts
+        dateexecuted:
+          column:
+            name: dateexecuted
+        deploymentId:
+          column:
+            name: deployment_id
+        description:
+          column:
+            name: description
+        exectype:
+          column:
+            name: exectype
+        filename:
+          column:
+            name: filename
+        id:
+          column:
+            name: id
+        labels:
+          column:
+            name: labels
+        liquibase:
+          column:
+            name: liquibase
+        md5Sum:
+          column:
+            name: md5sum
+        orderexecuted:
+          column:
+            name: orderexecuted
+        tag:
+          column:
+            name: tag
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthDatabasechangelogObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - author
+          - comments
+          - contexts
+          - dateexecuted
+          - deploymentId
+          - description
+          - exectype
+          - filename
+          - id
+          - labels
+          - liquibase
+          - md5Sum
+          - orderexecuted
+          - tag
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthDatabasechangelogResponse
+  description: Responses from the 'insert_auth_databasechangelog' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthDatabasechangelog!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthDatabasechangelogResponse
+    inputTypeName: InsertAuthDatabasechangelogResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_databasechangelog_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthDatabasechangelogResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthDatabasechangelog
+  outputType: InsertAuthDatabasechangelogResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthDatabasechangelogObject!]!"
+    - name: postCheck
+      type: AuthDatabasechangelogBoolExp
+      description: Insert permission predicate over the 'auth_databasechangelog' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_databasechangelog
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthDatabasechangelog
+    rootFieldKind: Mutation
+  description: Insert into the auth_databasechangelog table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthDatabasechangelog
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,272 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserRoleMappingRealmId
+  description: Update the 'realm_id' column in the 'auth_fed_user_role_mapping' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserRoleMappingRealmId
+    inputTypeName: UpdateColumnAuthFedUserRoleMappingRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_role_mapping_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserRoleMappingRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserRoleMappingRoleId
+  description: Update the 'role_id' column in the 'auth_fed_user_role_mapping' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserRoleMappingRoleId
+    inputTypeName: UpdateColumnAuthFedUserRoleMappingRoleIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_role_mapping_role_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserRoleMappingRoleId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserRoleMappingStorageProviderId
+  description: Update the 'storage_provider_id' column in the
+    'auth_fed_user_role_mapping' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserRoleMappingStorageProviderId
+    inputTypeName: UpdateColumnAuthFedUserRoleMappingStorageProviderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_role_mapping_storage_provider_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserRoleMappingStorageProviderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthFedUserRoleMappingUserId
+  description: Update the 'user_id' column in the 'auth_fed_user_role_mapping' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthFedUserRoleMappingUserId
+    inputTypeName: UpdateColumnAuthFedUserRoleMappingUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_fed_user_role_mapping_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthFedUserRoleMappingUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdUpdateColumns
+  description: Update the columns of the 'auth_fed_user_role_mapping' collection
+  fields:
+    - name: realmId
+      type: UpdateColumnAuthFedUserRoleMappingRealmId
+      description: Update the 'realm_id' column in the 'auth_fed_user_role_mapping'
+        collection.
+    - name: roleId
+      type: UpdateColumnAuthFedUserRoleMappingRoleId
+      description: Update the 'role_id' column in the 'auth_fed_user_role_mapping'
+        collection.
+    - name: storageProviderId
+      type: UpdateColumnAuthFedUserRoleMappingStorageProviderId
+      description: Update the 'storage_provider_id' column in the
+        'auth_fed_user_role_mapping' collection.
+    - name: userId
+      type: UpdateColumnAuthFedUserRoleMappingUserId
+      description: Update the 'user_id' column in the 'auth_fed_user_role_mapping'
+        collection.
+  graphql:
+    typeName: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdUpdateColumns
+    inputTypeName: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_role_mapping_by_role_id_and_user_id_update_columns
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        roleId:
+          column:
+            name: role_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - roleId
+          - storageProviderId
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdResponse
+  description: Responses from the
+    'update_auth_fed_user_role_mapping_by_role_id_and_user_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserRoleMapping!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdResponse
+    inputTypeName: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_fed_user_role_mapping_by_role_id_and_user_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthFedUserRoleMappingByRoleIdAndUserId
+  outputType: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdResponse!
+  arguments:
+    - name: keyRoleId
+      type: Varchar!
+    - name: keyUserId
+      type: Varchar!
+    - name: postCheck
+      type: AuthFedUserRoleMappingBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_fed_user_role_mapping' collection
+    - name: preCheck
+      type: AuthFedUserRoleMappingBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_fed_user_role_mapping' collection
+    - name: updateColumns
+      type: UpdateAuthFedUserRoleMappingByRoleIdAndUserIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_fed_user_role_mapping_by_role_id_and_user_id
+    argumentMapping:
+      keyRoleId: key_role_id
+      keyUserId: key_user_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthFedUserRoleMappingByRoleIdAndUserId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_fed_user_role_mapping' collection using
+    the 'role_id' and 'user_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthFedUserRoleMappingByRoleIdAndUserId
+  permissions:
+    - role: admin
+      allowExecution: true
+

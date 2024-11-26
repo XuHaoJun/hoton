@@ -1,0 +1,301 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientScopeDescription
+  description: Update the 'description' column in the 'auth_client_scope' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientScopeDescription
+    inputTypeName: UpdateColumnAuthClientScopeDescriptionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_scope_description
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientScopeDescription
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientScopeId
+  description: Update the 'id' column in the 'auth_client_scope' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientScopeId
+    inputTypeName: UpdateColumnAuthClientScopeIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_scope_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientScopeId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientScopeName
+  description: Update the 'name' column in the 'auth_client_scope' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientScopeName
+    inputTypeName: UpdateColumnAuthClientScopeNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_scope_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientScopeName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientScopeProtocol
+  description: Update the 'protocol' column in the 'auth_client_scope' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientScopeProtocol
+    inputTypeName: UpdateColumnAuthClientScopeProtocolInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_scope_protocol
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientScopeProtocol
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthClientScopeRealmId
+  description: Update the 'realm_id' column in the 'auth_client_scope' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthClientScopeRealmId
+    inputTypeName: UpdateColumnAuthClientScopeRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_client_scope_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthClientScopeRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientScopeByIdUpdateColumns
+  description: Update the columns of the 'auth_client_scope' collection
+  fields:
+    - name: description
+      type: UpdateColumnAuthClientScopeDescription
+      description: Update the 'description' column in the 'auth_client_scope' collection.
+    - name: id
+      type: UpdateColumnAuthClientScopeId
+      description: Update the 'id' column in the 'auth_client_scope' collection.
+    - name: name
+      type: UpdateColumnAuthClientScopeName
+      description: Update the 'name' column in the 'auth_client_scope' collection.
+    - name: protocol
+      type: UpdateColumnAuthClientScopeProtocol
+      description: Update the 'protocol' column in the 'auth_client_scope' collection.
+    - name: realmId
+      type: UpdateColumnAuthClientScopeRealmId
+      description: Update the 'realm_id' column in the 'auth_client_scope' collection.
+  graphql:
+    typeName: UpdateAuthClientScopeByIdUpdateColumns
+    inputTypeName: UpdateAuthClientScopeByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_scope_by_id_update_columns
+      fieldMapping:
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        protocol:
+          column:
+            name: protocol
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientScopeByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - description
+          - id
+          - name
+          - protocol
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthClientScopeByIdResponse
+  description: Responses from the 'update_auth_client_scope_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthClientScopeByIdResponse
+    inputTypeName: UpdateAuthClientScopeByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_client_scope_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthClientScopeByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthClientScopeById
+  outputType: UpdateAuthClientScopeByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthClientScopeBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_client_scope' collection
+    - name: preCheck
+      type: AuthClientScopeBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_client_scope' collection
+    - name: updateColumns
+      type: UpdateAuthClientScopeByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_client_scope_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthClientScopeById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_client_scope' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthClientScopeById
+  permissions:
+    - role: admin
+      allowExecution: true
+

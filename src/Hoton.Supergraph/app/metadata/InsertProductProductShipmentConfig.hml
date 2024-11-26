@@ -1,0 +1,127 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductShipmentConfigObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid
+    - name: productId
+      type: Uuid
+    - name: realmOrderShipmentConfigId
+      type: Uuid
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertProductProductShipmentConfigObject
+    inputTypeName: InsertProductProductShipmentConfigObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_shipment_config_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productId:
+          column:
+            name: product_id
+        realmOrderShipmentConfigId:
+          column:
+            name: realm_order_shipment_config_id
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductShipmentConfigObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - productId
+          - realmOrderShipmentConfigId
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductShipmentConfigResponse
+  description: Responses from the 'insert_product_product_shipment_config' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProductShipmentConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertProductProductShipmentConfigResponse
+    inputTypeName: InsertProductProductShipmentConfigResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_shipment_config_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductShipmentConfigResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertProductProductShipmentConfig
+  outputType: InsertProductProductShipmentConfigResponse!
+  arguments:
+    - name: objects
+      type: "[InsertProductProductShipmentConfigObject!]!"
+    - name: postCheck
+      type: ProductProductShipmentConfigBoolExp
+      description: Insert permission predicate over the
+        'product_product_shipment_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_product_product_shipment_config
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertProductProductShipmentConfig
+    rootFieldKind: Mutation
+  description: Insert into the product_product_shipment_config table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertProductProductShipmentConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

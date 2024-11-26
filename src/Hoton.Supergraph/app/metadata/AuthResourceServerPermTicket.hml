@@ -1,0 +1,298 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthResourceServerPermTicket
+  fields:
+    - name: createdTimestamp
+      type: Int8!
+    - name: grantedTimestamp
+      type: Int8
+    - name: id
+      type: Varchar!
+    - name: owner
+      type: Varchar!
+    - name: policyId
+      type: Varchar
+    - name: requester
+      type: Varchar!
+    - name: resourceId
+      type: Varchar!
+    - name: resourceServerId
+      type: Varchar!
+    - name: scopeId
+      type: Varchar
+  graphql:
+    typeName: AuthResourceServerPermTicket
+    inputTypeName: AuthResourceServerPermTicketInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_resource_server_perm_ticket
+      fieldMapping:
+        createdTimestamp:
+          column:
+            name: created_timestamp
+        grantedTimestamp:
+          column:
+            name: granted_timestamp
+        id:
+          column:
+            name: id
+        owner:
+          column:
+            name: owner
+        policyId:
+          column:
+            name: policy_id
+        requester:
+          column:
+            name: requester
+        resourceId:
+          column:
+            name: resource_id
+        resourceServerId:
+          column:
+            name: resource_server_id
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthResourceServerPermTicket
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdTimestamp
+          - grantedTimestamp
+          - id
+          - owner
+          - policyId
+          - requester
+          - resourceId
+          - resourceServerId
+          - scopeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthResourceServerPermTicketBoolExp
+  operand:
+    object:
+      type: AuthResourceServerPermTicket
+      comparableFields:
+        - fieldName: createdTimestamp
+          booleanExpressionType: Int8BoolExp
+        - fieldName: grantedTimestamp
+          booleanExpressionType: Int8BoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: owner
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: policyId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: requester
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resourceId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resourceServerId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: scopeId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceServer
+        - relationshipName: authResourceServerResource
+        - relationshipName: authResourceServerScope
+        - relationshipName: authResourceServerPolicy
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthResourceServerPermTicketBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthResourceServerPermTicketAggExp
+  operand:
+    object:
+      aggregatedType: AuthResourceServerPermTicket
+      aggregatableFields:
+        - fieldName: createdTimestamp
+          aggregateExpression: Int8AggExp
+        - fieldName: grantedTimestamp
+          aggregateExpression: Int8AggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: owner
+          aggregateExpression: VarcharAggExp
+        - fieldName: policyId
+          aggregateExpression: VarcharAggExp
+        - fieldName: requester
+          aggregateExpression: VarcharAggExp
+        - fieldName: resourceId
+          aggregateExpression: VarcharAggExp
+        - fieldName: resourceServerId
+          aggregateExpression: VarcharAggExp
+        - fieldName: scopeId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthResourceServerPermTicketAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthResourceServerPermTicket
+  objectType: AuthResourceServerPermTicket
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_resource_server_perm_ticket
+  filterExpressionType: AuthResourceServerPermTicketBoolExp
+  aggregateExpression: AuthResourceServerPermTicketAggExp
+  orderableFields:
+    - fieldName: createdTimestamp
+      orderByDirections:
+        enableAll: true
+    - fieldName: grantedTimestamp
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: owner
+      orderByDirections:
+        enableAll: true
+    - fieldName: policyId
+      orderByDirections:
+        enableAll: true
+    - fieldName: requester
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceServerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: scopeId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authResourceServerPermTicket
+      subscription:
+        rootField: authResourceServerPermTicket
+    selectUniques:
+      - queryRootField: authResourceServerPermTicketById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authResourceServerPermTicketById
+      - queryRootField: authResourceServerPermTicketByUkFrsr6T700S9V50Bu18Ws5Pmt
+        uniqueIdentifier:
+          - owner
+          - requester
+          - resourceId
+          - resourceServerId
+          - scopeId
+        subscription:
+          rootField: authResourceServerPermTicketByUkFrsr6T700S9V50Bu18Ws5Pmt
+    orderByExpressionType: AuthResourceServerPermTicketOrderBy
+    filterInputTypeName: AuthResourceServerPermTicketFilterInput
+    aggregate:
+      queryRootField: authResourceServerPermTicketAggregate
+      subscription:
+        rootField: authResourceServerPermTicketAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthResourceServerPermTicket
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServer
+  sourceType: AuthResourceServerPermTicket
+  target:
+    model:
+      name: AuthResourceServer
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceServerId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerResource
+  sourceType: AuthResourceServerPermTicket
+  target:
+    model:
+      name: AuthResourceServerResource
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerScope
+  sourceType: AuthResourceServerPermTicket
+  target:
+    model:
+      name: AuthResourceServerScope
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: scopeId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerPolicy
+  sourceType: AuthResourceServerPermTicket
+  target:
+    model:
+      name: AuthResourceServerPolicy
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: policyId
+      target:
+        modelField:
+          - fieldName: id
+

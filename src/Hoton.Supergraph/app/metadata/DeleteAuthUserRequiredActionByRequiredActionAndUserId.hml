@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthUserRequiredActionByRequiredActionAndUserIdResponse
+  description: Responses from the
+    'delete_auth_user_required_action_by_required_action_and_user_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserRequiredAction!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthUserRequiredActionByRequiredActionAndUserIdResponse
+    inputTypeName: DeleteAuthUserRequiredActionByRequiredActionAndUserIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_user_required_action_by_required_action_and_user_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthUserRequiredActionByRequiredActionAndUserIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthUserRequiredActionByRequiredActionAndUserId
+  outputType: DeleteAuthUserRequiredActionByRequiredActionAndUserIdResponse!
+  arguments:
+    - name: keyRequiredAction
+      type: Varchar!
+    - name: keyUserId
+      type: Varchar!
+    - name: preCheck
+      type: AuthUserRequiredActionBoolExp
+      description: Delete permission predicate over the 'auth_user_required_action'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_user_required_action_by_required_action_and_user_id
+    argumentMapping:
+      keyRequiredAction: key_required_action
+      keyUserId: key_user_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthUserRequiredActionByRequiredActionAndUserId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_user_required_action' collection using
+    the 'required_action' and 'user_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthUserRequiredActionByRequiredActionAndUserId
+  permissions:
+    - role: admin
+      allowExecution: true
+

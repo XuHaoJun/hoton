@@ -1,0 +1,144 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthOrgObject
+  fields:
+    - name: alias
+      type: Varchar!
+    - name: description
+      type: Varchar
+    - name: enabled
+      type: Bool!
+    - name: groupId
+      type: Varchar!
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: redirectUrl
+      type: Varchar
+  graphql:
+    typeName: InsertAuthOrgObject
+    inputTypeName: InsertAuthOrgObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_org_object
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        description:
+          column:
+            name: description
+        enabled:
+          column:
+            name: enabled
+        groupId:
+          column:
+            name: group_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        redirectUrl:
+          column:
+            name: redirect_url
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthOrgObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - description
+          - enabled
+          - groupId
+          - id
+          - name
+          - realmId
+          - redirectUrl
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthOrgResponse
+  description: Responses from the 'insert_auth_org' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOrg!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthOrgResponse
+    inputTypeName: InsertAuthOrgResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_org_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthOrgResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthOrg
+  outputType: InsertAuthOrgResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthOrgObject!]!"
+    - name: postCheck
+      type: AuthOrgBoolExp
+      description: Insert permission predicate over the 'auth_org' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_org
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthOrg
+    rootFieldKind: Mutation
+  description: Insert into the auth_org table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthOrg
+  permissions:
+    - role: admin
+      allowExecution: true
+

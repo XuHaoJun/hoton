@@ -1,0 +1,149 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthOrgDomain
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: orgId
+      type: Varchar!
+    - name: verified
+      type: Bool!
+  graphql:
+    typeName: AuthOrgDomain
+    inputTypeName: AuthOrgDomainInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_org_domain
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        orgId:
+          column:
+            name: org_id
+        verified:
+          column:
+            name: verified
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthOrgDomain
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - orgId
+          - verified
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthOrgDomainBoolExp
+  operand:
+    object:
+      type: AuthOrgDomain
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: orgId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: verified
+          booleanExpressionType: BoolBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthOrgDomainBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthOrgDomainAggExp
+  operand:
+    object:
+      aggregatedType: AuthOrgDomain
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: orgId
+          aggregateExpression: VarcharAggExp
+        - fieldName: verified
+          aggregateExpression: BoolAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthOrgDomainAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthOrgDomain
+  objectType: AuthOrgDomain
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_org_domain
+  filterExpressionType: AuthOrgDomainBoolExp
+  aggregateExpression: AuthOrgDomainAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: orgId
+      orderByDirections:
+        enableAll: true
+    - fieldName: verified
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authOrgDomain
+      subscription:
+        rootField: authOrgDomain
+    selectUniques:
+      - queryRootField: authOrgDomainByOrgDomainPkey
+        uniqueIdentifier:
+          - id
+          - name
+        subscription:
+          rootField: authOrgDomainByOrgDomainPkey
+    orderByExpressionType: AuthOrgDomainOrderBy
+    filterInputTypeName: AuthOrgDomainFilterInput
+    aggregate:
+      queryRootField: authOrgDomainAggregate
+      subscription:
+        rootField: authOrgDomainAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthOrgDomain
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

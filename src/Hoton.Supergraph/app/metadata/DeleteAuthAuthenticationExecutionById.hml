@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthAuthenticationExecutionByIdResponse
+  description: Responses from the 'delete_auth_authentication_execution_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticationExecution!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthAuthenticationExecutionByIdResponse
+    inputTypeName: DeleteAuthAuthenticationExecutionByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_authentication_execution_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthAuthenticationExecutionByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthAuthenticationExecutionById
+  outputType: DeleteAuthAuthenticationExecutionByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthAuthenticationExecutionBoolExp
+      description: Delete permission predicate over the
+        'auth_authentication_execution' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_authentication_execution_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthAuthenticationExecutionById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_authentication_execution' collection
+    using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthAuthenticationExecutionById
+  permissions:
+    - role: admin
+      allowExecution: true
+

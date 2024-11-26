@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthDatabasechangeloglockByIdResponse
+  description: Responses from the 'delete_auth_databasechangeloglock_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthDatabasechangeloglock!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthDatabasechangeloglockByIdResponse
+    inputTypeName: DeleteAuthDatabasechangeloglockByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_databasechangeloglock_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthDatabasechangeloglockByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthDatabasechangeloglockById
+  outputType: DeleteAuthDatabasechangeloglockByIdResponse!
+  arguments:
+    - name: keyId
+      type: Int4!
+    - name: preCheck
+      type: AuthDatabasechangeloglockBoolExp
+      description: Delete permission predicate over the 'auth_databasechangeloglock'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_databasechangeloglock_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthDatabasechangeloglockById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_databasechangeloglock' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthDatabasechangeloglockById
+  permissions:
+    - role: admin
+      allowExecution: true
+

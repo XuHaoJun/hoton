@@ -1,0 +1,115 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientAuthFlowBindingsObject
+  fields:
+    - name: bindingName
+      type: Varchar!
+    - name: clientId
+      type: Varchar!
+    - name: flowId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthClientAuthFlowBindingsObject
+    inputTypeName: InsertAuthClientAuthFlowBindingsObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_auth_flow_bindings_object
+      fieldMapping:
+        bindingName:
+          column:
+            name: binding_name
+        clientId:
+          column:
+            name: client_id
+        flowId:
+          column:
+            name: flow_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientAuthFlowBindingsObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - bindingName
+          - clientId
+          - flowId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthClientAuthFlowBindingsResponse
+  description: Responses from the 'insert_auth_client_auth_flow_bindings' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientAuthFlowBindings!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthClientAuthFlowBindingsResponse
+    inputTypeName: InsertAuthClientAuthFlowBindingsResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_client_auth_flow_bindings_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthClientAuthFlowBindingsResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthClientAuthFlowBindings
+  outputType: InsertAuthClientAuthFlowBindingsResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthClientAuthFlowBindingsObject!]!"
+    - name: postCheck
+      type: AuthClientAuthFlowBindingsBoolExp
+      description: Insert permission predicate over the
+        'auth_client_auth_flow_bindings' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_client_auth_flow_bindings
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthClientAuthFlowBindings
+    rootFieldKind: Mutation
+  description: Insert into the auth_client_auth_flow_bindings table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthClientAuthFlowBindings
+  permissions:
+    - role: admin
+      allowExecution: true
+

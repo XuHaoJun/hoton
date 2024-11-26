@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthGroupRoleMapping
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: roleId
+      type: Varchar!
+  graphql:
+    typeName: AuthGroupRoleMapping
+    inputTypeName: AuthGroupRoleMappingInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_group_role_mapping
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        roleId:
+          column:
+            name: role_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthGroupRoleMapping
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - roleId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthGroupRoleMappingBoolExp
+  operand:
+    object:
+      type: AuthGroupRoleMapping
+      comparableFields:
+        - fieldName: groupId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: roleId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authKeycloakGroup
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthGroupRoleMappingBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthGroupRoleMappingAggExp
+  operand:
+    object:
+      aggregatedType: AuthGroupRoleMapping
+      aggregatableFields:
+        - fieldName: groupId
+          aggregateExpression: VarcharAggExp
+        - fieldName: roleId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthGroupRoleMappingAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthGroupRoleMapping
+  objectType: AuthGroupRoleMapping
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_group_role_mapping
+  filterExpressionType: AuthGroupRoleMappingBoolExp
+  aggregateExpression: AuthGroupRoleMappingAggExp
+  orderableFields:
+    - fieldName: groupId
+      orderByDirections:
+        enableAll: true
+    - fieldName: roleId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authGroupRoleMapping
+      subscription:
+        rootField: authGroupRoleMapping
+    selectUniques:
+      - queryRootField: authGroupRoleMappingByConstraintGroupRole
+        uniqueIdentifier:
+          - groupId
+          - roleId
+        subscription:
+          rootField: authGroupRoleMappingByConstraintGroupRole
+    orderByExpressionType: AuthGroupRoleMappingOrderBy
+    filterInputTypeName: AuthGroupRoleMappingFilterInput
+    aggregate:
+      queryRootField: authGroupRoleMappingAggregate
+      subscription:
+        rootField: authGroupRoleMappingAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthGroupRoleMapping
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authKeycloakGroup
+  sourceType: AuthGroupRoleMapping
+  target:
+    model:
+      name: AuthKeycloakGroup
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: groupId
+      target:
+        modelField:
+          - fieldName: id
+

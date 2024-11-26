@@ -1,0 +1,162 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductObject
+  fields:
+    - name: categories
+      type: "[Ltree]"
+    - name: createdAt
+      type: Timestamptz
+    - name: description
+      type: Varchar
+    - name: id
+      type: Uuid
+    - name: name
+      type: Varchar!
+    - name: price
+      type: Numeric!
+    - name: realmId
+      type: Varchar!
+    - name: snapshotVersion
+      type: Timestamptz
+    - name: tags
+      type: "[Varchar]"
+    - name: temperatureZones
+      type: "[Varchar]"
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertProductProductObject
+    inputTypeName: InsertProductProductObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_object
+      fieldMapping:
+        categories:
+          column:
+            name: categories
+        createdAt:
+          column:
+            name: created_at
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        price:
+          column:
+            name: price
+        realmId:
+          column:
+            name: realm_id
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        tags:
+          column:
+            name: tags
+        temperatureZones:
+          column:
+            name: temperature_zones
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - categories
+          - createdAt
+          - description
+          - id
+          - name
+          - price
+          - realmId
+          - snapshotVersion
+          - tags
+          - temperatureZones
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductResponse
+  description: Responses from the 'insert_product_product' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProduct!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertProductProductResponse
+    inputTypeName: InsertProductProductResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertProductProduct
+  outputType: InsertProductProductResponse!
+  arguments:
+    - name: objects
+      type: "[InsertProductProductObject!]!"
+    - name: postCheck
+      type: ProductProductBoolExp
+      description: Insert permission predicate over the 'product_product' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_product_product
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertProductProduct
+    rootFieldKind: Mutation
+  description: Insert into the product_product table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertProductProduct
+  permissions:
+    - role: admin
+      allowExecution: true
+

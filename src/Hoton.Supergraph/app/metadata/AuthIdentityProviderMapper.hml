@@ -1,0 +1,203 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthIdentityProviderMapper
+  fields:
+    - name: id
+      type: Varchar!
+    - name: idpAlias
+      type: Varchar!
+    - name: idpMapperName
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+  graphql:
+    typeName: AuthIdentityProviderMapper
+    inputTypeName: AuthIdentityProviderMapperInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_identity_provider_mapper
+      fieldMapping:
+        id:
+          column:
+            name: id
+        idpAlias:
+          column:
+            name: idp_alias
+        idpMapperName:
+          column:
+            name: idp_mapper_name
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthIdentityProviderMapper
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - idpAlias
+          - idpMapperName
+          - name
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthIdentityProviderMapperBoolExp
+  operand:
+    object:
+      type: AuthIdentityProviderMapper
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: idpAlias
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: idpMapperName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+        - relationshipName: authIdpMapperConfigs
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthIdentityProviderMapperBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthIdentityProviderMapperAggExp
+  operand:
+    object:
+      aggregatedType: AuthIdentityProviderMapper
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: idpAlias
+          aggregateExpression: VarcharAggExp
+        - fieldName: idpMapperName
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthIdentityProviderMapperAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthIdentityProviderMapper
+  objectType: AuthIdentityProviderMapper
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_identity_provider_mapper
+  filterExpressionType: AuthIdentityProviderMapperBoolExp
+  aggregateExpression: AuthIdentityProviderMapperAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: idpAlias
+      orderByDirections:
+        enableAll: true
+    - fieldName: idpMapperName
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authIdentityProviderMapper
+      subscription:
+        rootField: authIdentityProviderMapper
+    selectUniques:
+      - queryRootField: authIdentityProviderMapperById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authIdentityProviderMapperById
+    orderByExpressionType: AuthIdentityProviderMapperOrderBy
+    filterInputTypeName: AuthIdentityProviderMapperFilterInput
+    aggregate:
+      queryRootField: authIdentityProviderMapperAggregate
+      subscription:
+        rootField: authIdentityProviderMapperAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthIdentityProviderMapper
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthIdentityProviderMapper
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authIdpMapperConfigs
+  sourceType: AuthIdentityProviderMapper
+  target:
+    model:
+      name: AuthIdpMapperConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthIdpMapperConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: idpMapperId
+  graphql:
+    aggregateFieldName: authIdpMapperConfigsAggregate
+

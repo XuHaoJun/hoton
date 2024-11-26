@@ -1,0 +1,126 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthKeycloakGroupObject
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: parentGroup
+      type: Varchar!
+    - name: realmId
+      type: Varchar
+    - name: type
+      type: Int4
+  graphql:
+    typeName: InsertAuthKeycloakGroupObject
+    inputTypeName: InsertAuthKeycloakGroupObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_keycloak_group_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        parentGroup:
+          column:
+            name: parent_group
+        realmId:
+          column:
+            name: realm_id
+        type:
+          column:
+            name: type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthKeycloakGroupObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - parentGroup
+          - realmId
+          - type
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthKeycloakGroupResponse
+  description: Responses from the 'insert_auth_keycloak_group' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthKeycloakGroup!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthKeycloakGroupResponse
+    inputTypeName: InsertAuthKeycloakGroupResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_keycloak_group_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthKeycloakGroupResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthKeycloakGroup
+  outputType: InsertAuthKeycloakGroupResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthKeycloakGroupObject!]!"
+    - name: postCheck
+      type: AuthKeycloakGroupBoolExp
+      description: Insert permission predicate over the 'auth_keycloak_group' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_keycloak_group
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthKeycloakGroup
+    rootFieldKind: Mutation
+  description: Insert into the auth_keycloak_group table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthKeycloakGroup
+  permissions:
+    - role: admin
+      allowExecution: true
+

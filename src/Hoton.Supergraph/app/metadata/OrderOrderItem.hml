@@ -1,0 +1,293 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrderItem
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: orderId
+      type: Uuid
+    - name: price
+      type: Numeric!
+    - name: productId
+      type: Uuid
+    - name: productSkuId
+      type: Uuid
+    - name: quantity
+      type: Int4
+    - name: snapshotVersion
+      type: Timestamptz
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderOrderItem
+    inputTypeName: OrderOrderItemInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order_item
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        orderId:
+          column:
+            name: order_id
+        price:
+          column:
+            name: price
+        productId:
+          column:
+            name: product_id
+        productSkuId:
+          column:
+            name: product_sku_id
+        quantity:
+          column:
+            name: quantity
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrderItem
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - orderId
+          - price
+          - productId
+          - productSkuId
+          - quantity
+          - snapshotVersion
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderItemBoolExp
+  operand:
+    object:
+      type: OrderOrderItem
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: orderId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: price
+          booleanExpressionType: NumericBoolExp
+        - fieldName: productId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: productSkuId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: quantity
+          booleanExpressionType: Int4BoolExp
+        - fieldName: snapshotVersion
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: orderOrder
+        - relationshipName: productProduct
+        - relationshipName: productProductSku
+        - relationshipName: orderOrderItemCargoMaps
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderItemBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderItemAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrderItem
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: orderId
+          aggregateExpression: UuidAggExp
+        - fieldName: price
+          aggregateExpression: NumericAggExp
+        - fieldName: productId
+          aggregateExpression: UuidAggExp
+        - fieldName: productSkuId
+          aggregateExpression: UuidAggExp
+        - fieldName: quantity
+          aggregateExpression: Int4AggExp
+        - fieldName: snapshotVersion
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderItemAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrderItem
+  objectType: OrderOrderItem
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order_item
+  filterExpressionType: OrderOrderItemBoolExp
+  aggregateExpression: OrderOrderItemAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+    - fieldName: productSkuId
+      orderByDirections:
+        enableAll: true
+    - fieldName: quantity
+      orderByDirections:
+        enableAll: true
+    - fieldName: snapshotVersion
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrderItem
+      subscription:
+        rootField: orderOrderItem
+    selectUniques:
+      - queryRootField: orderOrderItemById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderOrderItemById
+    orderByExpressionType: OrderOrderItemOrderBy
+    filterInputTypeName: OrderOrderItemFilterInput
+    aggregate:
+      queryRootField: orderOrderItemAggregate
+      subscription:
+        rootField: orderOrderItemAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrderItem
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrder
+  sourceType: OrderOrderItem
+  target:
+    model:
+      name: OrderOrder
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProduct
+  sourceType: OrderOrderItem
+  target:
+    model:
+      name: ProductProduct
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProductSku
+  sourceType: OrderOrderItem
+  target:
+    model:
+      name: ProductProductSku
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productSkuId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderItemCargoMaps
+  sourceType: OrderOrderItem
+  target:
+    model:
+      name: OrderOrderItemCargoMap
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderItemCargoMapAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderItemId
+  graphql:
+    aggregateFieldName: orderOrderItemCargoMapsAggregate
+

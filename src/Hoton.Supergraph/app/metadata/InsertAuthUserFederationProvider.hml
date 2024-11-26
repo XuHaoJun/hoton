@@ -1,0 +1,145 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserFederationProviderObject
+  fields:
+    - name: changedSyncPeriod
+      type: Int4
+    - name: displayName
+      type: Varchar
+    - name: fullSyncPeriod
+      type: Int4
+    - name: id
+      type: Varchar!
+    - name: lastSync
+      type: Int4
+    - name: priority
+      type: Int4
+    - name: providerName
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthUserFederationProviderObject
+    inputTypeName: InsertAuthUserFederationProviderObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_federation_provider_object
+      fieldMapping:
+        changedSyncPeriod:
+          column:
+            name: changed_sync_period
+        displayName:
+          column:
+            name: display_name
+        fullSyncPeriod:
+          column:
+            name: full_sync_period
+        id:
+          column:
+            name: id
+        lastSync:
+          column:
+            name: last_sync
+        priority:
+          column:
+            name: priority
+        providerName:
+          column:
+            name: provider_name
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserFederationProviderObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - changedSyncPeriod
+          - displayName
+          - fullSyncPeriod
+          - id
+          - lastSync
+          - priority
+          - providerName
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthUserFederationProviderResponse
+  description: Responses from the 'insert_auth_user_federation_provider' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserFederationProvider!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthUserFederationProviderResponse
+    inputTypeName: InsertAuthUserFederationProviderResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_user_federation_provider_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthUserFederationProviderResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthUserFederationProvider
+  outputType: InsertAuthUserFederationProviderResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthUserFederationProviderObject!]!"
+    - name: postCheck
+      type: AuthUserFederationProviderBoolExp
+      description: Insert permission predicate over the
+        'auth_user_federation_provider' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_user_federation_provider
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthUserFederationProvider
+    rootFieldKind: Mutation
+  description: Insert into the auth_user_federation_provider table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthUserFederationProvider
+  permissions:
+    - role: admin
+      allowExecution: true
+

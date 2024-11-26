@@ -1,0 +1,385 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAuthenticationFlowAlias
+  description: Update the 'alias' column in the 'auth_authentication_flow' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAuthenticationFlowAlias
+    inputTypeName: UpdateColumnAuthAuthenticationFlowAliasInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_authentication_flow_alias
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAuthenticationFlowAlias
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAuthenticationFlowBuiltIn
+  description: Update the 'built_in' column in the 'auth_authentication_flow' collection
+  fields:
+    - name: set
+      type: Bool!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAuthenticationFlowBuiltIn
+    inputTypeName: UpdateColumnAuthAuthenticationFlowBuiltInInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_authentication_flow_built_in
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAuthenticationFlowBuiltIn
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAuthenticationFlowDescription
+  description: Update the 'description' column in the 'auth_authentication_flow' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAuthenticationFlowDescription
+    inputTypeName: UpdateColumnAuthAuthenticationFlowDescriptionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_authentication_flow_description
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAuthenticationFlowDescription
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAuthenticationFlowId
+  description: Update the 'id' column in the 'auth_authentication_flow' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAuthenticationFlowId
+    inputTypeName: UpdateColumnAuthAuthenticationFlowIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_authentication_flow_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAuthenticationFlowId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAuthenticationFlowProviderId
+  description: Update the 'provider_id' column in the 'auth_authentication_flow' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAuthenticationFlowProviderId
+    inputTypeName: UpdateColumnAuthAuthenticationFlowProviderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_authentication_flow_provider_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAuthenticationFlowProviderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAuthenticationFlowRealmId
+  description: Update the 'realm_id' column in the 'auth_authentication_flow' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAuthenticationFlowRealmId
+    inputTypeName: UpdateColumnAuthAuthenticationFlowRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_authentication_flow_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAuthenticationFlowRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAuthenticationFlowTopLevel
+  description: Update the 'top_level' column in the 'auth_authentication_flow' collection
+  fields:
+    - name: set
+      type: Bool!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAuthenticationFlowTopLevel
+    inputTypeName: UpdateColumnAuthAuthenticationFlowTopLevelInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_authentication_flow_top_level
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAuthenticationFlowTopLevel
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthAuthenticationFlowByIdUpdateColumns
+  description: Update the columns of the 'auth_authentication_flow' collection
+  fields:
+    - name: alias
+      type: UpdateColumnAuthAuthenticationFlowAlias
+      description: Update the 'alias' column in the 'auth_authentication_flow' collection.
+    - name: builtIn
+      type: UpdateColumnAuthAuthenticationFlowBuiltIn
+      description: Update the 'built_in' column in the 'auth_authentication_flow'
+        collection.
+    - name: description
+      type: UpdateColumnAuthAuthenticationFlowDescription
+      description: Update the 'description' column in the 'auth_authentication_flow'
+        collection.
+    - name: id
+      type: UpdateColumnAuthAuthenticationFlowId
+      description: Update the 'id' column in the 'auth_authentication_flow' collection.
+    - name: providerId
+      type: UpdateColumnAuthAuthenticationFlowProviderId
+      description: Update the 'provider_id' column in the 'auth_authentication_flow'
+        collection.
+    - name: realmId
+      type: UpdateColumnAuthAuthenticationFlowRealmId
+      description: Update the 'realm_id' column in the 'auth_authentication_flow'
+        collection.
+    - name: topLevel
+      type: UpdateColumnAuthAuthenticationFlowTopLevel
+      description: Update the 'top_level' column in the 'auth_authentication_flow'
+        collection.
+  graphql:
+    typeName: UpdateAuthAuthenticationFlowByIdUpdateColumns
+    inputTypeName: UpdateAuthAuthenticationFlowByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_authentication_flow_by_id_update_columns
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        builtIn:
+          column:
+            name: built_in
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        providerId:
+          column:
+            name: provider_id
+        realmId:
+          column:
+            name: realm_id
+        topLevel:
+          column:
+            name: top_level
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthAuthenticationFlowByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - builtIn
+          - description
+          - id
+          - providerId
+          - realmId
+          - topLevel
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthAuthenticationFlowByIdResponse
+  description: Responses from the 'update_auth_authentication_flow_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticationFlow!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthAuthenticationFlowByIdResponse
+    inputTypeName: UpdateAuthAuthenticationFlowByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_authentication_flow_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthAuthenticationFlowByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthAuthenticationFlowById
+  outputType: UpdateAuthAuthenticationFlowByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthAuthenticationFlowBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_authentication_flow' collection
+    - name: preCheck
+      type: AuthAuthenticationFlowBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_authentication_flow' collection
+    - name: updateColumns
+      type: UpdateAuthAuthenticationFlowByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_authentication_flow_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthAuthenticationFlowById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_authentication_flow' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthAuthenticationFlowById
+  permissions:
+    - role: admin
+      allowExecution: true
+

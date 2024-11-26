@@ -1,0 +1,114 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFederatedUserObject
+  fields:
+    - name: id
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthFederatedUserObject
+    inputTypeName: InsertAuthFederatedUserObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_federated_user_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFederatedUserObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - realmId
+          - storageProviderId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFederatedUserResponse
+  description: Responses from the 'insert_auth_federated_user' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFederatedUser!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthFederatedUserResponse
+    inputTypeName: InsertAuthFederatedUserResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_federated_user_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFederatedUserResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthFederatedUser
+  outputType: InsertAuthFederatedUserResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthFederatedUserObject!]!"
+    - name: postCheck
+      type: AuthFederatedUserBoolExp
+      description: Insert permission predicate over the 'auth_federated_user' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_federated_user
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthFederatedUser
+    rootFieldKind: Mutation
+  description: Insert into the auth_federated_user table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthFederatedUser
+  permissions:
+    - role: admin
+      allowExecution: true
+

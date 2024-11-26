@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRealmSmtpConfig
+  fields:
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthRealmSmtpConfig
+    inputTypeName: AuthRealmSmtpConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_realm_smtp_config
+      fieldMapping:
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRealmSmtpConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - realmId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRealmSmtpConfigBoolExp
+  operand:
+    object:
+      type: AuthRealmSmtpConfig
+      comparableFields:
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRealmSmtpConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRealmSmtpConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthRealmSmtpConfig
+      aggregatableFields:
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRealmSmtpConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRealmSmtpConfig
+  objectType: AuthRealmSmtpConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_realm_smtp_config
+  filterExpressionType: AuthRealmSmtpConfigBoolExp
+  aggregateExpression: AuthRealmSmtpConfigAggExp
+  orderableFields:
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRealmSmtpConfig
+      subscription:
+        rootField: authRealmSmtpConfig
+    selectUniques:
+      - queryRootField: authRealmSmtpConfigByConstraintE
+        uniqueIdentifier:
+          - name
+          - realmId
+        subscription:
+          rootField: authRealmSmtpConfigByConstraintE
+    orderByExpressionType: AuthRealmSmtpConfigOrderBy
+    filterInputTypeName: AuthRealmSmtpConfigFilterInput
+    aggregate:
+      queryRootField: authRealmSmtpConfigAggregate
+      subscription:
+        rootField: authRealmSmtpConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRealmSmtpConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthRealmSmtpConfig
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

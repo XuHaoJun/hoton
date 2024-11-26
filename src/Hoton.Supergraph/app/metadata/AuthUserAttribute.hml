@@ -1,0 +1,206 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserAttribute
+  fields:
+    - name: id
+      type: Varchar!
+    - name: longValue
+      type: Text
+    - name: longValueHash
+      type: Bytea
+    - name: longValueHashLowerCase
+      type: Bytea
+    - name: name
+      type: Varchar!
+    - name: userId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthUserAttribute
+    inputTypeName: AuthUserAttributeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_attribute
+      fieldMapping:
+        id:
+          column:
+            name: id
+        longValue:
+          column:
+            name: long_value
+        longValueHash:
+          column:
+            name: long_value_hash
+        longValueHashLowerCase:
+          column:
+            name: long_value_hash_lower_case
+        name:
+          column:
+            name: name
+        userId:
+          column:
+            name: user_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserAttribute
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - longValue
+          - longValueHash
+          - longValueHashLowerCase
+          - name
+          - userId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserAttributeBoolExp
+  operand:
+    object:
+      type: AuthUserAttribute
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: longValue
+          booleanExpressionType: TextBoolExp
+        - fieldName: longValueHash
+          booleanExpressionType: ByteaBoolExp
+        - fieldName: longValueHashLowerCase
+          booleanExpressionType: ByteaBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserEntity
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserAttributeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserAttributeAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserAttribute
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: longValue
+          aggregateExpression: TextAggExp
+        - fieldName: longValueHash
+          aggregateExpression: ByteaAggExp
+        - fieldName: longValueHashLowerCase
+          aggregateExpression: ByteaAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserAttributeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserAttribute
+  objectType: AuthUserAttribute
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_attribute
+  filterExpressionType: AuthUserAttributeBoolExp
+  aggregateExpression: AuthUserAttributeAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: longValue
+      orderByDirections:
+        enableAll: true
+    - fieldName: longValueHash
+      orderByDirections:
+        enableAll: true
+    - fieldName: longValueHashLowerCase
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserAttribute
+      subscription:
+        rootField: authUserAttribute
+    selectUniques:
+      - queryRootField: authUserAttributeById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authUserAttributeById
+    orderByExpressionType: AuthUserAttributeOrderBy
+    filterInputTypeName: AuthUserAttributeFilterInput
+    aggregate:
+      queryRootField: authUserAttributeAggregate
+      subscription:
+        rootField: authUserAttributeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserAttribute
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: AuthUserAttribute
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+

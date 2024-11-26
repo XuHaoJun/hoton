@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthResourceServerPolicyByIdResponse
+  description: Responses from the 'delete_auth_resource_server_policy_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServerPolicy!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthResourceServerPolicyByIdResponse
+    inputTypeName: DeleteAuthResourceServerPolicyByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_resource_server_policy_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthResourceServerPolicyByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthResourceServerPolicyById
+  outputType: DeleteAuthResourceServerPolicyByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthResourceServerPolicyBoolExp
+      description: Delete permission predicate over the 'auth_resource_server_policy'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_resource_server_policy_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthResourceServerPolicyById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_resource_server_policy' collection
+    using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthResourceServerPolicyById
+  permissions:
+    - role: admin
+      allowExecution: true
+

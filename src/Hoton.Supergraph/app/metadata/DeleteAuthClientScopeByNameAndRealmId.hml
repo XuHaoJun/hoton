@@ -1,0 +1,76 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthClientScopeByNameAndRealmIdResponse
+  description: Responses from the 'delete_auth_client_scope_by_name_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClientScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthClientScopeByNameAndRealmIdResponse
+    inputTypeName: DeleteAuthClientScopeByNameAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_client_scope_by_name_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthClientScopeByNameAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthClientScopeByNameAndRealmId
+  outputType: DeleteAuthClientScopeByNameAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar
+    - name: keyRealmId
+      type: Varchar
+    - name: preCheck
+      type: AuthClientScopeBoolExp
+      description: Delete permission predicate over the 'auth_client_scope' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_client_scope_by_name_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthClientScopeByNameAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_client_scope' collection using the
+    'name' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthClientScopeByNameAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

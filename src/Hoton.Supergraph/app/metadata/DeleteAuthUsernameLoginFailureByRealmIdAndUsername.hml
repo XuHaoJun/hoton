@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthUsernameLoginFailureByRealmIdAndUsernameResponse
+  description: Responses from the
+    'delete_auth_username_login_failure_by_realm_id_and_username' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUsernameLoginFailure!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthUsernameLoginFailureByRealmIdAndUsernameResponse
+    inputTypeName: DeleteAuthUsernameLoginFailureByRealmIdAndUsernameResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_username_login_failure_by_realm_id_and_username_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthUsernameLoginFailureByRealmIdAndUsernameResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthUsernameLoginFailureByRealmIdAndUsername
+  outputType: DeleteAuthUsernameLoginFailureByRealmIdAndUsernameResponse!
+  arguments:
+    - name: keyRealmId
+      type: Varchar!
+    - name: keyUsername
+      type: Varchar!
+    - name: preCheck
+      type: AuthUsernameLoginFailureBoolExp
+      description: Delete permission predicate over the 'auth_username_login_failure'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_username_login_failure_by_realm_id_and_username
+    argumentMapping:
+      keyRealmId: key_realm_id
+      keyUsername: key_username
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthUsernameLoginFailureByRealmIdAndUsername
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_username_login_failure' collection
+    using the 'realm_id' and 'username' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthUsernameLoginFailureByRealmIdAndUsername
+  permissions:
+    - role: admin
+      allowExecution: true
+

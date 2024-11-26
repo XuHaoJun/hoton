@@ -1,0 +1,108 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthResourcePolicyObject
+  fields:
+    - name: policyId
+      type: Varchar!
+    - name: resourceId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthResourcePolicyObject
+    inputTypeName: InsertAuthResourcePolicyObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_resource_policy_object
+      fieldMapping:
+        policyId:
+          column:
+            name: policy_id
+        resourceId:
+          column:
+            name: resource_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthResourcePolicyObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - policyId
+          - resourceId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthResourcePolicyResponse
+  description: Responses from the 'insert_auth_resource_policy' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourcePolicy!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthResourcePolicyResponse
+    inputTypeName: InsertAuthResourcePolicyResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_resource_policy_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthResourcePolicyResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthResourcePolicy
+  outputType: InsertAuthResourcePolicyResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthResourcePolicyObject!]!"
+    - name: postCheck
+      type: AuthResourcePolicyBoolExp
+      description: Insert permission predicate over the 'auth_resource_policy' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_resource_policy
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthResourcePolicy
+    rootFieldKind: Mutation
+  description: Insert into the auth_resource_policy table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthResourcePolicy
+  permissions:
+    - role: admin
+      allowExecution: true
+

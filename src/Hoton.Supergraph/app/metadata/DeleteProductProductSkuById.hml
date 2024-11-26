@@ -1,0 +1,72 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteProductProductSkuByIdResponse
+  description: Responses from the 'delete_product_product_sku_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProductSku!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteProductProductSkuByIdResponse
+    inputTypeName: DeleteProductProductSkuByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_product_product_sku_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteProductProductSkuByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteProductProductSkuById
+  outputType: DeleteProductProductSkuByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: preCheck
+      type: ProductProductSkuBoolExp
+      description: Delete permission predicate over the 'product_product_sku' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_product_product_sku_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteProductProductSkuById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'product_product_sku' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteProductProductSkuById
+  permissions:
+    - role: admin
+      allowExecution: true
+

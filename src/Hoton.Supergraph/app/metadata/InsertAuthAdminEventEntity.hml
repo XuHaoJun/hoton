@@ -1,0 +1,168 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAdminEventEntityObject
+  fields:
+    - name: adminEventTime
+      type: Int8
+    - name: authClientId
+      type: Varchar
+    - name: authRealmId
+      type: Varchar
+    - name: authUserId
+      type: Varchar
+    - name: error
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: ipAddress
+      type: Varchar
+    - name: operationType
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: representation
+      type: Text
+    - name: resourcePath
+      type: Varchar
+    - name: resourceType
+      type: Varchar
+  graphql:
+    typeName: InsertAuthAdminEventEntityObject
+    inputTypeName: InsertAuthAdminEventEntityObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_admin_event_entity_object
+      fieldMapping:
+        adminEventTime:
+          column:
+            name: admin_event_time
+        authClientId:
+          column:
+            name: auth_client_id
+        authRealmId:
+          column:
+            name: auth_realm_id
+        authUserId:
+          column:
+            name: auth_user_id
+        error:
+          column:
+            name: error
+        id:
+          column:
+            name: id
+        ipAddress:
+          column:
+            name: ip_address
+        operationType:
+          column:
+            name: operation_type
+        realmId:
+          column:
+            name: realm_id
+        representation:
+          column:
+            name: representation
+        resourcePath:
+          column:
+            name: resource_path
+        resourceType:
+          column:
+            name: resource_type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAdminEventEntityObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - adminEventTime
+          - authClientId
+          - authRealmId
+          - authUserId
+          - error
+          - id
+          - ipAddress
+          - operationType
+          - realmId
+          - representation
+          - resourcePath
+          - resourceType
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAdminEventEntityResponse
+  description: Responses from the 'insert_auth_admin_event_entity' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAdminEventEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthAdminEventEntityResponse
+    inputTypeName: InsertAuthAdminEventEntityResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_admin_event_entity_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAdminEventEntityResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthAdminEventEntity
+  outputType: InsertAuthAdminEventEntityResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthAdminEventEntityObject!]!"
+    - name: postCheck
+      type: AuthAdminEventEntityBoolExp
+      description: Insert permission predicate over the 'auth_admin_event_entity' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_admin_event_entity
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthAdminEventEntity
+    rootFieldKind: Mutation
+  description: Insert into the auth_admin_event_entity table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthAdminEventEntity
+  permissions:
+    - role: admin
+      allowExecution: true
+

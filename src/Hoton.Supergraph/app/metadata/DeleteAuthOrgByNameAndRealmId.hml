@@ -1,0 +1,76 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthOrgByNameAndRealmIdResponse
+  description: Responses from the 'delete_auth_org_by_name_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthOrg!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthOrgByNameAndRealmIdResponse
+    inputTypeName: DeleteAuthOrgByNameAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_org_by_name_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthOrgByNameAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthOrgByNameAndRealmId
+  outputType: DeleteAuthOrgByNameAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar!
+    - name: preCheck
+      type: AuthOrgBoolExp
+      description: Delete permission predicate over the 'auth_org' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_org_by_name_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthOrgByNameAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_org' collection using the 'name' and
+    'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthOrgByNameAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

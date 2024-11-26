@@ -1,0 +1,343 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthProtocolMapperClientId
+  description: Update the 'client_id' column in the 'auth_protocol_mapper' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthProtocolMapperClientId
+    inputTypeName: UpdateColumnAuthProtocolMapperClientIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_protocol_mapper_client_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthProtocolMapperClientId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthProtocolMapperClientScopeId
+  description: Update the 'client_scope_id' column in the 'auth_protocol_mapper' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthProtocolMapperClientScopeId
+    inputTypeName: UpdateColumnAuthProtocolMapperClientScopeIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_protocol_mapper_client_scope_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthProtocolMapperClientScopeId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthProtocolMapperId
+  description: Update the 'id' column in the 'auth_protocol_mapper' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthProtocolMapperId
+    inputTypeName: UpdateColumnAuthProtocolMapperIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_protocol_mapper_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthProtocolMapperId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthProtocolMapperName
+  description: Update the 'name' column in the 'auth_protocol_mapper' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthProtocolMapperName
+    inputTypeName: UpdateColumnAuthProtocolMapperNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_protocol_mapper_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthProtocolMapperName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthProtocolMapperProtocol
+  description: Update the 'protocol' column in the 'auth_protocol_mapper' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthProtocolMapperProtocol
+    inputTypeName: UpdateColumnAuthProtocolMapperProtocolInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_protocol_mapper_protocol
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthProtocolMapperProtocol
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthProtocolMapperProtocolMapperName
+  description: Update the 'protocol_mapper_name' column in the
+    'auth_protocol_mapper' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthProtocolMapperProtocolMapperName
+    inputTypeName: UpdateColumnAuthProtocolMapperProtocolMapperNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_protocol_mapper_protocol_mapper_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthProtocolMapperProtocolMapperName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthProtocolMapperByIdUpdateColumns
+  description: Update the columns of the 'auth_protocol_mapper' collection
+  fields:
+    - name: clientId
+      type: UpdateColumnAuthProtocolMapperClientId
+      description: Update the 'client_id' column in the 'auth_protocol_mapper' collection.
+    - name: clientScopeId
+      type: UpdateColumnAuthProtocolMapperClientScopeId
+      description: Update the 'client_scope_id' column in the 'auth_protocol_mapper'
+        collection.
+    - name: id
+      type: UpdateColumnAuthProtocolMapperId
+      description: Update the 'id' column in the 'auth_protocol_mapper' collection.
+    - name: name
+      type: UpdateColumnAuthProtocolMapperName
+      description: Update the 'name' column in the 'auth_protocol_mapper' collection.
+    - name: protocol
+      type: UpdateColumnAuthProtocolMapperProtocol
+      description: Update the 'protocol' column in the 'auth_protocol_mapper' collection.
+    - name: protocolMapperName
+      type: UpdateColumnAuthProtocolMapperProtocolMapperName
+      description: Update the 'protocol_mapper_name' column in the
+        'auth_protocol_mapper' collection.
+  graphql:
+    typeName: UpdateAuthProtocolMapperByIdUpdateColumns
+    inputTypeName: UpdateAuthProtocolMapperByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_protocol_mapper_by_id_update_columns
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientScopeId:
+          column:
+            name: client_scope_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        protocol:
+          column:
+            name: protocol
+        protocolMapperName:
+          column:
+            name: protocol_mapper_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthProtocolMapperByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientScopeId
+          - id
+          - name
+          - protocol
+          - protocolMapperName
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthProtocolMapperByIdResponse
+  description: Responses from the 'update_auth_protocol_mapper_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthProtocolMapper!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthProtocolMapperByIdResponse
+    inputTypeName: UpdateAuthProtocolMapperByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_protocol_mapper_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthProtocolMapperByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthProtocolMapperById
+  outputType: UpdateAuthProtocolMapperByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthProtocolMapperBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_protocol_mapper' collection
+    - name: preCheck
+      type: AuthProtocolMapperBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_protocol_mapper' collection
+    - name: updateColumns
+      type: UpdateAuthProtocolMapperByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_protocol_mapper_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthProtocolMapperById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_protocol_mapper' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthProtocolMapperById
+  permissions:
+    - role: admin
+      allowExecution: true
+

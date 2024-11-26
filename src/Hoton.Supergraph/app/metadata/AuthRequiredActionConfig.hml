@@ -1,0 +1,136 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRequiredActionConfig
+  fields:
+    - name: name
+      type: Varchar!
+    - name: requiredActionId
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: AuthRequiredActionConfig
+    inputTypeName: AuthRequiredActionConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_required_action_config
+      fieldMapping:
+        name:
+          column:
+            name: name
+        requiredActionId:
+          column:
+            name: required_action_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRequiredActionConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - requiredActionId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRequiredActionConfigBoolExp
+  operand:
+    object:
+      type: AuthRequiredActionConfig
+      comparableFields:
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: requiredActionId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRequiredActionConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRequiredActionConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthRequiredActionConfig
+      aggregatableFields:
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: requiredActionId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRequiredActionConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRequiredActionConfig
+  objectType: AuthRequiredActionConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_required_action_config
+  filterExpressionType: AuthRequiredActionConfigBoolExp
+  aggregateExpression: AuthRequiredActionConfigAggExp
+  orderableFields:
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: requiredActionId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRequiredActionConfig
+      subscription:
+        rootField: authRequiredActionConfig
+    selectUniques:
+      - queryRootField: authRequiredActionConfigByConstraintReqActCfgPk
+        uniqueIdentifier:
+          - name
+          - requiredActionId
+        subscription:
+          rootField: authRequiredActionConfigByConstraintReqActCfgPk
+    orderByExpressionType: AuthRequiredActionConfigOrderBy
+    filterInputTypeName: AuthRequiredActionConfigFilterInput
+    aggregate:
+      queryRootField: authRequiredActionConfigAggregate
+      subscription:
+        rootField: authRequiredActionConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRequiredActionConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

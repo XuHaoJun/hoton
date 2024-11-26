@@ -1,0 +1,78 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthRealmSupportedLocalesByRealmIdAndValueResponse
+  description: Responses from the
+    'delete_auth_realm_supported_locales_by_realm_id_and_value' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmSupportedLocales!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthRealmSupportedLocalesByRealmIdAndValueResponse
+    inputTypeName: DeleteAuthRealmSupportedLocalesByRealmIdAndValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_realm_supported_locales_by_realm_id_and_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthRealmSupportedLocalesByRealmIdAndValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthRealmSupportedLocalesByRealmIdAndValue
+  outputType: DeleteAuthRealmSupportedLocalesByRealmIdAndValueResponse!
+  arguments:
+    - name: keyRealmId
+      type: Varchar!
+    - name: keyValue
+      type: Varchar!
+    - name: preCheck
+      type: AuthRealmSupportedLocalesBoolExp
+      description: Delete permission predicate over the 'auth_realm_supported_locales'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_realm_supported_locales_by_realm_id_and_value
+    argumentMapping:
+      keyRealmId: key_realm_id
+      keyValue: key_value
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthRealmSupportedLocalesByRealmIdAndValue
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_realm_supported_locales' collection
+    using the 'realm_id' and 'value' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthRealmSupportedLocalesByRealmIdAndValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

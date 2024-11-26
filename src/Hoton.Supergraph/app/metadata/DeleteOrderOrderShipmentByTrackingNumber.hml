@@ -1,0 +1,73 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderOrderShipmentByTrackingNumberResponse
+  description: Responses from the 'delete_order_order_shipment_by_tracking_number' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderShipment!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderOrderShipmentByTrackingNumberResponse
+    inputTypeName: DeleteOrderOrderShipmentByTrackingNumberResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_order_shipment_by_tracking_number_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderOrderShipmentByTrackingNumberResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderOrderShipmentByTrackingNumber
+  outputType: DeleteOrderOrderShipmentByTrackingNumberResponse!
+  arguments:
+    - name: keyTrackingNumber
+      type: Varchar!
+    - name: preCheck
+      type: OrderOrderShipmentBoolExp
+      description: Delete permission predicate over the 'order_order_shipment' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_order_shipment_by_tracking_number
+    argumentMapping:
+      keyTrackingNumber: key_tracking_number
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderOrderShipmentByTrackingNumber
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_order_shipment' collection using the
+    'tracking_number' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderOrderShipmentByTrackingNumber
+  permissions:
+    - role: admin
+      allowExecution: true
+

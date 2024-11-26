@@ -1,0 +1,252 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthAdminEventEntity
+  fields:
+    - name: adminEventTime
+      type: Int8
+    - name: authClientId
+      type: Varchar
+    - name: authRealmId
+      type: Varchar
+    - name: authUserId
+      type: Varchar
+    - name: error
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: ipAddress
+      type: Varchar
+    - name: operationType
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: representation
+      type: Text
+    - name: resourcePath
+      type: Varchar
+    - name: resourceType
+      type: Varchar
+  graphql:
+    typeName: AuthAdminEventEntity
+    inputTypeName: AuthAdminEventEntityInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_admin_event_entity
+      fieldMapping:
+        adminEventTime:
+          column:
+            name: admin_event_time
+        authClientId:
+          column:
+            name: auth_client_id
+        authRealmId:
+          column:
+            name: auth_realm_id
+        authUserId:
+          column:
+            name: auth_user_id
+        error:
+          column:
+            name: error
+        id:
+          column:
+            name: id
+        ipAddress:
+          column:
+            name: ip_address
+        operationType:
+          column:
+            name: operation_type
+        realmId:
+          column:
+            name: realm_id
+        representation:
+          column:
+            name: representation
+        resourcePath:
+          column:
+            name: resource_path
+        resourceType:
+          column:
+            name: resource_type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthAdminEventEntity
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - adminEventTime
+          - authClientId
+          - authRealmId
+          - authUserId
+          - error
+          - id
+          - ipAddress
+          - operationType
+          - realmId
+          - representation
+          - resourcePath
+          - resourceType
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthAdminEventEntityBoolExp
+  operand:
+    object:
+      type: AuthAdminEventEntity
+      comparableFields:
+        - fieldName: adminEventTime
+          booleanExpressionType: Int8BoolExp
+        - fieldName: authClientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: authRealmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: authUserId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: error
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: ipAddress
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: operationType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: representation
+          booleanExpressionType: TextBoolExp
+        - fieldName: resourcePath
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: resourceType
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthAdminEventEntityBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthAdminEventEntityAggExp
+  operand:
+    object:
+      aggregatedType: AuthAdminEventEntity
+      aggregatableFields:
+        - fieldName: adminEventTime
+          aggregateExpression: Int8AggExp
+        - fieldName: authClientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: authRealmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: authUserId
+          aggregateExpression: VarcharAggExp
+        - fieldName: error
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: ipAddress
+          aggregateExpression: VarcharAggExp
+        - fieldName: operationType
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: representation
+          aggregateExpression: TextAggExp
+        - fieldName: resourcePath
+          aggregateExpression: VarcharAggExp
+        - fieldName: resourceType
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthAdminEventEntityAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthAdminEventEntity
+  objectType: AuthAdminEventEntity
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_admin_event_entity
+  filterExpressionType: AuthAdminEventEntityBoolExp
+  aggregateExpression: AuthAdminEventEntityAggExp
+  orderableFields:
+    - fieldName: adminEventTime
+      orderByDirections:
+        enableAll: true
+    - fieldName: authClientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: authRealmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: authUserId
+      orderByDirections:
+        enableAll: true
+    - fieldName: error
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: ipAddress
+      orderByDirections:
+        enableAll: true
+    - fieldName: operationType
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: representation
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourcePath
+      orderByDirections:
+        enableAll: true
+    - fieldName: resourceType
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authAdminEventEntity
+      subscription:
+        rootField: authAdminEventEntity
+    selectUniques:
+      - queryRootField: authAdminEventEntityById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authAdminEventEntityById
+    orderByExpressionType: AuthAdminEventEntityOrderBy
+    filterInputTypeName: AuthAdminEventEntityFilterInput
+    aggregate:
+      queryRootField: authAdminEventEntityAggregate
+      subscription:
+        rootField: authAdminEventEntityAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthAdminEventEntity
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

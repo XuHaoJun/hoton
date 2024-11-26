@@ -1,0 +1,149 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthFedUserRoleMapping
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: roleId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthFedUserRoleMapping
+    inputTypeName: AuthFedUserRoleMappingInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_fed_user_role_mapping
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        roleId:
+          column:
+            name: role_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthFedUserRoleMapping
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - roleId
+          - storageProviderId
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthFedUserRoleMappingBoolExp
+  operand:
+    object:
+      type: AuthFedUserRoleMapping
+      comparableFields:
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: roleId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storageProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthFedUserRoleMappingBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthFedUserRoleMappingAggExp
+  operand:
+    object:
+      aggregatedType: AuthFedUserRoleMapping
+      aggregatableFields:
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: roleId
+          aggregateExpression: VarcharAggExp
+        - fieldName: storageProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthFedUserRoleMappingAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthFedUserRoleMapping
+  objectType: AuthFedUserRoleMapping
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_fed_user_role_mapping
+  filterExpressionType: AuthFedUserRoleMappingBoolExp
+  aggregateExpression: AuthFedUserRoleMappingAggExp
+  orderableFields:
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: roleId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storageProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authFedUserRoleMapping
+      subscription:
+        rootField: authFedUserRoleMapping
+    selectUniques:
+      - queryRootField: authFedUserRoleMappingByConstrFedUserRole
+        uniqueIdentifier:
+          - roleId
+          - userId
+        subscription:
+          rootField: authFedUserRoleMappingByConstrFedUserRole
+    orderByExpressionType: AuthFedUserRoleMappingOrderBy
+    filterInputTypeName: AuthFedUserRoleMappingFilterInput
+    aggregate:
+      queryRootField: authFedUserRoleMappingAggregate
+      subscription:
+        rootField: authFedUserRoleMappingAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthFedUserRoleMapping
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

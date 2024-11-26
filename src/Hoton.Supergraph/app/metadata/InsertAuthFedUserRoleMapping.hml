@@ -1,0 +1,121 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserRoleMappingObject
+  fields:
+    - name: realmId
+      type: Varchar!
+    - name: roleId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthFedUserRoleMappingObject
+    inputTypeName: InsertAuthFedUserRoleMappingObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_role_mapping_object
+      fieldMapping:
+        realmId:
+          column:
+            name: realm_id
+        roleId:
+          column:
+            name: role_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserRoleMappingObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - realmId
+          - roleId
+          - storageProviderId
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserRoleMappingResponse
+  description: Responses from the 'insert_auth_fed_user_role_mapping' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserRoleMapping!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthFedUserRoleMappingResponse
+    inputTypeName: InsertAuthFedUserRoleMappingResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_role_mapping_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserRoleMappingResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthFedUserRoleMapping
+  outputType: InsertAuthFedUserRoleMappingResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthFedUserRoleMappingObject!]!"
+    - name: postCheck
+      type: AuthFedUserRoleMappingBoolExp
+      description: Insert permission predicate over the 'auth_fed_user_role_mapping'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_fed_user_role_mapping
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthFedUserRoleMapping
+    rootFieldKind: Mutation
+  description: Insert into the auth_fed_user_role_mapping table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthFedUserRoleMapping
+  permissions:
+    - role: admin
+      allowExecution: true
+

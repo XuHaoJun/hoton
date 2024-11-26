@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthResourceScopeByResourceIdAndScopeIdResponse
+  description: Responses from the
+    'delete_auth_resource_scope_by_resource_id_and_scope_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthResourceScopeByResourceIdAndScopeIdResponse
+    inputTypeName: DeleteAuthResourceScopeByResourceIdAndScopeIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_resource_scope_by_resource_id_and_scope_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthResourceScopeByResourceIdAndScopeIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthResourceScopeByResourceIdAndScopeId
+  outputType: DeleteAuthResourceScopeByResourceIdAndScopeIdResponse!
+  arguments:
+    - name: keyResourceId
+      type: Varchar!
+    - name: keyScopeId
+      type: Varchar!
+    - name: preCheck
+      type: AuthResourceScopeBoolExp
+      description: Delete permission predicate over the 'auth_resource_scope' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_resource_scope_by_resource_id_and_scope_id
+    argumentMapping:
+      keyResourceId: key_resource_id
+      keyScopeId: key_scope_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthResourceScopeByResourceIdAndScopeId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_resource_scope' collection using the
+    'resource_id' and 'scope_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthResourceScopeByResourceIdAndScopeId
+  permissions:
+    - role: admin
+      allowExecution: true
+

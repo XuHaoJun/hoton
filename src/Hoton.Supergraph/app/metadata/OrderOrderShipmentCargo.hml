@@ -1,0 +1,268 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrderShipmentCargo
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: height
+      type: Numeric
+    - name: id
+      type: Uuid!
+    - name: length
+      type: Numeric
+    - name: orderShipmentId
+      type: Uuid
+    - name: trackingNumber
+      type: Varchar
+    - name: updatedAt
+      type: Timestamptz
+    - name: volume
+      type: Numeric
+    - name: weight
+      type: Numeric
+    - name: width
+      type: Numeric
+  graphql:
+    typeName: OrderOrderShipmentCargo
+    inputTypeName: OrderOrderShipmentCargoInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order_shipment_cargo
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        height:
+          column:
+            name: height
+        id:
+          column:
+            name: id
+        length:
+          column:
+            name: length
+        orderShipmentId:
+          column:
+            name: order_shipment_id
+        trackingNumber:
+          column:
+            name: tracking_number
+        updatedAt:
+          column:
+            name: updated_at
+        volume:
+          column:
+            name: volume
+        weight:
+          column:
+            name: weight
+        width:
+          column:
+            name: width
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrderShipmentCargo
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - height
+          - id
+          - length
+          - orderShipmentId
+          - trackingNumber
+          - updatedAt
+          - volume
+          - weight
+          - width
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderShipmentCargoBoolExp
+  operand:
+    object:
+      type: OrderOrderShipmentCargo
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: height
+          booleanExpressionType: NumericBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: length
+          booleanExpressionType: NumericBoolExp
+        - fieldName: orderShipmentId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: trackingNumber
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: volume
+          booleanExpressionType: NumericBoolExp
+        - fieldName: weight
+          booleanExpressionType: NumericBoolExp
+        - fieldName: width
+          booleanExpressionType: NumericBoolExp
+      comparableRelationships:
+        - relationshipName: orderOrderItemCargoMaps
+        - relationshipName: orderOrderShipment
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderShipmentCargoBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderShipmentCargoAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrderShipmentCargo
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: height
+          aggregateExpression: NumericAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: length
+          aggregateExpression: NumericAggExp
+        - fieldName: orderShipmentId
+          aggregateExpression: UuidAggExp
+        - fieldName: trackingNumber
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: volume
+          aggregateExpression: NumericAggExp
+        - fieldName: weight
+          aggregateExpression: NumericAggExp
+        - fieldName: width
+          aggregateExpression: NumericAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderShipmentCargoAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrderShipmentCargo
+  objectType: OrderOrderShipmentCargo
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order_shipment_cargo
+  filterExpressionType: OrderOrderShipmentCargoBoolExp
+  aggregateExpression: OrderOrderShipmentCargoAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: height
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: length
+      orderByDirections:
+        enableAll: true
+    - fieldName: orderShipmentId
+      orderByDirections:
+        enableAll: true
+    - fieldName: trackingNumber
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: volume
+      orderByDirections:
+        enableAll: true
+    - fieldName: weight
+      orderByDirections:
+        enableAll: true
+    - fieldName: width
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrderShipmentCargo
+      subscription:
+        rootField: orderOrderShipmentCargo
+    selectUniques:
+      - queryRootField: orderOrderShipmentCargoById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderOrderShipmentCargoById
+    orderByExpressionType: OrderOrderShipmentCargoOrderBy
+    filterInputTypeName: OrderOrderShipmentCargoFilterInput
+    aggregate:
+      queryRootField: orderOrderShipmentCargoAggregate
+      subscription:
+        rootField: orderOrderShipmentCargoAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrderShipmentCargo
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderItemCargoMaps
+  sourceType: OrderOrderShipmentCargo
+  target:
+    model:
+      name: OrderOrderItemCargoMap
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderItemCargoMapAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderShipmentCargoId
+  graphql:
+    aggregateFieldName: orderOrderItemCargoMapsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderShipment
+  sourceType: OrderOrderShipmentCargo
+  target:
+    model:
+      name: OrderOrderShipment
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: orderShipmentId
+      target:
+        modelField:
+          - fieldName: id
+

@@ -1,0 +1,229 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthComponent
+  fields:
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: parentId
+      type: Varchar
+    - name: providerId
+      type: Varchar
+    - name: providerType
+      type: Varchar
+    - name: realmId
+      type: Varchar
+    - name: subType
+      type: Varchar
+  graphql:
+    typeName: AuthComponent
+    inputTypeName: AuthComponentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_component
+      fieldMapping:
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        parentId:
+          column:
+            name: parent_id
+        providerId:
+          column:
+            name: provider_id
+        providerType:
+          column:
+            name: provider_type
+        realmId:
+          column:
+            name: realm_id
+        subType:
+          column:
+            name: sub_type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthComponent
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - name
+          - parentId
+          - providerId
+          - providerType
+          - realmId
+          - subType
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthComponentBoolExp
+  operand:
+    object:
+      type: AuthComponent
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: parentId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: providerId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: providerType
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: subType
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+        - relationshipName: authComponentConfigs
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthComponentBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthComponentAggExp
+  operand:
+    object:
+      aggregatedType: AuthComponent
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: parentId
+          aggregateExpression: VarcharAggExp
+        - fieldName: providerId
+          aggregateExpression: VarcharAggExp
+        - fieldName: providerType
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: subType
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthComponentAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthComponent
+  objectType: AuthComponent
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_component
+  filterExpressionType: AuthComponentBoolExp
+  aggregateExpression: AuthComponentAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: parentId
+      orderByDirections:
+        enableAll: true
+    - fieldName: providerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: providerType
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: subType
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authComponent
+      subscription:
+        rootField: authComponent
+    selectUniques:
+      - queryRootField: authComponentById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authComponentById
+    orderByExpressionType: AuthComponentOrderBy
+    filterInputTypeName: AuthComponentFilterInput
+    aggregate:
+      queryRootField: authComponentAggregate
+      subscription:
+        rootField: authComponentAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthComponent
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthComponent
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authComponentConfigs
+  sourceType: AuthComponent
+  target:
+    model:
+      name: AuthComponentConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthComponentConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: componentId
+  graphql:
+    aggregateFieldName: authComponentConfigsAggregate
+

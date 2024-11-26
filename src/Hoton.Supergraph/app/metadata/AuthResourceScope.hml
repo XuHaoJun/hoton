@@ -1,0 +1,161 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthResourceScope
+  fields:
+    - name: resourceId
+      type: Varchar!
+    - name: scopeId
+      type: Varchar!
+  graphql:
+    typeName: AuthResourceScope
+    inputTypeName: AuthResourceScopeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_resource_scope
+      fieldMapping:
+        resourceId:
+          column:
+            name: resource_id
+        scopeId:
+          column:
+            name: scope_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthResourceScope
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - resourceId
+          - scopeId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthResourceScopeBoolExp
+  operand:
+    object:
+      type: AuthResourceScope
+      comparableFields:
+        - fieldName: resourceId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: scopeId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authResourceServerResource
+        - relationshipName: authResourceServerScope
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthResourceScopeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthResourceScopeAggExp
+  operand:
+    object:
+      aggregatedType: AuthResourceScope
+      aggregatableFields:
+        - fieldName: resourceId
+          aggregateExpression: VarcharAggExp
+        - fieldName: scopeId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthResourceScopeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthResourceScope
+  objectType: AuthResourceScope
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_resource_scope
+  filterExpressionType: AuthResourceScopeBoolExp
+  aggregateExpression: AuthResourceScopeAggExp
+  orderableFields:
+    - fieldName: resourceId
+      orderByDirections:
+        enableAll: true
+    - fieldName: scopeId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authResourceScope
+      subscription:
+        rootField: authResourceScope
+    selectUniques:
+      - queryRootField: authResourceScopeByConstraintFarsrsp
+        uniqueIdentifier:
+          - resourceId
+          - scopeId
+        subscription:
+          rootField: authResourceScopeByConstraintFarsrsp
+    orderByExpressionType: AuthResourceScopeOrderBy
+    filterInputTypeName: AuthResourceScopeFilterInput
+    aggregate:
+      queryRootField: authResourceScopeAggregate
+      subscription:
+        rootField: authResourceScopeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthResourceScope
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerResource
+  sourceType: AuthResourceScope
+  target:
+    model:
+      name: AuthResourceServerResource
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: resourceId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authResourceServerScope
+  sourceType: AuthResourceScope
+  target:
+    model:
+      name: AuthResourceServerScope
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: scopeId
+      target:
+        modelField:
+          - fieldName: id
+

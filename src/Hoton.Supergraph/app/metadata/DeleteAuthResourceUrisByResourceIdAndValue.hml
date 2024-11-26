@@ -1,0 +1,77 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthResourceUrisByResourceIdAndValueResponse
+  description: Responses from the
+    'delete_auth_resource_uris_by_resource_id_and_value' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceUris!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthResourceUrisByResourceIdAndValueResponse
+    inputTypeName: DeleteAuthResourceUrisByResourceIdAndValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_resource_uris_by_resource_id_and_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthResourceUrisByResourceIdAndValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthResourceUrisByResourceIdAndValue
+  outputType: DeleteAuthResourceUrisByResourceIdAndValueResponse!
+  arguments:
+    - name: keyResourceId
+      type: Varchar!
+    - name: keyValue
+      type: Varchar!
+    - name: preCheck
+      type: AuthResourceUrisBoolExp
+      description: Delete permission predicate over the 'auth_resource_uris' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_resource_uris_by_resource_id_and_value
+    argumentMapping:
+      keyResourceId: key_resource_id
+      keyValue: key_value
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthResourceUrisByResourceIdAndValue
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_resource_uris' collection using the
+    'resource_id' and 'value' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthResourceUrisByResourceIdAndValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

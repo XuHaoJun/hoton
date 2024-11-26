@@ -1,0 +1,73 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderByInternalIdResponse
+  description: Responses from the 'delete_auth_identity_provider_by_internal_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthIdentityProvider!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthIdentityProviderByInternalIdResponse
+    inputTypeName: DeleteAuthIdentityProviderByInternalIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_identity_provider_by_internal_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthIdentityProviderByInternalIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthIdentityProviderByInternalId
+  outputType: DeleteAuthIdentityProviderByInternalIdResponse!
+  arguments:
+    - name: keyInternalId
+      type: Varchar!
+    - name: preCheck
+      type: AuthIdentityProviderBoolExp
+      description: Delete permission predicate over the 'auth_identity_provider' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_identity_provider_by_internal_id
+    argumentMapping:
+      keyInternalId: key_internal_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthIdentityProviderByInternalId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_identity_provider' collection using the
+    'internal_id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthIdentityProviderByInternalId
+  permissions:
+    - role: admin
+      allowExecution: true
+

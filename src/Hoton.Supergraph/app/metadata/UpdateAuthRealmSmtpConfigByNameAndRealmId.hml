@@ -1,0 +1,228 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthRealmSmtpConfigName
+  description: Update the 'name' column in the 'auth_realm_smtp_config' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthRealmSmtpConfigName
+    inputTypeName: UpdateColumnAuthRealmSmtpConfigNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_realm_smtp_config_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthRealmSmtpConfigName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthRealmSmtpConfigRealmId
+  description: Update the 'realm_id' column in the 'auth_realm_smtp_config' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthRealmSmtpConfigRealmId
+    inputTypeName: UpdateColumnAuthRealmSmtpConfigRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_realm_smtp_config_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthRealmSmtpConfigRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthRealmSmtpConfigValue
+  description: Update the 'value' column in the 'auth_realm_smtp_config' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthRealmSmtpConfigValue
+    inputTypeName: UpdateColumnAuthRealmSmtpConfigValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_realm_smtp_config_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthRealmSmtpConfigValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRealmSmtpConfigByNameAndRealmIdUpdateColumns
+  description: Update the columns of the 'auth_realm_smtp_config' collection
+  fields:
+    - name: name
+      type: UpdateColumnAuthRealmSmtpConfigName
+      description: Update the 'name' column in the 'auth_realm_smtp_config' collection.
+    - name: realmId
+      type: UpdateColumnAuthRealmSmtpConfigRealmId
+      description: Update the 'realm_id' column in the 'auth_realm_smtp_config' collection.
+    - name: value
+      type: UpdateColumnAuthRealmSmtpConfigValue
+      description: Update the 'value' column in the 'auth_realm_smtp_config' collection.
+  graphql:
+    typeName: UpdateAuthRealmSmtpConfigByNameAndRealmIdUpdateColumns
+    inputTypeName: UpdateAuthRealmSmtpConfigByNameAndRealmIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_realm_smtp_config_by_name_and_realm_id_update_columns
+      fieldMapping:
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRealmSmtpConfigByNameAndRealmIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - realmId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthRealmSmtpConfigByNameAndRealmIdResponse
+  description: Responses from the
+    'update_auth_realm_smtp_config_by_name_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmSmtpConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthRealmSmtpConfigByNameAndRealmIdResponse
+    inputTypeName: UpdateAuthRealmSmtpConfigByNameAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_realm_smtp_config_by_name_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthRealmSmtpConfigByNameAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthRealmSmtpConfigByNameAndRealmId
+  outputType: UpdateAuthRealmSmtpConfigByNameAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar!
+    - name: postCheck
+      type: AuthRealmSmtpConfigBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_realm_smtp_config' collection
+    - name: preCheck
+      type: AuthRealmSmtpConfigBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_realm_smtp_config' collection
+    - name: updateColumns
+      type: UpdateAuthRealmSmtpConfigByNameAndRealmIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_realm_smtp_config_by_name_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyRealmId: key_realm_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthRealmSmtpConfigByNameAndRealmId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_realm_smtp_config' collection using the
+    'name' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthRealmSmtpConfigByNameAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

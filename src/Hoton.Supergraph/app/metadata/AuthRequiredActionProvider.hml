@@ -1,0 +1,219 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRequiredActionProvider
+  fields:
+    - name: alias
+      type: Varchar
+    - name: defaultAction
+      type: Bool!
+    - name: enabled
+      type: Bool!
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: priority
+      type: Int4
+    - name: providerId
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: AuthRequiredActionProvider
+    inputTypeName: AuthRequiredActionProviderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_required_action_provider
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        defaultAction:
+          column:
+            name: default_action
+        enabled:
+          column:
+            name: enabled
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        priority:
+          column:
+            name: priority
+        providerId:
+          column:
+            name: provider_id
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRequiredActionProvider
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - defaultAction
+          - enabled
+          - id
+          - name
+          - priority
+          - providerId
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRequiredActionProviderBoolExp
+  operand:
+    object:
+      type: AuthRequiredActionProvider
+      comparableFields:
+        - fieldName: alias
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: defaultAction
+          booleanExpressionType: BoolBoolExp
+        - fieldName: enabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: priority
+          booleanExpressionType: Int4BoolExp
+        - fieldName: providerId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRequiredActionProviderBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRequiredActionProviderAggExp
+  operand:
+    object:
+      aggregatedType: AuthRequiredActionProvider
+      aggregatableFields:
+        - fieldName: alias
+          aggregateExpression: VarcharAggExp
+        - fieldName: defaultAction
+          aggregateExpression: BoolAggExp
+        - fieldName: enabled
+          aggregateExpression: BoolAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: priority
+          aggregateExpression: Int4AggExp
+        - fieldName: providerId
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRequiredActionProviderAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRequiredActionProvider
+  objectType: AuthRequiredActionProvider
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_required_action_provider
+  filterExpressionType: AuthRequiredActionProviderBoolExp
+  aggregateExpression: AuthRequiredActionProviderAggExp
+  orderableFields:
+    - fieldName: alias
+      orderByDirections:
+        enableAll: true
+    - fieldName: defaultAction
+      orderByDirections:
+        enableAll: true
+    - fieldName: enabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: priority
+      orderByDirections:
+        enableAll: true
+    - fieldName: providerId
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRequiredActionProvider
+      subscription:
+        rootField: authRequiredActionProvider
+    selectUniques:
+      - queryRootField: authRequiredActionProviderById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authRequiredActionProviderById
+    orderByExpressionType: AuthRequiredActionProviderOrderBy
+    filterInputTypeName: AuthRequiredActionProviderFilterInput
+    aggregate:
+      queryRootField: authRequiredActionProviderAggregate
+      subscription:
+        rootField: authRequiredActionProviderAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRequiredActionProvider
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthRequiredActionProvider
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

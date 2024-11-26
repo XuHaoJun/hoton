@@ -1,0 +1,142 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserConsentClientScope
+  fields:
+    - name: scopeId
+      type: Varchar!
+    - name: userConsentId
+      type: Varchar!
+  graphql:
+    typeName: AuthUserConsentClientScope
+    inputTypeName: AuthUserConsentClientScopeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_consent_client_scope
+      fieldMapping:
+        scopeId:
+          column:
+            name: scope_id
+        userConsentId:
+          column:
+            name: user_consent_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserConsentClientScope
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - scopeId
+          - userConsentId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserConsentClientScopeBoolExp
+  operand:
+    object:
+      type: AuthUserConsentClientScope
+      comparableFields:
+        - fieldName: scopeId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userConsentId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserConsent
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserConsentClientScopeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserConsentClientScopeAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserConsentClientScope
+      aggregatableFields:
+        - fieldName: scopeId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userConsentId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserConsentClientScopeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserConsentClientScope
+  objectType: AuthUserConsentClientScope
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_consent_client_scope
+  filterExpressionType: AuthUserConsentClientScopeBoolExp
+  aggregateExpression: AuthUserConsentClientScopeAggExp
+  orderableFields:
+    - fieldName: scopeId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userConsentId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserConsentClientScope
+      subscription:
+        rootField: authUserConsentClientScope
+    selectUniques:
+      - queryRootField: authUserConsentClientScopeByConstraintGrntcsntClscPm
+        uniqueIdentifier:
+          - scopeId
+          - userConsentId
+        subscription:
+          rootField: authUserConsentClientScopeByConstraintGrntcsntClscPm
+    orderByExpressionType: AuthUserConsentClientScopeOrderBy
+    filterInputTypeName: AuthUserConsentClientScopeFilterInput
+    aggregate:
+      queryRootField: authUserConsentClientScopeAggregate
+      subscription:
+        rootField: authUserConsentClientScopeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserConsentClientScope
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserConsent
+  sourceType: AuthUserConsentClientScope
+  target:
+    model:
+      name: AuthUserConsent
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userConsentId
+      target:
+        modelField:
+          - fieldName: id
+

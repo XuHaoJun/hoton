@@ -1,0 +1,82 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse
+  description: Responses from the
+    'delete_auth_resource_server_resource_by_name_and_owner_and_resource_server_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthResourceServerResource!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse
+    inputTypeName: DeleteAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_resource_server_resource_by_name_and_owner_and_resource_server_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthResourceServerResourceByNameAndOwnerAndResourceServerId
+  outputType: DeleteAuthResourceServerResourceByNameAndOwnerAndResourceServerIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyOwner
+      type: Varchar!
+    - name: keyResourceServerId
+      type: Varchar!
+    - name: preCheck
+      type: AuthResourceServerResourceBoolExp
+      description: Delete permission predicate over the
+        'auth_resource_server_resource' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_resource_server_resource_by_name_and_owner_and_resource_server_id
+    argumentMapping:
+      keyName: key_name
+      keyOwner: key_owner
+      keyResourceServerId: key_resource_server_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthResourceServerResourceByNameAndOwnerAndResourceServerId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_resource_server_resource' collection
+    using the 'name', 'owner' and 'resource_server_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthResourceServerResourceByNameAndOwnerAndResourceServerId
+  permissions:
+    - role: admin
+      allowExecution: true
+

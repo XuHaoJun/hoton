@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthFedUserRequiredActionByRequiredActionAndUserIdResponse
+  description: Responses from the
+    'delete_auth_fed_user_required_action_by_required_action_and_user_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserRequiredAction!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthFedUserRequiredActionByRequiredActionAndUserIdResponse
+    inputTypeName: DeleteAuthFedUserRequiredActionByRequiredActionAndUserIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_fed_user_required_action_by_required_action_and_user_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthFedUserRequiredActionByRequiredActionAndUserIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthFedUserRequiredActionByRequiredActionAndUserId
+  outputType: DeleteAuthFedUserRequiredActionByRequiredActionAndUserIdResponse!
+  arguments:
+    - name: keyRequiredAction
+      type: Varchar!
+    - name: keyUserId
+      type: Varchar!
+    - name: preCheck
+      type: AuthFedUserRequiredActionBoolExp
+      description: Delete permission predicate over the
+        'auth_fed_user_required_action' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_fed_user_required_action_by_required_action_and_user_id
+    argumentMapping:
+      keyRequiredAction: key_required_action
+      keyUserId: key_user_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthFedUserRequiredActionByRequiredActionAndUserId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_fed_user_required_action' collection
+    using the 'required_action' and 'user_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthFedUserRequiredActionByRequiredActionAndUserId
+  permissions:
+    - role: admin
+      allowExecution: true
+

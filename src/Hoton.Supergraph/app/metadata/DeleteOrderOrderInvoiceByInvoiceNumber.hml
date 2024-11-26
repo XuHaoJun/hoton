@@ -1,0 +1,73 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderOrderInvoiceByInvoiceNumberResponse
+  description: Responses from the 'delete_order_order_invoice_by_invoice_number' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderInvoice!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderOrderInvoiceByInvoiceNumberResponse
+    inputTypeName: DeleteOrderOrderInvoiceByInvoiceNumberResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_order_invoice_by_invoice_number_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderOrderInvoiceByInvoiceNumberResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderOrderInvoiceByInvoiceNumber
+  outputType: DeleteOrderOrderInvoiceByInvoiceNumberResponse!
+  arguments:
+    - name: keyInvoiceNumber
+      type: Varchar!
+    - name: preCheck
+      type: OrderOrderInvoiceBoolExp
+      description: Delete permission predicate over the 'order_order_invoice' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_order_invoice_by_invoice_number
+    argumentMapping:
+      keyInvoiceNumber: key_invoice_number
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderOrderInvoiceByInvoiceNumber
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_order_invoice' collection using the
+    'invoice_number' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderOrderInvoiceByInvoiceNumber
+  permissions:
+    - role: admin
+      allowExecution: true
+

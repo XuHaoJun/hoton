@@ -1,0 +1,236 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthClientScope
+  fields:
+    - name: description
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar
+    - name: protocol
+      type: Varchar
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: AuthClientScope
+    inputTypeName: AuthClientScopeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_client_scope
+      fieldMapping:
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        protocol:
+          column:
+            name: protocol
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthClientScope
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - description
+          - id
+          - name
+          - protocol
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthClientScopeBoolExp
+  operand:
+    object:
+      type: AuthClientScope
+      comparableFields:
+        - fieldName: description
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: protocol
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authClientScopeAttributes
+        - relationshipName: authClientScopeRoleMappings
+        - relationshipName: authProtocolMappers
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthClientScopeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthClientScopeAggExp
+  operand:
+    object:
+      aggregatedType: AuthClientScope
+      aggregatableFields:
+        - fieldName: description
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: protocol
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthClientScopeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthClientScope
+  objectType: AuthClientScope
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_client_scope
+  filterExpressionType: AuthClientScopeBoolExp
+  aggregateExpression: AuthClientScopeAggExp
+  orderableFields:
+    - fieldName: description
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: protocol
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authClientScope
+      subscription:
+        rootField: authClientScope
+    selectUniques:
+      - queryRootField: authClientScopeById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authClientScopeById
+      - queryRootField: authClientScopeByUkCliScope
+        uniqueIdentifier:
+          - name
+          - realmId
+        subscription:
+          rootField: authClientScopeByUkCliScope
+    orderByExpressionType: AuthClientScopeOrderBy
+    filterInputTypeName: AuthClientScopeFilterInput
+    aggregate:
+      queryRootField: authClientScopeAggregate
+      subscription:
+        rootField: authClientScopeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthClientScope
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClientScopeAttributes
+  sourceType: AuthClientScope
+  target:
+    model:
+      name: AuthClientScopeAttributes
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthClientScopeAttributesAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: scopeId
+  graphql:
+    aggregateFieldName: authClientScopeAttributesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authClientScopeRoleMappings
+  sourceType: AuthClientScope
+  target:
+    model:
+      name: AuthClientScopeRoleMapping
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthClientScopeRoleMappingAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: scopeId
+  graphql:
+    aggregateFieldName: authClientScopeRoleMappingsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authProtocolMappers
+  sourceType: AuthClientScope
+  target:
+    model:
+      name: AuthProtocolMapper
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: AuthProtocolMapperAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: clientScopeId
+  graphql:
+    aggregateFieldName: authProtocolMappersAggregate
+

@@ -1,0 +1,135 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthFederatedUser
+  fields:
+    - name: id
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+  graphql:
+    typeName: AuthFederatedUser
+    inputTypeName: AuthFederatedUserInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_federated_user
+      fieldMapping:
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthFederatedUser
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - realmId
+          - storageProviderId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthFederatedUserBoolExp
+  operand:
+    object:
+      type: AuthFederatedUser
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storageProviderId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthFederatedUserBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthFederatedUserAggExp
+  operand:
+    object:
+      aggregatedType: AuthFederatedUser
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: storageProviderId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthFederatedUserAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthFederatedUser
+  objectType: AuthFederatedUser
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_federated_user
+  filterExpressionType: AuthFederatedUserBoolExp
+  aggregateExpression: AuthFederatedUserAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storageProviderId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authFederatedUser
+      subscription:
+        rootField: authFederatedUser
+    selectUniques:
+      - queryRootField: authFederatedUserById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authFederatedUserById
+    orderByExpressionType: AuthFederatedUserOrderBy
+    filterInputTypeName: AuthFederatedUserFilterInput
+    aggregate:
+      queryRootField: authFederatedUserAggregate
+      subscription:
+        rootField: authFederatedUserAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthFederatedUser
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

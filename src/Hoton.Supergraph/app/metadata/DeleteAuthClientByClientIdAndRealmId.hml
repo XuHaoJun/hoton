@@ -1,0 +1,76 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthClientByClientIdAndRealmIdResponse
+  description: Responses from the 'delete_auth_client_by_client_id_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthClient!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthClientByClientIdAndRealmIdResponse
+    inputTypeName: DeleteAuthClientByClientIdAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_client_by_client_id_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthClientByClientIdAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthClientByClientIdAndRealmId
+  outputType: DeleteAuthClientByClientIdAndRealmIdResponse!
+  arguments:
+    - name: keyClientId
+      type: Varchar
+    - name: keyRealmId
+      type: Varchar
+    - name: preCheck
+      type: AuthClientBoolExp
+      description: Delete permission predicate over the 'auth_client' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_client_by_client_id_and_realm_id
+    argumentMapping:
+      keyClientId: key_client_id
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthClientByClientIdAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_client' collection using the
+    'client_id' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthClientByClientIdAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,382 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserAttributeId
+  description: Update the 'id' column in the 'auth_user_attribute' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserAttributeId
+    inputTypeName: UpdateColumnAuthUserAttributeIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_attribute_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserAttributeId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserAttributeLongValue
+  description: Update the 'long_value' column in the 'auth_user_attribute' collection
+  fields:
+    - name: set
+      type: Text
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserAttributeLongValue
+    inputTypeName: UpdateColumnAuthUserAttributeLongValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_attribute_long_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserAttributeLongValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserAttributeLongValueHash
+  description: Update the 'long_value_hash' column in the 'auth_user_attribute' collection
+  fields:
+    - name: set
+      type: Bytea
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserAttributeLongValueHash
+    inputTypeName: UpdateColumnAuthUserAttributeLongValueHashInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_attribute_long_value_hash
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserAttributeLongValueHash
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserAttributeLongValueHashLowerCase
+  description: Update the 'long_value_hash_lower_case' column in the
+    'auth_user_attribute' collection
+  fields:
+    - name: set
+      type: Bytea
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserAttributeLongValueHashLowerCase
+    inputTypeName: UpdateColumnAuthUserAttributeLongValueHashLowerCaseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_attribute_long_value_hash_lower_case
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserAttributeLongValueHashLowerCase
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserAttributeName
+  description: Update the 'name' column in the 'auth_user_attribute' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserAttributeName
+    inputTypeName: UpdateColumnAuthUserAttributeNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_attribute_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserAttributeName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserAttributeUserId
+  description: Update the 'user_id' column in the 'auth_user_attribute' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserAttributeUserId
+    inputTypeName: UpdateColumnAuthUserAttributeUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_attribute_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserAttributeUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthUserAttributeValue
+  description: Update the 'value' column in the 'auth_user_attribute' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthUserAttributeValue
+    inputTypeName: UpdateColumnAuthUserAttributeValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_user_attribute_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthUserAttributeValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserAttributeByIdUpdateColumns
+  description: Update the columns of the 'auth_user_attribute' collection
+  fields:
+    - name: id
+      type: UpdateColumnAuthUserAttributeId
+      description: Update the 'id' column in the 'auth_user_attribute' collection.
+    - name: longValue
+      type: UpdateColumnAuthUserAttributeLongValue
+      description: Update the 'long_value' column in the 'auth_user_attribute' collection.
+    - name: longValueHash
+      type: UpdateColumnAuthUserAttributeLongValueHash
+      description: Update the 'long_value_hash' column in the 'auth_user_attribute'
+        collection.
+    - name: longValueHashLowerCase
+      type: UpdateColumnAuthUserAttributeLongValueHashLowerCase
+      description: Update the 'long_value_hash_lower_case' column in the
+        'auth_user_attribute' collection.
+    - name: name
+      type: UpdateColumnAuthUserAttributeName
+      description: Update the 'name' column in the 'auth_user_attribute' collection.
+    - name: userId
+      type: UpdateColumnAuthUserAttributeUserId
+      description: Update the 'user_id' column in the 'auth_user_attribute' collection.
+    - name: value
+      type: UpdateColumnAuthUserAttributeValue
+      description: Update the 'value' column in the 'auth_user_attribute' collection.
+  graphql:
+    typeName: UpdateAuthUserAttributeByIdUpdateColumns
+    inputTypeName: UpdateAuthUserAttributeByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_attribute_by_id_update_columns
+      fieldMapping:
+        id:
+          column:
+            name: id
+        longValue:
+          column:
+            name: long_value
+        longValueHash:
+          column:
+            name: long_value_hash
+        longValueHashLowerCase:
+          column:
+            name: long_value_hash_lower_case
+        name:
+          column:
+            name: name
+        userId:
+          column:
+            name: user_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserAttributeByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - longValue
+          - longValueHash
+          - longValueHashLowerCase
+          - name
+          - userId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserAttributeByIdResponse
+  description: Responses from the 'update_auth_user_attribute_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthUserAttributeByIdResponse
+    inputTypeName: UpdateAuthUserAttributeByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_attribute_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserAttributeByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthUserAttributeById
+  outputType: UpdateAuthUserAttributeByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthUserAttributeBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_user_attribute' collection
+    - name: preCheck
+      type: AuthUserAttributeBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_user_attribute' collection
+    - name: updateColumns
+      type: UpdateAuthUserAttributeByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_user_attribute_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthUserAttributeById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_user_attribute' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthUserAttributeById
+  permissions:
+    - role: admin
+      allowExecution: true
+

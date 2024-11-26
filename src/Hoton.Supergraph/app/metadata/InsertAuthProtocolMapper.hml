@@ -1,0 +1,132 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthProtocolMapperObject
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: clientScopeId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: name
+      type: Varchar!
+    - name: protocol
+      type: Varchar!
+    - name: protocolMapperName
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthProtocolMapperObject
+    inputTypeName: InsertAuthProtocolMapperObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_protocol_mapper_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientScopeId:
+          column:
+            name: client_scope_id
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        protocol:
+          column:
+            name: protocol
+        protocolMapperName:
+          column:
+            name: protocol_mapper_name
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthProtocolMapperObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientScopeId
+          - id
+          - name
+          - protocol
+          - protocolMapperName
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthProtocolMapperResponse
+  description: Responses from the 'insert_auth_protocol_mapper' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthProtocolMapper!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthProtocolMapperResponse
+    inputTypeName: InsertAuthProtocolMapperResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_protocol_mapper_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthProtocolMapperResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthProtocolMapper
+  outputType: InsertAuthProtocolMapperResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthProtocolMapperObject!]!"
+    - name: postCheck
+      type: AuthProtocolMapperBoolExp
+      description: Insert permission predicate over the 'auth_protocol_mapper' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_protocol_mapper
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthProtocolMapper
+    rootFieldKind: Mutation
+  description: Insert into the auth_protocol_mapper table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthProtocolMapper
+  permissions:
+    - role: admin
+      allowExecution: true
+

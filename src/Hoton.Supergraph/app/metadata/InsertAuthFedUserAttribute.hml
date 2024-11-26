@@ -1,0 +1,150 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserAttributeObject
+  fields:
+    - name: id
+      type: Varchar!
+    - name: longValue
+      type: Text
+    - name: longValueHash
+      type: Bytea
+    - name: longValueHashLowerCase
+      type: Bytea
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: InsertAuthFedUserAttributeObject
+    inputTypeName: InsertAuthFedUserAttributeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_attribute_object
+      fieldMapping:
+        id:
+          column:
+            name: id
+        longValue:
+          column:
+            name: long_value
+        longValueHash:
+          column:
+            name: long_value_hash
+        longValueHashLowerCase:
+          column:
+            name: long_value_hash_lower_case
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserAttributeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - longValue
+          - longValueHash
+          - longValueHashLowerCase
+          - name
+          - realmId
+          - storageProviderId
+          - userId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserAttributeResponse
+  description: Responses from the 'insert_auth_fed_user_attribute' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthFedUserAttributeResponse
+    inputTypeName: InsertAuthFedUserAttributeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_attribute_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserAttributeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthFedUserAttribute
+  outputType: InsertAuthFedUserAttributeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthFedUserAttributeObject!]!"
+    - name: postCheck
+      type: AuthFedUserAttributeBoolExp
+      description: Insert permission predicate over the 'auth_fed_user_attribute' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_fed_user_attribute
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthFedUserAttribute
+    rootFieldKind: Mutation
+  description: Insert into the auth_fed_user_attribute table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthFedUserAttribute
+  permissions:
+    - role: admin
+      allowExecution: true
+

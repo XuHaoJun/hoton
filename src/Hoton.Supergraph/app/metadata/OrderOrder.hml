@@ -1,0 +1,384 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderOrder
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: customerName
+      type: Varchar!
+    - name: id
+      type: Uuid!
+    - name: realmId
+      type: Varchar!
+    - name: shipmentFee
+      type: Numeric!
+    - name: status
+      type: Varchar
+    - name: totalAmount
+      type: Numeric!
+    - name: transactionNo
+      type: Varchar!
+    - name: updatedAt
+      type: Timestamptz
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: OrderOrder
+    inputTypeName: OrderOrderInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_order
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        customerName:
+          column:
+            name: customer_name
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+        shipmentFee:
+          column:
+            name: shipment_fee
+        status:
+          column:
+            name: status
+        totalAmount:
+          column:
+            name: total_amount
+        transactionNo:
+          column:
+            name: transaction_no
+        updatedAt:
+          column:
+            name: updated_at
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderOrder
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - customerName
+          - id
+          - realmId
+          - shipmentFee
+          - status
+          - totalAmount
+          - transactionNo
+          - updatedAt
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderOrderBoolExp
+  operand:
+    object:
+      type: OrderOrder
+      comparableFields:
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: customerName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: shipmentFee
+          booleanExpressionType: NumericBoolExp
+        - fieldName: status
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: totalAmount
+          booleanExpressionType: NumericBoolExp
+        - fieldName: transactionNo
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+        - relationshipName: authUserEntity
+        - relationshipName: orderOrderInvoices
+        - relationshipName: orderOrderItems
+        - relationshipName: orderOrderPayments
+        - relationshipName: orderOrderShipments
+        - relationshipName: orderOrderStatusHistories
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderOrderBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderOrderAggExp
+  operand:
+    object:
+      aggregatedType: OrderOrder
+      aggregatableFields:
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: customerName
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: shipmentFee
+          aggregateExpression: NumericAggExp
+        - fieldName: status
+          aggregateExpression: VarcharAggExp
+        - fieldName: totalAmount
+          aggregateExpression: NumericAggExp
+        - fieldName: transactionNo
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderOrderAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderOrder
+  objectType: OrderOrder
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_order
+  filterExpressionType: OrderOrderBoolExp
+  aggregateExpression: OrderOrderAggExp
+  orderableFields:
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: customerName
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: shipmentFee
+      orderByDirections:
+        enableAll: true
+    - fieldName: status
+      orderByDirections:
+        enableAll: true
+    - fieldName: totalAmount
+      orderByDirections:
+        enableAll: true
+    - fieldName: transactionNo
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderOrder
+      subscription:
+        rootField: orderOrder
+    selectUniques:
+      - queryRootField: orderOrderById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderOrderById
+      - queryRootField: orderOrderByTransactionNo
+        uniqueIdentifier:
+          - transactionNo
+        subscription:
+          rootField: orderOrderByTransactionNo
+    orderByExpressionType: OrderOrderOrderBy
+    filterInputTypeName: OrderOrderFilterInput
+    aggregate:
+      queryRootField: orderOrderAggregate
+      subscription:
+        rootField: orderOrderAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderOrder
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: OrderOrder
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserEntity
+  sourceType: OrderOrder
+  target:
+    model:
+      name: AuthUserEntity
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderInvoices
+  sourceType: OrderOrder
+  target:
+    model:
+      name: OrderOrderInvoice
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderInvoiceAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderId
+  graphql:
+    aggregateFieldName: orderOrderInvoicesAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderItems
+  sourceType: OrderOrder
+  target:
+    model:
+      name: OrderOrderItem
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderItemAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderId
+  graphql:
+    aggregateFieldName: orderOrderItemsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderPayments
+  sourceType: OrderOrder
+  target:
+    model:
+      name: OrderOrderPayment
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderPaymentAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderId
+  graphql:
+    aggregateFieldName: orderOrderPaymentsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderShipments
+  sourceType: OrderOrder
+  target:
+    model:
+      name: OrderOrderShipment
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderShipmentAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderId
+  graphql:
+    aggregateFieldName: orderOrderShipmentsAggregate
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: orderOrderStatusHistories
+  sourceType: OrderOrder
+  target:
+    model:
+      name: OrderOrderStatusHistory
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: OrderOrderStatusHistoryAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: orderId
+  graphql:
+    aggregateFieldName: orderOrderStatusHistoriesAggregate
+

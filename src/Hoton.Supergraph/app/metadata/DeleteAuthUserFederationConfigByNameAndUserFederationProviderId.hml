@@ -1,0 +1,79 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthUserFederationConfigByNameAndUserFederationProviderIdResponse
+  description: Responses from the
+    'delete_auth_user_federation_config_by_name_and_user_federation_provider_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserFederationConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthUserFederationConfigByNameAndUserFederationProviderIdResponse
+    inputTypeName: DeleteAuthUserFederationConfigByNameAndUserFederationProviderIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_user_federation_config_by_name_and_user_federation_provider_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthUserFederationConfigByNameAndUserFederationProviderIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthUserFederationConfigByNameAndUserFederationProviderId
+  outputType: DeleteAuthUserFederationConfigByNameAndUserFederationProviderIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar!
+    - name: keyUserFederationProviderId
+      type: Varchar!
+    - name: preCheck
+      type: AuthUserFederationConfigBoolExp
+      description: Delete permission predicate over the 'auth_user_federation_config'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_user_federation_config_by_name_and_user_federation_provider_id
+    argumentMapping:
+      keyName: key_name
+      keyUserFederationProviderId: key_user_federation_provider_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthUserFederationConfigByNameAndUserFederationProviderId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_user_federation_config' collection
+    using the 'name' and 'user_federation_provider_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthUserFederationConfigByNameAndUserFederationProviderId
+  permissions:
+    - role: admin
+      allowExecution: true
+

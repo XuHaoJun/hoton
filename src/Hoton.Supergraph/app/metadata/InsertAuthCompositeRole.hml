@@ -1,0 +1,108 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthCompositeRoleObject
+  fields:
+    - name: childRole
+      type: Varchar!
+    - name: composite
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthCompositeRoleObject
+    inputTypeName: InsertAuthCompositeRoleObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_composite_role_object
+      fieldMapping:
+        childRole:
+          column:
+            name: child_role
+        composite:
+          column:
+            name: composite
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthCompositeRoleObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - childRole
+          - composite
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthCompositeRoleResponse
+  description: Responses from the 'insert_auth_composite_role' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthCompositeRole!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthCompositeRoleResponse
+    inputTypeName: InsertAuthCompositeRoleResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_composite_role_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthCompositeRoleResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthCompositeRole
+  outputType: InsertAuthCompositeRoleResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthCompositeRoleObject!]!"
+    - name: postCheck
+      type: AuthCompositeRoleBoolExp
+      description: Insert permission predicate over the 'auth_composite_role' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_composite_role
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthCompositeRole
+    rootFieldKind: Mutation
+  description: Insert into the auth_composite_role table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthCompositeRole
+  permissions:
+    - role: admin
+      allowExecution: true
+

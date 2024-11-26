@@ -1,0 +1,225 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: CartCartItem
+  fields:
+    - name: cartId
+      type: Uuid
+    - name: createdAt
+      type: Timestamptz
+    - name: id
+      type: Uuid!
+    - name: price
+      type: Numeric!
+    - name: productSkuId
+      type: Uuid
+    - name: quantity
+      type: Int4!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: CartCartItem
+    inputTypeName: CartCartItemInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: cart_cart_item
+      fieldMapping:
+        cartId:
+          column:
+            name: cart_id
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        price:
+          column:
+            name: price
+        productSkuId:
+          column:
+            name: product_sku_id
+        quantity:
+          column:
+            name: quantity
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: CartCartItem
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - cartId
+          - createdAt
+          - id
+          - price
+          - productSkuId
+          - quantity
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: CartCartItemBoolExp
+  operand:
+    object:
+      type: CartCartItem
+      comparableFields:
+        - fieldName: cartId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: price
+          booleanExpressionType: NumericBoolExp
+        - fieldName: productSkuId
+          booleanExpressionType: UuidBoolExp
+        - fieldName: quantity
+          booleanExpressionType: Int4BoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: cartCart
+        - relationshipName: productProductSku
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: CartCartItemBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: CartCartItemAggExp
+  operand:
+    object:
+      aggregatedType: CartCartItem
+      aggregatableFields:
+        - fieldName: cartId
+          aggregateExpression: UuidAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: price
+          aggregateExpression: NumericAggExp
+        - fieldName: productSkuId
+          aggregateExpression: UuidAggExp
+        - fieldName: quantity
+          aggregateExpression: Int4AggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: CartCartItemAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: CartCartItem
+  objectType: CartCartItem
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: cart_cart_item
+  filterExpressionType: CartCartItemBoolExp
+  aggregateExpression: CartCartItemAggExp
+  orderableFields:
+    - fieldName: cartId
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: price
+      orderByDirections:
+        enableAll: true
+    - fieldName: productSkuId
+      orderByDirections:
+        enableAll: true
+    - fieldName: quantity
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: cartCartItem
+      subscription:
+        rootField: cartCartItem
+    selectUniques:
+      - queryRootField: cartCartItemById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: cartCartItemById
+    orderByExpressionType: CartCartItemOrderBy
+    filterInputTypeName: CartCartItemFilterInput
+    aggregate:
+      queryRootField: cartCartItemAggregate
+      subscription:
+        rootField: cartCartItemAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: CartCartItem
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: cartCart
+  sourceType: CartCartItem
+  target:
+    model:
+      name: CartCart
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: cartId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProductSku
+  sourceType: CartCartItem
+  target:
+    model:
+      name: ProductProductSku
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productSkuId
+      target:
+        modelField:
+          - fieldName: id
+

@@ -1,0 +1,587 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityAdminEventTime
+  description: Update the 'admin_event_time' column in the
+    'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Int8
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityAdminEventTime
+    inputTypeName: UpdateColumnAuthAdminEventEntityAdminEventTimeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_admin_event_time
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityAdminEventTime
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityAuthClientId
+  description: Update the 'auth_client_id' column in the 'auth_admin_event_entity'
+    collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityAuthClientId
+    inputTypeName: UpdateColumnAuthAdminEventEntityAuthClientIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_auth_client_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityAuthClientId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityAuthRealmId
+  description: Update the 'auth_realm_id' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityAuthRealmId
+    inputTypeName: UpdateColumnAuthAdminEventEntityAuthRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_auth_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityAuthRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityAuthUserId
+  description: Update the 'auth_user_id' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityAuthUserId
+    inputTypeName: UpdateColumnAuthAdminEventEntityAuthUserIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_auth_user_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityAuthUserId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityError
+  description: Update the 'error' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityError
+    inputTypeName: UpdateColumnAuthAdminEventEntityErrorInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_error
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityError
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityId
+  description: Update the 'id' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityId
+    inputTypeName: UpdateColumnAuthAdminEventEntityIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityIpAddress
+  description: Update the 'ip_address' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityIpAddress
+    inputTypeName: UpdateColumnAuthAdminEventEntityIpAddressInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_ip_address
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityIpAddress
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityOperationType
+  description: Update the 'operation_type' column in the 'auth_admin_event_entity'
+    collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityOperationType
+    inputTypeName: UpdateColumnAuthAdminEventEntityOperationTypeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_operation_type
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityOperationType
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityRealmId
+  description: Update the 'realm_id' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityRealmId
+    inputTypeName: UpdateColumnAuthAdminEventEntityRealmIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_realm_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityRealmId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityRepresentation
+  description: Update the 'representation' column in the 'auth_admin_event_entity'
+    collection
+  fields:
+    - name: set
+      type: Text
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityRepresentation
+    inputTypeName: UpdateColumnAuthAdminEventEntityRepresentationInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_representation
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityRepresentation
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityResourcePath
+  description: Update the 'resource_path' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityResourcePath
+    inputTypeName: UpdateColumnAuthAdminEventEntityResourcePathInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_resource_path
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityResourcePath
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnAuthAdminEventEntityResourceType
+  description: Update the 'resource_type' column in the 'auth_admin_event_entity' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnAuthAdminEventEntityResourceType
+    inputTypeName: UpdateColumnAuthAdminEventEntityResourceTypeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_auth_admin_event_entity_resource_type
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnAuthAdminEventEntityResourceType
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthAdminEventEntityByIdUpdateColumns
+  description: Update the columns of the 'auth_admin_event_entity' collection
+  fields:
+    - name: adminEventTime
+      type: UpdateColumnAuthAdminEventEntityAdminEventTime
+      description: Update the 'admin_event_time' column in the
+        'auth_admin_event_entity' collection.
+    - name: authClientId
+      type: UpdateColumnAuthAdminEventEntityAuthClientId
+      description: Update the 'auth_client_id' column in the 'auth_admin_event_entity'
+        collection.
+    - name: authRealmId
+      type: UpdateColumnAuthAdminEventEntityAuthRealmId
+      description: Update the 'auth_realm_id' column in the 'auth_admin_event_entity'
+        collection.
+    - name: authUserId
+      type: UpdateColumnAuthAdminEventEntityAuthUserId
+      description: Update the 'auth_user_id' column in the 'auth_admin_event_entity'
+        collection.
+    - name: error
+      type: UpdateColumnAuthAdminEventEntityError
+      description: Update the 'error' column in the 'auth_admin_event_entity' collection.
+    - name: id
+      type: UpdateColumnAuthAdminEventEntityId
+      description: Update the 'id' column in the 'auth_admin_event_entity' collection.
+    - name: ipAddress
+      type: UpdateColumnAuthAdminEventEntityIpAddress
+      description: Update the 'ip_address' column in the 'auth_admin_event_entity'
+        collection.
+    - name: operationType
+      type: UpdateColumnAuthAdminEventEntityOperationType
+      description: Update the 'operation_type' column in the 'auth_admin_event_entity'
+        collection.
+    - name: realmId
+      type: UpdateColumnAuthAdminEventEntityRealmId
+      description: Update the 'realm_id' column in the 'auth_admin_event_entity' collection.
+    - name: representation
+      type: UpdateColumnAuthAdminEventEntityRepresentation
+      description: Update the 'representation' column in the 'auth_admin_event_entity'
+        collection.
+    - name: resourcePath
+      type: UpdateColumnAuthAdminEventEntityResourcePath
+      description: Update the 'resource_path' column in the 'auth_admin_event_entity'
+        collection.
+    - name: resourceType
+      type: UpdateColumnAuthAdminEventEntityResourceType
+      description: Update the 'resource_type' column in the 'auth_admin_event_entity'
+        collection.
+  graphql:
+    typeName: UpdateAuthAdminEventEntityByIdUpdateColumns
+    inputTypeName: UpdateAuthAdminEventEntityByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_admin_event_entity_by_id_update_columns
+      fieldMapping:
+        adminEventTime:
+          column:
+            name: admin_event_time
+        authClientId:
+          column:
+            name: auth_client_id
+        authRealmId:
+          column:
+            name: auth_realm_id
+        authUserId:
+          column:
+            name: auth_user_id
+        error:
+          column:
+            name: error
+        id:
+          column:
+            name: id
+        ipAddress:
+          column:
+            name: ip_address
+        operationType:
+          column:
+            name: operation_type
+        realmId:
+          column:
+            name: realm_id
+        representation:
+          column:
+            name: representation
+        resourcePath:
+          column:
+            name: resource_path
+        resourceType:
+          column:
+            name: resource_type
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthAdminEventEntityByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - adminEventTime
+          - authClientId
+          - authRealmId
+          - authUserId
+          - error
+          - id
+          - ipAddress
+          - operationType
+          - realmId
+          - representation
+          - resourcePath
+          - resourceType
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthAdminEventEntityByIdResponse
+  description: Responses from the 'update_auth_admin_event_entity_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAdminEventEntity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthAdminEventEntityByIdResponse
+    inputTypeName: UpdateAuthAdminEventEntityByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_admin_event_entity_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthAdminEventEntityByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthAdminEventEntityById
+  outputType: UpdateAuthAdminEventEntityByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: postCheck
+      type: AuthAdminEventEntityBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_admin_event_entity' collection
+    - name: preCheck
+      type: AuthAdminEventEntityBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_admin_event_entity' collection
+    - name: updateColumns
+      type: UpdateAuthAdminEventEntityByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_admin_event_entity_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthAdminEventEntityById
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_admin_event_entity' collection using the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthAdminEventEntityById
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,114 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmAttributeObject
+  fields:
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: value
+      type: Text
+  graphql:
+    typeName: InsertAuthRealmAttributeObject
+    inputTypeName: InsertAuthRealmAttributeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_attribute_object
+      fieldMapping:
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmAttributeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - realmId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthRealmAttributeResponse
+  description: Responses from the 'insert_auth_realm_attribute' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthRealmAttribute!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthRealmAttributeResponse
+    inputTypeName: InsertAuthRealmAttributeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_realm_attribute_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthRealmAttributeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthRealmAttribute
+  outputType: InsertAuthRealmAttributeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthRealmAttributeObject!]!"
+    - name: postCheck
+      type: AuthRealmAttributeBoolExp
+      description: Insert permission predicate over the 'auth_realm_attribute' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_realm_attribute
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthRealmAttribute
+    rootFieldKind: Mutation
+  description: Insert into the auth_realm_attribute table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthRealmAttribute
+  permissions:
+    - role: admin
+      allowExecution: true
+

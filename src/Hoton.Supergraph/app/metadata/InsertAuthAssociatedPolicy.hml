@@ -1,0 +1,108 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAssociatedPolicyObject
+  fields:
+    - name: associatedPolicyId
+      type: Varchar!
+    - name: policyId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthAssociatedPolicyObject
+    inputTypeName: InsertAuthAssociatedPolicyObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_associated_policy_object
+      fieldMapping:
+        associatedPolicyId:
+          column:
+            name: associated_policy_id
+        policyId:
+          column:
+            name: policy_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAssociatedPolicyObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - associatedPolicyId
+          - policyId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAssociatedPolicyResponse
+  description: Responses from the 'insert_auth_associated_policy' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAssociatedPolicy!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthAssociatedPolicyResponse
+    inputTypeName: InsertAuthAssociatedPolicyResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_associated_policy_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAssociatedPolicyResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthAssociatedPolicy
+  outputType: InsertAuthAssociatedPolicyResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthAssociatedPolicyObject!]!"
+    - name: postCheck
+      type: AuthAssociatedPolicyBoolExp
+      description: Insert permission predicate over the 'auth_associated_policy' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_associated_policy
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthAssociatedPolicy
+    rootFieldKind: Mutation
+  description: Insert into the auth_associated_policy table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthAssociatedPolicy
+  permissions:
+    - role: admin
+      allowExecution: true
+

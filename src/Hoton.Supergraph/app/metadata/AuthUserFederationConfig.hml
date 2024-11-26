@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthUserFederationConfig
+  fields:
+    - name: name
+      type: Varchar!
+    - name: userFederationProviderId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthUserFederationConfig
+    inputTypeName: AuthUserFederationConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_user_federation_config
+      fieldMapping:
+        name:
+          column:
+            name: name
+        userFederationProviderId:
+          column:
+            name: user_federation_provider_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthUserFederationConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - name
+          - userFederationProviderId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthUserFederationConfigBoolExp
+  operand:
+    object:
+      type: AuthUserFederationConfig
+      comparableFields:
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userFederationProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authUserFederationProvider
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthUserFederationConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthUserFederationConfigAggExp
+  operand:
+    object:
+      aggregatedType: AuthUserFederationConfig
+      aggregatableFields:
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: userFederationProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthUserFederationConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthUserFederationConfig
+  objectType: AuthUserFederationConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_user_federation_config
+  filterExpressionType: AuthUserFederationConfigBoolExp
+  aggregateExpression: AuthUserFederationConfigAggExp
+  orderableFields:
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: userFederationProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authUserFederationConfig
+      subscription:
+        rootField: authUserFederationConfig
+    selectUniques:
+      - queryRootField: authUserFederationConfigByConstraintF9
+        uniqueIdentifier:
+          - name
+          - userFederationProviderId
+        subscription:
+          rootField: authUserFederationConfigByConstraintF9
+    orderByExpressionType: AuthUserFederationConfigOrderBy
+    filterInputTypeName: AuthUserFederationConfigFilterInput
+    aggregate:
+      queryRootField: authUserFederationConfigAggregate
+      subscription:
+        rootField: authUserFederationConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthUserFederationConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authUserFederationProvider
+  sourceType: AuthUserFederationConfig
+  target:
+    model:
+      name: AuthUserFederationProvider
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: userFederationProviderId
+      target:
+        modelField:
+          - fieldName: id
+

@@ -1,0 +1,147 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRealmDefaultGroups
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+  graphql:
+    typeName: AuthRealmDefaultGroups
+    inputTypeName: AuthRealmDefaultGroupsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_realm_default_groups
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRealmDefaultGroups
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - realmId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRealmDefaultGroupsBoolExp
+  operand:
+    object:
+      type: AuthRealmDefaultGroups
+      comparableFields:
+        - fieldName: groupId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRealmDefaultGroupsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRealmDefaultGroupsAggExp
+  operand:
+    object:
+      aggregatedType: AuthRealmDefaultGroups
+      aggregatableFields:
+        - fieldName: groupId
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRealmDefaultGroupsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRealmDefaultGroups
+  objectType: AuthRealmDefaultGroups
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_realm_default_groups
+  filterExpressionType: AuthRealmDefaultGroupsBoolExp
+  aggregateExpression: AuthRealmDefaultGroupsAggExp
+  orderableFields:
+    - fieldName: groupId
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRealmDefaultGroups
+      subscription:
+        rootField: authRealmDefaultGroups
+    selectUniques:
+      - queryRootField: authRealmDefaultGroupsByGroupId
+        uniqueIdentifier:
+          - groupId
+        subscription:
+          rootField: authRealmDefaultGroupsByGroupId
+      - queryRootField: authRealmDefaultGroupsByConstrRealmDefaultGroups
+        uniqueIdentifier:
+          - groupId
+          - realmId
+        subscription:
+          rootField: authRealmDefaultGroupsByConstrRealmDefaultGroups
+    orderByExpressionType: AuthRealmDefaultGroupsOrderBy
+    filterInputTypeName: AuthRealmDefaultGroupsFilterInput
+    aggregate:
+      queryRootField: authRealmDefaultGroupsAggregate
+      subscription:
+        rootField: authRealmDefaultGroupsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRealmDefaultGroups
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: AuthRealmDefaultGroups
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+

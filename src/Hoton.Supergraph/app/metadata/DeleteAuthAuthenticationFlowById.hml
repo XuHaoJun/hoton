@@ -1,0 +1,74 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthAuthenticationFlowByIdResponse
+  description: Responses from the 'delete_auth_authentication_flow_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticationFlow!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthAuthenticationFlowByIdResponse
+    inputTypeName: DeleteAuthAuthenticationFlowByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_authentication_flow_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthAuthenticationFlowByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthAuthenticationFlowById
+  outputType: DeleteAuthAuthenticationFlowByIdResponse!
+  arguments:
+    - name: keyId
+      type: Varchar!
+    - name: preCheck
+      type: AuthAuthenticationFlowBoolExp
+      description: Delete permission predicate over the 'auth_authentication_flow'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_authentication_flow_by_id
+    argumentMapping:
+      keyId: key_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthAuthenticationFlowById
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_authentication_flow' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthAuthenticationFlowById
+  permissions:
+    - role: admin
+      allowExecution: true
+

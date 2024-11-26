@@ -1,0 +1,132 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFederatedIdentityObject
+  fields:
+    - name: federatedUserId
+      type: Varchar
+    - name: federatedUsername
+      type: Varchar
+    - name: identityProvider
+      type: Varchar!
+    - name: realmId
+      type: Varchar
+    - name: token
+      type: Text
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthFederatedIdentityObject
+    inputTypeName: InsertAuthFederatedIdentityObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_federated_identity_object
+      fieldMapping:
+        federatedUserId:
+          column:
+            name: federated_user_id
+        federatedUsername:
+          column:
+            name: federated_username
+        identityProvider:
+          column:
+            name: identity_provider
+        realmId:
+          column:
+            name: realm_id
+        token:
+          column:
+            name: token
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFederatedIdentityObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - federatedUserId
+          - federatedUsername
+          - identityProvider
+          - realmId
+          - token
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFederatedIdentityResponse
+  description: Responses from the 'insert_auth_federated_identity' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFederatedIdentity!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthFederatedIdentityResponse
+    inputTypeName: InsertAuthFederatedIdentityResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_federated_identity_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFederatedIdentityResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthFederatedIdentity
+  outputType: InsertAuthFederatedIdentityResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthFederatedIdentityObject!]!"
+    - name: postCheck
+      type: AuthFederatedIdentityBoolExp
+      description: Insert permission predicate over the 'auth_federated_identity' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_federated_identity
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthFederatedIdentity
+    rootFieldKind: Mutation
+  description: Insert into the auth_federated_identity table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthFederatedIdentity
+  permissions:
+    - role: admin
+      allowExecution: true
+

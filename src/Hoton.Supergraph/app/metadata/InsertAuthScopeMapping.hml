@@ -1,0 +1,108 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthScopeMappingObject
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: roleId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthScopeMappingObject
+    inputTypeName: InsertAuthScopeMappingObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_scope_mapping_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        roleId:
+          column:
+            name: role_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthScopeMappingObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - roleId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthScopeMappingResponse
+  description: Responses from the 'insert_auth_scope_mapping' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthScopeMapping!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthScopeMappingResponse
+    inputTypeName: InsertAuthScopeMappingResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_scope_mapping_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthScopeMappingResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthScopeMapping
+  outputType: InsertAuthScopeMappingResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthScopeMappingObject!]!"
+    - name: postCheck
+      type: AuthScopeMappingBoolExp
+      description: Insert permission predicate over the 'auth_scope_mapping' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_scope_mapping
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthScopeMapping
+    rootFieldKind: Mutation
+  description: Insert into the auth_scope_mapping table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthScopeMapping
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,468 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryCreatedAt
+  description: Update the 'created_at' column in the 'order_order_status_history' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryCreatedAt
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryCreaterId
+  description: Update the 'creater_id' column in the 'order_order_status_history' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryCreaterId
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryCreaterIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_creater_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryCreaterId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryFromStatus
+  description: Update the 'from_status' column in the 'order_order_status_history'
+    collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryFromStatus
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryFromStatusInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_from_status
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryFromStatus
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryId
+  description: Update the 'id' column in the 'order_order_status_history' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryId
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryOrderId
+  description: Update the 'order_id' column in the 'order_order_status_history' collection
+  fields:
+    - name: set
+      type: Uuid
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryOrderId
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryOrderIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_order_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryOrderId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryReason
+  description: Update the 'reason' column in the 'order_order_status_history' collection
+  fields:
+    - name: set
+      type: Varchar
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryReason
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryReasonInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_reason
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryReason
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryReasonData
+  description: Update the 'reason_data' column in the 'order_order_status_history'
+    collection
+  fields:
+    - name: set
+      type: Jsonb
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryReasonData
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryReasonDataInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_reason_data
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryReasonData
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryToStatus
+  description: Update the 'to_status' column in the 'order_order_status_history' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryToStatus
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryToStatusInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_to_status
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryToStatus
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnOrderOrderStatusHistoryUpdatedAt
+  description: Update the 'updated_at' column in the 'order_order_status_history' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnOrderOrderStatusHistoryUpdatedAt
+    inputTypeName: UpdateColumnOrderOrderStatusHistoryUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_order_order_status_history_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnOrderOrderStatusHistoryUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderStatusHistoryByIdUpdateColumns
+  description: Update the columns of the 'order_order_status_history' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnOrderOrderStatusHistoryCreatedAt
+      description: Update the 'created_at' column in the 'order_order_status_history'
+        collection.
+    - name: createrId
+      type: UpdateColumnOrderOrderStatusHistoryCreaterId
+      description: Update the 'creater_id' column in the 'order_order_status_history'
+        collection.
+    - name: fromStatus
+      type: UpdateColumnOrderOrderStatusHistoryFromStatus
+      description: Update the 'from_status' column in the 'order_order_status_history'
+        collection.
+    - name: id
+      type: UpdateColumnOrderOrderStatusHistoryId
+      description: Update the 'id' column in the 'order_order_status_history' collection.
+    - name: orderId
+      type: UpdateColumnOrderOrderStatusHistoryOrderId
+      description: Update the 'order_id' column in the 'order_order_status_history'
+        collection.
+    - name: reason
+      type: UpdateColumnOrderOrderStatusHistoryReason
+      description: Update the 'reason' column in the 'order_order_status_history'
+        collection.
+    - name: reasonData
+      type: UpdateColumnOrderOrderStatusHistoryReasonData
+      description: Update the 'reason_data' column in the 'order_order_status_history'
+        collection.
+    - name: toStatus
+      type: UpdateColumnOrderOrderStatusHistoryToStatus
+      description: Update the 'to_status' column in the 'order_order_status_history'
+        collection.
+    - name: updatedAt
+      type: UpdateColumnOrderOrderStatusHistoryUpdatedAt
+      description: Update the 'updated_at' column in the 'order_order_status_history'
+        collection.
+  graphql:
+    typeName: UpdateOrderOrderStatusHistoryByIdUpdateColumns
+    inputTypeName: UpdateOrderOrderStatusHistoryByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_status_history_by_id_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        createrId:
+          column:
+            name: creater_id
+        fromStatus:
+          column:
+            name: from_status
+        id:
+          column:
+            name: id
+        orderId:
+          column:
+            name: order_id
+        reason:
+          column:
+            name: reason
+        reasonData:
+          column:
+            name: reason_data
+        toStatus:
+          column:
+            name: to_status
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderStatusHistoryByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - createrId
+          - fromStatus
+          - id
+          - orderId
+          - reason
+          - reasonData
+          - toStatus
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateOrderOrderStatusHistoryByIdResponse
+  description: Responses from the 'update_order_order_status_history_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderOrderStatusHistory!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateOrderOrderStatusHistoryByIdResponse
+    inputTypeName: UpdateOrderOrderStatusHistoryByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_order_order_status_history_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateOrderOrderStatusHistoryByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateOrderOrderStatusHistoryById
+  outputType: UpdateOrderOrderStatusHistoryByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: OrderOrderStatusHistoryBoolExp
+      description: Update permission post-condition predicate over the
+        'order_order_status_history' collection
+    - name: preCheck
+      type: OrderOrderStatusHistoryBoolExp
+      description: Update permission pre-condition predicate over the
+        'order_order_status_history' collection
+    - name: updateColumns
+      type: UpdateOrderOrderStatusHistoryByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_order_order_status_history_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateOrderOrderStatusHistoryById
+    rootFieldKind: Mutation
+  description: Update any row on the 'order_order_status_history' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateOrderOrderStatusHistoryById
+  permissions:
+    - role: admin
+      allowExecution: true
+

@@ -1,0 +1,115 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAuthenticatorConfigObject
+  fields:
+    - name: alias
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: realmId
+      type: Varchar
+  graphql:
+    typeName: InsertAuthAuthenticatorConfigObject
+    inputTypeName: InsertAuthAuthenticatorConfigObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_authenticator_config_object
+      fieldMapping:
+        alias:
+          column:
+            name: alias
+        id:
+          column:
+            name: id
+        realmId:
+          column:
+            name: realm_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAuthenticatorConfigObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - alias
+          - id
+          - realmId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthAuthenticatorConfigResponse
+  description: Responses from the 'insert_auth_authenticator_config' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthAuthenticatorConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthAuthenticatorConfigResponse
+    inputTypeName: InsertAuthAuthenticatorConfigResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_authenticator_config_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthAuthenticatorConfigResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthAuthenticatorConfig
+  outputType: InsertAuthAuthenticatorConfigResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthAuthenticatorConfigObject!]!"
+    - name: postCheck
+      type: AuthAuthenticatorConfigBoolExp
+      description: Insert permission predicate over the 'auth_authenticator_config'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_authenticator_config
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthAuthenticatorConfig
+    rootFieldKind: Mutation
+  description: Insert into the auth_authenticator_config table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthAuthenticatorConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

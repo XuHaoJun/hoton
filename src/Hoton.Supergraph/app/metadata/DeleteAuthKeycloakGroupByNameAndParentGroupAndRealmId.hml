@@ -1,0 +1,80 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse
+  description: Responses from the
+    'delete_auth_keycloak_group_by_name_and_parent_group_and_realm_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthKeycloakGroup!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse
+    inputTypeName: DeleteAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_auth_keycloak_group_by_name_and_parent_group_and_realm_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteAuthKeycloakGroupByNameAndParentGroupAndRealmId
+  outputType: DeleteAuthKeycloakGroupByNameAndParentGroupAndRealmIdResponse!
+  arguments:
+    - name: keyName
+      type: Varchar
+    - name: keyParentGroup
+      type: Varchar!
+    - name: keyRealmId
+      type: Varchar
+    - name: preCheck
+      type: AuthKeycloakGroupBoolExp
+      description: Delete permission predicate over the 'auth_keycloak_group' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_auth_keycloak_group_by_name_and_parent_group_and_realm_id
+    argumentMapping:
+      keyName: key_name
+      keyParentGroup: key_parent_group
+      keyRealmId: key_realm_id
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteAuthKeycloakGroupByNameAndParentGroupAndRealmId
+    rootFieldKind: Mutation
+  description: Delete any row on the 'auth_keycloak_group' collection using the
+    'name', 'parent_group' and 'realm_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteAuthKeycloakGroupByNameAndParentGroupAndRealmId
+  permissions:
+    - role: admin
+      allowExecution: true
+

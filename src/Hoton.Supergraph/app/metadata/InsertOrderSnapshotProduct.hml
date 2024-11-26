@@ -1,0 +1,144 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderSnapshotProductObject
+  fields:
+    - name: createdAt
+      type: Timestamptz
+    - name: description
+      type: Text
+    - name: id
+      type: Uuid!
+    - name: name
+      type: Varchar!
+    - name: price
+      type: Numeric!
+    - name: realmId
+      type: Varchar!
+    - name: snapshotVersion
+      type: Timestamptz
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertOrderSnapshotProductObject
+    inputTypeName: InsertOrderSnapshotProductObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_snapshot_product_object
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        description:
+          column:
+            name: description
+        id:
+          column:
+            name: id
+        name:
+          column:
+            name: name
+        price:
+          column:
+            name: price
+        realmId:
+          column:
+            name: realm_id
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderSnapshotProductObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - description
+          - id
+          - name
+          - price
+          - realmId
+          - snapshotVersion
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderSnapshotProductResponse
+  description: Responses from the 'insert_order_snapshot_product' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderSnapshotProduct!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderSnapshotProductResponse
+    inputTypeName: InsertOrderSnapshotProductResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_snapshot_product_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderSnapshotProductResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderSnapshotProduct
+  outputType: InsertOrderSnapshotProductResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderSnapshotProductObject!]!"
+    - name: postCheck
+      type: OrderSnapshotProductBoolExp
+      description: Insert permission predicate over the 'order_snapshot_product' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_snapshot_product
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderSnapshotProduct
+    rootFieldKind: Mutation
+  description: Insert into the order_snapshot_product table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderSnapshotProduct
+  permissions:
+    - role: admin
+      allowExecution: true
+

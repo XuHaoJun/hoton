@@ -1,0 +1,136 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthRealmLocalizations
+  fields:
+    - name: locale
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: texts
+      type: Text!
+  graphql:
+    typeName: AuthRealmLocalizations
+    inputTypeName: AuthRealmLocalizationsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_realm_localizations
+      fieldMapping:
+        locale:
+          column:
+            name: locale
+        realmId:
+          column:
+            name: realm_id
+        texts:
+          column:
+            name: texts
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthRealmLocalizations
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - locale
+          - realmId
+          - texts
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthRealmLocalizationsBoolExp
+  operand:
+    object:
+      type: AuthRealmLocalizations
+      comparableFields:
+        - fieldName: locale
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: texts
+          booleanExpressionType: TextBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthRealmLocalizationsBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthRealmLocalizationsAggExp
+  operand:
+    object:
+      aggregatedType: AuthRealmLocalizations
+      aggregatableFields:
+        - fieldName: locale
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: texts
+          aggregateExpression: TextAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthRealmLocalizationsAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthRealmLocalizations
+  objectType: AuthRealmLocalizations
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_realm_localizations
+  filterExpressionType: AuthRealmLocalizationsBoolExp
+  aggregateExpression: AuthRealmLocalizationsAggExp
+  orderableFields:
+    - fieldName: locale
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: texts
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authRealmLocalizations
+      subscription:
+        rootField: authRealmLocalizations
+    selectUniques:
+      - queryRootField: authRealmLocalizationsByRealmLocalizationsPkey
+        uniqueIdentifier:
+          - locale
+          - realmId
+        subscription:
+          rootField: authRealmLocalizationsByRealmLocalizationsPkey
+    orderByExpressionType: AuthRealmLocalizationsOrderBy
+    filterInputTypeName: AuthRealmLocalizationsFilterInput
+    aggregate:
+      queryRootField: authRealmLocalizationsAggregate
+      subscription:
+        rootField: authRealmLocalizationsAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthRealmLocalizations
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

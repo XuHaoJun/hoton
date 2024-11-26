@@ -1,0 +1,149 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthFedUserGroupMembership
+  fields:
+    - name: groupId
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthFedUserGroupMembership
+    inputTypeName: AuthFedUserGroupMembershipInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_fed_user_group_membership
+      fieldMapping:
+        groupId:
+          column:
+            name: group_id
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthFedUserGroupMembership
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - groupId
+          - realmId
+          - storageProviderId
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthFedUserGroupMembershipBoolExp
+  operand:
+    object:
+      type: AuthFedUserGroupMembership
+      comparableFields:
+        - fieldName: groupId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storageProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthFedUserGroupMembershipBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthFedUserGroupMembershipAggExp
+  operand:
+    object:
+      aggregatedType: AuthFedUserGroupMembership
+      aggregatableFields:
+        - fieldName: groupId
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: storageProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthFedUserGroupMembershipAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthFedUserGroupMembership
+  objectType: AuthFedUserGroupMembership
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_fed_user_group_membership
+  filterExpressionType: AuthFedUserGroupMembershipBoolExp
+  aggregateExpression: AuthFedUserGroupMembershipAggExp
+  orderableFields:
+    - fieldName: groupId
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storageProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authFedUserGroupMembership
+      subscription:
+        rootField: authFedUserGroupMembership
+    selectUniques:
+      - queryRootField: authFedUserGroupMembershipByConstrFedUserGroup
+        uniqueIdentifier:
+          - groupId
+          - userId
+        subscription:
+          rootField: authFedUserGroupMembershipByConstrFedUserGroup
+    orderByExpressionType: AuthFedUserGroupMembershipOrderBy
+    filterInputTypeName: AuthFedUserGroupMembershipFilterInput
+    aggregate:
+      queryRootField: authFedUserGroupMembershipAggregate
+      subscription:
+        rootField: authFedUserGroupMembershipAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthFedUserGroupMembership
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

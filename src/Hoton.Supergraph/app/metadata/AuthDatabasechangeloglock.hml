@@ -1,0 +1,135 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthDatabasechangeloglock
+  fields:
+    - name: id
+      type: Int4!
+    - name: locked
+      type: Bool!
+    - name: lockedby
+      type: Varchar
+    - name: lockgranted
+      type: Timestamp
+  graphql:
+    typeName: AuthDatabasechangeloglock
+    inputTypeName: AuthDatabasechangeloglockInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_databasechangeloglock
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthDatabasechangeloglock
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - locked
+          - lockedby
+          - lockgranted
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthDatabasechangeloglockBoolExp
+  operand:
+    object:
+      type: AuthDatabasechangeloglock
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: Int4BoolExp
+        - fieldName: locked
+          booleanExpressionType: BoolBoolExp
+        - fieldName: lockedby
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lockgranted
+          booleanExpressionType: TimestampBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthDatabasechangeloglockBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthDatabasechangeloglockAggExp
+  operand:
+    object:
+      aggregatedType: AuthDatabasechangeloglock
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: Int4AggExp
+        - fieldName: locked
+          aggregateExpression: BoolAggExp
+        - fieldName: lockedby
+          aggregateExpression: VarcharAggExp
+        - fieldName: lockgranted
+          aggregateExpression: TimestampAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthDatabasechangeloglockAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthDatabasechangeloglock
+  objectType: AuthDatabasechangeloglock
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_databasechangeloglock
+  filterExpressionType: AuthDatabasechangeloglockBoolExp
+  aggregateExpression: AuthDatabasechangeloglockAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: locked
+      orderByDirections:
+        enableAll: true
+    - fieldName: lockedby
+      orderByDirections:
+        enableAll: true
+    - fieldName: lockgranted
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authDatabasechangeloglock
+      subscription:
+        rootField: authDatabasechangeloglock
+    selectUniques:
+      - queryRootField: authDatabasechangeloglockById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authDatabasechangeloglockById
+    orderByExpressionType: AuthDatabasechangeloglockOrderBy
+    filterInputTypeName: AuthDatabasechangeloglockFilterInput
+    aggregate:
+      queryRootField: authDatabasechangeloglockAggregate
+      subscription:
+        rootField: authDatabasechangeloglockAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthDatabasechangeloglock
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

@@ -1,0 +1,108 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthWebOriginsObject
+  fields:
+    - name: clientId
+      type: Varchar!
+    - name: value
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthWebOriginsObject
+    inputTypeName: InsertAuthWebOriginsObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_web_origins_object
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthWebOriginsObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - value
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthWebOriginsResponse
+  description: Responses from the 'insert_auth_web_origins' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthWebOrigins!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthWebOriginsResponse
+    inputTypeName: InsertAuthWebOriginsResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_web_origins_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthWebOriginsResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthWebOrigins
+  outputType: InsertAuthWebOriginsResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthWebOriginsObject!]!"
+    - name: postCheck
+      type: AuthWebOriginsBoolExp
+      description: Insert permission predicate over the 'auth_web_origins' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_web_origins
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthWebOrigins
+    rootFieldKind: Mutation
+  description: Insert into the auth_web_origins table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthWebOrigins
+  permissions:
+    - role: admin
+      allowExecution: true
+

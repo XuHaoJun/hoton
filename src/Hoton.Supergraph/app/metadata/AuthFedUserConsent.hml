@@ -1,0 +1,213 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthFedUserConsent
+  fields:
+    - name: clientId
+      type: Varchar
+    - name: clientStorageProvider
+      type: Varchar
+    - name: createdDate
+      type: Int8
+    - name: externalClientId
+      type: Varchar
+    - name: id
+      type: Varchar!
+    - name: lastUpdatedDate
+      type: Int8
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+  graphql:
+    typeName: AuthFedUserConsent
+    inputTypeName: AuthFedUserConsentInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_fed_user_consent
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        createdDate:
+          column:
+            name: created_date
+        externalClientId:
+          column:
+            name: external_client_id
+        id:
+          column:
+            name: id
+        lastUpdatedDate:
+          column:
+            name: last_updated_date
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthFedUserConsent
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - createdDate
+          - externalClientId
+          - id
+          - lastUpdatedDate
+          - realmId
+          - storageProviderId
+          - userId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthFedUserConsentBoolExp
+  operand:
+    object:
+      type: AuthFedUserConsent
+      comparableFields:
+        - fieldName: clientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: clientStorageProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: createdDate
+          booleanExpressionType: Int8BoolExp
+        - fieldName: externalClientId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: lastUpdatedDate
+          booleanExpressionType: Int8BoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storageProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthFedUserConsentBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthFedUserConsentAggExp
+  operand:
+    object:
+      aggregatedType: AuthFedUserConsent
+      aggregatableFields:
+        - fieldName: clientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: clientStorageProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: createdDate
+          aggregateExpression: Int8AggExp
+        - fieldName: externalClientId
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: lastUpdatedDate
+          aggregateExpression: Int8AggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: storageProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthFedUserConsentAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthFedUserConsent
+  objectType: AuthFedUserConsent
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_fed_user_consent
+  filterExpressionType: AuthFedUserConsentBoolExp
+  aggregateExpression: AuthFedUserConsentAggExp
+  orderableFields:
+    - fieldName: clientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: clientStorageProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: externalClientId
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: lastUpdatedDate
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storageProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authFedUserConsent
+      subscription:
+        rootField: authFedUserConsent
+    selectUniques:
+      - queryRootField: authFedUserConsentById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authFedUserConsentById
+    orderByExpressionType: AuthFedUserConsentOrderBy
+    filterInputTypeName: AuthFedUserConsentFilterInput
+    aggregate:
+      queryRootField: authFedUserConsentAggregate
+      subscription:
+        rootField: authFedUserConsentAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthFedUserConsent
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

@@ -1,0 +1,167 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdUpdateColumns
+  description: Update the columns of the 'auth_user_consent' collection
+  fields:
+    - name: clientId
+      type: UpdateColumnAuthUserConsentClientId
+      description: Update the 'client_id' column in the 'auth_user_consent' collection.
+    - name: clientStorageProvider
+      type: UpdateColumnAuthUserConsentClientStorageProvider
+      description: Update the 'client_storage_provider' column in the
+        'auth_user_consent' collection.
+    - name: createdDate
+      type: UpdateColumnAuthUserConsentCreatedDate
+      description: Update the 'created_date' column in the 'auth_user_consent' collection.
+    - name: externalClientId
+      type: UpdateColumnAuthUserConsentExternalClientId
+      description: Update the 'external_client_id' column in the 'auth_user_consent'
+        collection.
+    - name: id
+      type: UpdateColumnAuthUserConsentId
+      description: Update the 'id' column in the 'auth_user_consent' collection.
+    - name: lastUpdatedDate
+      type: UpdateColumnAuthUserConsentLastUpdatedDate
+      description: Update the 'last_updated_date' column in the 'auth_user_consent'
+        collection.
+    - name: userId
+      type: UpdateColumnAuthUserConsentUserId
+      description: Update the 'user_id' column in the 'auth_user_consent' collection.
+  graphql:
+    typeName: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdUpdateColumns
+    inputTypeName: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_consent_by_client_storage_provider_and_external_client_id_and_user_id_update_columns
+      fieldMapping:
+        clientId:
+          column:
+            name: client_id
+        clientStorageProvider:
+          column:
+            name: client_storage_provider
+        createdDate:
+          column:
+            name: created_date
+        externalClientId:
+          column:
+            name: external_client_id
+        id:
+          column:
+            name: id
+        lastUpdatedDate:
+          column:
+            name: last_updated_date
+        userId:
+          column:
+            name: user_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - clientId
+          - clientStorageProvider
+          - createdDate
+          - externalClientId
+          - id
+          - lastUpdatedDate
+          - userId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdResponse
+  description: Responses from the
+    'update_auth_user_consent_by_client_storage_provider_and_external_client_id_and_user_id'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthUserConsent!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdResponse
+    inputTypeName: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_auth_user_consent_by_client_storage_provider_and_external_client_id_and_user_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserId
+  outputType: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdResponse!
+  arguments:
+    - name: keyClientStorageProvider
+      type: Varchar
+    - name: keyExternalClientId
+      type: Varchar
+    - name: keyUserId
+      type: Varchar!
+    - name: postCheck
+      type: AuthUserConsentBoolExp
+      description: Update permission post-condition predicate over the
+        'auth_user_consent' collection
+    - name: preCheck
+      type: AuthUserConsentBoolExp
+      description: Update permission pre-condition predicate over the
+        'auth_user_consent' collection
+    - name: updateColumns
+      type: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_auth_user_consent_by_client_storage_provider_and_external_client_id_and_user_id
+    argumentMapping:
+      keyClientStorageProvider: key_client_storage_provider
+      keyExternalClientId: key_external_client_id
+      keyUserId: key_user_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserId
+    rootFieldKind: Mutation
+  description: Update any row on the 'auth_user_consent' collection using the
+    'client_storage_provider', 'external_client_id' and 'user_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateAuthUserConsentByClientStorageProviderAndExternalClientIdAndUserId
+  permissions:
+    - role: admin
+      allowExecution: true
+

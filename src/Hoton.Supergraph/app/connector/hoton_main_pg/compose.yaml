@@ -1,0 +1,14 @@
+services:
+  app_hoton_main_pg:
+    build:
+      context: .
+      dockerfile: .hasura-connector/Dockerfile.hoton_main_pg
+    environment:
+      CONNECTION_URI: $APP_HOTON_MAIN_PG_CONNECTION_URI
+      HASURA_SERVICE_TOKEN_SECRET: $APP_HOTON_MAIN_PG_HASURA_SERVICE_TOKEN_SECRET
+      OTEL_EXPORTER_OTLP_ENDPOINT: $APP_HOTON_MAIN_PG_OTEL_EXPORTER_OTLP_ENDPOINT
+      OTEL_SERVICE_NAME: $APP_HOTON_MAIN_PG_OTEL_SERVICE_NAME
+    extra_hosts:
+      - local.hasura.dev:host-gateway
+    ports:
+      - 9350:8080

@@ -1,0 +1,163 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderRealmOrderShipmentConfigObject
+  fields:
+    - name: country
+      type: Varchar
+    - name: createdAt
+      type: Timestamptz
+    - name: displayName
+      type: Varchar!
+    - name: id
+      type: Uuid
+    - name: minOrderAmount
+      type: Numeric!
+    - name: payConditions
+      type: Varchar
+    - name: realmId
+      type: Varchar!
+    - name: shipmentFee
+      type: Numeric!
+    - name: shipmentServiceProvider
+      type: Varchar!
+    - name: temperatureZone
+      type: Varchar!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: InsertOrderRealmOrderShipmentConfigObject
+    inputTypeName: InsertOrderRealmOrderShipmentConfigObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_realm_order_shipment_config_object
+      fieldMapping:
+        country:
+          column:
+            name: country
+        createdAt:
+          column:
+            name: created_at
+        displayName:
+          column:
+            name: display_name
+        id:
+          column:
+            name: id
+        minOrderAmount:
+          column:
+            name: min_order_amount
+        payConditions:
+          column:
+            name: pay_conditions
+        realmId:
+          column:
+            name: realm_id
+        shipmentFee:
+          column:
+            name: shipment_fee
+        shipmentServiceProvider:
+          column:
+            name: shipment_service_provider
+        temperatureZone:
+          column:
+            name: temperature_zone
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderRealmOrderShipmentConfigObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - country
+          - createdAt
+          - displayName
+          - id
+          - minOrderAmount
+          - payConditions
+          - realmId
+          - shipmentFee
+          - shipmentServiceProvider
+          - temperatureZone
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertOrderRealmOrderShipmentConfigResponse
+  description: Responses from the 'insert_order_realm_order_shipment_config' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderRealmOrderShipmentConfig!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertOrderRealmOrderShipmentConfigResponse
+    inputTypeName: InsertOrderRealmOrderShipmentConfigResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_order_realm_order_shipment_config_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertOrderRealmOrderShipmentConfigResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertOrderRealmOrderShipmentConfig
+  outputType: InsertOrderRealmOrderShipmentConfigResponse!
+  arguments:
+    - name: objects
+      type: "[InsertOrderRealmOrderShipmentConfigObject!]!"
+    - name: postCheck
+      type: OrderRealmOrderShipmentConfigBoolExp
+      description: Insert permission predicate over the
+        'order_realm_order_shipment_config' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_order_realm_order_shipment_config
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertOrderRealmOrderShipmentConfig
+    rootFieldKind: Mutation
+  description: Insert into the order_realm_order_shipment_config table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertOrderRealmOrderShipmentConfig
+  permissions:
+    - role: admin
+      allowExecution: true
+

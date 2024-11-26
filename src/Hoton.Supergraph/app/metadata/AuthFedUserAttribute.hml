@@ -1,0 +1,213 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: AuthFedUserAttribute
+  fields:
+    - name: id
+      type: Varchar!
+    - name: longValue
+      type: Text
+    - name: longValueHash
+      type: Bytea
+    - name: longValueHashLowerCase
+      type: Bytea
+    - name: name
+      type: Varchar!
+    - name: realmId
+      type: Varchar!
+    - name: storageProviderId
+      type: Varchar
+    - name: userId
+      type: Varchar!
+    - name: value
+      type: Varchar
+  graphql:
+    typeName: AuthFedUserAttribute
+    inputTypeName: AuthFedUserAttributeInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: auth_fed_user_attribute
+      fieldMapping:
+        id:
+          column:
+            name: id
+        longValue:
+          column:
+            name: long_value
+        longValueHash:
+          column:
+            name: long_value_hash
+        longValueHashLowerCase:
+          column:
+            name: long_value_hash_lower_case
+        name:
+          column:
+            name: name
+        realmId:
+          column:
+            name: realm_id
+        storageProviderId:
+          column:
+            name: storage_provider_id
+        userId:
+          column:
+            name: user_id
+        value:
+          column:
+            name: value
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: AuthFedUserAttribute
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - id
+          - longValue
+          - longValueHash
+          - longValueHashLowerCase
+          - name
+          - realmId
+          - storageProviderId
+          - userId
+          - value
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: AuthFedUserAttributeBoolExp
+  operand:
+    object:
+      type: AuthFedUserAttribute
+      comparableFields:
+        - fieldName: id
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: longValue
+          booleanExpressionType: TextBoolExp
+        - fieldName: longValueHash
+          booleanExpressionType: ByteaBoolExp
+        - fieldName: longValueHashLowerCase
+          booleanExpressionType: ByteaBoolExp
+        - fieldName: name
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: storageProviderId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: userId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: value
+          booleanExpressionType: VarcharBoolExp
+      comparableRelationships: []
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: AuthFedUserAttributeBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: AuthFedUserAttributeAggExp
+  operand:
+    object:
+      aggregatedType: AuthFedUserAttribute
+      aggregatableFields:
+        - fieldName: id
+          aggregateExpression: VarcharAggExp
+        - fieldName: longValue
+          aggregateExpression: TextAggExp
+        - fieldName: longValueHash
+          aggregateExpression: ByteaAggExp
+        - fieldName: longValueHashLowerCase
+          aggregateExpression: ByteaAggExp
+        - fieldName: name
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: storageProviderId
+          aggregateExpression: VarcharAggExp
+        - fieldName: userId
+          aggregateExpression: VarcharAggExp
+        - fieldName: value
+          aggregateExpression: VarcharAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: AuthFedUserAttributeAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: AuthFedUserAttribute
+  objectType: AuthFedUserAttribute
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: auth_fed_user_attribute
+  filterExpressionType: AuthFedUserAttributeBoolExp
+  aggregateExpression: AuthFedUserAttributeAggExp
+  orderableFields:
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: longValue
+      orderByDirections:
+        enableAll: true
+    - fieldName: longValueHash
+      orderByDirections:
+        enableAll: true
+    - fieldName: longValueHashLowerCase
+      orderByDirections:
+        enableAll: true
+    - fieldName: name
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: storageProviderId
+      orderByDirections:
+        enableAll: true
+    - fieldName: userId
+      orderByDirections:
+        enableAll: true
+    - fieldName: value
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: authFedUserAttribute
+      subscription:
+        rootField: authFedUserAttribute
+    selectUniques:
+      - queryRootField: authFedUserAttributeById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: authFedUserAttributeById
+    orderByExpressionType: AuthFedUserAttributeOrderBy
+    filterInputTypeName: AuthFedUserAttributeFilterInput
+    aggregate:
+      queryRootField: authFedUserAttributeAggregate
+      subscription:
+        rootField: authFedUserAttributeAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: AuthFedUserAttribute
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+

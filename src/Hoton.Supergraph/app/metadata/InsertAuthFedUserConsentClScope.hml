@@ -1,0 +1,109 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserConsentClScopeObject
+  fields:
+    - name: scopeId
+      type: Varchar!
+    - name: userConsentId
+      type: Varchar!
+  graphql:
+    typeName: InsertAuthFedUserConsentClScopeObject
+    inputTypeName: InsertAuthFedUserConsentClScopeObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_consent_cl_scope_object
+      fieldMapping:
+        scopeId:
+          column:
+            name: scope_id
+        userConsentId:
+          column:
+            name: user_consent_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserConsentClScopeObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - scopeId
+          - userConsentId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertAuthFedUserConsentClScopeResponse
+  description: Responses from the 'insert_auth_fed_user_consent_cl_scope' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[AuthFedUserConsentClScope!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertAuthFedUserConsentClScopeResponse
+    inputTypeName: InsertAuthFedUserConsentClScopeResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_auth_fed_user_consent_cl_scope_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertAuthFedUserConsentClScopeResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertAuthFedUserConsentClScope
+  outputType: InsertAuthFedUserConsentClScopeResponse!
+  arguments:
+    - name: objects
+      type: "[InsertAuthFedUserConsentClScopeObject!]!"
+    - name: postCheck
+      type: AuthFedUserConsentClScopeBoolExp
+      description: Insert permission predicate over the
+        'auth_fed_user_consent_cl_scope' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_auth_fed_user_consent_cl_scope
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertAuthFedUserConsentClScope
+    rootFieldKind: Mutation
+  description: Insert into the auth_fed_user_consent_cl_scope table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertAuthFedUserConsentClScope
+  permissions:
+    - role: admin
+      allowExecution: true
+

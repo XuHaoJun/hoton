@@ -1,0 +1,281 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: OrderRealmOrderShipmentConfig
+  fields:
+    - name: country
+      type: Varchar
+    - name: createdAt
+      type: Timestamptz
+    - name: displayName
+      type: Varchar!
+    - name: id
+      type: Uuid!
+    - name: minOrderAmount
+      type: Numeric!
+    - name: payConditions
+      type: Varchar
+    - name: realmId
+      type: Varchar!
+    - name: shipmentFee
+      type: Numeric!
+    - name: shipmentServiceProvider
+      type: Varchar!
+    - name: temperatureZone
+      type: Varchar!
+    - name: updatedAt
+      type: Timestamptz
+  graphql:
+    typeName: OrderRealmOrderShipmentConfig
+    inputTypeName: OrderRealmOrderShipmentConfigInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: order_realm_order_shipment_config
+      fieldMapping:
+        country:
+          column:
+            name: country
+        createdAt:
+          column:
+            name: created_at
+        displayName:
+          column:
+            name: display_name
+        id:
+          column:
+            name: id
+        minOrderAmount:
+          column:
+            name: min_order_amount
+        payConditions:
+          column:
+            name: pay_conditions
+        realmId:
+          column:
+            name: realm_id
+        shipmentFee:
+          column:
+            name: shipment_fee
+        shipmentServiceProvider:
+          column:
+            name: shipment_service_provider
+        temperatureZone:
+          column:
+            name: temperature_zone
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: OrderRealmOrderShipmentConfig
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - country
+          - createdAt
+          - displayName
+          - id
+          - minOrderAmount
+          - payConditions
+          - realmId
+          - shipmentFee
+          - shipmentServiceProvider
+          - temperatureZone
+          - updatedAt
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: OrderRealmOrderShipmentConfigBoolExp
+  operand:
+    object:
+      type: OrderRealmOrderShipmentConfig
+      comparableFields:
+        - fieldName: country
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: createdAt
+          booleanExpressionType: TimestamptzBoolExp
+        - fieldName: displayName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: id
+          booleanExpressionType: UuidBoolExp
+        - fieldName: minOrderAmount
+          booleanExpressionType: NumericBoolExp
+        - fieldName: payConditions
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: realmId
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: shipmentFee
+          booleanExpressionType: NumericBoolExp
+        - fieldName: shipmentServiceProvider
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: temperatureZone
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
+      comparableRelationships:
+        - relationshipName: authRealm
+        - relationshipName: productProductShipmentConfigs
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: OrderRealmOrderShipmentConfigBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: OrderRealmOrderShipmentConfigAggExp
+  operand:
+    object:
+      aggregatedType: OrderRealmOrderShipmentConfig
+      aggregatableFields:
+        - fieldName: country
+          aggregateExpression: VarcharAggExp
+        - fieldName: createdAt
+          aggregateExpression: TimestamptzAggExp
+        - fieldName: displayName
+          aggregateExpression: VarcharAggExp
+        - fieldName: id
+          aggregateExpression: UuidAggExp
+        - fieldName: minOrderAmount
+          aggregateExpression: NumericAggExp
+        - fieldName: payConditions
+          aggregateExpression: VarcharAggExp
+        - fieldName: realmId
+          aggregateExpression: VarcharAggExp
+        - fieldName: shipmentFee
+          aggregateExpression: NumericAggExp
+        - fieldName: shipmentServiceProvider
+          aggregateExpression: VarcharAggExp
+        - fieldName: temperatureZone
+          aggregateExpression: VarcharAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: OrderRealmOrderShipmentConfigAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: OrderRealmOrderShipmentConfig
+  objectType: OrderRealmOrderShipmentConfig
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: order_realm_order_shipment_config
+  filterExpressionType: OrderRealmOrderShipmentConfigBoolExp
+  aggregateExpression: OrderRealmOrderShipmentConfigAggExp
+  orderableFields:
+    - fieldName: country
+      orderByDirections:
+        enableAll: true
+    - fieldName: createdAt
+      orderByDirections:
+        enableAll: true
+    - fieldName: displayName
+      orderByDirections:
+        enableAll: true
+    - fieldName: id
+      orderByDirections:
+        enableAll: true
+    - fieldName: minOrderAmount
+      orderByDirections:
+        enableAll: true
+    - fieldName: payConditions
+      orderByDirections:
+        enableAll: true
+    - fieldName: realmId
+      orderByDirections:
+        enableAll: true
+    - fieldName: shipmentFee
+      orderByDirections:
+        enableAll: true
+    - fieldName: shipmentServiceProvider
+      orderByDirections:
+        enableAll: true
+    - fieldName: temperatureZone
+      orderByDirections:
+        enableAll: true
+    - fieldName: updatedAt
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: orderRealmOrderShipmentConfig
+      subscription:
+        rootField: orderRealmOrderShipmentConfig
+    selectUniques:
+      - queryRootField: orderRealmOrderShipmentConfigById
+        uniqueIdentifier:
+          - id
+        subscription:
+          rootField: orderRealmOrderShipmentConfigById
+    orderByExpressionType: OrderRealmOrderShipmentConfigOrderBy
+    filterInputTypeName: OrderRealmOrderShipmentConfigFilterInput
+    aggregate:
+      queryRootField: orderRealmOrderShipmentConfigAggregate
+      subscription:
+        rootField: orderRealmOrderShipmentConfigAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: OrderRealmOrderShipmentConfig
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: authRealm
+  sourceType: OrderRealmOrderShipmentConfig
+  target:
+    model:
+      name: AuthRealm
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: realmId
+      target:
+        modelField:
+          - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProductShipmentConfigs
+  sourceType: OrderRealmOrderShipmentConfig
+  target:
+    model:
+      name: ProductProductShipmentConfig
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ProductProductShipmentConfigAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: realmOrderShipmentConfigId
+  graphql:
+    aggregateFieldName: productProductShipmentConfigsAggregate
+
