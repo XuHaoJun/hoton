@@ -36,11 +36,14 @@ public class HasuraController : ControllerBase
             //       ]
             //     }
             //   },
+            var realmId = User.Claims.Where(c => c.Type == "realm_id").Select(c => c.Value).ToList().FirstOrDefault();
             var resp = new HasuraValidateResponse()
             {
+                RealmId = realmId ?? "",
                 UserId = User.Identity.Name,
+                Role = "user",
                 DefaultRole = "user",
-                AllowedRoles = ["user"]
+                AllowedRoles = ["user", "guest"]
             };
             return Ok(resp);
         }
