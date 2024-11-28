@@ -54,6 +54,7 @@ export const config = createTamagui({
   defaultFont: 'body',
   animations,
   shouldAddPrefersColorThemes: true,
+  disableRootThemeClass: true,
   themeClassNameOnRoot: true,
 
   // highly recommended to turn this on if you are using shorthands

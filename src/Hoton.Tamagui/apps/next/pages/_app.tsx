@@ -52,7 +52,6 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       <Provider
-        disableRootThemeClass
         disableInjectCSS
         defaultTheme={theme}
       >
