@@ -2,9 +2,9 @@ kind: AuthConfig
 version: v2
 definition:
   mode:
-    # noAuth:
-    #   role: admin
-    #   sessionVariables: {}
-    webhook:
-      url: http://local.hasura.dev:5000/api/hasura/validateRequest
-      method: Get
+    noAuth:
+      role: admin
+      sessionVariables: {}
+    # webhook:
+    #   url: http://local.hasura.dev:5000/api/hasura/validateRequest
+    #   method: Get

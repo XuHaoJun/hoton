@@ -87,6 +87,19 @@ definition:
           - tags
           - temperatureZones
           - updatedAt
+    - role: user
+      output:
+        allowedFields:
+          - categories
+          - createdAt
+          - description
+          - id
+          - name
+          - price
+          - realmId
+          - tags
+          - temperatureZones
+          - updatedAt
 
 ---
 kind: BooleanExpressionType
@@ -228,6 +241,14 @@ definition:
       select:
         filter: null
         allowSubscriptions: true
+    - role: user
+      select:
+        filter:
+          fieldComparison:
+            field: realmId
+            operator: _eq
+            value:
+              sessionVariable: x-hasura-realm-id  
 
 ---
 kind: Relationship
