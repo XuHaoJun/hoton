@@ -24,6 +24,8 @@ definition:
       type: Jsonb
     - name: updatedAt
       type: Timestamptz
+    - name: searchVector
+      type: Tsvector
   graphql:
     typeName: InsertProductProductObject
     inputTypeName: InsertProductProductObjectInput
@@ -61,6 +63,9 @@ definition:
         updatedAt:
           column:
             name: updated_at
+        searchVector:
+          column:
+            name: search_vector
 
 ---
 kind: TypePermissions
@@ -81,6 +86,7 @@ definition:
           - tags
           - temperatureZones
           - updatedAt
+          - searchVector
 
 ---
 kind: ObjectType

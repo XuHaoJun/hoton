@@ -7477,6 +7477,15 @@
             "nullable": "nonNullable",
             "description": null
           },
+          "search_vector": {
+            "name": "search_vector",
+            "type": {
+              "scalarType": "tsvector"
+            },
+            "nullable": "nonNullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          },
           "snapshot_version": {
             "name": "snapshot_version",
             "type": {
@@ -8585,6 +8594,57 @@
           },
           "typeRepresentation": "timestamptz"
         },
+        "tsvector": {
+          "typeName": "tsvector",
+          "schemaName": "pg_catalog",
+          "description": null,
+          "aggregateFunctions": {},
+          "comparisonOperators": {
+            "_eq": {
+              "operatorName": "=",
+              "operatorKind": "equal",
+              "argumentType": "tsvector",
+              "isInfix": true
+            },
+            "_gt": {
+              "operatorName": ">",
+              "operatorKind": "custom",
+              "argumentType": "tsvector",
+              "isInfix": true
+            },
+            "_gte": {
+              "operatorName": ">=",
+              "operatorKind": "custom",
+              "argumentType": "tsvector",
+              "isInfix": true
+            },
+            "_in": {
+              "operatorName": "IN",
+              "operatorKind": "in",
+              "argumentType": "tsvector",
+              "isInfix": true
+            },
+            "_lt": {
+              "operatorName": "<",
+              "operatorKind": "custom",
+              "argumentType": "tsvector",
+              "isInfix": true
+            },
+            "_lte": {
+              "operatorName": "<=",
+              "operatorKind": "custom",
+              "argumentType": "tsvector",
+              "isInfix": true
+            },
+            "_neq": {
+              "operatorName": "<>",
+              "operatorKind": "custom",
+              "argumentType": "tsvector",
+              "isInfix": true
+            }
+          },
+          "typeRepresentation": null
+        },
         "uuid": {
           "typeName": "uuid",
           "schemaName": "pg_catalog",
@@ -8758,7 +8818,114 @@
       "composite": {}
     },
     "nativeOperations": {
-      "queries": {},
+      "queries": {
+        "product_search_vector": {
+          "sql": {
+            "file": "native_operations/queries/product_search_vector.sql"
+          },
+          "columns": {
+            "created_at": {
+              "name": "created_at",
+              "type": {
+                "scalarType": "timestamptz"
+              },
+              "nullable": "nullable",
+              "description": null
+            },
+            "description": {
+              "name": "description",
+              "type": {
+                "scalarType": "varchar"
+              },
+              "nullable": "nullable",
+              "description": null
+            },
+            "id": {
+              "name": "id",
+              "type": {
+                "scalarType": "uuid"
+              },
+              "nullable": "nonNullable",
+              "description": null
+            },
+            "name": {
+              "name": "name",
+              "type": {
+                "scalarType": "varchar"
+              },
+              "nullable": "nonNullable",
+              "description": null
+            },
+            "price": {
+              "name": "price",
+              "type": {
+                "scalarType": "numeric"
+              },
+              "nullable": "nonNullable",
+              "description": null
+            },
+            "realm_id": {
+              "name": "realm_id",
+              "type": {
+                "scalarType": "varchar"
+              },
+              "nullable": "nonNullable",
+              "description": null
+            },
+            "search_vector": {
+              "name": "search_vector",
+              "type": {
+                "scalarType": "tsvector"
+              },
+              "nullable": "nonNullable",
+              "description": null
+            },
+            "snapshot_version": {
+              "name": "snapshot_version",
+              "type": {
+                "scalarType": "timestamptz"
+              },
+              "nullable": "nullable",
+              "description": null
+            },
+            "tags": {
+              "name": "tags",
+              "type": {
+                "scalarType": "jsonb"
+              },
+              "nullable": "nullable",
+              "description": null
+            },
+            "temperature_zones": {
+              "name": "temperature_zones",
+              "type": {
+                "scalarType": "jsonb"
+              },
+              "nullable": "nullable",
+              "description": null
+            },
+            "updated_at": {
+              "name": "updated_at",
+              "type": {
+                "scalarType": "timestamptz"
+              },
+              "nullable": "nullable",
+              "description": null
+            }
+          },
+          "arguments": {
+            "keyword": {
+              "name": "keyword",
+              "type": {
+                "scalarType": "text"
+              },
+              "nullable": "nonNullable",
+              "description": null
+            }
+          },
+          "description": null
+        }
+      },
       "mutations": {}
     }
   },

@@ -2,7 +2,7 @@
 kind: ObjectType
 version: v1
 definition:
-  name: ProductProduct
+  name: ProductSearchVector
   fields:
     - name: createdAt
       type: Timestamptz
@@ -16,6 +16,8 @@ definition:
       type: Numeric!
     - name: realmId
       type: Varchar!
+    - name: searchVector
+      type: Tsvector!
     - name: snapshotVersion
       type: Timestamptz
     - name: tags
@@ -24,14 +26,12 @@ definition:
       type: Jsonb
     - name: updatedAt
       type: Timestamptz
-    - name: searchVector
-      type: Tsvector!
   graphql:
-    typeName: ProductProduct
-    inputTypeName: ProductProductInput
+    typeName: ProductSearchVector
+    inputTypeName: ProductSearchVectorInput
   dataConnectorTypeMapping:
     - dataConnectorName: hoton_main_pg
-      dataConnectorObjectType: product_product
+      dataConnectorObjectType: product_search_vector
       fieldMapping:
         createdAt:
           column:
@@ -51,6 +51,9 @@ definition:
         realmId:
           column:
             name: realm_id
+        searchVector:
+          column:
+            name: search_vector
         snapshotVersion:
           column:
             name: snapshot_version
@@ -63,15 +66,12 @@ definition:
         updatedAt:
           column:
             name: updated_at
-        searchVector:
-          column:
-            name: search_vector
 
 ---
 kind: TypePermissions
 version: v1
 definition:
-  typeName: ProductProduct
+  typeName: ProductSearchVector
   permissions:
     - role: admin
       output:
@@ -82,20 +82,8 @@ definition:
           - name
           - price
           - realmId
-          - snapshotVersion
-          - tags
-          - temperatureZones
-          - updatedAt
           - searchVector
-    - role: user
-      output:
-        allowedFields:
-          - createdAt
-          - description
-          - id
-          - name
-          - price
-          - realmId
+          - snapshotVersion
           - tags
           - temperatureZones
           - updatedAt
@@ -104,10 +92,10 @@ definition:
 kind: BooleanExpressionType
 version: v1
 definition:
-  name: ProductProductBoolExp
+  name: ProductSearchVectorBoolExp
   operand:
     object:
-      type: ProductProduct
+      type: ProductSearchVector
       comparableFields:
         - fieldName: createdAt
           booleanExpressionType: TimestamptzBoolExp
@@ -121,6 +109,8 @@ definition:
           booleanExpressionType: NumericBoolExp
         - fieldName: realmId
           booleanExpressionType: VarcharBoolExp
+        - fieldName: searchVector
+          booleanExpressionType: TsvectorBoolExp
         - fieldName: snapshotVersion
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: tags
@@ -129,28 +119,22 @@ definition:
           booleanExpressionType: JsonbBoolExp
         - fieldName: updatedAt
           booleanExpressionType: TimestamptzBoolExp
-        - fieldName: searchVector
-          booleanExpressionType: TsvectorBoolExp
-      comparableRelationships:
-        - relationshipName: authRealm
-        - relationshipName: productProductCategories
-        - relationshipName: productProductShipmentConfigs
-        - relationshipName: productProductSkus
+      comparableRelationships: []
   logicalOperators:
     enable: true
   isNull:
     enable: true
   graphql:
-    typeName: ProductProductBoolExp
+    typeName: ProductSearchVectorBoolExp
 
 ---
 kind: AggregateExpression
 version: v1
 definition:
-  name: ProductProductAggExp
+  name: ProductSearchVectorAggExp
   operand:
     object:
-      aggregatedType: ProductProduct
+      aggregatedType: ProductSearchVector
       aggregatableFields:
         - fieldName: createdAt
           aggregateExpression: TimestamptzAggExp
@@ -164,6 +148,8 @@ definition:
           aggregateExpression: NumericAggExp
         - fieldName: realmId
           aggregateExpression: VarcharAggExp
+        - fieldName: searchVector
+          aggregateExpression: TsvectorAggExp
         - fieldName: snapshotVersion
           aggregateExpression: TimestamptzAggExp
         - fieldName: tags
@@ -172,24 +158,25 @@ definition:
           aggregateExpression: JsonbAggExp
         - fieldName: updatedAt
           aggregateExpression: TimestamptzAggExp
-        - fieldName: searchVector
-          aggregateExpression: TsvectorAggExp
   count:
     enable: true
   graphql:
-    selectTypeName: ProductProductAggExp
+    selectTypeName: ProductSearchVectorAggExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: ProductProduct
-  objectType: ProductProduct
+  name: ProductSearchVector
+  objectType: ProductSearchVector
+  arguments:
+    - name: keyword
+      type: Text!
   source:
     dataConnectorName: hoton_main_pg
-    collection: product_product
-  filterExpressionType: ProductProductBoolExp
-  aggregateExpression: ProductProductAggExp
+    collection: product_search_vector
+  filterExpressionType: ProductSearchVectorBoolExp
+  aggregateExpression: ProductSearchVectorAggExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -209,6 +196,9 @@ definition:
     - fieldName: realmId
       orderByDirections:
         enableAll: true
+    - fieldName: searchVector
+      orderByDirections:
+        enableAll: true
     - fieldName: snapshotVersion
       orderByDirections:
         enableAll: true
@@ -221,145 +211,28 @@ definition:
     - fieldName: updatedAt
       orderByDirections:
         enableAll: true
-    - fieldName: searchVector
-      orderByDirections:
-        enableAll: true
   graphql:
     selectMany:
-      queryRootField: productProduct
+      queryRootField: productSearchVector
       subscription:
-        rootField: productProduct
-    selectUniques:
-      - queryRootField: productProductById
-        uniqueIdentifier:
-          - id
-        subscription:
-          rootField: productProductById
-    orderByExpressionType: ProductProductOrderBy
-    filterInputTypeName: ProductProductFilterInput
+        rootField: productSearchVector
+    selectUniques: []
+    argumentsInputType: ProductSearchVectorArguments
+    orderByExpressionType: ProductSearchVectorOrderBy
+    filterInputTypeName: ProductSearchVectorFilterInput
     aggregate:
-      queryRootField: productProductAggregate
+      queryRootField: productSearchVectorAggregate
       subscription:
-        rootField: productProductAggregate
+        rootField: productSearchVectorAggregate
 
 ---
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: ProductProduct
+  modelName: ProductSearchVector
   permissions:
     - role: admin
       select:
         filter: null
         allowSubscriptions: true
-    - role: user
-      select:
-        filter:
-          fieldComparison:
-            field: realmId
-            operator: _eq
-            value:
-              sessionVariable: x-hasura-realm-id
 
----
-kind: Relationship
-version: v1
-definition:
-  name: authRealm
-  sourceType: ProductProduct
-  target:
-    model:
-      name: AuthRealm
-      relationshipType: Object
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: realmId
-      target:
-        modelField:
-          - fieldName: id
-
----
-kind: Relationship
-version: v1
-definition:
-  name: productProductCategories
-  sourceType: ProductProduct
-  target:
-    model:
-      name: ProductProductCategory
-      relationshipType: Array
-      aggregate:
-        aggregateExpression: ProductProductCategoryAggExp
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: productId
-  graphql:
-    aggregateFieldName: productProductCategoriesAggregate
-
----
-kind: Relationship
-version: v1
-definition:
-  name: productProductShipmentConfigs
-  sourceType: ProductProduct
-  target:
-    model:
-      name: ProductProductShipmentConfig
-      relationshipType: Array
-      aggregate:
-        aggregateExpression: ProductProductShipmentConfigAggExp
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: productId
-  graphql:
-    aggregateFieldName: productProductShipmentConfigsAggregate
-
----
-kind: Relationship
-version: v1
-definition:
-  name: productProductSkus
-  sourceType: ProductProduct
-  target:
-    model:
-      name: ProductProductSku
-      relationshipType: Array
-      aggregate:
-        aggregateExpression: ProductProductSkuAggExp
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: productId
-  graphql:
-    aggregateFieldName: productProductSkusAggregate
-
-
----
-kind: Relationship
-version: v1
-definition:
-  name: productProduct
-  sourceType: ProductSearchVector
-  target:
-    model:
-      name: ProductProduct
-      relationshipType: Object
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: id

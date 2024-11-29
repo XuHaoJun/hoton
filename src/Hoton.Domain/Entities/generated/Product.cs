@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NpgsqlTypes;
 
 namespace Hoton.Domain.Entities.generated;
 
@@ -18,6 +19,8 @@ public partial class Product
     public string Tags { get; set; }
 
     public string TemperatureZones { get; set; }
+
+    public NpgsqlTsVector SearchVector { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

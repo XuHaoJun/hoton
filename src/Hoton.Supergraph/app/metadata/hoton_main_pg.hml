@@ -806,6 +806,38 @@ definition:
               argument_type:
                 type: named
                 name: timestamptz
+        tsvector:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+            _gt:
+              type: custom
+              argument_type:
+                type: named
+                name: tsvector
+            _gte:
+              type: custom
+              argument_type:
+                type: named
+                name: tsvector
+            _in:
+              type: in
+            _lt:
+              type: custom
+              argument_type:
+                type: named
+                name: tsvector
+            _lte:
+              type: custom
+              argument_type:
+                type: named
+                name: tsvector
+            _neq:
+              type: custom
+              argument_type:
+                type: named
+                name: tsvector
         uuid:
           representation:
             type: uuid
@@ -10642,6 +10674,12 @@ definition:
               type:
                 type: named
                 name: varchar
+            search_vector:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: tsvector
             snapshot_version:
               type:
                 type: nullable
@@ -11505,6 +11543,10 @@ definition:
               type:
                 type: named
                 name: varchar
+            search_vector:
+              type:
+                type: named
+                name: tsvector
             snapshot_version:
               type:
                 type: nullable
@@ -11607,6 +11649,64 @@ definition:
                 underlying_type:
                   type: named
                   name: int4
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        product_search_vector:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            description:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: varchar
+            id:
+              type:
+                type: named
+                name: uuid
+            name:
+              type:
+                type: named
+                name: varchar
+            price:
+              type:
+                type: named
+                name: numeric
+            realm_id:
+              type:
+                type: named
+                name: varchar
+            search_vector:
+              type:
+                type: named
+                name: tsvector
+            snapshot_version:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            tags:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: jsonb
+            temperature_zones:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: jsonb
             updated_at:
               type:
                 type: nullable
@@ -24086,6 +24186,14 @@ definition:
               type:
                 type: named
                 name: varchar
+        update_column_product_product_search_vector:
+          description: Update the 'search_vector' column in the 'product_product' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: tsvector
         update_column_product_product_shipment_config_created_at:
           description: Update the 'created_at' column in the 'product_product_shipment_config' collection
           fields:
@@ -25873,6 +25981,13 @@ definition:
                 underlying_type:
                   type: named
                   name: update_column_product_product_realm_id
+            search_vector:
+              description: Update the 'search_vector' column in the 'product_product' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_search_vector
             snapshot_version:
               description: Update the 'snapshot_version' column in the 'product_product' collection.
               type:
@@ -27422,6 +27537,15 @@ definition:
               column_mapping:
                 product_id: id
               foreign_collection: product_product
+        - name: product_search_vector
+          arguments:
+            keyword:
+              type:
+                type: named
+                name: text
+          type: product_search_vector
+          uniqueness_constraints: {}
+          foreign_keys: {}
       functions: []
       procedures:
         - name: delete_auth_admin_event_entity_by_id

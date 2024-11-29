@@ -2195,6 +2195,10 @@ public partial class DomainDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(36)
                 .HasColumnName("realm_id");
+            entity.Property(e => e.SearchVector)
+                .IsRequired()
+                .HasDefaultValueSql("''::tsvector")
+                .HasColumnName("search_vector");
             entity.Property(e => e.SnapshotVersion)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("snapshot_version");

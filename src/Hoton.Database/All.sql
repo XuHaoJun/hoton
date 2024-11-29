@@ -31,6 +31,8 @@ CREATE TABLE "product"."product" (
     -- 空調 (Air-Conditioned): 溫度範圍一般為18°C至23°C，適合某些特定商品的儲存。
     temperature_zones JSONB, -- 溫層區間, ["ambient", "chilled", "frozen", "deep-frozen", "air-conditioned"]
     --
+    search_vector tsvector NOT NULL DEFAULT '',
+    --
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     snapshot_version TIMESTAMPTZ DEFAULT NOW()

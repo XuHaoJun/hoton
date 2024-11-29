@@ -1228,3 +1228,75 @@ definition:
   graphql:
     selectTypeName: LtreeAggExp
 
+---
+kind: ScalarType
+version: v1
+definition:
+  name: Tsvector
+  graphql:
+    typeName: Tsvector
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: TsvectorBoolExp
+  operand:
+    scalar:
+      type: Tsvector
+      comparisonOperators:
+        - name: _eq
+          argumentType: Tsvector!
+        - name: _gt
+          argumentType: Tsvector!
+        - name: _gte
+          argumentType: Tsvector!
+        - name: _in
+          argumentType: "[Tsvector!]!"
+        - name: _lt
+          argumentType: Tsvector!
+        - name: _lte
+          argumentType: Tsvector!
+        - name: _neq
+          argumentType: Tsvector!
+      dataConnectorOperatorMapping:
+        - dataConnectorName: hoton_main_pg
+          dataConnectorScalarType: tsvector
+          operatorMapping: {}
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: TsvectorBoolExp
+
+---
+kind: DataConnectorScalarRepresentation
+version: v1
+definition:
+  dataConnectorName: hoton_main_pg
+  dataConnectorScalarType: tsvector
+  representation: Tsvector
+  graphql:
+    comparisonExpressionTypeName: TsvectorComparisonExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: TsvectorAggExp
+  operand:
+    scalar:
+      aggregatedType: Tsvector
+      aggregationFunctions: []
+      dataConnectorAggregationFunctionMapping:
+        - dataConnectorName: hoton_main_pg
+          dataConnectorScalarType: tsvector
+          functionMapping: {}
+  count:
+    enable: true
+  countDistinct:
+    enable: true
+  graphql:
+    selectTypeName: TsvectorAggExp
+
