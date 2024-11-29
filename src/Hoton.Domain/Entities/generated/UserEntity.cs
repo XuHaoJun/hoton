@@ -31,6 +31,8 @@ public partial class UserEntity
 
     public int NotBefore { get; set; }
 
+    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
+
     public virtual ICollection<Credential> Credentials { get; set; } = new List<Credential>();
 
     public virtual ICollection<FederatedIdentity> FederatedIdentities { get; set; } = new List<FederatedIdentity>();

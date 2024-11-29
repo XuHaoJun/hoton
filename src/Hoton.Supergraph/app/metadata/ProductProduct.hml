@@ -5,7 +5,7 @@ definition:
   name: ProductProduct
   fields:
     - name: categories
-      type: "[Ltree]"
+      type: Ltree
     - name: createdAt
       type: Timestamptz
     - name: description
@@ -21,9 +21,9 @@ definition:
     - name: snapshotVersion
       type: Timestamptz
     - name: tags
-      type: "[Varchar]"
+      type: Jsonb
     - name: temperatureZones
-      type: "[Varchar]"
+      type: Jsonb
     - name: updatedAt
       type: Timestamptz
   graphql:
@@ -126,6 +126,12 @@ definition:
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: updatedAt
           booleanExpressionType: TimestamptzBoolExp
+        - fieldName: categories
+          booleanExpressionType: LtreeBoolExp
+        - fieldName: tags
+          booleanExpressionType: JsonbBoolExp
+        - fieldName: temperatureZones
+          booleanExpressionType: JsonbBoolExp
       comparableRelationships:
         - relationshipName: orderOrderItems
         - relationshipName: authRealm
@@ -163,6 +169,12 @@ definition:
           aggregateExpression: TimestamptzAggExp
         - fieldName: updatedAt
           aggregateExpression: TimestamptzAggExp
+        - fieldName: categories
+          aggregateExpression: LtreeAggExp
+        - fieldName: tags
+          aggregateExpression: JsonbAggExp
+        - fieldName: temperatureZones
+          aggregateExpression: JsonbAggExp
   count:
     enable: true
   graphql:
@@ -248,7 +260,7 @@ definition:
             field: realmId
             operator: _eq
             value:
-              sessionVariable: x-hasura-realm-id  
+              sessionVariable: x-hasura-realm-id
 
 ---
 kind: Relationship

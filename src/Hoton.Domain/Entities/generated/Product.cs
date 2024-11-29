@@ -16,15 +16,21 @@ public partial class Product
 
     public decimal Price { get; set; }
 
-    public List<LTree> Categories { get; set; }
+    public LTree? Categories { get; set; }
 
-    public List<string> Tags { get; set; }
+    public string Tags { get; set; }
+
+    public string TemperatureZones { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? SnapshotVersion { get; set; }
+
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
+    public virtual ICollection<ProductShipmentConfig> ProductShipmentConfigs { get; set; } = new List<ProductShipmentConfig>();
 
     public virtual ICollection<ProductSku> ProductSkus { get; set; } = new List<ProductSku>();
 

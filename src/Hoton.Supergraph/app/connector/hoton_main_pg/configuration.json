@@ -7445,9 +7445,7 @@
           "categories": {
             "name": "categories",
             "type": {
-              "arrayType": {
-                "scalarType": "ltree"
-              }
+              "scalarType": "ltree"
             },
             "nullable": "nullable",
             "description": null
@@ -7514,9 +7512,7 @@
           "tags": {
             "name": "tags",
             "type": {
-              "arrayType": {
-                "scalarType": "varchar"
-              }
+              "scalarType": "jsonb"
             },
             "nullable": "nullable",
             "description": null
@@ -7524,9 +7520,7 @@
           "temperature_zones": {
             "name": "temperature_zones",
             "type": {
-              "arrayType": {
-                "scalarType": "varchar"
-              }
+              "scalarType": "jsonb"
             },
             "nullable": "nullable",
             "description": null

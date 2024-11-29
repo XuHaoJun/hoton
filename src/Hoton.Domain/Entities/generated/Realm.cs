@@ -129,6 +129,14 @@ public partial class Realm
 
     public virtual ICollection<KeycloakRole> KeycloakRoles { get; set; } = new List<KeycloakRole>();
 
+    public virtual ICollection<OrderInvoice> OrderInvoices { get; set; } = new List<OrderInvoice>();
+
+    public virtual ICollection<OrderPayment> OrderPayments { get; set; } = new List<OrderPayment>();
+
+    public virtual ICollection<OrderShipment> OrderShipments { get; set; } = new List<OrderShipment>();
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
     public virtual ICollection<RealmAttribute> RealmAttributes { get; set; } = new List<RealmAttribute>();
@@ -139,6 +147,8 @@ public partial class Realm
 
     public virtual ICollection<RealmEventsListener> RealmEventsListeners { get; set; } = new List<RealmEventsListener>();
 
+    public virtual ICollection<RealmOrderShipmentConfig> RealmOrderShipmentConfigs { get; set; } = new List<RealmOrderShipmentConfig>();
+
     public virtual ICollection<RealmRequiredCredential> RealmRequiredCredentials { get; set; } = new List<RealmRequiredCredential>();
 
     public virtual ICollection<RealmSmtpConfig> RealmSmtpConfigs { get; set; } = new List<RealmSmtpConfig>();
@@ -146,6 +156,8 @@ public partial class Realm
     public virtual ICollection<RealmSupportedLocale> RealmSupportedLocales { get; set; } = new List<RealmSupportedLocale>();
 
     public virtual ICollection<RequiredActionProvider> RequiredActionProviders { get; set; } = new List<RequiredActionProvider>();
+
+    public virtual ICollection<SnapshotProduct> SnapshotProducts { get; set; } = new List<SnapshotProduct>();
 
     public virtual ICollection<UserFederationMapper> UserFederationMappers { get; set; } = new List<UserFederationMapper>();
 

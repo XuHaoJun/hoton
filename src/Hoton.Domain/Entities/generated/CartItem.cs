@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace Hoton.Domain.Entities.generated;
 
-public partial class SnapshotProduct
+public partial class CartItem
 {
     public Guid Id { get; set; }
 
-    public string RealmId { get; set; }
+    public Guid? CartId { get; set; }
 
-    public DateTime SnapshotVersion { get; set; }
+    public Guid? ProductSkuId { get; set; }
 
-    public string Name { get; set; }
-
-    public string Description { get; set; }
+    public int Quantity { get; set; }
 
     public decimal Price { get; set; }
 
@@ -21,5 +19,7 @@ public partial class SnapshotProduct
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual Realm Realm { get; set; }
+    public virtual Cart Cart { get; set; }
+
+    public virtual ProductSku ProductSku { get; set; }
 }

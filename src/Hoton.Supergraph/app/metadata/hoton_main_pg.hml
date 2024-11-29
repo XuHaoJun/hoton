@@ -10606,12 +10606,8 @@ definition:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: ltree
+                  type: named
+                  name: ltree
             created_at:
               type:
                 type: nullable
@@ -10652,22 +10648,14 @@ definition:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: varchar
+                  type: named
+                  name: jsonb
             temperature_zones:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: varchar
+                  type: named
+                  name: jsonb
             updated_at:
               type:
                 type: nullable
@@ -11523,12 +11511,8 @@ definition:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: ltree
+                  type: named
+                  name: ltree
             created_at:
               type:
                 type: nullable
@@ -11567,22 +11551,14 @@ definition:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: varchar
+                  type: named
+                  name: jsonb
             temperature_zones:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: varchar
+                  type: named
+                  name: jsonb
             updated_at:
               type:
                 type: nullable
@@ -24102,12 +24078,8 @@ definition:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: ltree
+                  type: named
+                  name: ltree
         update_column_product_product_created_at:
           description: Update the 'created_at' column in the 'product_product' collection
           fields:
@@ -24302,12 +24274,8 @@ definition:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: varchar
+                  type: named
+                  name: jsonb
         update_column_product_product_temperature_zones:
           description: Update the 'temperature_zones' column in the 'product_product' collection
           fields:
@@ -24316,12 +24284,8 @@ definition:
               type:
                 type: nullable
                 underlying_type:
-                  type: array
-                  element_type:
-                    type: nullable
-                    underlying_type:
-                      type: named
-                      name: varchar
+                  type: named
+                  name: jsonb
         update_column_product_product_updated_at:
           description: Update the 'updated_at' column in the 'product_product' collection
           fields:

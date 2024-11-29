@@ -1204,3 +1204,23 @@ definition:
   graphql:
     comparisonExpressionTypeName: LtreeComparisonExp
 
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: LtreeAggExp
+  operand:
+    scalar:
+      aggregatedType: Ltree
+      aggregationFunctions: []
+      dataConnectorAggregationFunctionMapping:
+        - dataConnectorName: hoton_main_pg
+          dataConnectorScalarType: ltree
+          functionMapping: {}
+  count:
+    enable: true
+  countDistinct:
+    enable: true
+  graphql:
+    selectTypeName: LtreeAggExp
+

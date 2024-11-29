@@ -22,10 +22,10 @@ CREATE TABLE "product"."product" (
     --
     price DECIMAL(10, 2) NOT NULL,
     --
-    categories ltree[], 
-    tags varchar(255)[],
+    categories ltree, 
+    tags JSONB,
     --
-    temperature_zones varchar(50)[],
+    temperature_zones JSONB,
     --
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),

@@ -27,9 +27,9 @@ public partial class DomainDbContext : DbContext
 
     public virtual DbSet<BrokerLink> BrokerLinks { get; set; }
 
-    public virtual DbSet<Cargo> Cargos { get; set; }
+    public virtual DbSet<Cart> Carts { get; set; }
 
-    public virtual DbSet<CargoProductSkuQuantityMap> CargoProductSkuQuantityMaps { get; set; }
+    public virtual DbSet<CartItem> CartItems { get; set; }
 
     public virtual DbSet<Client> Clients { get; set; }
 
@@ -93,12 +93,6 @@ public partial class DomainDbContext : DbContext
 
     public virtual DbSet<IdpMapperConfig> IdpMapperConfigs { get; set; }
 
-    public virtual DbSet<Invoice> Invoices { get; set; }
-
-    public virtual DbSet<InvoiceItem> InvoiceItems { get; set; }
-
-    public virtual DbSet<InvoiceStatusHistory> InvoiceStatusHistories { get; set; }
-
     public virtual DbSet<KeycloakGroup> KeycloakGroups { get; set; }
 
     public virtual DbSet<KeycloakRole> KeycloakRoles { get; set; }
@@ -111,11 +105,21 @@ public partial class DomainDbContext : DbContext
 
     public virtual DbSet<Order> Orders { get; set; }
 
-    public virtual DbSet<OrderInvoiceMap> OrderInvoiceMaps { get; set; }
+    public virtual DbSet<OrderInvoice> OrderInvoices { get; set; }
+
+    public virtual DbSet<OrderInvoiceItem> OrderInvoiceItems { get; set; }
+
+    public virtual DbSet<OrderInvoiceStatusHistory> OrderInvoiceStatusHistories { get; set; }
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
 
-    public virtual DbSet<OrderPaymentMap> OrderPaymentMaps { get; set; }
+    public virtual DbSet<OrderItemCargoMap> OrderItemCargoMaps { get; set; }
+
+    public virtual DbSet<OrderPayment> OrderPayments { get; set; }
+
+    public virtual DbSet<OrderShipment> OrderShipments { get; set; }
+
+    public virtual DbSet<OrderShipmentCargo> OrderShipmentCargos { get; set; }
 
     public virtual DbSet<OrderStatusHistory> OrderStatusHistories { get; set; }
 
@@ -123,11 +127,11 @@ public partial class DomainDbContext : DbContext
 
     public virtual DbSet<OrgDomain> OrgDomains { get; set; }
 
-    public virtual DbSet<Payment> Payments { get; set; }
-
     public virtual DbSet<PolicyConfig> PolicyConfigs { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
+
+    public virtual DbSet<ProductShipmentConfig> ProductShipmentConfigs { get; set; }
 
     public virtual DbSet<ProductSku> ProductSkus { get; set; }
 
@@ -146,6 +150,8 @@ public partial class DomainDbContext : DbContext
     public virtual DbSet<RealmEventsListener> RealmEventsListeners { get; set; }
 
     public virtual DbSet<RealmLocalization> RealmLocalizations { get; set; }
+
+    public virtual DbSet<RealmOrderShipmentConfig> RealmOrderShipmentConfigs { get; set; }
 
     public virtual DbSet<RealmRequiredCredential> RealmRequiredCredentials { get; set; }
 
@@ -179,8 +185,6 @@ public partial class DomainDbContext : DbContext
 
     public virtual DbSet<ScopeMapping> ScopeMappings { get; set; }
 
-    public virtual DbSet<Shipment> Shipments { get; set; }
-
     public virtual DbSet<SnapshotProduct> SnapshotProducts { get; set; }
 
     public virtual DbSet<SnapshotProductSku> SnapshotProductSkus { get; set; }
@@ -210,10 +214,6 @@ public partial class DomainDbContext : DbContext
     public virtual DbSet<UsernameLoginFailure> UsernameLoginFailures { get; set; }
 
     public virtual DbSet<WebOrigin> WebOrigins { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=hoton-dev;Username=postgres;Password=postgres");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -412,11 +412,11 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.Token).HasColumnName("token");
         });
 
-        modelBuilder.Entity<Cargo>(entity =>
+        modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("cargo_pkey");
+            entity.HasKey(e => e.Id).HasName("cart_pkey");
 
-            entity.ToTable("cargo", "shipment");
+            entity.ToTable("cart", "cart");
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("uuid_generate_v4()")
@@ -424,52 +424,52 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
-            entity.Property(e => e.Height)
-                .HasPrecision(10, 2)
-                .HasColumnName("height");
-            entity.Property(e => e.Length)
-                .HasPrecision(10, 2)
-                .HasColumnName("length");
-            entity.Property(e => e.ShipmentId).HasColumnName("shipment_id");
-            entity.Property(e => e.TrackingNumber)
-                .HasMaxLength(255)
-                .HasColumnName("tracking_number");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
-            entity.Property(e => e.Volume)
-                .HasPrecision(10, 2)
-                .HasComputedColumnSql("((length * width) * height)", true)
-                .HasColumnName("volume");
-            entity.Property(e => e.Weight)
-                .HasPrecision(10, 2)
-                .HasColumnName("weight");
-            entity.Property(e => e.Width)
-                .HasPrecision(10, 2)
-                .HasColumnName("width");
+            entity.Property(e => e.UserId)
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnName("user_id");
 
-            entity.HasOne(d => d.Shipment).WithMany(p => p.Cargos)
-                .HasForeignKey(d => d.ShipmentId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("cargo_shipment_id_fkey");
+            entity.HasOne(d => d.User).WithMany(p => p.Carts)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("cart_user_id_fkey");
         });
 
-        modelBuilder.Entity<CargoProductSkuQuantityMap>(entity =>
+        modelBuilder.Entity<CartItem>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("cargo_product_sku_quantity_map", "shipment");
+            entity.HasKey(e => e.Id).HasName("cart_item_pkey");
 
-            entity.Property(e => e.CargoId).HasColumnName("cargo_id");
+            entity.ToTable("cart_item", "cart");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.CartId).HasColumnName("cart_id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Price)
+                .HasPrecision(10, 2)
+                .HasColumnName("price");
             entity.Property(e => e.ProductSkuId).HasColumnName("product_sku_id");
             entity.Property(e => e.Quantity)
                 .HasDefaultValue(1)
                 .HasColumnName("quantity");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.Cargo).WithMany()
-                .HasForeignKey(d => d.CargoId)
+            entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
+                .HasForeignKey(d => d.CartId)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("cargo_product_sku_quantity_map_cargo_id_fkey");
+                .HasConstraintName("cart_item_cart_id_fkey");
+
+            entity.HasOne(d => d.ProductSku).WithMany(p => p.CartItems)
+                .HasForeignKey(d => d.ProductSkuId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("cart_item_product_sku_id_fkey");
         });
 
         modelBuilder.Entity<Client>(entity =>
@@ -1413,141 +1413,6 @@ public partial class DomainDbContext : DbContext
                 .HasConstraintName("fk_idpmconfig");
         });
 
-        modelBuilder.Entity<Invoice>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("invoice_pkey");
-
-            entity.ToTable("invoice", "invoice");
-
-            entity.HasIndex(e => e.InvoiceNumber, "invoice_invoice_number_key").IsUnique();
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("uuid_generate_v4()")
-                .HasColumnName("id");
-            entity.Property(e => e.Amount)
-                .HasPrecision(10, 2)
-                .HasColumnName("amount");
-            entity.Property(e => e.CarrierNo)
-                .HasMaxLength(255)
-                .HasColumnName("carrier_no");
-            entity.Property(e => e.CompanyName)
-                .HasMaxLength(255)
-                .HasColumnName("company_name");
-            entity.Property(e => e.CompanyNo)
-                .HasMaxLength(255)
-                .HasColumnName("company_no");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.InvoiceNumber)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("invoice_number");
-            entity.Property(e => e.InvoiceType)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("invoice_type");
-            entity.Property(e => e.IssueDate)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("issue_date");
-            entity.Property(e => e.ServiceProvider)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("service_provider");
-            entity.Property(e => e.Status)
-                .HasMaxLength(50)
-                .HasDefaultValueSql("'issued'::character varying")
-                .HasColumnName("status");
-            entity.Property(e => e.Tax)
-                .HasPrecision(10, 2)
-                .HasColumnName("tax");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("updated_at");
-            entity.Property(e => e.VoidDate).HasColumnName("void_date");
-        });
-
-        modelBuilder.Entity<InvoiceItem>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("invoice_item_pkey");
-
-            entity.ToTable("invoice_item", "invoice");
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("uuid_generate_v4()")
-                .HasColumnName("id");
-            entity.Property(e => e.Amount)
-                .HasPrecision(10, 2)
-                .HasComputedColumnSql("((quantity)::numeric * unit_price)", true)
-                .HasColumnName("amount");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.InvoiceId).HasColumnName("invoice_id");
-            entity.Property(e => e.ProductName)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("product_name");
-            entity.Property(e => e.Quantity)
-                .HasDefaultValue(1)
-                .HasColumnName("quantity");
-            entity.Property(e => e.Remark).HasColumnName("remark");
-            entity.Property(e => e.TaxType)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("tax_type");
-            entity.Property(e => e.UnitPrice)
-                .HasPrecision(10, 2)
-                .HasColumnName("unit_price");
-            entity.Property(e => e.UnitWord)
-                .HasMaxLength(255)
-                .HasColumnName("unit_word");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("updated_at");
-
-            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceItems)
-                .HasForeignKey(d => d.InvoiceId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("invoice_item_invoice_id_fkey");
-        });
-
-        modelBuilder.Entity<InvoiceStatusHistory>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("invoice_status_history_pkey");
-
-            entity.ToTable("invoice_status_history", "invoice");
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("uuid_generate_v4()")
-                .HasColumnName("id");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.FromStatus)
-                .HasMaxLength(50)
-                .HasColumnName("from_status");
-            entity.Property(e => e.InvoiceId).HasColumnName("invoice_id");
-            entity.Property(e => e.Reason)
-                .HasMaxLength(50)
-                .HasColumnName("reason");
-            entity.Property(e => e.ReasonData)
-                .HasColumnType("jsonb")
-                .HasColumnName("reason_data");
-            entity.Property(e => e.ToStatus)
-                .HasMaxLength(50)
-                .HasDefaultValueSql("'issued'::character varying")
-                .HasColumnName("to_status");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("updated_at");
-
-            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceStatusHistories)
-                .HasForeignKey(d => d.InvoiceId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("invoice_status_history_invoice_id_fkey");
-        });
-
         modelBuilder.Entity<KeycloakGroup>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("constraint_group");
@@ -1772,9 +1637,13 @@ public partial class DomainDbContext : DbContext
                 .IsRequired()
                 .HasMaxLength(255)
                 .HasColumnName("customer_name");
-            entity.Property(e => e.DeliveryFee)
+            entity.Property(e => e.RealmId)
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnName("realm_id");
+            entity.Property(e => e.ShipmentFee)
                 .HasPrecision(10, 2)
-                .HasColumnName("delivery_fee");
+                .HasColumnName("shipment_fee");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
                 .HasDefaultValueSql("'pending'::character varying")
@@ -1794,30 +1663,162 @@ public partial class DomainDbContext : DbContext
                 .HasMaxLength(36)
                 .HasColumnName("user_id");
 
+            entity.HasOne(d => d.Realm).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.RealmId)
+                .HasConstraintName("order_realm_id_fkey");
+
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
                 .HasConstraintName("order_user_id_fkey");
         });
 
-        modelBuilder.Entity<OrderInvoiceMap>(entity =>
+        modelBuilder.Entity<OrderInvoice>(entity =>
         {
-            entity.HasKey(e => new { e.OrderId, e.InvoiceId }).HasName("order_invoice_map_pkey");
+            entity.HasKey(e => e.Id).HasName("order_invoice_pkey");
 
-            entity.ToTable("order_invoice_map", "order");
+            entity.ToTable("order_invoice", "order");
 
-            entity.Property(e => e.OrderId).HasColumnName("order_id");
-            entity.Property(e => e.InvoiceId).HasColumnName("invoice_id");
+            entity.HasIndex(e => e.InvoiceNumber, "order_invoice_invoice_number_key").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.Amount)
+                .HasPrecision(10, 2)
+                .HasColumnName("amount");
+            entity.Property(e => e.CarrierNo)
+                .HasMaxLength(255)
+                .HasColumnName("carrier_no");
+            entity.Property(e => e.CompanyName)
+                .HasMaxLength(255)
+                .HasColumnName("company_name");
+            entity.Property(e => e.CompanyNo)
+                .HasMaxLength(255)
+                .HasColumnName("company_no");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
+            entity.Property(e => e.InvoiceNumber)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("invoice_number");
+            entity.Property(e => e.InvoiceType)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("invoice_type");
+            entity.Property(e => e.IssueDate)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("issue_date");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.RealmId)
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnName("realm_id");
+            entity.Property(e => e.ServiceProvider)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("service_provider");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'issued'::character varying")
+                .HasColumnName("status");
+            entity.Property(e => e.Tax)
+                .HasPrecision(10, 2)
+                .HasColumnName("tax");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.VoidDate).HasColumnName("void_date");
 
-            entity.HasOne(d => d.Invoice).WithMany(p => p.OrderInvoiceMaps)
-                .HasForeignKey(d => d.InvoiceId)
-                .HasConstraintName("order_invoice_map_invoice_id_fkey");
-
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderInvoiceMaps)
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderInvoices)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("order_invoice_map_order_id_fkey");
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_invoice_order_id_fkey");
+
+            entity.HasOne(d => d.Realm).WithMany(p => p.OrderInvoices)
+                .HasForeignKey(d => d.RealmId)
+                .HasConstraintName("order_invoice_realm_id_fkey");
+        });
+
+        modelBuilder.Entity<OrderInvoiceItem>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("order_invoice_item_pkey");
+
+            entity.ToTable("order_invoice_item", "order");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.Amount)
+                .HasPrecision(10, 2)
+                .HasComputedColumnSql("((quantity)::numeric * unit_price)", true)
+                .HasColumnName("amount");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.OrderInvoiceId).HasColumnName("order_invoice_id");
+            entity.Property(e => e.ProductName)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("product_name");
+            entity.Property(e => e.Quantity)
+                .HasDefaultValue(1)
+                .HasColumnName("quantity");
+            entity.Property(e => e.Remark).HasColumnName("remark");
+            entity.Property(e => e.TaxType)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("tax_type");
+            entity.Property(e => e.UnitPrice)
+                .HasPrecision(10, 2)
+                .HasColumnName("unit_price");
+            entity.Property(e => e.UnitWord)
+                .HasMaxLength(255)
+                .HasColumnName("unit_word");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.OrderInvoice).WithMany(p => p.OrderInvoiceItems)
+                .HasForeignKey(d => d.OrderInvoiceId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_invoice_item_order_invoice_id_fkey");
+        });
+
+        modelBuilder.Entity<OrderInvoiceStatusHistory>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("order_invoice_status_history_pkey");
+
+            entity.ToTable("order_invoice_status_history", "order");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.FromStatus)
+                .HasMaxLength(50)
+                .HasColumnName("from_status");
+            entity.Property(e => e.OrderInvoiceId).HasColumnName("order_invoice_id");
+            entity.Property(e => e.Reason)
+                .HasMaxLength(50)
+                .HasColumnName("reason");
+            entity.Property(e => e.ReasonData)
+                .HasColumnType("jsonb")
+                .HasColumnName("reason_data");
+            entity.Property(e => e.ToStatus)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'issued'::character varying")
+                .HasColumnName("to_status");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.OrderInvoice).WithMany(p => p.OrderInvoiceStatusHistories)
+                .HasForeignKey(d => d.OrderInvoiceId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_invoice_status_history_order_invoice_id_fkey");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -1852,23 +1853,216 @@ public partial class DomainDbContext : DbContext
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_item_order_id_fkey");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_item_product_id_fkey");
+
+            entity.HasOne(d => d.ProductSku).WithMany(p => p.OrderItems)
+                .HasForeignKey(d => d.ProductSkuId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_item_product_sku_id_fkey");
         });
 
-        modelBuilder.Entity<OrderPaymentMap>(entity =>
+        modelBuilder.Entity<OrderItemCargoMap>(entity =>
         {
-            entity.HasKey(e => new { e.OrderId, e.PaymentId }).HasName("order_payment_map_pkey");
+            entity
+                .HasNoKey()
+                .ToTable("order_item_cargo_map", "order");
 
-            entity.ToTable("order_payment_map", "order");
+            entity.Property(e => e.OrderItemId).HasColumnName("order_item_id");
+            entity.Property(e => e.OrderShipmentCargoId).HasColumnName("order_shipment_cargo_id");
+            entity.Property(e => e.Quantity)
+                .HasDefaultValue(1)
+                .HasColumnName("quantity");
 
-            entity.Property(e => e.OrderId).HasColumnName("order_id");
-            entity.Property(e => e.PaymentId).HasColumnName("payment_id");
+            entity.HasOne(d => d.OrderItem).WithMany()
+                .HasForeignKey(d => d.OrderItemId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_item_cargo_map_order_item_id_fkey");
+
+            entity.HasOne(d => d.OrderShipmentCargo).WithMany()
+                .HasForeignKey(d => d.OrderShipmentCargoId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_item_cargo_map_order_shipment_cargo_id_fkey");
+        });
+
+        modelBuilder.Entity<OrderPayment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("order_payment_pkey");
+
+            entity.ToTable("order_payment", "order");
+
+            entity.HasIndex(e => e.PaymentNumber, "order_payment_payment_number_key").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.Amount)
+                .HasPrecision(10, 2)
+                .HasColumnName("amount");
+            entity.Property(e => e.AtmPayNo)
+                .HasMaxLength(255)
+                .HasColumnName("atm_pay_no");
+            entity.Property(e => e.CheckMacValue)
+                .HasMaxLength(255)
+                .HasColumnName("check_mac_value");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
+            entity.Property(e => e.MerchantId)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("merchant_id");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.OrderResultUrl)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("order_result_url");
+            entity.Property(e => e.PaymentMethod)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("payment_method");
+            entity.Property(e => e.PaymentNumber)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("payment_number");
+            entity.Property(e => e.RealmId)
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnName("realm_id");
+            entity.Property(e => e.ReturnUrl)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("return_url");
+            entity.Property(e => e.ServiceProvider)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("service_provider");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'pending'::character varying")
+                .HasColumnName("status");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
 
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderPaymentMaps)
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderPayments)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("order_payment_map_order_id_fkey");
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_payment_order_id_fkey");
+
+            entity.HasOne(d => d.Realm).WithMany(p => p.OrderPayments)
+                .HasForeignKey(d => d.RealmId)
+                .HasConstraintName("order_payment_realm_id_fkey");
+        });
+
+        modelBuilder.Entity<OrderShipment>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("order_shipment_pkey");
+
+            entity.ToTable("order_shipment", "order");
+
+            entity.HasIndex(e => e.TrackingNumber, "order_shipment_tracking_number_key").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.RealmId)
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnName("realm_id");
+            entity.Property(e => e.ReceiverAddress)
+                .HasMaxLength(255)
+                .HasColumnName("receiver_address");
+            entity.Property(e => e.ReceiverName)
+                .HasMaxLength(100)
+                .HasColumnName("receiver_name");
+            entity.Property(e => e.ReceiverPhone)
+                .HasMaxLength(100)
+                .HasColumnName("receiver_phone");
+            entity.Property(e => e.SenderName)
+                .HasMaxLength(100)
+                .HasColumnName("sender_name");
+            entity.Property(e => e.SenderPhone)
+                .HasMaxLength(100)
+                .HasColumnName("sender_phone");
+            entity.Property(e => e.ServiceProvider)
+                .HasMaxLength(50)
+                .HasColumnName("service_provider");
+            entity.Property(e => e.ServiceType)
+                .HasMaxLength(50)
+                .HasColumnName("service_type");
+            entity.Property(e => e.Status)
+                .HasMaxLength(50)
+                .HasDefaultValueSql("'pending'::character varying")
+                .HasColumnName("status");
+            entity.Property(e => e.TemperatureZone)
+                .HasMaxLength(50)
+                .HasColumnName("temperature_zone");
+            entity.Property(e => e.TrackingNumber)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("tracking_number");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderShipments)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_shipment_order_id_fkey");
+
+            entity.HasOne(d => d.Realm).WithMany(p => p.OrderShipments)
+                .HasForeignKey(d => d.RealmId)
+                .HasConstraintName("order_shipment_realm_id_fkey");
+        });
+
+        modelBuilder.Entity<OrderShipmentCargo>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("order_shipment_cargo_pkey");
+
+            entity.ToTable("order_shipment_cargo", "order");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Height)
+                .HasPrecision(10, 2)
+                .HasColumnName("height");
+            entity.Property(e => e.Length)
+                .HasPrecision(10, 2)
+                .HasColumnName("length");
+            entity.Property(e => e.OrderShipmentId).HasColumnName("order_shipment_id");
+            entity.Property(e => e.TrackingNumber)
+                .HasMaxLength(255)
+                .HasColumnName("tracking_number");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+            entity.Property(e => e.Volume)
+                .HasPrecision(10, 2)
+                .HasComputedColumnSql("((length * width) * height)", true)
+                .HasColumnName("volume");
+            entity.Property(e => e.Weight)
+                .HasPrecision(10, 2)
+                .HasColumnName("weight");
+            entity.Property(e => e.Width)
+                .HasPrecision(10, 2)
+                .HasColumnName("width");
+
+            entity.HasOne(d => d.OrderShipment).WithMany(p => p.OrderShipmentCargos)
+                .HasForeignKey(d => d.OrderShipmentId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("order_shipment_cargo_order_shipment_id_fkey");
         });
 
         modelBuilder.Entity<OrderStatusHistory>(entity =>
@@ -1972,58 +2166,6 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.Verified).HasColumnName("verified");
         });
 
-        modelBuilder.Entity<Payment>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("payment_pkey");
-
-            entity.ToTable("payment", "payment");
-
-            entity.HasIndex(e => e.PaymentNumber, "payment_payment_number_key").IsUnique();
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("uuid_generate_v4()")
-                .HasColumnName("id");
-            entity.Property(e => e.Amount)
-                .HasPrecision(10, 2)
-                .HasColumnName("amount");
-            entity.Property(e => e.AtmPayNo)
-                .HasMaxLength(255)
-                .HasColumnName("atm_pay_no");
-            entity.Property(e => e.CheckMacValue)
-                .HasMaxLength(255)
-                .HasColumnName("check_mac_value");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.OrderResultUrl)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("order_result_url");
-            entity.Property(e => e.PaymentMethod)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("payment_method");
-            entity.Property(e => e.PaymentNumber)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("payment_number");
-            entity.Property(e => e.ReturnUrl)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("return_url");
-            entity.Property(e => e.ServiceProvider)
-                .IsRequired()
-                .HasMaxLength(50)
-                .HasColumnName("service_provider");
-            entity.Property(e => e.Status)
-                .HasMaxLength(50)
-                .HasDefaultValueSql("'pending'::character varying")
-                .HasColumnName("status");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("updated_at");
-        });
-
         modelBuilder.Entity<PolicyConfig>(entity =>
         {
             entity.HasKey(e => new { e.PolicyId, e.Name }).HasName("constraint_dpc");
@@ -2057,7 +2199,9 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
-            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Description)
+                .HasMaxLength(1024)
+                .HasColumnName("description");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(255)
@@ -2073,8 +2217,11 @@ public partial class DomainDbContext : DbContext
                 .HasDefaultValueSql("now()")
                 .HasColumnName("snapshot_version");
             entity.Property(e => e.Tags)
-                .HasColumnType("character varying(255)[]")
+                .HasColumnType("jsonb")
                 .HasColumnName("tags");
+            entity.Property(e => e.TemperatureZones)
+                .HasColumnType("jsonb")
+                .HasColumnName("temperature_zones");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
@@ -2082,6 +2229,35 @@ public partial class DomainDbContext : DbContext
             entity.HasOne(d => d.Realm).WithMany(p => p.Products)
                 .HasForeignKey(d => d.RealmId)
                 .HasConstraintName("product_realm_id_fkey");
+        });
+
+        modelBuilder.Entity<ProductShipmentConfig>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("product_shipment_config_pkey");
+
+            entity.ToTable("product_shipment_config", "product");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.RealmOrderShipmentConfigId).HasColumnName("realm_order_shipment_config_id");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductShipmentConfigs)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("product_shipment_config_product_id_fkey");
+
+            entity.HasOne(d => d.RealmOrderShipmentConfig).WithMany(p => p.ProductShipmentConfigs)
+                .HasForeignKey(d => d.RealmOrderShipmentConfigId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("product_shipment_config_realm_order_shipment_config_id_fkey");
         });
 
         modelBuilder.Entity<ProductSku>(entity =>
@@ -2440,6 +2616,55 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.Texts)
                 .IsRequired()
                 .HasColumnName("texts");
+        });
+
+        modelBuilder.Entity<RealmOrderShipmentConfig>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("realm_order_shipment_config_pkey");
+
+            entity.ToTable("realm_order_shipment_config", "order");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.Country)
+                .HasMaxLength(50)
+                .HasColumnName("country");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.DisplayName)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("display_name");
+            entity.Property(e => e.MinOrderAmount)
+                .HasPrecision(10, 2)
+                .HasColumnName("min_order_amount");
+            entity.Property(e => e.PayConditions)
+                .HasMaxLength(50)
+                .HasColumnName("pay_conditions");
+            entity.Property(e => e.RealmId)
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnName("realm_id");
+            entity.Property(e => e.ShipmentFee)
+                .HasPrecision(10, 2)
+                .HasColumnName("shipment_fee");
+            entity.Property(e => e.ShipmentServiceProvider)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("shipment_service_provider");
+            entity.Property(e => e.TemperatureZone)
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("temperature_zone");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Realm).WithMany(p => p.RealmOrderShipmentConfigs)
+                .HasForeignKey(d => d.RealmId)
+                .HasConstraintName("realm_order_shipment_config_realm_id_fkey");
         });
 
         modelBuilder.Entity<RealmRequiredCredential>(entity =>
@@ -3011,57 +3236,6 @@ public partial class DomainDbContext : DbContext
                 .HasConstraintName("fk_ouse064plmlr732lxjcn1q5f1");
         });
 
-        modelBuilder.Entity<Shipment>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("shipment_pkey");
-
-            entity.ToTable("shipment", "shipment");
-
-            entity.HasIndex(e => e.TrackingNumber, "shipment_tracking_number_key").IsUnique();
-
-            entity.Property(e => e.Id)
-                .HasDefaultValueSql("uuid_generate_v4()")
-                .HasColumnName("id");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("created_at");
-            entity.Property(e => e.ReceiverAddress)
-                .HasMaxLength(255)
-                .HasColumnName("receiver_address");
-            entity.Property(e => e.ReceiverName)
-                .HasMaxLength(100)
-                .HasColumnName("receiver_name");
-            entity.Property(e => e.ReceiverPhone)
-                .HasMaxLength(100)
-                .HasColumnName("receiver_phone");
-            entity.Property(e => e.SenderName)
-                .HasMaxLength(100)
-                .HasColumnName("sender_name");
-            entity.Property(e => e.SenderPhone)
-                .HasMaxLength(100)
-                .HasColumnName("sender_phone");
-            entity.Property(e => e.ServiceProvider)
-                .HasMaxLength(50)
-                .HasColumnName("service_provider");
-            entity.Property(e => e.ServiceType)
-                .HasMaxLength(50)
-                .HasColumnName("service_type");
-            entity.Property(e => e.Status)
-                .HasMaxLength(50)
-                .HasDefaultValueSql("'pending'::character varying")
-                .HasColumnName("status");
-            entity.Property(e => e.TemperatureZone)
-                .HasMaxLength(50)
-                .HasColumnName("temperature_zone");
-            entity.Property(e => e.TrackingNumber)
-                .IsRequired()
-                .HasMaxLength(255)
-                .HasColumnName("tracking_number");
-            entity.Property(e => e.UpdatedAt)
-                .HasDefaultValueSql("now()")
-                .HasColumnName("updated_at");
-        });
-
         modelBuilder.Entity<SnapshotProduct>(entity =>
         {
             entity.HasKey(e => new { e.Id, e.SnapshotVersion }).HasName("snapshot_product_pkey");
@@ -3083,9 +3257,17 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.Price)
                 .HasPrecision(10, 2)
                 .HasColumnName("price");
+            entity.Property(e => e.RealmId)
+                .IsRequired()
+                .HasMaxLength(36)
+                .HasColumnName("realm_id");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.Realm).WithMany(p => p.SnapshotProducts)
+                .HasForeignKey(d => d.RealmId)
+                .HasConstraintName("snapshot_product_realm_id_fkey");
         });
 
         modelBuilder.Entity<SnapshotProductSku>(entity =>
