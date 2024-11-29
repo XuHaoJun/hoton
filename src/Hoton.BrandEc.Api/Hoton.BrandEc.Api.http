@@ -1,6 +1,0 @@
-@Hoton.BrandEc.Api_HostAddress = http://localhost:5028
-
-GET {{Hoton.BrandEc.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

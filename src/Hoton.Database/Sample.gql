@@ -1,0 +1,22 @@
+query ProductSearch {
+  productProduct(
+    where: {productProductCategories: {enabled: {_eq: "true"}, category: {_descendant: "electronics"}}, tags: {jsonb_contains: "[\"laptop\"]"}}
+    limit: 10
+    offset: 0
+  ) {
+    tags
+    productProductCategories(where: {enabled: {_eq: "true"}}) {
+      category
+      enabled
+    }
+    name
+    description
+    id
+    price
+    temperatureZones
+    snapshotVersion
+    realmId
+    updatedAt
+    createdAt
+  }
+}

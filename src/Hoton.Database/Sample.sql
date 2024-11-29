@@ -1,59 +1,20 @@
--- 插入商品分類 (Product Category)
-INSERT INTO product_category (name_path) 
+-- Sample data for product table
+INSERT INTO "product"."product" (id, realm_id, name, description, price, tags, temperature_zones)
 VALUES 
-    ('3C'), -- 顯示所有3C產品的根分類
-    ('3C.手機'), -- 手機分類
-    ('3C.筆記型電腦'), -- 筆記型電腦分類
-    ('3C.耳機'); -- 耳機分類
+('10cd8ebb-efda-4c9d-a20d-cf5c3f287d56', '8e98626a-3804-4ade-a812-566918b8a8dc', 'Smartphone XYZ', 'Latest model with advanced features', 699.99, '["electronics", "smartphone"]', '["ambient"]'),
+('08052e12-5892-4936-83f1-a65e9253e331', '8e98626a-3804-4ade-a812-566918b8a8dc', 'Laptop ABC', 'High-performance laptop for professionals', 1299.99, '["electronics", "laptop"]', '["ambient"]'),
+('fd7baa20-f0d8-4671-8d23-24d173f17b97', '8e98626a-3804-4ade-a812-566918b8a8dc', 'Wireless Earbuds', 'Noise-cancelling wireless earbuds', 199.99, '["electronics", "audio"]', '["ambient"]');
 
--- 插入商品 (Product)
-INSERT INTO product (name, description, price) 
+-- Sample data for product_category table
+INSERT INTO "product"."product_category" (product_id, category, enabled)
 VALUES 
-    ('iPhone 15', '蘋果最新款iPhone 15，支援5G和A16處理器', 29999.99),
-    ('MacBook Pro 16', '蘋果MacBook Pro 16英寸，搭載M1 Pro處理器', 54999.99),
-    ('Sony WH-1000XM5', '索尼主動降噪耳機，支援藍牙連接', 11999.99);
+('10cd8ebb-efda-4c9d-a20d-cf5c3f287d56', 'electronics.smartphones', TRUE),
+('08052e12-5892-4936-83f1-a65e9253e331', 'electronics.laptops', TRUE),
+('fd7baa20-f0d8-4671-8d23-24d173f17b97', 'electronics.audio', TRUE);
 
--- 插入商品 SKU (Product SKU)
-INSERT INTO product_sku (product_id, spec, stock_quantity, safety_stock) 
-VALUES
-    -- iPhone 15 256GB
-    ((SELECT id FROM product WHERE name = 'iPhone 15'), '{"memory": "256GB", "color": "black"}', 50, 5),
-    ((SELECT id FROM product WHERE name = 'iPhone 15'), '{"memory": "512GB", "color": "white"}', 30, 5),
-    
-    -- MacBook Pro 16 (M1 Pro, 16GB RAM, 512GB SSD)
-    ((SELECT id FROM product WHERE name = 'MacBook Pro 16'), '{"processor": "M1 Pro", "ram": "16GB", "storage": "512GB SSD"}', 20, 2),
-    ((SELECT id FROM product WHERE name = 'MacBook Pro 16'), '{"processor": "M1 Pro", "ram": "32GB", "storage": "1TB SSD"}', 10, 2),
-    
-    -- Sony WH-1000XM5
-    ((SELECT id FROM product WHERE name = 'Sony WH-1000XM5'), '{"color": "black"}', 100, 10);
-    
--- 插入商品與分類的關聯 (Product-Category Mapping)
-INSERT INTO product_category_map (product_id, category_id)
-SELECT p.id, c.id
-FROM product p
-JOIN product_category c ON c.name_path = CASE 
-    WHEN p.name = 'iPhone 15' THEN '3C.手機'
-    WHEN p.name = 'MacBook Pro 16' THEN '3C.筆記型電腦'
-    WHEN p.name = 'Sony WH-1000XM5' THEN '3C.耳機'
-    ELSE '3C'
-END;
-
--- Insert some sample data
-INSERT INTO categories (paths) VALUES (
-    ARRAY['electronics.computers.laptops'::ltree, 
-          'electronics.accessories.cables'::ltree]
-);
-
--- Query examples:
-
--- Check if ANY element matches a path
-SELECT * FROM categories 
-WHERE paths @> 'electronics.computers'::ltree;
-
--- Using ANY operator
-SELECT * FROM categories 
-WHERE 'electronics.computers.laptops'::ltree = ANY(paths);
-
--- Using overlap operator &&
-SELECT * FROM categories 
-WHERE paths && ARRAY['electronics.computers'::ltree];
+-- Sample data for product_sku table
+INSERT INTO "product"."product_sku" (id, product_id, spec, stock_quantity, safety_stock)
+VALUES 
+('27ef8c5e-cdbe-4d5d-a6b1-accffb0c7151', '10cd8ebb-efda-4c9d-a20d-cf5c3f287d56', '{"color": "black", "storage": "128GB", "RAM": "8GB"}', 100, 10),
+('44ba180d-bcb1-43b2-96c6-0452b642721d', '08052e12-5892-4936-83f1-a65e9253e331', '{"color": "silver", "storage": "512GB", "RAM": "16GB"}', 50, 5),
+('1f17ee1d-ea74-4391-bb64-1ece729a5837', 'fd7baa20-f0d8-4671-8d23-24d173f17b97', '{"color": "white", "battery_life": "24 hours"}', 200, 20);
