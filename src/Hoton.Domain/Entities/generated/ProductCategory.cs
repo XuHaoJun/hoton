@@ -10,7 +10,7 @@ public partial class ProductCategory
 
     public LTree Category { get; set; }
 
-    public bool? Enabled { get; set; }
+    public bool Enabled { get; set; }
 
     public virtual Product Product { get; set; }
 }

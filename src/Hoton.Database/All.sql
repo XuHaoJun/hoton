@@ -41,7 +41,7 @@ CREATE TABLE "product"."product" (
 CREATE TABLE "product"."product_category" (
     product_id UUID NOT NULL REFERENCES "product"."product" (id) ON DELETE CASCADE, 
     category ltree NOT NULL, 
-    enabled BOOLEAN DEFAULT TRUE,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
     PRIMARY KEY (product_id, category)
 );
 

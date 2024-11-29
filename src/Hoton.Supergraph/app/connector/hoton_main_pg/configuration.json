@@ -7545,7 +7545,7 @@
             "type": {
               "scalarType": "bool"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "hasDefault": "hasDefault",
             "description": null
           },

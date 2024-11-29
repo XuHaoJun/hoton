@@ -38,7 +38,7 @@ definition:
   description: Update the 'enabled' column in the 'product_product_category' collection
   fields:
     - name: set
-      type: Bool
+      type: Bool!
       description: Set the column to this value
   graphql:
     typeName: UpdateColumnProductProductCategoryEnabled

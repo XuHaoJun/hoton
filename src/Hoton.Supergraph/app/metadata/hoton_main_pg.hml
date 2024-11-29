@@ -11537,10 +11537,8 @@ definition:
                 name: ltree
             enabled:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: bool
+                type: named
+                name: bool
             product_id:
               type:
                 type: named
@@ -24026,10 +24024,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: bool
+                type: named
+                name: bool
         update_column_product_product_category_product_id:
           description: Update the 'product_id' column in the 'product_product_category' collection
           fields:
