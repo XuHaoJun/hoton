@@ -1183,6 +1183,10 @@ definition:
           argumentType: Ltree!
         - name: _neq
           argumentType: Ltree!
+        - name: _ancestor
+          argumentType: Ltree!
+        - name: _descendant
+          argumentType: Ltree!
       dataConnectorOperatorMapping:
         - dataConnectorName: hoton_main_pg
           dataConnectorScalarType: ltree

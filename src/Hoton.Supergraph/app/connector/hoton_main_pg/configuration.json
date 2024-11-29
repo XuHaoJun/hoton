@@ -8253,6 +8253,18 @@
               "operatorKind": "custom",
               "argumentType": "ltree",
               "isInfix": true
+            },
+            "_ancestor": {
+              "operatorName": "@>",
+              "operatorKind": "custom",
+              "argumentType": "ltree",
+              "isInfix": true
+            },
+            "_descendant": {
+              "operatorName": "<@",
+              "operatorKind": "custom",
+              "argumentType": "ltree",
+              "isInfix": true
             }
           },
           "typeRepresentation": null
