@@ -4,8 +4,6 @@ version: v1
 definition:
   name: ProductProduct
   fields:
-    - name: categories
-      type: Ltree
     - name: createdAt
       type: Timestamptz
     - name: description
@@ -33,9 +31,6 @@ definition:
     - dataConnectorName: hoton_main_pg
       dataConnectorObjectType: product_product
       fieldMapping:
-        categories:
-          column:
-            name: categories
         createdAt:
           column:
             name: created_at
@@ -76,7 +71,6 @@ definition:
     - role: admin
       output:
         allowedFields:
-          - categories
           - createdAt
           - description
           - id
@@ -90,7 +84,6 @@ definition:
     - role: user
       output:
         allowedFields:
-          - categories
           - createdAt
           - description
           - id
@@ -124,17 +117,15 @@ definition:
           booleanExpressionType: VarcharBoolExp
         - fieldName: snapshotVersion
           booleanExpressionType: TimestamptzBoolExp
-        - fieldName: updatedAt
-          booleanExpressionType: TimestamptzBoolExp
-        - fieldName: categories
-          booleanExpressionType: LtreeBoolExp
         - fieldName: tags
           booleanExpressionType: JsonbBoolExp
         - fieldName: temperatureZones
           booleanExpressionType: JsonbBoolExp
+        - fieldName: updatedAt
+          booleanExpressionType: TimestamptzBoolExp
       comparableRelationships:
-        - relationshipName: orderOrderItems
         - relationshipName: authRealm
+        - relationshipName: productProductCategories
         - relationshipName: productProductShipmentConfigs
         - relationshipName: productProductSkus
   logicalOperators:
@@ -167,14 +158,12 @@ definition:
           aggregateExpression: VarcharAggExp
         - fieldName: snapshotVersion
           aggregateExpression: TimestamptzAggExp
-        - fieldName: updatedAt
-          aggregateExpression: TimestamptzAggExp
-        - fieldName: categories
-          aggregateExpression: LtreeAggExp
         - fieldName: tags
           aggregateExpression: JsonbAggExp
         - fieldName: temperatureZones
           aggregateExpression: JsonbAggExp
+        - fieldName: updatedAt
+          aggregateExpression: TimestamptzAggExp
   count:
     enable: true
   graphql:
@@ -192,9 +181,6 @@ definition:
   filterExpressionType: ProductProductBoolExp
   aggregateExpression: ProductProductAggExp
   orderableFields:
-    - fieldName: categories
-      orderByDirections:
-        enableAll: true
     - fieldName: createdAt
       orderByDirections:
         enableAll: true
@@ -266,28 +252,6 @@ definition:
 kind: Relationship
 version: v1
 definition:
-  name: orderOrderItems
-  sourceType: ProductProduct
-  target:
-    model:
-      name: OrderOrderItem
-      relationshipType: Array
-      aggregate:
-        aggregateExpression: OrderOrderItemAggExp
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: id
-      target:
-        modelField:
-          - fieldName: productId
-  graphql:
-    aggregateFieldName: orderOrderItemsAggregate
-
----
-kind: Relationship
-version: v1
-definition:
   name: authRealm
   sourceType: ProductProduct
   target:
@@ -301,6 +265,28 @@ definition:
       target:
         modelField:
           - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProductCategories
+  sourceType: ProductProduct
+  target:
+    model:
+      name: ProductProductCategory
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ProductProductCategoryAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productId
+  graphql:
+    aggregateFieldName: productProductCategoriesAggregate
 
 ---
 kind: Relationship

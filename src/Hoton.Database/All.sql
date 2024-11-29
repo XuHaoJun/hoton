@@ -22,20 +22,33 @@ CREATE TABLE "product"."product" (
     --
     price DECIMAL(10, 2) NOT NULL,
     --
-    categories ltree, 
-    tags JSONB,
+    tags JSONB, -- 標籤, ["tag1", "tag2", "tag3"]
     --
-    temperature_zones JSONB,
+    -- 常溫 (Ambient Temperature): 通常指室內溫度，約為20°C至25°C。
+    -- 冷藏 (Chilled): 溫度範圍一般為2°C至8°C，適用於生鮮食品和某些藥品。
+    -- 冷凍 (Frozen): 溫度通常在-18°C以下，主要用於肉類、海鮮和冷凍食品。
+    -- 極凍 (Deep-Frozen): 溫度範圍可低至-29°C，用於長期保存易腐壞的食品。
+    -- 空調 (Air-Conditioned): 溫度範圍一般為18°C至23°C，適合某些特定商品的儲存。
+    temperature_zones JSONB, -- 溫層區間, ["ambient", "chilled", "frozen", "deep-frozen", "air-conditioned"]
     --
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     snapshot_version TIMESTAMPTZ DEFAULT NOW()
 );
 
+
+-- 商品分類
+CREATE TABLE "product"."product_category" (
+    product_id UUID NOT NULL REFERENCES "product"."product" (id) ON DELETE CASCADE, 
+    category ltree NOT NULL, 
+    enabled BOOLEAN DEFAULT TRUE,
+    PRIMARY KEY (product_id, category)
+);
+
 -- 商品 SKU (Product SKU)
 CREATE TABLE "product"."product_sku" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE, 
+    product_id UUID NOT NULL REFERENCES "product"."product" (id) ON DELETE CASCADE, 
     spec JSONB NOT NULL,          -- 儲存詳細規格
     stock_quantity INT DEFAULT 0, -- 庫存量
     safety_stock INT DEFAULT 0,   -- 安全水位量
@@ -63,8 +76,8 @@ CREATE TABLE "order"."realm_order_shipment_config" (
 -- 商品物流設定
 CREATE TABLE "product"."product_shipment_config" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE, 
-    realm_order_shipment_config_id UUID REFERENCES "order"."realm_order_shipment_config" (id) ON DELETE CASCADE, 
+    product_id UUID NOT NULL REFERENCES "product"."product" (id) ON DELETE CASCADE, 
+    realm_order_shipment_config_id UUID NOT NULL REFERENCES "order"."realm_order_shipment_config" (id) ON DELETE CASCADE, 
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -86,9 +99,8 @@ CREATE TABLE "order"."order" (
 -- 訂單項目表 (Order Item)
 CREATE TABLE "order"."order_item" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
-    product_id UUID REFERENCES "product"."product" (id) ON DELETE CASCADE,
-    product_sku_id UUID REFERENCES "product"."product_sku" (id) ON DELETE CASCADE,
+    order_id UUID NOT NULL REFERENCES "order"."order" (id) ON DELETE CASCADE,
+    product_sku_id UUID NOT NULL REFERENCES "product"."product_sku" (id) ON DELETE CASCADE,
     snapshot_version TIMESTAMPTZ DEFAULT NOW(),
     quantity INT DEFAULT 1, -- 購買數量
     price DECIMAL(10, 2) NOT NULL, -- 商品單價
@@ -99,7 +111,7 @@ CREATE TABLE "order"."order_item" (
 -- 訂單狀態歷史表 (Order Status)
 CREATE TABLE "order"."order_status_history" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
+    order_id UUID NOT NULL REFERENCES "order"."order" (id) ON DELETE CASCADE,
     from_status VARCHAR(50),
     to_status VARCHAR(50) NOT NULL,
     reason VARCHAR(50) , -- 原因，如出貨、確認、取消
@@ -150,7 +162,7 @@ CREATE TABLE "order"."snapshot_product_sku" (
 CREATE TABLE "order"."order_shipment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 物流單 ID
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
+    order_id UUID NOT NULL REFERENCES "order"."order" (id) ON DELETE CASCADE,
     tracking_number VARCHAR(255) UNIQUE NOT NULL,  -- 物流單號
     status VARCHAR(50) DEFAULT 'pending',  -- 物流單狀態，例如 pending, shipped, delivered, returned
     service_provider VARCHAR(50), -- 物流服務商名稱
@@ -168,7 +180,7 @@ CREATE TABLE "order"."order_shipment" (
 -- 物流箱表 (Cargo)
 CREATE TABLE "order"."order_shipment_cargo" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 物流箱 ID
-    order_shipment_id UUID REFERENCES "order"."order_shipment" (id) ON DELETE CASCADE,  -- 物流單 ID
+    order_shipment_id UUID NOT NULL REFERENCES "order"."order_shipment" (id) ON DELETE CASCADE,  -- 物流單 ID
     tracking_number VARCHAR(255),                    -- 箱子編號
     length DECIMAL(10, 2),
     width DECIMAL(10, 2),
@@ -181,8 +193,8 @@ CREATE TABLE "order"."order_shipment_cargo" (
 
 -- 訂單 item 與物流箱的多對多關聯表和商品數量
 CREATE TABLE "order"."order_item_cargo_map" (
-    order_item_id UUID REFERENCES "order"."order_item" (id) ON DELETE CASCADE,  -- 箱子 ID
-    order_shipment_cargo_id UUID REFERENCES "order"."order_shipment_cargo" (id) ON DELETE CASCADE,  -- 箱子 ID
+    order_item_id UUID NOT NULL REFERENCES "order"."order_item" (id) ON DELETE CASCADE,  -- 箱子 ID
+    order_shipment_cargo_id UUID NOT NULL REFERENCES "order"."order_shipment_cargo" (id) ON DELETE CASCADE,  -- 箱子 ID
     quantity INT DEFAULT 1 -- 數量
 );
 
@@ -190,7 +202,7 @@ CREATE TABLE "order"."order_item_cargo_map" (
 CREATE TABLE "order"."order_payment" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 支付單 ID
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
+    order_id UUID NOT NULL REFERENCES "order"."order" (id) ON DELETE CASCADE,
     payment_number VARCHAR(255) UNIQUE NOT NULL,     -- 支付單號
     amount DECIMAL(10, 2) NOT NULL,         -- 支付總金額
     status VARCHAR(50) DEFAULT 'pending',   -- 支付狀態，例如 pending, completed, failed, refunded
@@ -209,7 +221,7 @@ CREATE TABLE "order"."order_payment" (
 CREATE TABLE "order"."order_invoice" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 發票 ID
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
-    order_id UUID REFERENCES "order"."order" (id) ON DELETE CASCADE,
+    order_id UUID NOT NULL REFERENCES "order"."order" (id) ON DELETE CASCADE,
     invoice_number VARCHAR(255) UNIQUE NOT NULL,  -- 發票號碼
     invoice_type VARCHAR(50) NOT NULL,  -- 發票類型 type, 發票類型(1:二聯式 2:三聯式 3:個人載具)
     amount DECIMAL(10, 2) NOT NULL,  -- 發票總金額(含稅)
@@ -228,7 +240,7 @@ CREATE TABLE "order"."order_invoice" (
 -- 發票狀態歷程表 (Invoice status history)
 CREATE TABLE "order"."order_invoice_status_history" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    order_invoice_id UUID REFERENCES "order"."order_invoice" (id) ON DELETE CASCADE,
+    order_invoice_id UUID NOT NULL REFERENCES "order"."order_invoice" (id) ON DELETE CASCADE,
     from_status VARCHAR(50),  
     to_status VARCHAR(50) DEFAULT 'issued',
     reason VARCHAR(50) , -- 原因，如退貨、部分退貨
@@ -240,7 +252,7 @@ CREATE TABLE "order"."order_invoice_status_history" (
 -- 發票項目表 (Invoice Item)
 CREATE TABLE "order"."order_invoice_item" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  -- 發票項目 ID
-    order_invoice_id UUID REFERENCES "order"."order_invoice" (id) ON DELETE CASCADE,  -- 關聯發票 ID
+    order_invoice_id UUID NOT NULL REFERENCES "order"."order_invoice" (id) ON DELETE CASCADE,  -- 關聯發票 ID
     product_name VARCHAR(255) NOT NULL,  -- 商品名稱,內部系統為{商品名稱}_{規格}
     tax_type VARCHAR(50) NOT NULL,       -- 商品課稅別.
     remark TEXT,  -- 備註
@@ -263,8 +275,8 @@ CREATE TABLE "cart"."cart" (
 -- 購物車品項 (Cart Item)
 CREATE TABLE "cart"."cart_item" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    cart_id UUID REFERENCES "cart"."cart" (id) ON DELETE CASCADE,
-    product_sku_id UUID REFERENCES "product"."product_sku" (id) ON DELETE CASCADE,
+    cart_id UUID NOT NULL REFERENCES "cart"."cart" (id) ON DELETE CASCADE,
+    product_sku_id UUID NOT NULL REFERENCES "product"."product_sku" (id) ON DELETE CASCADE,
     quantity INT NOT NULL DEFAULT 1,
     price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),

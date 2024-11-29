@@ -9,7 +9,7 @@ definition:
     - name: id
       type: Uuid
     - name: orderInvoiceId
-      type: Uuid
+      type: Uuid!
     - name: productName
       type: Varchar!
     - name: quantity

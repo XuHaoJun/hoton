@@ -7,7 +7,7 @@ public partial class ProductSku
 {
     public Guid Id { get; set; }
 
-    public Guid? ProductId { get; set; }
+    public Guid ProductId { get; set; }
 
     public string Spec { get; set; }
 

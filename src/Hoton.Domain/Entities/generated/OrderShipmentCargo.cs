@@ -7,7 +7,7 @@ public partial class OrderShipmentCargo
 {
     public Guid Id { get; set; }
 
-    public Guid? OrderShipmentId { get; set; }
+    public Guid OrderShipmentId { get; set; }
 
     public string TrackingNumber { get; set; }
 

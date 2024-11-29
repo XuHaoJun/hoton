@@ -7,7 +7,7 @@ public partial class OrderInvoiceItem
 {
     public Guid Id { get; set; }
 
-    public Guid? OrderInvoiceId { get; set; }
+    public Guid OrderInvoiceId { get; set; }
 
     public string ProductName { get; set; }
 

@@ -9,7 +9,7 @@ definition:
     - name: id
       type: Uuid!
     - name: orderId
-      type: Uuid
+      type: Uuid!
     - name: realmId
       type: Varchar!
     - name: receiverAddress

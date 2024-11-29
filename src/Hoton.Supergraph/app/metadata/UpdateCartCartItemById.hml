@@ -6,7 +6,7 @@ definition:
   description: Update the 'cart_id' column in the 'cart_cart_item' collection
   fields:
     - name: set
-      type: Uuid
+      type: Uuid!
       description: Set the column to this value
   graphql:
     typeName: UpdateColumnCartCartItemCartId
@@ -134,7 +134,7 @@ definition:
   description: Update the 'product_sku_id' column in the 'cart_cart_item' collection
   fields:
     - name: set
-      type: Uuid
+      type: Uuid!
       description: Set the column to this value
   graphql:
     typeName: UpdateColumnCartCartItemProductSkuId

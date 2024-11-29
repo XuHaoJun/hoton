@@ -5919,7 +5919,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "created_at": {
@@ -5953,7 +5953,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "quantity": {
@@ -6197,7 +6197,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "realm_id": {
@@ -6314,7 +6314,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "product_name": {
@@ -6427,7 +6427,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "reason": {
@@ -6508,7 +6508,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "price": {
@@ -6519,20 +6519,12 @@
             "nullable": "nonNullable",
             "description": null
           },
-          "product_id": {
-            "name": "product_id",
-            "type": {
-              "scalarType": "uuid"
-            },
-            "nullable": "nullable",
-            "description": null
-          },
           "product_sku_id": {
             "name": "product_sku_id",
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "quantity": {
@@ -6576,13 +6568,6 @@
               "order_id": "id"
             }
           },
-          "order_item_product_id_fkey": {
-            "foreignSchema": "product",
-            "foreignTable": "product",
-            "columnMapping": {
-              "product_id": "id"
-            }
-          },
           "order_item_product_sku_id_fkey": {
             "foreignSchema": "product",
             "foreignTable": "product_sku",
@@ -6602,7 +6587,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "order_shipment_cargo_id": {
@@ -6610,7 +6595,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "quantity": {
@@ -6701,7 +6686,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "order_result_url": {
@@ -6824,7 +6809,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "realm_id": {
@@ -6995,7 +6980,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "tracking_number": {
@@ -7101,7 +7086,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "reason": {
@@ -7442,14 +7427,6 @@
         "schemaName": "product",
         "tableName": "product",
         "columns": {
-          "categories": {
-            "name": "categories",
-            "type": {
-              "scalarType": "ltree"
-            },
-            "nullable": "nullable",
-            "description": null
-          },
           "created_at": {
             "name": "created_at",
             "type": {
@@ -7551,6 +7528,53 @@
         },
         "description": null
       },
+      "product_product_category": {
+        "schemaName": "product",
+        "tableName": "product_category",
+        "columns": {
+          "category": {
+            "name": "category",
+            "type": {
+              "scalarType": "ltree"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "enabled": {
+            "name": "enabled",
+            "type": {
+              "scalarType": "bool"
+            },
+            "nullable": "nullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          },
+          "product_id": {
+            "name": "product_id",
+            "type": {
+              "scalarType": "uuid"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          }
+        },
+        "uniquenessConstraints": {
+          "product_category_pkey": [
+            "category",
+            "product_id"
+          ]
+        },
+        "foreignRelations": {
+          "product_category_product_id_fkey": {
+            "foreignSchema": "product",
+            "foreignTable": "product",
+            "columnMapping": {
+              "product_id": "id"
+            }
+          }
+        },
+        "description": null
+      },
       "product_product_shipment_config": {
         "schemaName": "product",
         "tableName": "product_shipment_config",
@@ -7578,7 +7602,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "realm_order_shipment_config_id": {
@@ -7586,7 +7610,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "updated_at": {
@@ -7649,7 +7673,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "safety_stock": {

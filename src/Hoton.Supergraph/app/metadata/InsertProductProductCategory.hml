@@ -1,0 +1,115 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductCategoryObject
+  fields:
+    - name: category
+      type: Ltree!
+    - name: enabled
+      type: Bool
+    - name: productId
+      type: Uuid!
+  graphql:
+    typeName: InsertProductProductCategoryObject
+    inputTypeName: InsertProductProductCategoryObjectInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_category_object
+      fieldMapping:
+        category:
+          column:
+            name: category
+        enabled:
+          column:
+            name: enabled
+        productId:
+          column:
+            name: product_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductCategoryObject
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - category
+          - enabled
+          - productId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: InsertProductProductCategoryResponse
+  description: Responses from the 'insert_product_product_category' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProductCategory!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: InsertProductProductCategoryResponse
+    inputTypeName: InsertProductProductCategoryResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: insert_product_product_category_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: InsertProductProductCategoryResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: InsertProductProductCategory
+  outputType: InsertProductProductCategoryResponse!
+  arguments:
+    - name: objects
+      type: "[InsertProductProductCategoryObject!]!"
+    - name: postCheck
+      type: ProductProductCategoryBoolExp
+      description: Insert permission predicate over the 'product_product_category'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: insert_product_product_category
+    argumentMapping:
+      objects: objects
+      postCheck: post_check
+  graphql:
+    rootFieldName: insertProductProductCategory
+    rootFieldKind: Mutation
+  description: Insert into the product_product_category table
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: InsertProductProductCategory
+  permissions:
+    - role: admin
+      allowExecution: true
+

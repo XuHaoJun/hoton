@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hoton.Domain.Entities.generated;
 
@@ -16,8 +15,6 @@ public partial class Product
 
     public decimal Price { get; set; }
 
-    public LTree? Categories { get; set; }
-
     public string Tags { get; set; }
 
     public string TemperatureZones { get; set; }
@@ -28,7 +25,7 @@ public partial class Product
 
     public DateTime? SnapshotVersion { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public virtual ICollection<ProductCategory> ProductCategories { get; set; } = new List<ProductCategory>();
 
     public virtual ICollection<ProductShipmentConfig> ProductShipmentConfigs { get; set; } = new List<ProductShipmentConfig>();
 

@@ -13,7 +13,7 @@ definition:
     - name: id
       type: Uuid
     - name: orderId
-      type: Uuid
+      type: Uuid!
     - name: reason
       type: Varchar
     - name: reasonData

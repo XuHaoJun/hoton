@@ -11,7 +11,7 @@ definition:
     - name: id
       type: Uuid
     - name: orderInvoiceId
-      type: Uuid
+      type: Uuid!
     - name: reason
       type: Varchar
     - name: reasonData

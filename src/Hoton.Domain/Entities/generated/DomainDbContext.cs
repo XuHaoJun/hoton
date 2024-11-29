@@ -131,6 +131,8 @@ public partial class DomainDbContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+
     public virtual DbSet<ProductShipmentConfig> ProductShipmentConfigs { get; set; }
 
     public virtual DbSet<ProductSku> ProductSkus { get; set; }
@@ -463,12 +465,10 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Cart).WithMany(p => p.CartItems)
                 .HasForeignKey(d => d.CartId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("cart_item_cart_id_fkey");
 
             entity.HasOne(d => d.ProductSku).WithMany(p => p.CartItems)
                 .HasForeignKey(d => d.ProductSkuId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("cart_item_product_sku_id_fkey");
         });
 
@@ -1732,7 +1732,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderInvoices)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_invoice_order_id_fkey");
 
             entity.HasOne(d => d.Realm).WithMany(p => p.OrderInvoices)
@@ -1781,7 +1780,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.OrderInvoice).WithMany(p => p.OrderInvoiceItems)
                 .HasForeignKey(d => d.OrderInvoiceId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_invoice_item_order_invoice_id_fkey");
         });
 
@@ -1817,7 +1815,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.OrderInvoice).WithMany(p => p.OrderInvoiceStatusHistories)
                 .HasForeignKey(d => d.OrderInvoiceId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_invoice_status_history_order_invoice_id_fkey");
         });
 
@@ -1837,7 +1834,6 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.Price)
                 .HasPrecision(10, 2)
                 .HasColumnName("price");
-            entity.Property(e => e.ProductId).HasColumnName("product_id");
             entity.Property(e => e.ProductSkuId).HasColumnName("product_sku_id");
             entity.Property(e => e.Quantity)
                 .HasDefaultValue(1)
@@ -1851,17 +1847,10 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_item_order_id_fkey");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("order_item_product_id_fkey");
 
             entity.HasOne(d => d.ProductSku).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.ProductSkuId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_item_product_sku_id_fkey");
         });
 
@@ -1879,12 +1868,10 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.OrderItem).WithMany()
                 .HasForeignKey(d => d.OrderItemId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_item_cargo_map_order_item_id_fkey");
 
             entity.HasOne(d => d.OrderShipmentCargo).WithMany()
                 .HasForeignKey(d => d.OrderShipmentCargoId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_item_cargo_map_order_shipment_cargo_id_fkey");
         });
 
@@ -1950,7 +1937,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderPayments)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_payment_order_id_fkey");
 
             entity.HasOne(d => d.Realm).WithMany(p => p.OrderPayments)
@@ -2015,7 +2001,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderShipments)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_shipment_order_id_fkey");
 
             entity.HasOne(d => d.Realm).WithMany(p => p.OrderShipments)
@@ -2061,7 +2046,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.OrderShipment).WithMany(p => p.OrderShipmentCargos)
                 .HasForeignKey(d => d.OrderShipmentId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_shipment_cargo_order_shipment_id_fkey");
         });
 
@@ -2101,7 +2085,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderStatusHistories)
                 .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("order_status_history_order_id_fkey");
         });
 
@@ -2195,7 +2178,6 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("uuid_generate_v4()")
                 .HasColumnName("id");
-            entity.Property(e => e.Categories).HasColumnName("categories");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("created_at");
@@ -2231,6 +2213,23 @@ public partial class DomainDbContext : DbContext
                 .HasConstraintName("product_realm_id_fkey");
         });
 
+        modelBuilder.Entity<ProductCategory>(entity =>
+        {
+            entity.HasKey(e => new { e.ProductId, e.Category }).HasName("product_category_pkey");
+
+            entity.ToTable("product_category", "product");
+
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.Category).HasColumnName("category");
+            entity.Property(e => e.Enabled)
+                .HasDefaultValue(true)
+                .HasColumnName("enabled");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductCategories)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("product_category_product_id_fkey");
+        });
+
         modelBuilder.Entity<ProductShipmentConfig>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("product_shipment_config_pkey");
@@ -2251,12 +2250,10 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductShipmentConfigs)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("product_shipment_config_product_id_fkey");
 
             entity.HasOne(d => d.RealmOrderShipmentConfig).WithMany(p => p.ProductShipmentConfigs)
                 .HasForeignKey(d => d.RealmOrderShipmentConfigId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("product_shipment_config_realm_order_shipment_config_id_fkey");
         });
 
@@ -2292,7 +2289,6 @@ public partial class DomainDbContext : DbContext
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductSkus)
                 .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("product_sku_product_id_fkey");
         });
 

@@ -5,9 +5,9 @@ definition:
   name: OrderOrderItemCargoMap
   fields:
     - name: orderItemId
-      type: Uuid
+      type: Uuid!
     - name: orderShipmentCargoId
-      type: Uuid
+      type: Uuid!
     - name: quantity
       type: Int4
   graphql:

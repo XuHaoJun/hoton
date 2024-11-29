@@ -105,7 +105,7 @@ definition:
     'order_order_invoice_status_history' collection
   fields:
     - name: set
-      type: Uuid
+      type: Uuid!
       description: Set the column to this value
   graphql:
     typeName: UpdateColumnOrderOrderInvoiceStatusHistoryOrderInvoiceId

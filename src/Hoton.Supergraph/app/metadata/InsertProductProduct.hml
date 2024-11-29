@@ -4,8 +4,6 @@ version: v1
 definition:
   name: InsertProductProductObject
   fields:
-    - name: categories
-      type: "[Ltree]"
     - name: createdAt
       type: Timestamptz
     - name: description
@@ -21,9 +19,9 @@ definition:
     - name: snapshotVersion
       type: Timestamptz
     - name: tags
-      type: "[Varchar]"
+      type: Jsonb
     - name: temperatureZones
-      type: "[Varchar]"
+      type: Jsonb
     - name: updatedAt
       type: Timestamptz
   graphql:
@@ -33,9 +31,6 @@ definition:
     - dataConnectorName: hoton_main_pg
       dataConnectorObjectType: insert_product_product_object
       fieldMapping:
-        categories:
-          column:
-            name: categories
         createdAt:
           column:
             name: created_at
@@ -76,7 +71,6 @@ definition:
     - role: admin
       output:
         allowedFields:
-          - categories
           - createdAt
           - description
           - id

@@ -9,13 +9,11 @@ definition:
     - name: id
       type: Uuid!
     - name: orderId
-      type: Uuid
+      type: Uuid!
     - name: price
       type: Numeric!
-    - name: productId
-      type: Uuid
     - name: productSkuId
-      type: Uuid
+      type: Uuid!
     - name: quantity
       type: Int4
     - name: snapshotVersion
@@ -41,9 +39,6 @@ definition:
         price:
           column:
             name: price
-        productId:
-          column:
-            name: product_id
         productSkuId:
           column:
             name: product_sku_id
@@ -70,7 +65,6 @@ definition:
           - id
           - orderId
           - price
-          - productId
           - productSkuId
           - quantity
           - snapshotVersion
@@ -93,8 +87,6 @@ definition:
           booleanExpressionType: UuidBoolExp
         - fieldName: price
           booleanExpressionType: NumericBoolExp
-        - fieldName: productId
-          booleanExpressionType: UuidBoolExp
         - fieldName: productSkuId
           booleanExpressionType: UuidBoolExp
         - fieldName: quantity
@@ -105,7 +97,6 @@ definition:
           booleanExpressionType: TimestamptzBoolExp
       comparableRelationships:
         - relationshipName: orderOrder
-        - relationshipName: productProduct
         - relationshipName: productProductSku
         - relationshipName: orderOrderItemCargoMaps
   logicalOperators:
@@ -132,8 +123,6 @@ definition:
           aggregateExpression: UuidAggExp
         - fieldName: price
           aggregateExpression: NumericAggExp
-        - fieldName: productId
-          aggregateExpression: UuidAggExp
         - fieldName: productSkuId
           aggregateExpression: UuidAggExp
         - fieldName: quantity
@@ -169,9 +158,6 @@ definition:
       orderByDirections:
         enableAll: true
     - fieldName: price
-      orderByDirections:
-        enableAll: true
-    - fieldName: productId
       orderByDirections:
         enableAll: true
     - fieldName: productSkuId
@@ -229,24 +215,6 @@ definition:
     - source:
         fieldPath:
           - fieldName: orderId
-      target:
-        modelField:
-          - fieldName: id
-
----
-kind: Relationship
-version: v1
-definition:
-  name: productProduct
-  sourceType: OrderOrderItem
-  target:
-    model:
-      name: ProductProduct
-      relationshipType: Object
-  mapping:
-    - source:
-        fieldPath:
-          - fieldName: productId
       target:
         modelField:
           - fieldName: id

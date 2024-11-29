@@ -7,11 +7,9 @@ public partial class OrderItem
 {
     public Guid Id { get; set; }
 
-    public Guid? OrderId { get; set; }
+    public Guid OrderId { get; set; }
 
-    public Guid? ProductId { get; set; }
-
-    public Guid? ProductSkuId { get; set; }
+    public Guid ProductSkuId { get; set; }
 
     public DateTime? SnapshotVersion { get; set; }
 
@@ -24,8 +22,6 @@ public partial class OrderItem
     public DateTime? UpdatedAt { get; set; }
 
     public virtual Order Order { get; set; }
-
-    public virtual Product Product { get; set; }
 
     public virtual ProductSku ProductSku { get; set; }
 }

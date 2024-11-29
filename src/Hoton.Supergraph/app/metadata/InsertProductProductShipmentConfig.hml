@@ -9,9 +9,9 @@ definition:
     - name: id
       type: Uuid
     - name: productId
-      type: Uuid
+      type: Uuid!
     - name: realmOrderShipmentConfigId
-      type: Uuid
+      type: Uuid!
     - name: updatedAt
       type: Timestamptz
   graphql:

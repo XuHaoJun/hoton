@@ -5,9 +5,9 @@ namespace Hoton.Domain.Entities.generated;
 
 public partial class OrderItemCargoMap
 {
-    public Guid? OrderItemId { get; set; }
+    public Guid OrderItemId { get; set; }
 
-    public Guid? OrderShipmentCargoId { get; set; }
+    public Guid OrderShipmentCargoId { get; set; }
 
     public int? Quantity { get; set; }
 

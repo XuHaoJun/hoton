@@ -1,0 +1,155 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: ProductProductCategory
+  fields:
+    - name: category
+      type: Ltree!
+    - name: enabled
+      type: Bool
+    - name: productId
+      type: Uuid!
+  graphql:
+    typeName: ProductProductCategory
+    inputTypeName: ProductProductCategoryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: product_product_category
+      fieldMapping:
+        category:
+          column:
+            name: category
+        enabled:
+          column:
+            name: enabled
+        productId:
+          column:
+            name: product_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: ProductProductCategory
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - category
+          - enabled
+          - productId
+
+---
+kind: BooleanExpressionType
+version: v1
+definition:
+  name: ProductProductCategoryBoolExp
+  operand:
+    object:
+      type: ProductProductCategory
+      comparableFields:
+        - fieldName: category
+          booleanExpressionType: LtreeBoolExp
+        - fieldName: enabled
+          booleanExpressionType: BoolBoolExp
+        - fieldName: productId
+          booleanExpressionType: UuidBoolExp
+      comparableRelationships:
+        - relationshipName: productProduct
+  logicalOperators:
+    enable: true
+  isNull:
+    enable: true
+  graphql:
+    typeName: ProductProductCategoryBoolExp
+
+---
+kind: AggregateExpression
+version: v1
+definition:
+  name: ProductProductCategoryAggExp
+  operand:
+    object:
+      aggregatedType: ProductProductCategory
+      aggregatableFields:
+        - fieldName: category
+          aggregateExpression: LtreeAggExp
+        - fieldName: enabled
+          aggregateExpression: BoolAggExp
+        - fieldName: productId
+          aggregateExpression: UuidAggExp
+  count:
+    enable: true
+  graphql:
+    selectTypeName: ProductProductCategoryAggExp
+
+---
+kind: Model
+version: v1
+definition:
+  name: ProductProductCategory
+  objectType: ProductProductCategory
+  source:
+    dataConnectorName: hoton_main_pg
+    collection: product_product_category
+  filterExpressionType: ProductProductCategoryBoolExp
+  aggregateExpression: ProductProductCategoryAggExp
+  orderableFields:
+    - fieldName: category
+      orderByDirections:
+        enableAll: true
+    - fieldName: enabled
+      orderByDirections:
+        enableAll: true
+    - fieldName: productId
+      orderByDirections:
+        enableAll: true
+  graphql:
+    selectMany:
+      queryRootField: productProductCategory
+      subscription:
+        rootField: productProductCategory
+    selectUniques:
+      - queryRootField: productProductCategoryByProductCategoryPkey
+        uniqueIdentifier:
+          - category
+          - productId
+        subscription:
+          rootField: productProductCategoryByProductCategoryPkey
+    orderByExpressionType: ProductProductCategoryOrderBy
+    filterInputTypeName: ProductProductCategoryFilterInput
+    aggregate:
+      queryRootField: productProductCategoryAggregate
+      subscription:
+        rootField: productProductCategoryAggregate
+
+---
+kind: ModelPermissions
+version: v1
+definition:
+  modelName: ProductProductCategory
+  permissions:
+    - role: admin
+      select:
+        filter: null
+        allowSubscriptions: true
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProduct
+  sourceType: ProductProductCategory
+  target:
+    model:
+      name: ProductProduct
+      relationshipType: Object
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: productId
+      target:
+        modelField:
+          - fieldName: id
+

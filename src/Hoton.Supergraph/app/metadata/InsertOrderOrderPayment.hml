@@ -17,7 +17,7 @@ definition:
     - name: merchantId
       type: Varchar!
     - name: orderId
-      type: Uuid
+      type: Uuid!
     - name: orderResultUrl
       type: Varchar!
     - name: paymentMethod

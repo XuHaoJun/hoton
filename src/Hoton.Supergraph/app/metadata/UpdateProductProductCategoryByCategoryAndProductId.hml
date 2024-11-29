@@ -1,0 +1,230 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductCategoryCategory
+  description: Update the 'category' column in the 'product_product_category' collection
+  fields:
+    - name: set
+      type: Ltree!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductCategoryCategory
+    inputTypeName: UpdateColumnProductProductCategoryCategoryInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_category_category
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductCategoryCategory
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductCategoryEnabled
+  description: Update the 'enabled' column in the 'product_product_category' collection
+  fields:
+    - name: set
+      type: Bool
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductCategoryEnabled
+    inputTypeName: UpdateColumnProductProductCategoryEnabledInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_category_enabled
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductCategoryEnabled
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductCategoryProductId
+  description: Update the 'product_id' column in the 'product_product_category' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductCategoryProductId
+    inputTypeName: UpdateColumnProductProductCategoryProductIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_category_product_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductCategoryProductId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateProductProductCategoryByCategoryAndProductIdUpdateColumns
+  description: Update the columns of the 'product_product_category' collection
+  fields:
+    - name: category
+      type: UpdateColumnProductProductCategoryCategory
+      description: Update the 'category' column in the 'product_product_category'
+        collection.
+    - name: enabled
+      type: UpdateColumnProductProductCategoryEnabled
+      description: Update the 'enabled' column in the 'product_product_category' collection.
+    - name: productId
+      type: UpdateColumnProductProductCategoryProductId
+      description: Update the 'product_id' column in the 'product_product_category'
+        collection.
+  graphql:
+    typeName: UpdateProductProductCategoryByCategoryAndProductIdUpdateColumns
+    inputTypeName: UpdateProductProductCategoryByCategoryAndProductIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_product_product_category_by_category_and_product_id_update_columns
+      fieldMapping:
+        category:
+          column:
+            name: category
+        enabled:
+          column:
+            name: enabled
+        productId:
+          column:
+            name: product_id
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateProductProductCategoryByCategoryAndProductIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - category
+          - enabled
+          - productId
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateProductProductCategoryByCategoryAndProductIdResponse
+  description: Responses from the
+    'update_product_product_category_by_category_and_product_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProductCategory!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateProductProductCategoryByCategoryAndProductIdResponse
+    inputTypeName: UpdateProductProductCategoryByCategoryAndProductIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_product_product_category_by_category_and_product_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateProductProductCategoryByCategoryAndProductIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateProductProductCategoryByCategoryAndProductId
+  outputType: UpdateProductProductCategoryByCategoryAndProductIdResponse!
+  arguments:
+    - name: keyCategory
+      type: Ltree!
+    - name: keyProductId
+      type: Uuid!
+    - name: postCheck
+      type: ProductProductCategoryBoolExp
+      description: Update permission post-condition predicate over the
+        'product_product_category' collection
+    - name: preCheck
+      type: ProductProductCategoryBoolExp
+      description: Update permission pre-condition predicate over the
+        'product_product_category' collection
+    - name: updateColumns
+      type: UpdateProductProductCategoryByCategoryAndProductIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_product_product_category_by_category_and_product_id
+    argumentMapping:
+      keyCategory: key_category
+      keyProductId: key_product_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateProductProductCategoryByCategoryAndProductId
+    rootFieldKind: Mutation
+  description: Update any row on the 'product_product_category' collection using
+    the 'category' and 'product_id' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateProductProductCategoryByCategoryAndProductId
+  permissions:
+    - role: admin
+      allowExecution: true
+

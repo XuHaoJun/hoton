@@ -2,38 +2,6 @@
 kind: ObjectType
 version: v1
 definition:
-  name: UpdateColumnProductProductCategories
-  description: Update the 'categories' column in the 'product_product' collection
-  fields:
-    - name: set
-      type: "[Ltree]"
-      description: Set the column to this value
-  graphql:
-    typeName: UpdateColumnProductProductCategories
-    inputTypeName: UpdateColumnProductProductCategoriesInput
-  dataConnectorTypeMapping:
-    - dataConnectorName: hoton_main_pg
-      dataConnectorObjectType: update_column_product_product_categories
-      fieldMapping:
-        set:
-          column:
-            name: _set
-
----
-kind: TypePermissions
-version: v1
-definition:
-  typeName: UpdateColumnProductProductCategories
-  permissions:
-    - role: admin
-      output:
-        allowedFields:
-          - set
-
----
-kind: ObjectType
-version: v1
-definition:
   name: UpdateColumnProductProductCreatedAt
   description: Update the 'created_at' column in the 'product_product' collection
   fields:
@@ -262,7 +230,7 @@ definition:
   description: Update the 'tags' column in the 'product_product' collection
   fields:
     - name: set
-      type: "[Varchar]"
+      type: Jsonb
       description: Set the column to this value
   graphql:
     typeName: UpdateColumnProductProductTags
@@ -294,7 +262,7 @@ definition:
   description: Update the 'temperature_zones' column in the 'product_product' collection
   fields:
     - name: set
-      type: "[Varchar]"
+      type: Jsonb
       description: Set the column to this value
   graphql:
     typeName: UpdateColumnProductProductTemperatureZones
@@ -357,9 +325,6 @@ definition:
   name: UpdateProductProductByIdUpdateColumns
   description: Update the columns of the 'product_product' collection
   fields:
-    - name: categories
-      type: UpdateColumnProductProductCategories
-      description: Update the 'categories' column in the 'product_product' collection.
     - name: createdAt
       type: UpdateColumnProductProductCreatedAt
       description: Update the 'created_at' column in the 'product_product' collection.
@@ -398,9 +363,6 @@ definition:
     - dataConnectorName: hoton_main_pg
       dataConnectorObjectType: update_product_product_by_id_update_columns
       fieldMapping:
-        categories:
-          column:
-            name: categories
         createdAt:
           column:
             name: created_at
@@ -441,7 +403,6 @@ definition:
     - role: admin
       output:
         allowedFields:
-          - categories
           - createdAt
           - description
           - id

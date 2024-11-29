@@ -3599,10 +3599,8 @@ definition:
           fields:
             cart_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             created_at:
               type:
                 type: nullable
@@ -3619,10 +3617,8 @@ definition:
                 name: numeric
             product_sku_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             quantity:
               type:
                 type: named
@@ -5478,6 +5474,21 @@ definition:
                 element_type:
                   type: named
                   name: product_product
+        delete_product_product_category_by_category_and_product_id_response:
+          description: Responses from the 'delete_product_product_category_by_category_and_product_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_category
         delete_product_product_shipment_config_by_id_response:
           description: Responses from the 'delete_product_product_shipment_config_by_id' procedure
           fields:
@@ -9581,10 +9592,8 @@ definition:
           fields:
             cart_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             created_at:
               type:
                 type: nullable
@@ -9603,10 +9612,8 @@ definition:
                 name: numeric
             product_sku_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             quantity:
               type:
                 type: nullable
@@ -9689,10 +9696,8 @@ definition:
                   name: uuid
             order_invoice_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             product_name:
               type:
                 type: named
@@ -9796,10 +9801,8 @@ definition:
                   name: timestamptz
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             realm_id:
               type:
                 type: named
@@ -9867,10 +9870,8 @@ definition:
                   name: uuid
             order_invoice_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             reason:
               type:
                 type: nullable
@@ -9914,16 +9915,12 @@ definition:
           fields:
             order_item_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             order_shipment_cargo_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             quantity:
               type:
                 type: nullable
@@ -9961,26 +9958,16 @@ definition:
                   name: uuid
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             price:
               type:
                 type: named
                 name: numeric
-            product_id:
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
             product_sku_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             quantity:
               type:
                 type: nullable
@@ -10100,10 +10087,8 @@ definition:
                 name: varchar
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             order_result_url:
               type:
                 type: named
@@ -10198,10 +10183,8 @@ definition:
                   name: numeric
             order_shipment_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             tracking_number:
               type:
                 type: nullable
@@ -10257,10 +10240,8 @@ definition:
                   name: uuid
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             realm_id:
               type:
                 type: named
@@ -10370,10 +10351,8 @@ definition:
                   name: uuid
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             reason:
               type:
                 type: nullable
@@ -10600,14 +10579,39 @@ definition:
                 element_type:
                   type: named
                   name: order_snapshot_product_sku
-        insert_product_product_object:
+        insert_product_product_category_object:
           fields:
-            categories:
+            category:
+              type:
+                type: named
+                name: ltree
+            enabled:
               type:
                 type: nullable
                 underlying_type:
                   type: named
-                  name: ltree
+                  name: bool
+            product_id:
+              type:
+                type: named
+                name: uuid
+        insert_product_product_category_response:
+          description: Responses from the 'insert_product_product_category' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_category
+        insert_product_product_object:
+          fields:
             created_at:
               type:
                 type: nullable
@@ -10693,16 +10697,12 @@ definition:
                   name: uuid
             product_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             realm_order_shipment_config_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             updated_at:
               type:
                 type: nullable
@@ -10740,10 +10740,8 @@ definition:
                   name: uuid
             product_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             safety_stock:
               type:
                 type: nullable
@@ -10885,10 +10883,8 @@ definition:
                   name: timestamptz
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             realm_id:
               type:
                 type: named
@@ -10939,10 +10935,8 @@ definition:
                 name: uuid
             order_invoice_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             product_name:
               type:
                 type: named
@@ -10997,10 +10991,8 @@ definition:
                 name: uuid
             order_invoice_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             reason:
               type:
                 type: nullable
@@ -11039,26 +11031,16 @@ definition:
                 name: uuid
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             price:
               type:
                 type: named
                 name: numeric
-            product_id:
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
             product_sku_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             quantity:
               type:
                 type: nullable
@@ -11081,16 +11063,12 @@ definition:
           fields:
             order_item_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             order_shipment_cargo_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             quantity:
               type:
                 type: nullable
@@ -11131,10 +11109,8 @@ definition:
                 name: varchar
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             order_result_url:
               type:
                 type: named
@@ -11185,10 +11161,8 @@ definition:
                 name: uuid
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             realm_id:
               type:
                 type: named
@@ -11283,10 +11257,8 @@ definition:
                   name: numeric
             order_shipment_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             tracking_number:
               type:
                 type: nullable
@@ -11341,10 +11313,8 @@ definition:
                 name: uuid
             order_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             reason:
               type:
                 type: nullable
@@ -11507,12 +11477,6 @@ definition:
                   name: timestamptz
         product_product:
           fields:
-            categories:
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: ltree
             created_at:
               type:
                 type: nullable
@@ -11565,6 +11529,22 @@ definition:
                 underlying_type:
                   type: named
                   name: timestamptz
+        product_product_category:
+          fields:
+            category:
+              type:
+                type: named
+                name: ltree
+            enabled:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: bool
+            product_id:
+              type:
+                type: named
+                name: uuid
         product_product_shipment_config:
           fields:
             created_at:
@@ -11579,16 +11559,12 @@ definition:
                 name: uuid
             product_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             realm_order_shipment_config_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             updated_at:
               type:
                 type: nullable
@@ -11609,10 +11585,8 @@ definition:
                 name: uuid
             product_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             safety_stock:
               type:
                 type: nullable
@@ -22820,10 +22794,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_cart_cart_item_created_at:
           description: Update the 'created_at' column in the 'cart_cart_item' collection
           fields:
@@ -22856,10 +22828,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_cart_cart_item_quantity:
           description: Update the 'quantity' column in the 'cart_cart_item' collection
           fields:
@@ -23028,10 +22998,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_invoice_item_product_name:
           description: Update the 'product_name' column in the 'order_order_invoice_item' collection
           fields:
@@ -23100,10 +23068,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_invoice_realm_id:
           description: Update the 'realm_id' column in the 'order_order_invoice' collection
           fields:
@@ -23164,10 +23130,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_invoice_status_history_reason:
           description: Update the 'reason' column in the 'order_order_invoice_status_history' collection
           fields:
@@ -23260,10 +23224,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_item_price:
           description: Update the 'price' column in the 'order_order_item' collection
           fields:
@@ -23272,26 +23234,14 @@ definition:
               type:
                 type: named
                 name: numeric
-        update_column_order_order_item_product_id:
-          description: Update the 'product_id' column in the 'order_order_item' collection
-          fields:
-            _set:
-              description: Set the column to this value
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
         update_column_order_order_item_product_sku_id:
           description: Update the 'product_sku_id' column in the 'order_order_item' collection
           fields:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_item_quantity:
           description: Update the 'quantity' column in the 'order_order_item' collection
           fields:
@@ -23382,10 +23332,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_payment_order_result_url:
           description: Update the 'order_result_url' column in the 'order_order_payment' collection
           fields:
@@ -23506,10 +23454,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_shipment_cargo_tracking_number:
           description: Update the 'tracking_number' column in the 'order_order_shipment_cargo' collection
           fields:
@@ -23582,10 +23528,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_shipment_realm_id:
           description: Update the 'realm_id' column in the 'order_order_shipment' collection
           fields:
@@ -23754,10 +23698,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_order_status_history_reason:
           description: Update the 'reason' column in the 'order_order_status_history' collection
           fields:
@@ -24070,8 +24012,16 @@ definition:
                 underlying_type:
                   type: named
                   name: timestamptz
-        update_column_product_product_categories:
-          description: Update the 'categories' column in the 'product_product' collection
+        update_column_product_product_category_category:
+          description: Update the 'category' column in the 'product_product_category' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: ltree
+        update_column_product_product_category_enabled:
+          description: Update the 'enabled' column in the 'product_product_category' collection
           fields:
             _set:
               description: Set the column to this value
@@ -24079,7 +24029,15 @@ definition:
                 type: nullable
                 underlying_type:
                   type: named
-                  name: ltree
+                  name: bool
+        update_column_product_product_category_product_id:
+          description: Update the 'product_id' column in the 'product_product_category' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
         update_column_product_product_created_at:
           description: Update the 'created_at' column in the 'product_product' collection
           fields:
@@ -24156,20 +24114,16 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_product_product_shipment_config_realm_order_shipment_config_id:
           description: Update the 'realm_order_shipment_config_id' column in the 'product_product_shipment_config' collection
           fields:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_product_product_shipment_config_updated_at:
           description: Update the 'updated_at' column in the 'product_product_shipment_config' collection
           fields:
@@ -24204,10 +24158,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_product_product_sku_safety_stock:
           description: Update the 'safety_stock' column in the 'product_product_sku' collection
           fields:
@@ -24940,13 +24892,6 @@ definition:
                 underlying_type:
                   type: named
                   name: update_column_order_order_item_price
-            product_id:
-              description: Update the 'product_id' column in the 'order_order_item' collection.
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: update_column_order_order_item_product_id
             product_sku_id:
               description: Update the 'product_sku_id' column in the 'order_order_item' collection.
               type:
@@ -25890,13 +25835,6 @@ definition:
         update_product_product_by_id_update_columns:
           description: Update the columns of the 'product_product' collection
           fields:
-            categories:
-              description: Update the 'categories' column in the 'product_product' collection.
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: update_column_product_product_categories
             created_at:
               description: Update the 'created_at' column in the 'product_product' collection.
               type:
@@ -25967,6 +25905,45 @@ definition:
                 underlying_type:
                   type: named
                   name: update_column_product_product_updated_at
+        update_product_product_category_by_category_and_product_id_response:
+          description: Responses from the 'update_product_product_category_by_category_and_product_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_category
+        update_product_product_category_by_category_and_product_id_update_columns:
+          description: Update the columns of the 'product_product_category' collection
+          fields:
+            category:
+              description: Update the 'category' column in the 'product_product_category' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_category_category
+            enabled:
+              description: Update the 'enabled' column in the 'product_product_category' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_category_enabled
+            product_id:
+              description: Update the 'product_id' column in the 'product_product_category' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_category_product_id
         update_product_product_shipment_config_by_id_response:
           description: Responses from the 'update_product_product_shipment_config_by_id' procedure
           fields:
@@ -27283,10 +27260,6 @@ definition:
               column_mapping:
                 order_id: id
               foreign_collection: order_order
-            order_item_product_id_fkey:
-              column_mapping:
-                product_id: id
-              foreign_collection: product_product
             order_item_product_sku_id_fkey:
               column_mapping:
                 product_sku_id: id
@@ -27412,6 +27385,19 @@ definition:
               column_mapping:
                 realm_id: id
               foreign_collection: auth_realm
+        - name: product_product_category
+          arguments: {}
+          type: product_product_category
+          uniqueness_constraints:
+            product_category_pkey:
+              unique_columns:
+                - category
+                - product_id
+          foreign_keys:
+            product_category_product_id_fkey:
+              column_mapping:
+                product_id: id
+              foreign_collection: product_product
         - name: product_product_shipment_config
           arguments: {}
           type: product_product_shipment_config
@@ -29863,6 +29849,27 @@ definition:
           result_type:
             type: named
             name: delete_product_product_by_id_response
+        - name: delete_product_product_category_by_category_and_product_id
+          description: Delete any row on the 'product_product_category' collection using the 'category' and 'product_id' keys
+          arguments:
+            key_category:
+              type:
+                type: named
+                name: ltree
+            key_product_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'product_product_category' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_category
+          result_type:
+            type: named
+            name: delete_product_product_category_by_category_and_product_id_response
         - name: delete_product_product_shipment_config_by_id
           description: Delete any row on the 'product_product_shipment_config' collection using the 'id' key
           arguments:
@@ -31854,6 +31861,25 @@ definition:
           result_type:
             type: named
             name: insert_product_product_response
+        - name: insert_product_product_category
+          description: Insert into the product_product_category table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_product_product_category_object
+            post_check:
+              description: Insert permission predicate over the 'product_product_category' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_category
+          result_type:
+            type: named
+            name: insert_product_product_category_response
         - name: insert_product_product_shipment_config
           description: Insert into the product_product_shipment_config table
           arguments:
@@ -35666,6 +35692,38 @@ definition:
           result_type:
             type: named
             name: update_product_product_by_id_response
+        - name: update_product_product_category_by_category_and_product_id
+          description: Update any row on the 'product_product_category' collection using the 'category' and 'product_id' keys
+          arguments:
+            key_category:
+              type:
+                type: named
+                name: ltree
+            key_product_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'product_product_category' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_category
+            pre_check:
+              description: Update permission pre-condition predicate over the 'product_product_category' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_category
+            update_columns:
+              type:
+                type: named
+                name: update_product_product_category_by_category_and_product_id_update_columns
+          result_type:
+            type: named
+            name: update_product_product_category_by_category_and_product_id_response
         - name: update_product_product_shipment_config_by_id
           description: Update any row on the 'product_product_shipment_config' collection using the 'id' key
           arguments:

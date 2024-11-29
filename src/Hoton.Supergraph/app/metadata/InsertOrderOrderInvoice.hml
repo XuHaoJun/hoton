@@ -23,7 +23,7 @@ definition:
     - name: issueDate
       type: Timestamptz
     - name: orderId
-      type: Uuid
+      type: Uuid!
     - name: realmId
       type: Varchar!
     - name: serviceProvider

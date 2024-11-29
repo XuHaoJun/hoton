@@ -13,7 +13,7 @@ definition:
     - name: length
       type: Numeric
     - name: orderShipmentId
-      type: Uuid
+      type: Uuid!
     - name: trackingNumber
       type: Varchar
     - name: updatedAt

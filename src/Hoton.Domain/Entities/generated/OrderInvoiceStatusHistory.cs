@@ -7,7 +7,7 @@ public partial class OrderInvoiceStatusHistory
 {
     public Guid Id { get; set; }
 
-    public Guid? OrderInvoiceId { get; set; }
+    public Guid OrderInvoiceId { get; set; }
 
     public string FromStatus { get; set; }
 

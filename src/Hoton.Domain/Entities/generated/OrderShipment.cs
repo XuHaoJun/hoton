@@ -9,7 +9,7 @@ public partial class OrderShipment
 
     public string RealmId { get; set; }
 
-    public Guid? OrderId { get; set; }
+    public Guid OrderId { get; set; }
 
     public string TrackingNumber { get; set; }
 

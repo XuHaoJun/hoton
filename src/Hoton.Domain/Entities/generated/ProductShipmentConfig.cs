@@ -7,9 +7,9 @@ public partial class ProductShipmentConfig
 {
     public Guid Id { get; set; }
 
-    public Guid? ProductId { get; set; }
+    public Guid ProductId { get; set; }
 
-    public Guid? RealmOrderShipmentConfigId { get; set; }
+    public Guid RealmOrderShipmentConfigId { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 

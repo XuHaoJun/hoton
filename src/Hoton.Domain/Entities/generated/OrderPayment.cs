@@ -9,7 +9,7 @@ public partial class OrderPayment
 
     public string RealmId { get; set; }
 
-    public Guid? OrderId { get; set; }
+    public Guid OrderId { get; set; }
 
     public string PaymentNumber { get; set; }
 

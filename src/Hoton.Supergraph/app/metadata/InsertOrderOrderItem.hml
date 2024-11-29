@@ -9,13 +9,11 @@ definition:
     - name: id
       type: Uuid
     - name: orderId
-      type: Uuid
+      type: Uuid!
     - name: price
       type: Numeric!
-    - name: productId
-      type: Uuid
     - name: productSkuId
-      type: Uuid
+      type: Uuid!
     - name: quantity
       type: Int4
     - name: snapshotVersion
@@ -41,9 +39,6 @@ definition:
         price:
           column:
             name: price
-        productId:
-          column:
-            name: product_id
         productSkuId:
           column:
             name: product_sku_id
@@ -70,7 +65,6 @@ definition:
           - id
           - orderId
           - price
-          - productId
           - productSkuId
           - quantity
           - snapshotVersion
