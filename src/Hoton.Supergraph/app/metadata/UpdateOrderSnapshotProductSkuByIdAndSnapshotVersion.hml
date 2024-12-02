@@ -70,7 +70,7 @@ definition:
   description: Update the 'product_id' column in the 'order_snapshot_product_sku' collection
   fields:
     - name: set
-      type: Uuid
+      type: Uuid!
       description: Set the column to this value
   graphql:
     typeName: UpdateColumnOrderSnapshotProductSkuProductId
@@ -154,38 +154,6 @@ kind: TypePermissions
 version: v1
 definition:
   typeName: UpdateColumnOrderSnapshotProductSkuSnapshotVersion
-  permissions:
-    - role: admin
-      output:
-        allowedFields:
-          - set
-
----
-kind: ObjectType
-version: v1
-definition:
-  name: UpdateColumnOrderSnapshotProductSkuSpec
-  description: Update the 'spec' column in the 'order_snapshot_product_sku' collection
-  fields:
-    - name: set
-      type: Jsonb!
-      description: Set the column to this value
-  graphql:
-    typeName: UpdateColumnOrderSnapshotProductSkuSpec
-    inputTypeName: UpdateColumnOrderSnapshotProductSkuSpecInput
-  dataConnectorTypeMapping:
-    - dataConnectorName: hoton_main_pg
-      dataConnectorObjectType: update_column_order_snapshot_product_sku_spec
-      fieldMapping:
-        set:
-          column:
-            name: _set
-
----
-kind: TypePermissions
-version: v1
-definition:
-  typeName: UpdateColumnOrderSnapshotProductSkuSpec
   permissions:
     - role: admin
       output:
@@ -283,9 +251,6 @@ definition:
       type: UpdateColumnOrderSnapshotProductSkuSnapshotVersion
       description: Update the 'snapshot_version' column in the
         'order_snapshot_product_sku' collection.
-    - name: spec
-      type: UpdateColumnOrderSnapshotProductSkuSpec
-      description: Update the 'spec' column in the 'order_snapshot_product_sku' collection.
     - name: stockQuantity
       type: UpdateColumnOrderSnapshotProductSkuStockQuantity
       description: Update the 'stock_quantity' column in the
@@ -316,9 +281,6 @@ definition:
         snapshotVersion:
           column:
             name: snapshot_version
-        spec:
-          column:
-            name: spec
         stockQuantity:
           column:
             name: stock_quantity
@@ -340,7 +302,6 @@ definition:
           - productId
           - safetyStock
           - snapshotVersion
-          - spec
           - stockQuantity
           - updatedAt
 

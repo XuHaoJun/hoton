@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace Hoton.Domain.Entities.generated;
 
-public partial class SnapshotProductSku
+public partial class SnapshotProductSkuSpec
 {
     public Guid Id { get; set; }
 
-    public Guid ProductId { get; set; }
+    public Guid ProductSkuId { get; set; }
 
-    public int? StockQuantity { get; set; }
+    public string SpecName { get; set; }
 
-    public int? SafetyStock { get; set; }
+    public string SpecValue { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
 
-    public DateTime SnapshotVersion { get; set; }
+    public DateTime? SnapshotVersion { get; set; }
 }

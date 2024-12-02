@@ -2,28 +2,28 @@
 kind: ObjectType
 version: v1
 definition:
-  name: InsertProductProductSkuObject
+  name: InsertOrderSnapshotProductSkuSpecObject
   fields:
     - name: createdAt
       type: Timestamptz
     - name: id
-      type: Uuid
-    - name: productId
       type: Uuid!
-    - name: safetyStock
-      type: Int4
+    - name: productSkuId
+      type: Uuid!
     - name: snapshotVersion
       type: Timestamptz
-    - name: stockQuantity
-      type: Int4
+    - name: specName
+      type: Varchar!
+    - name: specValue
+      type: Varchar!
     - name: updatedAt
       type: Timestamptz
   graphql:
-    typeName: InsertProductProductSkuObject
-    inputTypeName: InsertProductProductSkuObjectInput
+    typeName: InsertOrderSnapshotProductSkuSpecObject
+    inputTypeName: InsertOrderSnapshotProductSkuSpecObjectInput
   dataConnectorTypeMapping:
     - dataConnectorName: hoton_main_pg
-      dataConnectorObjectType: insert_product_product_sku_object
+      dataConnectorObjectType: insert_order_snapshot_product_sku_spec_object
       fieldMapping:
         createdAt:
           column:
@@ -31,18 +31,18 @@ definition:
         id:
           column:
             name: id
-        productId:
+        productSkuId:
           column:
-            name: product_id
-        safetyStock:
-          column:
-            name: safety_stock
+            name: product_sku_id
         snapshotVersion:
           column:
             name: snapshot_version
-        stockQuantity:
+        specName:
           column:
-            name: stock_quantity
+            name: spec_name
+        specValue:
+          column:
+            name: spec_value
         updatedAt:
           column:
             name: updated_at
@@ -51,38 +51,38 @@ definition:
 kind: TypePermissions
 version: v1
 definition:
-  typeName: InsertProductProductSkuObject
+  typeName: InsertOrderSnapshotProductSkuSpecObject
   permissions:
     - role: admin
       output:
         allowedFields:
           - createdAt
           - id
-          - productId
-          - safetyStock
+          - productSkuId
           - snapshotVersion
-          - stockQuantity
+          - specName
+          - specValue
           - updatedAt
 
 ---
 kind: ObjectType
 version: v1
 definition:
-  name: InsertProductProductSkuResponse
-  description: Responses from the 'insert_product_product_sku' procedure
+  name: InsertOrderSnapshotProductSkuSpecResponse
+  description: Responses from the 'insert_order_snapshot_product_sku_spec' procedure
   fields:
     - name: affectedRows
       type: Int4!
       description: The number of rows affected by the mutation
     - name: returning
-      type: "[ProductProductSku!]!"
+      type: "[OrderSnapshotProductSkuSpec!]!"
       description: Data from rows affected by the mutation
   graphql:
-    typeName: InsertProductProductSkuResponse
-    inputTypeName: InsertProductProductSkuResponseInput
+    typeName: InsertOrderSnapshotProductSkuSpecResponse
+    inputTypeName: InsertOrderSnapshotProductSkuSpecResponseInput
   dataConnectorTypeMapping:
     - dataConnectorName: hoton_main_pg
-      dataConnectorObjectType: insert_product_product_sku_response
+      dataConnectorObjectType: insert_order_snapshot_product_sku_spec_response
       fieldMapping:
         affectedRows:
           column:
@@ -95,7 +95,7 @@ definition:
 kind: TypePermissions
 version: v1
 definition:
-  typeName: InsertProductProductSkuResponse
+  typeName: InsertOrderSnapshotProductSkuSpecResponse
   permissions:
     - role: admin
       output:
@@ -107,31 +107,32 @@ definition:
 kind: Command
 version: v1
 definition:
-  name: InsertProductProductSku
-  outputType: InsertProductProductSkuResponse!
+  name: InsertOrderSnapshotProductSkuSpec
+  outputType: InsertOrderSnapshotProductSkuSpecResponse!
   arguments:
     - name: objects
-      type: "[InsertProductProductSkuObject!]!"
+      type: "[InsertOrderSnapshotProductSkuSpecObject!]!"
     - name: postCheck
-      type: ProductProductSkuBoolExp
-      description: Insert permission predicate over the 'product_product_sku' collection
+      type: OrderSnapshotProductSkuSpecBoolExp
+      description: Insert permission predicate over the
+        'order_snapshot_product_sku_spec' collection
   source:
     dataConnectorName: hoton_main_pg
     dataConnectorCommand:
-      procedure: insert_product_product_sku
+      procedure: insert_order_snapshot_product_sku_spec
     argumentMapping:
       objects: objects
       postCheck: post_check
   graphql:
-    rootFieldName: insertProductProductSku
+    rootFieldName: insertOrderSnapshotProductSkuSpec
     rootFieldKind: Mutation
-  description: Insert into the product_product_sku table
+  description: Insert into the order_snapshot_product_sku_spec table
 
 ---
 kind: CommandPermissions
 version: v1
 definition:
-  commandName: InsertProductProductSku
+  commandName: InsertOrderSnapshotProductSkuSpec
   permissions:
     - role: admin
       allowExecution: true

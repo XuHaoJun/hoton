@@ -1,0 +1,82 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValueResponse
+  description: Responses from the
+    'delete_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProductSkuSpec!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValueResponse
+    inputTypeName: DeleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValue
+  outputType: DeleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValueResponse!
+  arguments:
+    - name: keyProductSkuId
+      type: Uuid!
+    - name: keySpecName
+      type: Varchar!
+    - name: keySpecValue
+      type: Varchar!
+    - name: preCheck
+      type: ProductProductSkuSpecBoolExp
+      description: Delete permission predicate over the 'product_product_sku_spec'
+        collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value
+    argumentMapping:
+      keyProductSkuId: key_product_sku_id
+      keySpecName: key_spec_name
+      keySpecValue: key_spec_value
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValue
+    rootFieldKind: Mutation
+  description: Delete any row on the 'product_product_sku_spec' collection using
+    the 'product_sku_id', 'spec_name' and 'spec_value' keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteProductProductSkuSpecByProductSkuIdAndSpecNameAndSpecValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

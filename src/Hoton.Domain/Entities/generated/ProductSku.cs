@@ -9,8 +9,6 @@ public partial class ProductSku
 
     public Guid ProductId { get; set; }
 
-    public string Spec { get; set; }
-
     public int? StockQuantity { get; set; }
 
     public int? SafetyStock { get; set; }
@@ -26,4 +24,6 @@ public partial class ProductSku
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public virtual Product Product { get; set; }
+
+    public virtual ICollection<ProductSkuSpec> ProductSkuSpecs { get; set; } = new List<ProductSkuSpec>();
 }

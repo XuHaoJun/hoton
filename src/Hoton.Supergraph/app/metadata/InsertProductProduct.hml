@@ -16,6 +16,8 @@ definition:
       type: Numeric!
     - name: realmId
       type: Varchar!
+    - name: searchVector
+      type: Tsvector
     - name: snapshotVersion
       type: Timestamptz
     - name: tags
@@ -24,8 +26,6 @@ definition:
       type: Jsonb
     - name: updatedAt
       type: Timestamptz
-    - name: searchVector
-      type: Tsvector
   graphql:
     typeName: InsertProductProductObject
     inputTypeName: InsertProductProductObjectInput
@@ -51,6 +51,9 @@ definition:
         realmId:
           column:
             name: realm_id
+        searchVector:
+          column:
+            name: search_vector
         snapshotVersion:
           column:
             name: snapshot_version
@@ -63,9 +66,6 @@ definition:
         updatedAt:
           column:
             name: updated_at
-        searchVector:
-          column:
-            name: search_vector
 
 ---
 kind: TypePermissions
@@ -82,11 +82,11 @@ definition:
           - name
           - price
           - realmId
+          - searchVector
           - snapshotVersion
           - tags
           - temperatureZones
           - updatedAt
-          - searchVector
 
 ---
 kind: ObjectType

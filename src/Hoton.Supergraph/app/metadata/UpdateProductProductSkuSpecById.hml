@@ -1,0 +1,388 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSkuSpecCreatedAt
+  description: Update the 'created_at' column in the 'product_product_sku_spec' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSkuSpecCreatedAt
+    inputTypeName: UpdateColumnProductProductSkuSpecCreatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_sku_spec_created_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSkuSpecCreatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSkuSpecId
+  description: Update the 'id' column in the 'product_product_sku_spec' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSkuSpecId
+    inputTypeName: UpdateColumnProductProductSkuSpecIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_sku_spec_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSkuSpecId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSkuSpecProductSkuId
+  description: Update the 'product_sku_id' column in the
+    'product_product_sku_spec' collection
+  fields:
+    - name: set
+      type: Uuid!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSkuSpecProductSkuId
+    inputTypeName: UpdateColumnProductProductSkuSpecProductSkuIdInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_sku_spec_product_sku_id
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSkuSpecProductSkuId
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSkuSpecSnapshotVersion
+  description: Update the 'snapshot_version' column in the
+    'product_product_sku_spec' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSkuSpecSnapshotVersion
+    inputTypeName: UpdateColumnProductProductSkuSpecSnapshotVersionInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_sku_spec_snapshot_version
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSkuSpecSnapshotVersion
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSkuSpecSpecName
+  description: Update the 'spec_name' column in the 'product_product_sku_spec' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSkuSpecSpecName
+    inputTypeName: UpdateColumnProductProductSkuSpecSpecNameInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_sku_spec_spec_name
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSkuSpecSpecName
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSkuSpecSpecValue
+  description: Update the 'spec_value' column in the 'product_product_sku_spec' collection
+  fields:
+    - name: set
+      type: Varchar!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSkuSpecSpecValue
+    inputTypeName: UpdateColumnProductProductSkuSpecSpecValueInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_sku_spec_spec_value
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSkuSpecSpecValue
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateColumnProductProductSkuSpecUpdatedAt
+  description: Update the 'updated_at' column in the 'product_product_sku_spec' collection
+  fields:
+    - name: set
+      type: Timestamptz
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSkuSpecUpdatedAt
+    inputTypeName: UpdateColumnProductProductSkuSpecUpdatedAtInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_sku_spec_updated_at
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSkuSpecUpdatedAt
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateProductProductSkuSpecByIdUpdateColumns
+  description: Update the columns of the 'product_product_sku_spec' collection
+  fields:
+    - name: createdAt
+      type: UpdateColumnProductProductSkuSpecCreatedAt
+      description: Update the 'created_at' column in the 'product_product_sku_spec'
+        collection.
+    - name: id
+      type: UpdateColumnProductProductSkuSpecId
+      description: Update the 'id' column in the 'product_product_sku_spec' collection.
+    - name: productSkuId
+      type: UpdateColumnProductProductSkuSpecProductSkuId
+      description: Update the 'product_sku_id' column in the
+        'product_product_sku_spec' collection.
+    - name: snapshotVersion
+      type: UpdateColumnProductProductSkuSpecSnapshotVersion
+      description: Update the 'snapshot_version' column in the
+        'product_product_sku_spec' collection.
+    - name: specName
+      type: UpdateColumnProductProductSkuSpecSpecName
+      description: Update the 'spec_name' column in the 'product_product_sku_spec'
+        collection.
+    - name: specValue
+      type: UpdateColumnProductProductSkuSpecSpecValue
+      description: Update the 'spec_value' column in the 'product_product_sku_spec'
+        collection.
+    - name: updatedAt
+      type: UpdateColumnProductProductSkuSpecUpdatedAt
+      description: Update the 'updated_at' column in the 'product_product_sku_spec'
+        collection.
+  graphql:
+    typeName: UpdateProductProductSkuSpecByIdUpdateColumns
+    inputTypeName: UpdateProductProductSkuSpecByIdUpdateColumnsInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_product_product_sku_spec_by_id_update_columns
+      fieldMapping:
+        createdAt:
+          column:
+            name: created_at
+        id:
+          column:
+            name: id
+        productSkuId:
+          column:
+            name: product_sku_id
+        snapshotVersion:
+          column:
+            name: snapshot_version
+        specName:
+          column:
+            name: spec_name
+        specValue:
+          column:
+            name: spec_value
+        updatedAt:
+          column:
+            name: updated_at
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateProductProductSkuSpecByIdUpdateColumns
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - createdAt
+          - id
+          - productSkuId
+          - snapshotVersion
+          - specName
+          - specValue
+          - updatedAt
+
+---
+kind: ObjectType
+version: v1
+definition:
+  name: UpdateProductProductSkuSpecByIdResponse
+  description: Responses from the 'update_product_product_sku_spec_by_id' procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[ProductProductSkuSpec!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: UpdateProductProductSkuSpecByIdResponse
+    inputTypeName: UpdateProductProductSkuSpecByIdResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_product_product_sku_spec_by_id_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateProductProductSkuSpecByIdResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: UpdateProductProductSkuSpecById
+  outputType: UpdateProductProductSkuSpecByIdResponse!
+  arguments:
+    - name: keyId
+      type: Uuid!
+    - name: postCheck
+      type: ProductProductSkuSpecBoolExp
+      description: Update permission post-condition predicate over the
+        'product_product_sku_spec' collection
+    - name: preCheck
+      type: ProductProductSkuSpecBoolExp
+      description: Update permission pre-condition predicate over the
+        'product_product_sku_spec' collection
+    - name: updateColumns
+      type: UpdateProductProductSkuSpecByIdUpdateColumns!
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: update_product_product_sku_spec_by_id
+    argumentMapping:
+      keyId: key_id
+      postCheck: post_check
+      preCheck: pre_check
+      updateColumns: update_columns
+  graphql:
+    rootFieldName: updateProductProductSkuSpecById
+    rootFieldKind: Mutation
+  description: Update any row on the 'product_product_sku_spec' collection using
+    the 'id' key
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: UpdateProductProductSkuSpecById
+  permissions:
+    - role: admin
+      allowExecution: true
+

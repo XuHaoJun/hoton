@@ -1,10 +1,11 @@
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hoton.Ec.Api.Controllers;
 
 [Route("api/realms/{realmId}/[controller]/[action]")]
-public class ProductsController
+public class CatalogController
 {
     [AllowAnonymous]
     [HttpPost]

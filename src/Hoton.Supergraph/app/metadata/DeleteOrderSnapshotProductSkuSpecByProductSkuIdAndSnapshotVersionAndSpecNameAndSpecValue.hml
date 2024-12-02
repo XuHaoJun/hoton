@@ -1,0 +1,86 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: DeleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValueResponse
+  description: Responses from the
+    'delete_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value'
+    procedure
+  fields:
+    - name: affectedRows
+      type: Int4!
+      description: The number of rows affected by the mutation
+    - name: returning
+      type: "[OrderSnapshotProductSkuSpec!]!"
+      description: Data from rows affected by the mutation
+  graphql:
+    typeName: DeleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValueResponse
+    inputTypeName: DeleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValueResponseInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: delete_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value_response
+      fieldMapping:
+        affectedRows:
+          column:
+            name: affected_rows
+        returning:
+          column:
+            name: returning
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: DeleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValueResponse
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - affectedRows
+          - returning
+
+---
+kind: Command
+version: v1
+definition:
+  name: DeleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValue
+  outputType: DeleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValueResponse!
+  arguments:
+    - name: keyProductSkuId
+      type: Uuid!
+    - name: keySnapshotVersion
+      type: Timestamptz
+    - name: keySpecName
+      type: Varchar!
+    - name: keySpecValue
+      type: Varchar!
+    - name: preCheck
+      type: OrderSnapshotProductSkuSpecBoolExp
+      description: Delete permission predicate over the
+        'order_snapshot_product_sku_spec' collection
+  source:
+    dataConnectorName: hoton_main_pg
+    dataConnectorCommand:
+      procedure: delete_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value
+    argumentMapping:
+      keyProductSkuId: key_product_sku_id
+      keySnapshotVersion: key_snapshot_version
+      keySpecName: key_spec_name
+      keySpecValue: key_spec_value
+      preCheck: pre_check
+  graphql:
+    rootFieldName: deleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValue
+    rootFieldKind: Mutation
+  description: Delete any row on the 'order_snapshot_product_sku_spec' collection
+    using the 'product_sku_id', 'snapshot_version', 'spec_name' and 'spec_value'
+    keys
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: DeleteOrderSnapshotProductSkuSpecByProductSkuIdAndSnapshotVersionAndSpecNameAndSpecValue
+  permissions:
+    - role: admin
+      allowExecution: true
+

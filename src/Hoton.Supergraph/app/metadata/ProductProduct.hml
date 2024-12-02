@@ -16,6 +16,8 @@ definition:
       type: Numeric!
     - name: realmId
       type: Varchar!
+    - name: searchVector
+      type: Tsvector!
     - name: snapshotVersion
       type: Timestamptz
     - name: tags
@@ -24,8 +26,6 @@ definition:
       type: Jsonb
     - name: updatedAt
       type: Timestamptz
-    - name: searchVector
-      type: Tsvector!
   graphql:
     typeName: ProductProduct
     inputTypeName: ProductProductInput
@@ -51,6 +51,9 @@ definition:
         realmId:
           column:
             name: realm_id
+        searchVector:
+          column:
+            name: search_vector
         snapshotVersion:
           column:
             name: snapshot_version
@@ -63,9 +66,6 @@ definition:
         updatedAt:
           column:
             name: updated_at
-        searchVector:
-          column:
-            name: search_vector
 
 ---
 kind: TypePermissions
@@ -82,11 +82,11 @@ definition:
           - name
           - price
           - realmId
+          - searchVector
           - snapshotVersion
           - tags
           - temperatureZones
           - updatedAt
-          - searchVector
     - role: user
       output:
         allowedFields:
@@ -121,6 +121,8 @@ definition:
           booleanExpressionType: NumericBoolExp
         - fieldName: realmId
           booleanExpressionType: VarcharBoolExp
+        - fieldName: searchVector
+          booleanExpressionType: TsvectorBoolExp
         - fieldName: snapshotVersion
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: tags
@@ -129,8 +131,6 @@ definition:
           booleanExpressionType: JsonbBoolExp
         - fieldName: updatedAt
           booleanExpressionType: TimestamptzBoolExp
-        - fieldName: searchVector
-          booleanExpressionType: TsvectorBoolExp
       comparableRelationships:
         - relationshipName: authRealm
         - relationshipName: productProductCategories
@@ -164,6 +164,8 @@ definition:
           aggregateExpression: NumericAggExp
         - fieldName: realmId
           aggregateExpression: VarcharAggExp
+        - fieldName: searchVector
+          aggregateExpression: TsvectorAggExp
         - fieldName: snapshotVersion
           aggregateExpression: TimestamptzAggExp
         - fieldName: tags
@@ -172,8 +174,6 @@ definition:
           aggregateExpression: JsonbAggExp
         - fieldName: updatedAt
           aggregateExpression: TimestamptzAggExp
-        - fieldName: searchVector
-          aggregateExpression: TsvectorAggExp
   count:
     enable: true
   graphql:
@@ -209,6 +209,9 @@ definition:
     - fieldName: realmId
       orderByDirections:
         enableAll: true
+    - fieldName: searchVector
+      orderByDirections:
+        enableAll: true
     - fieldName: snapshotVersion
       orderByDirections:
         enableAll: true
@@ -219,9 +222,6 @@ definition:
       orderByDirections:
         enableAll: true
     - fieldName: updatedAt
-      orderByDirections:
-        enableAll: true
-    - fieldName: searchVector
       orderByDirections:
         enableAll: true
   graphql:
@@ -252,14 +252,6 @@ definition:
       select:
         filter: null
         allowSubscriptions: true
-    - role: user
-      select:
-        filter:
-          fieldComparison:
-            field: realmId
-            operator: _eq
-            value:
-              sessionVariable: x-hasura-realm-id
 
 ---
 kind: Relationship

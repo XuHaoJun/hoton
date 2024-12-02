@@ -194,6 +194,38 @@ definition:
 kind: ObjectType
 version: v1
 definition:
+  name: UpdateColumnProductProductSearchVector
+  description: Update the 'search_vector' column in the 'product_product' collection
+  fields:
+    - name: set
+      type: Tsvector!
+      description: Set the column to this value
+  graphql:
+    typeName: UpdateColumnProductProductSearchVector
+    inputTypeName: UpdateColumnProductProductSearchVectorInput
+  dataConnectorTypeMapping:
+    - dataConnectorName: hoton_main_pg
+      dataConnectorObjectType: update_column_product_product_search_vector
+      fieldMapping:
+        set:
+          column:
+            name: _set
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: UpdateColumnProductProductSearchVector
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - set
+
+---
+kind: ObjectType
+version: v1
+definition:
   name: UpdateColumnProductProductSnapshotVersion
   description: Update the 'snapshot_version' column in the 'product_product' collection
   fields:
@@ -343,6 +375,9 @@ definition:
     - name: realmId
       type: UpdateColumnProductProductRealmId
       description: Update the 'realm_id' column in the 'product_product' collection.
+    - name: searchVector
+      type: UpdateColumnProductProductSearchVector
+      description: Update the 'search_vector' column in the 'product_product' collection.
     - name: snapshotVersion
       type: UpdateColumnProductProductSnapshotVersion
       description: Update the 'snapshot_version' column in the 'product_product' collection.
@@ -356,9 +391,6 @@ definition:
     - name: updatedAt
       type: UpdateColumnProductProductUpdatedAt
       description: Update the 'updated_at' column in the 'product_product' collection.
-    - name: searchVector
-      type: UpdateColumnProductProductSearchVector
-      description: Update the 'search_vector' column in the 'product_product' collection.
   graphql:
     typeName: UpdateProductProductByIdUpdateColumns
     inputTypeName: UpdateProductProductByIdUpdateColumnsInput
@@ -384,6 +416,9 @@ definition:
         realmId:
           column:
             name: realm_id
+        searchVector:
+          column:
+            name: search_vector
         snapshotVersion:
           column:
             name: snapshot_version
@@ -396,9 +431,6 @@ definition:
         updatedAt:
           column:
             name: updated_at
-        searchVector:
-          column:
-            name: search_vector
 
 ---
 kind: TypePermissions
@@ -415,11 +447,11 @@ definition:
           - name
           - price
           - realmId
+          - searchVector
           - snapshotVersion
           - tags
           - temperatureZones
           - updatedAt
-          - searchVector
 
 ---
 kind: ObjectType
@@ -501,36 +533,4 @@ definition:
   permissions:
     - role: admin
       allowExecution: true
-
----
-kind: ObjectType
-version: v1
-definition:
-  name: UpdateColumnProductProductSearchVector
-  description: Update the 'search_vector' column in the 'product_product' collection
-  fields:
-    - name: set
-      type: Tsvector!
-      description: Set the column to this value
-  graphql:
-    typeName: UpdateColumnProductProductSearchVector
-    inputTypeName: UpdateColumnProductProductSearchVectorInput
-  dataConnectorTypeMapping:
-    - dataConnectorName: hoton_main_pg
-      dataConnectorObjectType: update_column_product_product_search_vector
-      fieldMapping:
-        set:
-          column:
-            name: _set
-
----
-kind: TypePermissions
-version: v1
-definition:
-  typeName: UpdateColumnProductProductSearchVector
-  permissions:
-    - role: admin
-      output:
-        allowedFields:
-          - set
 

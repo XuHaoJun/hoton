@@ -2,28 +2,28 @@
 kind: ObjectType
 version: v1
 definition:
-  name: OrderSnapshotProductSku
+  name: OrderSnapshotProductSkuSpec
   fields:
     - name: createdAt
       type: Timestamptz
     - name: id
       type: Uuid!
-    - name: productId
+    - name: productSkuId
       type: Uuid!
-    - name: safetyStock
-      type: Int4
     - name: snapshotVersion
-      type: Timestamptz!
-    - name: stockQuantity
-      type: Int4
+      type: Timestamptz
+    - name: specName
+      type: Varchar!
+    - name: specValue
+      type: Varchar!
     - name: updatedAt
       type: Timestamptz
   graphql:
-    typeName: OrderSnapshotProductSku
-    inputTypeName: OrderSnapshotProductSkuInput
+    typeName: OrderSnapshotProductSkuSpec
+    inputTypeName: OrderSnapshotProductSkuSpecInput
   dataConnectorTypeMapping:
     - dataConnectorName: hoton_main_pg
-      dataConnectorObjectType: order_snapshot_product_sku
+      dataConnectorObjectType: order_snapshot_product_sku_spec
       fieldMapping:
         createdAt:
           column:
@@ -31,18 +31,18 @@ definition:
         id:
           column:
             name: id
-        productId:
+        productSkuId:
           column:
-            name: product_id
-        safetyStock:
-          column:
-            name: safety_stock
+            name: product_sku_id
         snapshotVersion:
           column:
             name: snapshot_version
-        stockQuantity:
+        specName:
           column:
-            name: stock_quantity
+            name: spec_name
+        specValue:
+          column:
+            name: spec_value
         updatedAt:
           column:
             name: updated_at
@@ -51,40 +51,40 @@ definition:
 kind: TypePermissions
 version: v1
 definition:
-  typeName: OrderSnapshotProductSku
+  typeName: OrderSnapshotProductSkuSpec
   permissions:
     - role: admin
       output:
         allowedFields:
           - createdAt
           - id
-          - productId
-          - safetyStock
+          - productSkuId
           - snapshotVersion
-          - stockQuantity
+          - specName
+          - specValue
           - updatedAt
 
 ---
 kind: BooleanExpressionType
 version: v1
 definition:
-  name: OrderSnapshotProductSkuBoolExp
+  name: OrderSnapshotProductSkuSpecBoolExp
   operand:
     object:
-      type: OrderSnapshotProductSku
+      type: OrderSnapshotProductSkuSpec
       comparableFields:
         - fieldName: createdAt
           booleanExpressionType: TimestamptzBoolExp
         - fieldName: id
           booleanExpressionType: UuidBoolExp
-        - fieldName: productId
+        - fieldName: productSkuId
           booleanExpressionType: UuidBoolExp
-        - fieldName: safetyStock
-          booleanExpressionType: Int4BoolExp
         - fieldName: snapshotVersion
           booleanExpressionType: TimestamptzBoolExp
-        - fieldName: stockQuantity
-          booleanExpressionType: Int4BoolExp
+        - fieldName: specName
+          booleanExpressionType: VarcharBoolExp
+        - fieldName: specValue
+          booleanExpressionType: VarcharBoolExp
         - fieldName: updatedAt
           booleanExpressionType: TimestamptzBoolExp
       comparableRelationships: []
@@ -93,47 +93,47 @@ definition:
   isNull:
     enable: true
   graphql:
-    typeName: OrderSnapshotProductSkuBoolExp
+    typeName: OrderSnapshotProductSkuSpecBoolExp
 
 ---
 kind: AggregateExpression
 version: v1
 definition:
-  name: OrderSnapshotProductSkuAggExp
+  name: OrderSnapshotProductSkuSpecAggExp
   operand:
     object:
-      aggregatedType: OrderSnapshotProductSku
+      aggregatedType: OrderSnapshotProductSkuSpec
       aggregatableFields:
         - fieldName: createdAt
           aggregateExpression: TimestamptzAggExp
         - fieldName: id
           aggregateExpression: UuidAggExp
-        - fieldName: productId
+        - fieldName: productSkuId
           aggregateExpression: UuidAggExp
-        - fieldName: safetyStock
-          aggregateExpression: Int4AggExp
         - fieldName: snapshotVersion
           aggregateExpression: TimestamptzAggExp
-        - fieldName: stockQuantity
-          aggregateExpression: Int4AggExp
+        - fieldName: specName
+          aggregateExpression: VarcharAggExp
+        - fieldName: specValue
+          aggregateExpression: VarcharAggExp
         - fieldName: updatedAt
           aggregateExpression: TimestamptzAggExp
   count:
     enable: true
   graphql:
-    selectTypeName: OrderSnapshotProductSkuAggExp
+    selectTypeName: OrderSnapshotProductSkuSpecAggExp
 
 ---
 kind: Model
 version: v1
 definition:
-  name: OrderSnapshotProductSku
-  objectType: OrderSnapshotProductSku
+  name: OrderSnapshotProductSkuSpec
+  objectType: OrderSnapshotProductSkuSpec
   source:
     dataConnectorName: hoton_main_pg
-    collection: order_snapshot_product_sku
-  filterExpressionType: OrderSnapshotProductSkuBoolExp
-  aggregateExpression: OrderSnapshotProductSkuAggExp
+    collection: order_snapshot_product_sku_spec
+  filterExpressionType: OrderSnapshotProductSkuSpecBoolExp
+  aggregateExpression: OrderSnapshotProductSkuSpecAggExp
   orderableFields:
     - fieldName: createdAt
       orderByDirections:
@@ -141,16 +141,16 @@ definition:
     - fieldName: id
       orderByDirections:
         enableAll: true
-    - fieldName: productId
-      orderByDirections:
-        enableAll: true
-    - fieldName: safetyStock
+    - fieldName: productSkuId
       orderByDirections:
         enableAll: true
     - fieldName: snapshotVersion
       orderByDirections:
         enableAll: true
-    - fieldName: stockQuantity
+    - fieldName: specName
+      orderByDirections:
+        enableAll: true
+    - fieldName: specValue
       orderByDirections:
         enableAll: true
     - fieldName: updatedAt
@@ -158,28 +158,30 @@ definition:
         enableAll: true
   graphql:
     selectMany:
-      queryRootField: orderSnapshotProductSku
+      queryRootField: orderSnapshotProductSkuSpec
       subscription:
-        rootField: orderSnapshotProductSku
+        rootField: orderSnapshotProductSkuSpec
     selectUniques:
-      - queryRootField: orderSnapshotProductSkuBySnapshotProductSkuPkey
+      - queryRootField: orderSnapshotProductSkuSpecBySnapshotProductSkuSpecProductSkuIdSpecNameSpecValKey
         uniqueIdentifier:
-          - id
+          - productSkuId
           - snapshotVersion
+          - specName
+          - specValue
         subscription:
-          rootField: orderSnapshotProductSkuBySnapshotProductSkuPkey
-    orderByExpressionType: OrderSnapshotProductSkuOrderBy
-    filterInputTypeName: OrderSnapshotProductSkuFilterInput
+          rootField: orderSnapshotProductSkuSpecBySnapshotProductSkuSpecProductSkuIdSpecNameSpecValKey
+    orderByExpressionType: OrderSnapshotProductSkuSpecOrderBy
+    filterInputTypeName: OrderSnapshotProductSkuSpecFilterInput
     aggregate:
-      queryRootField: orderSnapshotProductSkuAggregate
+      queryRootField: orderSnapshotProductSkuSpecAggregate
       subscription:
-        rootField: orderSnapshotProductSkuAggregate
+        rootField: orderSnapshotProductSkuSpecAggregate
 
 ---
 kind: ModelPermissions
 version: v1
 definition:
-  modelName: OrderSnapshotProductSku
+  modelName: OrderSnapshotProductSkuSpec
   permissions:
     - role: admin
       select:

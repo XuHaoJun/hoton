@@ -9,8 +9,6 @@ public partial class SnapshotProduct
 
     public string RealmId { get; set; }
 
-    public DateTime SnapshotVersion { get; set; }
-
     public string Name { get; set; }
 
     public string Description { get; set; }
@@ -20,6 +18,8 @@ public partial class SnapshotProduct
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
+
+    public DateTime SnapshotVersion { get; set; }
 
     public virtual Realm Realm { get; set; }
 }

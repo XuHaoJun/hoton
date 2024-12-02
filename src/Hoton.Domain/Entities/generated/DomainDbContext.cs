@@ -137,6 +137,8 @@ public partial class DomainDbContext : DbContext
 
     public virtual DbSet<ProductSku> ProductSkus { get; set; }
 
+    public virtual DbSet<ProductSkuSpec> ProductSkuSpecs { get; set; }
+
     public virtual DbSet<ProtocolMapper> ProtocolMappers { get; set; }
 
     public virtual DbSet<ProtocolMapperConfig> ProtocolMapperConfigs { get; set; }
@@ -190,6 +192,8 @@ public partial class DomainDbContext : DbContext
     public virtual DbSet<SnapshotProduct> SnapshotProducts { get; set; }
 
     public virtual DbSet<SnapshotProductSku> SnapshotProductSkus { get; set; }
+
+    public virtual DbSet<SnapshotProductSkuSpec> SnapshotProductSkuSpecs { get; set; }
 
     public virtual DbSet<UserAttribute> UserAttributes { get; set; }
 
@@ -2280,10 +2284,6 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.SnapshotVersion)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("snapshot_version");
-            entity.Property(e => e.Spec)
-                .IsRequired()
-                .HasColumnType("jsonb")
-                .HasColumnName("spec");
             entity.Property(e => e.StockQuantity)
                 .HasDefaultValue(0)
                 .HasColumnName("stock_quantity");
@@ -2294,6 +2294,41 @@ public partial class DomainDbContext : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.ProductSkus)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("product_sku_product_id_fkey");
+        });
+
+        modelBuilder.Entity<ProductSkuSpec>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("product_sku_spec_pkey");
+
+            entity.ToTable("product_sku_spec", "product");
+
+            entity.HasIndex(e => new { e.ProductSkuId, e.SpecName, e.SpecValue }, "product_sku_spec_product_sku_id_spec_name_spec_value_key").IsUnique();
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.ProductSkuId).HasColumnName("product_sku_id");
+            entity.Property(e => e.SnapshotVersion)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("snapshot_version");
+            entity.Property(e => e.SpecName)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("spec_name");
+            entity.Property(e => e.SpecValue)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("spec_value");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+
+            entity.HasOne(d => d.ProductSku).WithMany(p => p.ProductSkuSpecs)
+                .HasForeignKey(d => d.ProductSkuId)
+                .HasConstraintName("product_sku_spec_product_sku_id_fkey");
         });
 
         modelBuilder.Entity<ProtocolMapper>(entity =>
@@ -3287,13 +3322,38 @@ public partial class DomainDbContext : DbContext
             entity.Property(e => e.SafetyStock)
                 .HasDefaultValue(0)
                 .HasColumnName("safety_stock");
-            entity.Property(e => e.Spec)
-                .IsRequired()
-                .HasColumnType("jsonb")
-                .HasColumnName("spec");
             entity.Property(e => e.StockQuantity)
                 .HasDefaultValue(0)
                 .HasColumnName("stock_quantity");
+            entity.Property(e => e.UpdatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("updated_at");
+        });
+
+        modelBuilder.Entity<SnapshotProductSkuSpec>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("snapshot_product_sku_spec", "order");
+
+            entity.HasIndex(e => new { e.ProductSkuId, e.SpecName, e.SpecValue, e.SnapshotVersion }, "snapshot_product_sku_spec_product_sku_id_spec_name_spec_val_key").IsUnique();
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("created_at");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ProductSkuId).HasColumnName("product_sku_id");
+            entity.Property(e => e.SnapshotVersion)
+                .HasDefaultValueSql("now()")
+                .HasColumnName("snapshot_version");
+            entity.Property(e => e.SpecName)
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("spec_name");
+            entity.Property(e => e.SpecValue)
+                .IsRequired()
+                .HasMaxLength(255)
+                .HasColumnName("spec_value");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnName("updated_at");

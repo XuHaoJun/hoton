@@ -7366,7 +7366,7 @@
             "type": {
               "scalarType": "uuid"
             },
-            "nullable": "nullable",
+            "nullable": "nonNullable",
             "description": null
           },
           "safety_stock": {
@@ -7385,14 +7385,6 @@
             },
             "nullable": "nonNullable",
             "hasDefault": "hasDefault",
-            "description": null
-          },
-          "spec": {
-            "name": "spec",
-            "type": {
-              "scalarType": "jsonb"
-            },
-            "nullable": "nonNullable",
             "description": null
           },
           "stock_quantity": {
@@ -7418,6 +7410,81 @@
           "snapshot_product_sku_pkey": [
             "id",
             "snapshot_version"
+          ]
+        },
+        "foreignRelations": {},
+        "description": null
+      },
+      "order_snapshot_product_sku_spec": {
+        "schemaName": "order",
+        "tableName": "snapshot_product_sku_spec",
+        "columns": {
+          "created_at": {
+            "name": "created_at",
+            "type": {
+              "scalarType": "timestamptz"
+            },
+            "nullable": "nullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          },
+          "id": {
+            "name": "id",
+            "type": {
+              "scalarType": "uuid"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "product_sku_id": {
+            "name": "product_sku_id",
+            "type": {
+              "scalarType": "uuid"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "snapshot_version": {
+            "name": "snapshot_version",
+            "type": {
+              "scalarType": "timestamptz"
+            },
+            "nullable": "nullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          },
+          "spec_name": {
+            "name": "spec_name",
+            "type": {
+              "scalarType": "varchar"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "spec_value": {
+            "name": "spec_value",
+            "type": {
+              "scalarType": "varchar"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": {
+              "scalarType": "timestamptz"
+            },
+            "nullable": "nullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          }
+        },
+        "uniquenessConstraints": {
+          "snapshot_product_sku_spec_product_sku_id_spec_name_spec_val_key": [
+            "product_sku_id",
+            "snapshot_version",
+            "spec_name",
+            "spec_value"
           ]
         },
         "foreignRelations": {},
@@ -7703,14 +7770,6 @@
             "hasDefault": "hasDefault",
             "description": null
           },
-          "spec": {
-            "name": "spec",
-            "type": {
-              "scalarType": "jsonb"
-            },
-            "nullable": "nonNullable",
-            "description": null
-          },
           "stock_quantity": {
             "name": "stock_quantity",
             "type": {
@@ -7741,6 +7800,92 @@
             "foreignTable": "product",
             "columnMapping": {
               "product_id": "id"
+            }
+          }
+        },
+        "description": null
+      },
+      "product_product_sku_spec": {
+        "schemaName": "product",
+        "tableName": "product_sku_spec",
+        "columns": {
+          "created_at": {
+            "name": "created_at",
+            "type": {
+              "scalarType": "timestamptz"
+            },
+            "nullable": "nullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          },
+          "id": {
+            "name": "id",
+            "type": {
+              "scalarType": "uuid"
+            },
+            "nullable": "nonNullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          },
+          "product_sku_id": {
+            "name": "product_sku_id",
+            "type": {
+              "scalarType": "uuid"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "snapshot_version": {
+            "name": "snapshot_version",
+            "type": {
+              "scalarType": "timestamptz"
+            },
+            "nullable": "nullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          },
+          "spec_name": {
+            "name": "spec_name",
+            "type": {
+              "scalarType": "varchar"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "spec_value": {
+            "name": "spec_value",
+            "type": {
+              "scalarType": "varchar"
+            },
+            "nullable": "nonNullable",
+            "description": null
+          },
+          "updated_at": {
+            "name": "updated_at",
+            "type": {
+              "scalarType": "timestamptz"
+            },
+            "nullable": "nullable",
+            "hasDefault": "hasDefault",
+            "description": null
+          }
+        },
+        "uniquenessConstraints": {
+          "product_sku_spec_pkey": [
+            "id"
+          ],
+          "product_sku_spec_product_sku_id_spec_name_spec_value_key": [
+            "product_sku_id",
+            "spec_name",
+            "spec_value"
+          ]
+        },
+        "foreignRelations": {
+          "product_sku_spec_product_sku_id_fkey": {
+            "foreignSchema": "product",
+            "foreignTable": "product_sku",
+            "columnMapping": {
+              "product_sku_id": "id"
             }
           }
         },

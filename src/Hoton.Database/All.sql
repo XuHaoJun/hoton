@@ -1,6 +1,6 @@
 -- 電商，設計Postgresql SQL table:
 -- - 商品(product)
--- - 商品的規格(product_sku), 詳細規格的 spec 使用 JSONB 儲存，如: {"memory": "256GB"}，需記錄庫存量與安全水位量。
+-- - 商品的規格(product_sku), 需記錄庫存量與安全水位量。
 -- - 商品分類(product_category) 有name_path(LTREE,pkey)，一個商品支援多種分類方式 。
 -- pkey id 預設都用 uuid, user_entity id 預設都用 varchar(36), 時間欄位預設都用 timestamptz
 -- Enable required extensions
@@ -51,12 +51,23 @@ CREATE TABLE "product"."product_category" (
 CREATE TABLE "product"."product_sku" (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     product_id UUID NOT NULL REFERENCES "product"."product" (id) ON DELETE CASCADE, 
-    spec JSONB NOT NULL,          -- 儲存詳細規格
     stock_quantity INT DEFAULT 0, -- 庫存量
     safety_stock INT DEFAULT 0,   -- 安全水位量
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     snapshot_version TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 商品規格
+CREATE TABLE "product"."product_sku_spec" (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_sku_id UUID NOT NULL REFERENCES "product"."product_sku" (id) ON DELETE CASCADE, 
+    spec_name VARCHAR(100) NOT NULL,  -- 規格名, 如顏色、尺寸
+    spec_value VARCHAR(255) NOT NULL, -- 規格值, 如藍色、L
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    snapshot_version TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (product_sku_id, spec_name, spec_value) -- 確保這三個一組是唯一的
 );
 
 -- 訂單物流設定
@@ -138,26 +149,36 @@ CREATE TABLE "order"."order_status_history" (
 CREATE TABLE "order"."snapshot_product" (
     id UUID NOT NULL,  -- 商品 ID
 	realm_id varchar(36) NOT NULL REFERENCES "auth"."realm" (id) ON DELETE CASCADE,
-    snapshot_version TIMESTAMPTZ NOT NULL DEFAULT NOW(),  -- 快照版本
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
+    snapshot_version TIMESTAMPTZ NOT NULL DEFAULT NOW(),  -- 快照版本
     PRIMARY KEY (id, snapshot_version)  -- 確保每個商品的不同版本唯一
 );
 
 -- 商品 SKU 快照表 (Snapshot Product SKU)
 CREATE TABLE "order"."snapshot_product_sku" (
     id UUID NOT NULL,  -- SKU ID
-    product_id UUID,  -- 關聯商品快照
-    spec JSONB NOT NULL,  -- 庫存量等詳細規格
+    product_id UUID NOT NULL,  -- 關聯商品快照
     stock_quantity INT DEFAULT 0,  -- 庫存量
     safety_stock INT DEFAULT 0,  -- 安全庫存量
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW(),
     snapshot_version TIMESTAMPTZ NOT NULL DEFAULT NOW(),  -- 快照版本
     PRIMARY KEY (id, snapshot_version)  -- 確保每個 SKU 的不同版本唯一
+);
+
+CREATE TABLE "order"."snapshot_product_sku_spec" (
+    id UUID NOT NULL,
+    product_sku_id UUID NOT NULL, 
+    spec_name VARCHAR(100) NOT NULL,  -- 規格名, 如顏色、尺寸
+    spec_value VARCHAR(255) NOT NULL, -- 規格值, 如藍色、L
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    snapshot_version TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE (product_sku_id, spec_name, spec_value, snapshot_version)
 );
 
 -- 物流單表 (Shipment)

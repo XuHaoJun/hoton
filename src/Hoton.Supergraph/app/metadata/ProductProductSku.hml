@@ -14,8 +14,6 @@ definition:
       type: Int4
     - name: snapshotVersion
       type: Timestamptz
-    - name: spec
-      type: Jsonb!
     - name: stockQuantity
       type: Int4
     - name: updatedAt
@@ -42,9 +40,6 @@ definition:
         snapshotVersion:
           column:
             name: snapshot_version
-        spec:
-          column:
-            name: spec
         stockQuantity:
           column:
             name: stock_quantity
@@ -66,7 +61,6 @@ definition:
           - productId
           - safetyStock
           - snapshotVersion
-          - spec
           - stockQuantity
           - updatedAt
 
@@ -89,8 +83,6 @@ definition:
           booleanExpressionType: Int4BoolExp
         - fieldName: snapshotVersion
           booleanExpressionType: TimestamptzBoolExp
-        - fieldName: spec
-          booleanExpressionType: JsonbBoolExp
         - fieldName: stockQuantity
           booleanExpressionType: Int4BoolExp
         - fieldName: updatedAt
@@ -99,6 +91,7 @@ definition:
         - relationshipName: cartCartItems
         - relationshipName: orderOrderItems
         - relationshipName: productProduct
+        - relationshipName: productProductSkuSpecs
   logicalOperators:
     enable: true
   isNull:
@@ -125,8 +118,6 @@ definition:
           aggregateExpression: Int4AggExp
         - fieldName: snapshotVersion
           aggregateExpression: TimestamptzAggExp
-        - fieldName: spec
-          aggregateExpression: JsonbAggExp
         - fieldName: stockQuantity
           aggregateExpression: Int4AggExp
         - fieldName: updatedAt
@@ -161,9 +152,6 @@ definition:
       orderByDirections:
         enableAll: true
     - fieldName: snapshotVersion
-      orderByDirections:
-        enableAll: true
-    - fieldName: spec
       orderByDirections:
         enableAll: true
     - fieldName: stockQuantity
@@ -262,4 +250,26 @@ definition:
       target:
         modelField:
           - fieldName: id
+
+---
+kind: Relationship
+version: v1
+definition:
+  name: productProductSkuSpecs
+  sourceType: ProductProductSku
+  target:
+    model:
+      name: ProductProductSkuSpec
+      relationshipType: Array
+      aggregate:
+        aggregateExpression: ProductProductSkuSpecAggExp
+  mapping:
+    - source:
+        fieldPath:
+          - fieldName: id
+      target:
+        modelField:
+          - fieldName: productSkuId
+  graphql:
+    aggregateFieldName: productProductSkuSpecsAggregate
 

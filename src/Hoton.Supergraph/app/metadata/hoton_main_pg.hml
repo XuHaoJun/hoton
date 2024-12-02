@@ -5491,6 +5491,21 @@ definition:
                 element_type:
                   type: named
                   name: order_snapshot_product_sku
+        delete_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value_response:
+          description: Responses from the 'delete_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: order_snapshot_product_sku_spec
         delete_product_product_by_id_response:
           description: Responses from the 'delete_product_product_by_id' procedure
           fields:
@@ -5551,6 +5566,36 @@ definition:
                 element_type:
                   type: named
                   name: product_product_sku
+        delete_product_product_sku_spec_by_id_response:
+          description: Responses from the 'delete_product_product_sku_spec_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_sku_spec
+        delete_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value_response:
+          description: Responses from the 'delete_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_sku_spec
         insert_auth_admin_event_entity_object:
           fields:
             admin_event_time:
@@ -10564,10 +10609,8 @@ definition:
                 name: uuid
             product_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             safety_stock:
               type:
                 type: nullable
@@ -10580,10 +10623,6 @@ definition:
                 underlying_type:
                   type: named
                   name: timestamptz
-            spec:
-              type:
-                type: named
-                name: jsonb
             stock_quantity:
               type:
                 type: nullable
@@ -10611,6 +10650,57 @@ definition:
                 element_type:
                   type: named
                   name: order_snapshot_product_sku
+        insert_order_snapshot_product_sku_spec_object:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            product_sku_id:
+              type:
+                type: named
+                name: uuid
+            snapshot_version:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            spec_name:
+              type:
+                type: named
+                name: varchar
+            spec_value:
+              type:
+                type: named
+                name: varchar
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        insert_order_snapshot_product_sku_spec_response:
+          description: Responses from the 'insert_order_snapshot_product_sku_spec' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: order_snapshot_product_sku_spec
         insert_product_product_category_object:
           fields:
             category:
@@ -10792,10 +10882,6 @@ definition:
                 underlying_type:
                   type: named
                   name: timestamptz
-            spec:
-              type:
-                type: named
-                name: jsonb
             stock_quantity:
               type:
                 type: nullable
@@ -10823,6 +10909,59 @@ definition:
                 element_type:
                   type: named
                   name: product_product_sku
+        insert_product_product_sku_spec_object:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: uuid
+            product_sku_id:
+              type:
+                type: named
+                name: uuid
+            snapshot_version:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            spec_name:
+              type:
+                type: named
+                name: varchar
+            spec_value:
+              type:
+                type: named
+                name: varchar
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        insert_product_product_sku_spec_response:
+          description: Responses from the 'insert_product_product_sku_spec' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_sku_spec
         order_order:
           fields:
             created_at:
@@ -11483,10 +11622,8 @@ definition:
                 name: uuid
             product_id:
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
             safety_stock:
               type:
                 type: nullable
@@ -11497,16 +11634,48 @@ definition:
               type:
                 type: named
                 name: timestamptz
-            spec:
-              type:
-                type: named
-                name: jsonb
             stock_quantity:
               type:
                 type: nullable
                 underlying_type:
                   type: named
                   name: int4
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        order_snapshot_product_sku_spec:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            product_sku_id:
+              type:
+                type: named
+                name: uuid
+            snapshot_version:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            spec_name:
+              type:
+                type: named
+                name: varchar
+            spec_value:
+              type:
+                type: named
+                name: varchar
             updated_at:
               type:
                 type: nullable
@@ -11639,16 +11808,48 @@ definition:
                 underlying_type:
                   type: named
                   name: timestamptz
-            spec:
-              type:
-                type: named
-                name: jsonb
             stock_quantity:
               type:
                 type: nullable
                 underlying_type:
                   type: named
                   name: int4
+            updated_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        product_product_sku_spec:
+          fields:
+            created_at:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            id:
+              type:
+                type: named
+                name: uuid
+            product_sku_id:
+              type:
+                type: named
+                name: uuid
+            snapshot_version:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            spec_name:
+              type:
+                type: named
+                name: varchar
+            spec_value:
+              type:
+                type: named
+                name: varchar
             updated_at:
               type:
                 type: nullable
@@ -24042,10 +24243,8 @@ definition:
             _set:
               description: Set the column to this value
               type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: uuid
+                type: named
+                name: uuid
         update_column_order_snapshot_product_sku_safety_stock:
           description: Update the 'safety_stock' column in the 'order_snapshot_product_sku' collection
           fields:
@@ -24064,14 +24263,68 @@ definition:
               type:
                 type: named
                 name: timestamptz
-        update_column_order_snapshot_product_sku_spec:
-          description: Update the 'spec' column in the 'order_snapshot_product_sku' collection
+        update_column_order_snapshot_product_sku_spec_created_at:
+          description: Update the 'created_at' column in the 'order_snapshot_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_order_snapshot_product_sku_spec_id:
+          description: Update the 'id' column in the 'order_snapshot_product_sku_spec' collection
           fields:
             _set:
               description: Set the column to this value
               type:
                 type: named
-                name: jsonb
+                name: uuid
+        update_column_order_snapshot_product_sku_spec_product_sku_id:
+          description: Update the 'product_sku_id' column in the 'order_snapshot_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_order_snapshot_product_sku_spec_snapshot_version:
+          description: Update the 'snapshot_version' column in the 'order_snapshot_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_order_snapshot_product_sku_spec_spec_name:
+          description: Update the 'spec_name' column in the 'order_snapshot_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_order_snapshot_product_sku_spec_spec_value:
+          description: Update the 'spec_value' column in the 'order_snapshot_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_order_snapshot_product_sku_spec_updated_at:
+          description: Update the 'updated_at' column in the 'order_snapshot_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
         update_column_order_snapshot_product_sku_stock_quantity:
           description: Update the 'stock_quantity' column in the 'order_snapshot_product_sku' collection
           fields:
@@ -24284,14 +24537,68 @@ definition:
                 underlying_type:
                   type: named
                   name: timestamptz
-        update_column_product_product_sku_spec:
-          description: Update the 'spec' column in the 'product_product_sku' collection
+        update_column_product_product_sku_spec_created_at:
+          description: Update the 'created_at' column in the 'product_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_product_product_sku_spec_id:
+          description: Update the 'id' column in the 'product_product_sku_spec' collection
           fields:
             _set:
               description: Set the column to this value
               type:
                 type: named
-                name: jsonb
+                name: uuid
+        update_column_product_product_sku_spec_product_sku_id:
+          description: Update the 'product_sku_id' column in the 'product_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: uuid
+        update_column_product_product_sku_spec_snapshot_version:
+          description: Update the 'snapshot_version' column in the 'product_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+        update_column_product_product_sku_spec_spec_name:
+          description: Update the 'spec_name' column in the 'product_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_product_product_sku_spec_spec_value:
+          description: Update the 'spec_value' column in the 'product_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: named
+                name: varchar
+        update_column_product_product_sku_spec_updated_at:
+          description: Update the 'updated_at' column in the 'product_product_sku_spec' collection
+          fields:
+            _set:
+              description: Set the column to this value
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
         update_column_product_product_sku_stock_quantity:
           description: Update the 'stock_quantity' column in the 'product_product_sku' collection
           fields:
@@ -25900,13 +26207,6 @@ definition:
                 underlying_type:
                   type: named
                   name: update_column_order_snapshot_product_sku_snapshot_version
-            spec:
-              description: Update the 'spec' column in the 'order_snapshot_product_sku' collection.
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: update_column_order_snapshot_product_sku_spec
             stock_quantity:
               description: Update the 'stock_quantity' column in the 'order_snapshot_product_sku' collection.
               type:
@@ -25921,6 +26221,73 @@ definition:
                 underlying_type:
                   type: named
                   name: update_column_order_snapshot_product_sku_updated_at
+        update_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value_response:
+          description: Responses from the 'update_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: order_snapshot_product_sku_spec
+        update_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value_update_columns:
+          description: Update the columns of the 'order_snapshot_product_sku_spec' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'order_snapshot_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_order_snapshot_product_sku_spec_created_at
+            id:
+              description: Update the 'id' column in the 'order_snapshot_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_order_snapshot_product_sku_spec_id
+            product_sku_id:
+              description: Update the 'product_sku_id' column in the 'order_snapshot_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_order_snapshot_product_sku_spec_product_sku_id
+            snapshot_version:
+              description: Update the 'snapshot_version' column in the 'order_snapshot_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_order_snapshot_product_sku_spec_snapshot_version
+            spec_name:
+              description: Update the 'spec_name' column in the 'order_snapshot_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_order_snapshot_product_sku_spec_spec_name
+            spec_value:
+              description: Update the 'spec_value' column in the 'order_snapshot_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_order_snapshot_product_sku_spec_spec_value
+            updated_at:
+              description: Update the 'updated_at' column in the 'order_snapshot_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_order_snapshot_product_sku_spec_updated_at
         update_product_product_by_id_response:
           description: Responses from the 'update_product_product_by_id' procedure
           fields:
@@ -26161,13 +26528,6 @@ definition:
                 underlying_type:
                   type: named
                   name: update_column_product_product_sku_snapshot_version
-            spec:
-              description: Update the 'spec' column in the 'product_product_sku' collection.
-              type:
-                type: nullable
-                underlying_type:
-                  type: named
-                  name: update_column_product_product_sku_spec
             stock_quantity:
               description: Update the 'stock_quantity' column in the 'product_product_sku' collection.
               type:
@@ -26182,6 +26542,140 @@ definition:
                 underlying_type:
                   type: named
                   name: update_column_product_product_sku_updated_at
+        update_product_product_sku_spec_by_id_response:
+          description: Responses from the 'update_product_product_sku_spec_by_id' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_sku_spec
+        update_product_product_sku_spec_by_id_update_columns:
+          description: Update the columns of the 'product_product_sku_spec' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_created_at
+            id:
+              description: Update the 'id' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_id
+            product_sku_id:
+              description: Update the 'product_sku_id' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_product_sku_id
+            snapshot_version:
+              description: Update the 'snapshot_version' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_snapshot_version
+            spec_name:
+              description: Update the 'spec_name' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_spec_name
+            spec_value:
+              description: Update the 'spec_value' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_spec_value
+            updated_at:
+              description: Update the 'updated_at' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_updated_at
+        update_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value_response:
+          description: Responses from the 'update_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value' procedure
+          fields:
+            affected_rows:
+              description: The number of rows affected by the mutation
+              type:
+                type: named
+                name: int4
+            returning:
+              description: Data from rows affected by the mutation
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: product_product_sku_spec
+        update_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value_update_columns:
+          description: Update the columns of the 'product_product_sku_spec' collection
+          fields:
+            created_at:
+              description: Update the 'created_at' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_created_at
+            id:
+              description: Update the 'id' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_id
+            product_sku_id:
+              description: Update the 'product_sku_id' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_product_sku_id
+            snapshot_version:
+              description: Update the 'snapshot_version' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_snapshot_version
+            spec_name:
+              description: Update the 'spec_name' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_spec_name
+            spec_value:
+              description: Update the 'spec_value' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_spec_value
+            updated_at:
+              description: Update the 'updated_at' column in the 'product_product_sku_spec' collection.
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: update_column_product_product_sku_spec_updated_at
       collections:
         - name: auth_admin_event_entity
           arguments: {}
@@ -27484,6 +27978,17 @@ definition:
                 - id
                 - snapshot_version
           foreign_keys: {}
+        - name: order_snapshot_product_sku_spec
+          arguments: {}
+          type: order_snapshot_product_sku_spec
+          uniqueness_constraints:
+            snapshot_product_sku_spec_product_sku_id_spec_name_spec_val_key:
+              unique_columns:
+                - product_sku_id
+                - snapshot_version
+                - spec_name
+                - spec_value
+          foreign_keys: {}
         - name: product_product
           arguments: {}
           type: product_product
@@ -27537,6 +28042,23 @@ definition:
               column_mapping:
                 product_id: id
               foreign_collection: product_product
+        - name: product_product_sku_spec
+          arguments: {}
+          type: product_product_sku_spec
+          uniqueness_constraints:
+            product_sku_spec_pkey:
+              unique_columns:
+                - id
+            product_sku_spec_product_sku_id_spec_name_spec_value_key:
+              unique_columns:
+                - product_sku_id
+                - spec_name
+                - spec_value
+          foreign_keys:
+            product_sku_spec_product_sku_id_fkey:
+              column_mapping:
+                product_sku_id: id
+              foreign_collection: product_product_sku
         - name: product_search_vector
           arguments:
             keyword:
@@ -29952,6 +30474,37 @@ definition:
           result_type:
             type: named
             name: delete_order_snapshot_product_sku_by_id_and_snapshot_version_response
+        - name: delete_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value
+          description: Delete any row on the 'order_snapshot_product_sku_spec' collection using the 'product_sku_id', 'snapshot_version', 'spec_name' and 'spec_value' keys
+          arguments:
+            key_product_sku_id:
+              type:
+                type: named
+                name: uuid
+            key_snapshot_version:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            key_spec_name:
+              type:
+                type: named
+                name: varchar
+            key_spec_value:
+              type:
+                type: named
+                name: varchar
+            pre_check:
+              description: Delete permission predicate over the 'order_snapshot_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: order_snapshot_product_sku_spec
+          result_type:
+            type: named
+            name: delete_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value_response
         - name: delete_product_product_by_id
           description: Delete any row on the 'product_product' collection using the 'id' key
           arguments:
@@ -30024,6 +30577,48 @@ definition:
           result_type:
             type: named
             name: delete_product_product_sku_by_id_response
+        - name: delete_product_product_sku_spec_by_id
+          description: Delete any row on the 'product_product_sku_spec' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            pre_check:
+              description: Delete permission predicate over the 'product_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_sku_spec
+          result_type:
+            type: named
+            name: delete_product_product_sku_spec_by_id_response
+        - name: delete_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value
+          description: Delete any row on the 'product_product_sku_spec' collection using the 'product_sku_id', 'spec_name' and 'spec_value' keys
+          arguments:
+            key_product_sku_id:
+              type:
+                type: named
+                name: uuid
+            key_spec_name:
+              type:
+                type: named
+                name: varchar
+            key_spec_value:
+              type:
+                type: named
+                name: varchar
+            pre_check:
+              description: Delete permission predicate over the 'product_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_sku_spec
+          result_type:
+            type: named
+            name: delete_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value_response
         - name: insert_auth_admin_event_entity
           description: Insert into the auth_admin_event_entity table
           arguments:
@@ -31962,6 +32557,25 @@ definition:
           result_type:
             type: named
             name: insert_order_snapshot_product_sku_response
+        - name: insert_order_snapshot_product_sku_spec
+          description: Insert into the order_snapshot_product_sku_spec table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_order_snapshot_product_sku_spec_object
+            post_check:
+              description: Insert permission predicate over the 'order_snapshot_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: order_snapshot_product_sku_spec
+          result_type:
+            type: named
+            name: insert_order_snapshot_product_sku_spec_response
         - name: insert_product_product
           description: Insert into the product_product table
           arguments:
@@ -32038,6 +32652,25 @@ definition:
           result_type:
             type: named
             name: insert_product_product_sku_response
+        - name: insert_product_product_sku_spec
+          description: Insert into the product_product_sku_spec table
+          arguments:
+            objects:
+              type:
+                type: array
+                element_type:
+                  type: named
+                  name: insert_product_product_sku_spec_object
+            post_check:
+              description: Insert permission predicate over the 'product_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_sku_spec
+          result_type:
+            type: named
+            name: insert_product_product_sku_spec_response
         - name: update_auth_admin_event_entity_by_id
           description: Update any row on the 'auth_admin_event_entity' collection using the 'id' key
           arguments:
@@ -35784,6 +36417,48 @@ definition:
           result_type:
             type: named
             name: update_order_snapshot_product_sku_by_id_and_snapshot_version_response
+        - name: update_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value
+          description: Update any row on the 'order_snapshot_product_sku_spec' collection using the 'product_sku_id', 'snapshot_version', 'spec_name' and 'spec_value' keys
+          arguments:
+            key_product_sku_id:
+              type:
+                type: named
+                name: uuid
+            key_snapshot_version:
+              type:
+                type: nullable
+                underlying_type:
+                  type: named
+                  name: timestamptz
+            key_spec_name:
+              type:
+                type: named
+                name: varchar
+            key_spec_value:
+              type:
+                type: named
+                name: varchar
+            post_check:
+              description: Update permission post-condition predicate over the 'order_snapshot_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: order_snapshot_product_sku_spec
+            pre_check:
+              description: Update permission pre-condition predicate over the 'order_snapshot_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: order_snapshot_product_sku_spec
+            update_columns:
+              type:
+                type: named
+                name: update_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value_update_columns
+          result_type:
+            type: named
+            name: update_order_snapshot_product_sku_spec_by_product_sku_id_and_snapshot_version_and_spec_name_and_spec_value_response
         - name: update_product_product_by_id
           description: Update any row on the 'product_product' collection using the 'id' key
           arguments:
@@ -35900,6 +36575,70 @@ definition:
           result_type:
             type: named
             name: update_product_product_sku_by_id_response
+        - name: update_product_product_sku_spec_by_id
+          description: Update any row on the 'product_product_sku_spec' collection using the 'id' key
+          arguments:
+            key_id:
+              type:
+                type: named
+                name: uuid
+            post_check:
+              description: Update permission post-condition predicate over the 'product_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_sku_spec
+            pre_check:
+              description: Update permission pre-condition predicate over the 'product_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_sku_spec
+            update_columns:
+              type:
+                type: named
+                name: update_product_product_sku_spec_by_id_update_columns
+          result_type:
+            type: named
+            name: update_product_product_sku_spec_by_id_response
+        - name: update_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value
+          description: Update any row on the 'product_product_sku_spec' collection using the 'product_sku_id', 'spec_name' and 'spec_value' keys
+          arguments:
+            key_product_sku_id:
+              type:
+                type: named
+                name: uuid
+            key_spec_name:
+              type:
+                type: named
+                name: varchar
+            key_spec_value:
+              type:
+                type: named
+                name: varchar
+            post_check:
+              description: Update permission post-condition predicate over the 'product_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_sku_spec
+            pre_check:
+              description: Update permission pre-condition predicate over the 'product_product_sku_spec' collection
+              type:
+                type: nullable
+                underlying_type:
+                  type: predicate
+                  object_type_name: product_product_sku_spec
+            update_columns:
+              type:
+                type: named
+                name: update_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value_update_columns
+          result_type:
+            type: named
+            name: update_product_product_sku_spec_by_product_sku_id_and_spec_name_and_spec_value_response
     capabilities:
       version: 0.1.6
       capabilities:
