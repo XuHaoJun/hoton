@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@my/config": "0.0.1",
-    "@tamagui/lucide-icons": "^1.117.2",
-    "@tamagui/toast": "^1.117.2",
-    "tamagui": "^1.117.2"
+    "@tamagui/lucide-icons": "^1.118.1",
+    "@tamagui/toast": "^1.118.1",
+    "tamagui": "^1.118.1"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.117.2"
+    "@tamagui/build": "^1.118.1"
   }
 }
