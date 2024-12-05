@@ -51,12 +51,12 @@ export const MainBottomTabs = () => {
   const tabs = [
     {
       key: 'home',
-      label: 'Home',
+      label: '首頁',
       icon: Home,
     },
     {
       key: 'profile',
-      label: 'Profile',
+      label: '會員中心',
       icon: User,
     },
   ]

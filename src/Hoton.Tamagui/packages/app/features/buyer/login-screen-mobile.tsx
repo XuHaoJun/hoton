@@ -12,19 +12,14 @@ export const LoginScreenMobile = () => {
   const handleLogin = () => {
     // Implement login logic here
     console.log('Login:', email, password)
-
   }
 
   return (
     <YStack flex={1} backgroundColor="$background">
       {/* Login Form */}
-      <YStack flex={1} padding="$4" gap="$4" justifyContent="center">
+      <YStack flex={1} padding="$4" paddingTop="50%" gap="$4" justifyContent="flex-start">
         <Text fontSize="$8" fontWeight="bold" textAlign="center">
           Logo
-        </Text>
-
-        <Text fontSize="$4" color="$gray11" textAlign="center">
-          Text
         </Text>
 
         <YStack gap="$4" marginTop="$6">
@@ -41,7 +36,7 @@ export const LoginScreenMobile = () => {
             <Input
               flex={1}
               size="$4"
-              placeholder="Password"
+              placeholder="密碼"
               secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
@@ -56,7 +51,7 @@ export const LoginScreenMobile = () => {
           </XStack>
 
           <Button size="$4" marginTop="$2" onPress={handleLogin}>
-            Sign In
+            登入
           </Button>
 
           <XStack marginTop="$2">
