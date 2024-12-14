@@ -1,8 +1,7 @@
+using Hoton.HttpUtils.Extensions;
+using Hoton.Identity.Api.Contacts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-using Hoton.Identity.Api.Contacts;
-using Hoton.HttpUtils.Extensions;
 
 namespace Hoton.Identity.Api.Controllers;
 
@@ -30,7 +29,7 @@ public class AuthController : ControllerBase
             $"http://localhost:8080/realms/{realmName}/protocol/openid-connect/token"
         )
         {
-            Content = FormUrlEncodedExtensions.ToFormUrlEncoded(req, useJsonPropertyName: true)
+            Content = FormUrlEncodedExtensions.ToFormUrlEncoded(req, useJsonPropertyName: true),
         };
         var response = await _httpClient.SendAsync(kcReq);
         if (response.StatusCode != System.Net.HttpStatusCode.OK)

@@ -1,6 +1,5 @@
-using Microsoft.AspNetCore.Mvc;
-
 using Hoton.Identity.Api.Contacts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hoton.Identity.Api.Controllers;
 
@@ -43,7 +42,7 @@ public class HasuraController : ControllerBase
                 UserId = User.Identity.Name,
                 Role = "user",
                 DefaultRole = "user",
-                AllowedRoles = ["user", "guest"]
+                AllowedRoles = ["user", "guest"],
             };
             return Ok(resp);
         }

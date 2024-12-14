@@ -24,7 +24,7 @@ if (builder.Environment.IsDevelopment())
                 Type = SecuritySchemeType.ApiKey,
                 Scheme = "Bearer",
                 BearerFormat = "JWT",
-                Description = "JWT Authorization header using the Bearer scheme."
+                Description = "JWT Authorization header using the Bearer scheme.",
             }
         );
 
@@ -34,25 +34,23 @@ if (builder.Environment.IsDevelopment())
                 {
                     new OpenApiSecurityScheme
                     {
-                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
                     },
                     new string[] { }
-                }
+                },
             }
         );
     });
 }
-
+builder.Services.AddManagers();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddKeyCloakAdminClient();
 
 builder.Services.AddKeyCloakAuth();
-builder.Services
-    .AddAuthorization(options =>
+builder
+    .Services.AddAuthorization(options =>
     {
-        var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(
-            JwtBearerDefaults.AuthenticationScheme
-        );
+        var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
         defaultAuthorizationPolicyBuilder = defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
         options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
     })

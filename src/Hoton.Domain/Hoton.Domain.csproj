@@ -16,6 +16,12 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11" />
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
+    <PackageReference Include="GraphQL" Version="8.2.1" />
+    <PackageReference Include="GraphQL.MemoryCache" Version="8.2.1" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="8.2.1" />
+    <PackageReference Include="GraphQL-Parser" Version="9.5.0" />
+    <PackageReference Include="GraphQL.Client" Version="6.1.0" />
+    <PackageReference Include="GraphQL.Client.Serializer.SystemTextJson" Version="6.1.0" />
 	</ItemGroup>
 
 

@@ -12,6 +12,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hoton.Domain\Hoton.Domain.csproj" />
     <ProjectReference Include="..\..\utils\Hoton.Keycloak\Hoton.Keycloak.csproj" />
   </ItemGroup>
 </Project>

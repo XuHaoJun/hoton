@@ -21,37 +21,38 @@ public class UsersController : ControllerBase
     [AllowAnonymous]
     [HttpPost]
     [ActionName("")]
-    public async Task<ActionResult<string>> CreateUserAsync(
-        [FromRoute] string realmName,
-        [FromBody] CreateUserReq body
-    )
+    public async Task<ActionResult<string>> CreateUserAsync([FromRoute] string realmName, [FromBody] CreateUserReq body)
     {
         // var authProvider = new BaseBearerTokenAuthenticationProvider()
         // var requestAdapter = new HttpClientRequestAdapter();
         // var kcClient = new KeycloakAdminApiClient(requestAdapter);
         // kcClient.Admin.Realms[realmName].Users.PostAsync();
         // new AnonymousAuthenticationProvider()
-        try {
-
-        var resp = await _keycloakAdminApiClient.Admin.Realms[realmName].Users.PostAsync(
-            new UserRepresentation
-            {
-                Enabled = true,
-                Username = body.Username,
-                Email = body.Email,
-                EmailVerified = false,
-                Credentials =
-                [
-                    new()
+        try
+        {
+            var resp = await _keycloakAdminApiClient
+                .Admin.Realms[realmName]
+                .Users.PostAsync(
+                    new UserRepresentation
                     {
-                        Type = "password",
-                        Value = body.Password,
-                        Temporary = false
+                        Enabled = true,
+                        Username = body.Username,
+                        Email = body.Email,
+                        EmailVerified = false,
+                        Credentials =
+                        [
+                            new()
+                            {
+                                Type = "password",
+                                Value = body.Password,
+                                Temporary = false,
+                            },
+                        ],
                     }
-                ]
-            }
-        );
-        } catch (Exception e) {
+                );
+        }
+        catch (Exception e)
+        {
             return BadRequest(e.Message);
         }
         return Ok("ok");
